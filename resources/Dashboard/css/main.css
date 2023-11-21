@@ -1,0 +1,13 @@
+@import "_checkbox-radio-switch.css";
+@import "_progress.css";
+@import "_scrollbars.css";
+@import "_table.css";
+@import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+svg {
+    @apply rtl:-scale-x-100
+}
