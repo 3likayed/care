@@ -14,16 +14,16 @@
 <script setup>
 
 import SectionMain from "../../Components/Sahred/SectionMain.vue";
-
 import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
-
 import ModelList from "../../Components/Models/ModelList.vue";
+import {modelResolver} from "../../Globals.js";
 
 
 let model = "employee"
-let data = computed(() => usePage().props.data);
+
+let data = computed(() => usePage().props.data)
 
 </script>
 <style scoped>

@@ -68,7 +68,9 @@ let computedOptions = computed(() => props.options)
               :empty-selection-message="__('no_data')"
               :options="computedOptions"
               :pt="pt"
+              :disabled="isDisabled"
               filter
+              showClear
               option-label="name"
               option-value="id"
               @filter="(value)=>emit('filter',value)"

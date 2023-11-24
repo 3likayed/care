@@ -15,10 +15,10 @@
     <CardBox has-table>
         <BaseTable
             :headers="['#',__('name'),__('phone'),__('address'),__('created_at')]"
-            :pagination="pagination"
+            :pagination="data.pagination"
         >
             <tr
-                v-for="(item,key) in data"
+                v-for="(item,key) in data.list"
                 :key="key"
                 class="rtl:flex-row-reverse"
             >
@@ -42,6 +42,7 @@
                         >
                             {{ phone }}
                         </li>
+
                     </ul>
                 </td>
                 <td :data-label="__('phone')">
@@ -58,6 +59,7 @@
                     <TableOptions
                         :data="item"
                         :model="model"
+                        :options="options"
                     />
                 </td>
             </tr>
@@ -81,7 +83,7 @@ import {debounce} from "lodash";
 
 let props = defineProps({
     data: Object,
-    pagination: Object | Boolean,
+    options: Object,
     hasSearch: Boolean
 
 })

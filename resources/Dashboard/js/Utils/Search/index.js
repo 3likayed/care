@@ -18,11 +18,10 @@ export default class Search {
             defaults[key] = options[key] ?? options[key];
         }
 
-
         let startDate = moment();
-        startDate.add(defaults.mode * defaults.shift,'d')
+        startDate.add(defaults.shift, 'd')
 
-        let endDate = moment(startDate).add(defaults.interval,'d');
+        let endDate = moment(startDate).add(defaults.mode * defaults.interval, 'd');
 
 
         return [

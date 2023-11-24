@@ -16,7 +16,16 @@
             />
         </section>
         <section v-show="step === 1">
-            reservations
+            <ModelList
+                :data="data.reservations"
+                :has-pagination="false"
+                :options="reservationsOptions"
+                model="Reservation"
+
+            />
+        </section>
+        <section v-show="step === 2">
+            sdadasdas
         </section>
         <!--
             <section v-show="step === 1">
@@ -33,22 +42,32 @@
 
 import {usePage} from "@inertiajs/vue3";
 import SectionMain from "../../Components/Sahred/SectionMain.vue";
-import {provide, ref} from "vue";
+import {ref} from "vue";
 import {__, modelResolver} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import ModelData from "../../Components/Models/ModelData.vue";
+import ModelList from "../../Components/Models/ModelList.vue";
 
 
+let steps = ref([__('data'), __('reservations'), __('home')]);
 
-let steps = ref([__('data'), __('reservations')]);
 let step = ref(0);
 let data = usePage().props.data;
 let model = "patient";
 let breadcrumbItems = [{name: __(modelResolver(model)), href: route(`dashboard.${modelResolver(model)}.index`)}]
 breadcrumbItems.push({name: data.name, href: route(`dashboard.${modelResolver(model)}.show`, data.id)})
 
+let reservationsOptions = {
+    update: {
+        disabled: ['patient_id']
+    },
+    create: {
+        data: {patient_id: data.id},
+        disabled: ['patient_id']
+    }
+}
 </script>
 <style scoped>
 

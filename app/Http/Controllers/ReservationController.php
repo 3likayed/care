@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationStoreRequest;
+use App\Http\Resources\ModelCollection;
 use App\Models\Reservation;
 use App\Models\ReservationType;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class ReservationController extends Controller
 
         return Inertia::render('Reservations/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.reservations')]),
-            'data' => $reservations,
+            'data' => ModelCollection::make($reservations),
         ]);
     }
 

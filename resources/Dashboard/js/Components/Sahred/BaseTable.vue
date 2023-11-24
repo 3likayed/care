@@ -42,7 +42,7 @@ function calculatedUrl(paginationUrl) {
         <slot>
             <tr>
                 <td
-                    class="text-center w- py-24  dark:text-slate-400"
+                    class="justify-center py-24  dark:text-slate-400"
                     colspan="100%"
                 >
                     {{ __('no_data') }}

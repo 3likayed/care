@@ -6,7 +6,7 @@ let props = defineProps({
         type: Object,
         default: {},
     },
-    addonData:Object,
+    options : Object,
     model: String,
     isModal: {
         type: Boolean,
@@ -31,6 +31,7 @@ let component = defineAsyncComponent(() => import(`./${capitalizedWord}/${capita
         :data="data"
         :is-modal="isModal"
         :operation="operation"
+        :options="options"
         @cancel="$emit('cancel')"
     />
 </template>

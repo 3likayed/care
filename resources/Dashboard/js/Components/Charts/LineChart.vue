@@ -26,7 +26,7 @@ onMounted(() => {
     chart = new Chart(root.value, {
         type: "line",
         data: props.data,
-        options: {
+
             responsive: true,
             maintainAspectRatio: false,
             scales: {

@@ -1,4 +1,3 @@
-
 export const TRANSITIONS = {
     overlay: {
         enterFromClass: 'opacity-0 scale-75',
@@ -10,24 +9,24 @@ export const TRANSITIONS = {
 
 export default {
     dropdown: {
-        root: ({ props }) => ({
+        root: ({props}) => ({
             class: [
                 'cursor-pointer inline-flex relative select-none',
                 'bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md',
                 'dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300',
                 'w-full md:w-56',
                 'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
-                { 'opacity-60 select-none pointer-events-none cursor-default': props.disabled }
+                {'opacity-60 select-none pointer-events-none cursor-default': props.disabled}
             ]
         }),
-        input: ({ props }) => ({
+        input: ({props}) => ({
             class: [
                 'cursor-pointer block flex flex-auto overflow-hidden text-ellipsis whitespace-nowrap relative',
                 'bg-transparent border-0 text-gray-800',
                 'dark:text-white/80',
                 'last:pe-3 transition duration-200 bg-transparent rounded appearance-none font-sans text-base',
                 'focus:outline-none focus:shadow-none',
-                { 'pe-7': props.showClear }
+                {'pe-7': props.showClear}
             ]
         }),
         trigger: {
@@ -39,7 +38,7 @@ export default {
         list: {
             class: 'py-3 list-none m-0'
         },
-        item: ({ context }) => ({
+        item: ({context}) => ({
             class: [
                 'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
                 'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
@@ -73,7 +72,7 @@ export default {
             class: '-mt-2 absolute top-1/2'
         },
         clearicon: {
-            class: 'text-gray-500 right-12 -mt-2 absolute top-1/2'
+            class: 'text-gray-500 end-12 -mt-2 absolute top-1/2'
         },
         transition: TRANSITIONS.overlay
     }

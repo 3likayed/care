@@ -24,7 +24,7 @@ class PatientController extends Controller
 
     public function index(Request $request)
     {
-        $patients = $this->filter($request->only(['name', 'phone', 'start', 'end', 'trashed']))
+        $patients = Patient::filter($request->only(['search', 'trashed']))
             ->paginate();
         return Inertia::render('Patients/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.patients')]),
@@ -35,7 +35,7 @@ class PatientController extends Controller
     public function fetch(Request $request)
     {
 
-        return Patient::filter($request->only(['search', 'phone','id']))->get();
+        return Patient::filter($request->only(['search', 'id']))->get();
     }
 
     /**
@@ -62,6 +62,7 @@ class PatientController extends Controller
 
     public function show(Patient $patient)
     {
+        $patient->load('reservations','reservations.patient','reservations.reservationType');
         return Inertia::render('Patients/Show', [
             'data' => $patient,
             'meta' => meta()->metaValues(['title' => "$patient->name | " . __('dashboard.patients')]),

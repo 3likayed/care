@@ -34,6 +34,7 @@
         v-if="showEdit"
         :data="data"
         :model="model"
+        :options="options?.update"
         :show="showEdit"
         operation="edit"
         @cancel="showEdit=false"
@@ -72,6 +73,7 @@ let props = defineProps({
         type: Boolean,
         default: true,
     },
+    options : Object,
     model: String,
     data: Object
 })

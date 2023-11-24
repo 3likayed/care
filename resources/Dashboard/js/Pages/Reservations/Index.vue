@@ -1,11 +1,14 @@
 <template>
     <SectionMain>
-        <BreadCrumb :items="[{name: __(`${modelResolver(model)}`), href: route(`dashboard.${modelResolver(model)}.index`)}]"/>
+        <BreadCrumb
+            :items="[{name: __(`${modelResolver(model)}`), href: route(`dashboard.${modelResolver(model)}.index`)}]"/>
         <ModelList
             :data="data"
             :model="model"
-            has-search
+            :options="options"
+            :icon="mdiFormatListBulleted"
             has-pagination
+            has-search
 
         />
     </SectionMain>
@@ -19,9 +22,15 @@ import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import ModelList from "../../Components/Models/ModelList.vue";
+import {mdiFormatListBulleted} from "@mdi/js";
 
 let model = "reservation"
 let data = computed(() => usePage().props.data);
+let options = {
+    update: {
+        disabled: ['patient_id']
+    }
+}
 
 </script>
 <style scoped>

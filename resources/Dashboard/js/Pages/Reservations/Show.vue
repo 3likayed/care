@@ -44,7 +44,7 @@ import ModelData from "../../Components/Models/ModelData.vue";
 let steps = ref([__('data'), __('reservations')]);
 let step = ref(0);
 let data = usePage().props.data;
-let model = "reservations";
+let model = "reservation";
 let breadcrumbItems = [{name: __(modelResolver(model)), href: route(`dashboard.${modelResolver(model)}.index`)}]
 breadcrumbItems.push({name: data.name, href: route(`dashboard.${modelResolver(model)}.show`, data.id)})
 

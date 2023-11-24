@@ -1,6 +1,6 @@
 <script setup>
 import {computed, defineAsyncComponent, ref, useSlots} from "vue";
-import {mdiLockAlertOutline, mdiPlusCircle} from "@mdi/js";
+import {mdiPlusCircle} from "@mdi/js";
 import BaseButton from "../Sahred/BaseButton.vue";
 import SectionTitleLineWithButton from "../Sahred/SectionTitleLineWithButton.vue";
 import ModelData from "./ModelData.vue";
@@ -8,16 +8,14 @@ import ModelData from "./ModelData.vue";
 
 let props = defineProps({
     data: Object,
-    addonData: {
-        type: Object,
-        default: {},
-    },
+    options: Object,
+    icon: String,
     model: String,
     hasPagination: Boolean,
     hasSearch: Boolean,
     hasCreate: {
         type: Boolean,
-        default: Boolean,
+        default: true,
     }
 });
 
@@ -26,14 +24,19 @@ const firstLetterCap = props.model.charAt(0).toUpperCase()
 const remainingLetters = props.model.slice(1)
 const capitalizedWord = firstLetterCap + remainingLetters
 
-let [items, pagination] = props.hasPagination ? [
-        computed(() => props.data.data),
-        computed(() => props.data.meta)
-    ]
-    : [
-        computed(() => props.data),
-        computed(() => null)
-    ];
+
+let listData = computed(function () {
+
+    let [items, pagination] = props.hasPagination ?
+        [props.data.data, props.data.meta]
+        : [props.data, null];
+
+    return {
+        list: items,
+        pagination: pagination,
+    }
+});
+
 
 //example "./Employee/EmployeeList.vue"
 let listComponent = defineAsyncComponent(() => import(`./${capitalizedWord}/${capitalizedWord}List.vue`))
@@ -52,12 +55,12 @@ const click = () => {
 
 <template>
     <SectionTitleLineWithButton
-        :icon="mdiLockAlertOutline"
+        :icon="icon"
         :title="__(modelResolver(model))"
         main
     >
         <BaseButton
-            v-if="can(`${modelResolver(model)}.create`)"
+            v-if="can(`${modelResolver(model)}.create`) && hasCreate"
             :icon="mdiPlusCircle"
             color="success"
             @click="click"
@@ -66,18 +69,19 @@ const click = () => {
 
     <component
         :is="listComponent"
-        :data="items"
+        :data="listData"
         :has-search="hasSearch"
-        :pagination="props.hasPagination ? data.meta:null"
+        v-bind="options?{options:options}:{}"
     />
 
     <slot name="create">
         <ModelData
-            v-if="showCreate && !customCreate"
-            :data="items"
+            v-if="showCreate && !customCreate "
+            :data="options?.create?.data"
             :model="model"
             :show="showCreate"
             operation="create"
+            v-bind="options?.create ? {options:options.create}:{}"
             @cancel="showCreate=false"
         />
     </slot>

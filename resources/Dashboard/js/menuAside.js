@@ -1,12 +1,12 @@
 import {
     mdiAccountStarOutline,
     mdiCalendar,
-    mdiCogOutline,
+    mdiCogOutline, mdiFormatListBulleted, mdiFormatListBulletedType, mdiListBox, mdiListBoxOutline,
     mdiLockAlertOutline,
     mdiMonitor,
     mdiNaturePeople,
     mdiTable,
-    mdiViewList,
+    mdiViewList, mdiViewListOutline,
 } from "@mdi/js";
 
 export default [
@@ -52,7 +52,14 @@ export default [
                 label: "reservation-types",
                 permission: "reservation-types.show",
                 components: ['ReservationTypes/Index', 'ReservationTypes/Show'],
-                icon: mdiAccountStarOutline,
+                icon: mdiListBoxOutline,
+            },
+            {
+                route: "dashboard.reservations.index",
+                label: "reservations",
+                permission: "reservations.show",
+                components: ['Reservations/Index', 'Reservations/Show'],
+                icon: mdiFormatListBulletedType,
             },
         ],
     },

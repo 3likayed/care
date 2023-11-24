@@ -19,24 +19,27 @@
         >
             <FormControl
                 v-model="form.reservation_type_id"
-                :icon="mdiAccount"
+                :icon="mdiFormatListBulleted"
                 :options="reservationTypes"
                 name="reservation_type_id"
                 required
                 type="select"
+                @update:model-value="(reservationTypeId)=>changePrice(reservationTypeId)"
             />
         </FormField>
+
         <FormField
             :errors="form.errors.patient_id"
-            :label="__('select')"
-            label-for="select"
+            :label="__('patient')"
+            label-for="patient"
         >
             <FormControl
                 v-model="form.patient_id"
                 :icon="mdiAccount"
+                :is-disabled="options?.disabled?.includes('patient_id')"
                 :options="patients"
-                autocomplete="name"
-                name="name"
+                autocomplete="patient"
+                name="patient"
                 required
                 type="select"
                 @filter="(value)=>  patientFilterValue = value.value"
@@ -49,12 +52,24 @@
         >
             <FormControl
                 v-model="form.date"
-                :icon="mdiAccount"
                 :min="moment().format('YYYY-MM-DDTHH:MM')"
-                autocomplete="name"
+                autocomplete="date"
                 name="date"
                 required
                 type="datetime-local"
+            />
+        </FormField>
+        <FormField
+            :errors="form.errors.date"
+            :label="__('price')"
+            label-for="date"
+        >
+            <FormControl
+                v-model="price"
+                :icon="mdiAccount"
+                autocomplete="price"
+                is-disabled
+                name="price"
             />
         </FormField>
     </CardBoxModal>
@@ -63,7 +78,7 @@
 <script setup>
 
 import CardBoxModal from "../../Sahred/CardBoxModal.vue";
-import {mdiAccount} from "@mdi/js";
+import {mdiAccount, mdiFormatListBulleted} from "@mdi/js";
 import FormField from "../../Sahred/FormField.vue";
 import FormControl from "../../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -71,13 +86,17 @@ import {Model} from "../../../Utils/index.js";
 import {onMounted, ref, watch} from "vue";
 import {debounce} from "lodash";
 import moment from "moment";
+import {can, modelResolver} from "../../../Globals.js";
 
 let props = defineProps({
     data: {
         type: Object,
         default: {},
     },
-    addonData: Object,
+    options: {
+        type: Object,
+        default: {}
+    },
     show: Boolean,
     operation: String,
     isModal: {
@@ -86,22 +105,27 @@ let props = defineProps({
     }
 })
 let model = 'reservation'
+
 let form = useForm({
-    date: props.data?.date,
+    date: moment(props.data?.date).format('YYYY-MM-DDTHH:MM'),
     patient_id: props.data?.patient_id,
-    reservation_type_id: props.data.reservation_type_id
+    reservation_type_id: props.data?.reservation_type_id
 });
 
 
 let reservationTypes = ref();
 let patients = ref()
 let patientFilterValue = ref()
+let price = ref(props.data.price);
 
+function changePrice(reservationTypeId) {
+    price.value = reservationTypes.value.find(reservationType => reservationType.id === reservationTypeId).price
+}
 
 onMounted(() => {
 
     const fetchPatients = (searchData) => {
-        searchData.id = form.patient_id
+        searchData.id = form.patient_id ??''
         Model.fetch('patients', searchData)
             .then(data => patients.value = data)
     }

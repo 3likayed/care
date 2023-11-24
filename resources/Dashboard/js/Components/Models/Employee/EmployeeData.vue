@@ -19,6 +19,7 @@
             <FormControl
                 v-model="form.name"
                 :icon="mdiAccount"
+                :is-disabled="options.disabled?.includes('name')"
                 autocomplete="name"
                 name="name"
                 required
@@ -30,6 +31,7 @@
             label-for="email"
         >
             <FormControl
+                :is-disabled="options.disabled?.includes('email')"
                 v-model="form.email"
                 :icon="mdiAccount"
                 autocomplete="email"
@@ -145,6 +147,7 @@ let props = defineProps({
         default: {},
     },
     show: Boolean,
+    options : Object,
     operation: String,
     isModal: {
         type: Boolean,

@@ -49,10 +49,10 @@
     <CardBox has-table>
         <BaseTable
             :headers="['#',__('patient'),__('reservation_type'),__('price'),__('date'),__('created_at')]"
-            :pagination="pagination"
+            :pagination="data.pagination"
         >
             <tr
-                v-for="(item,key) in data"
+                v-for="(item,key) in data.list"
                 :key="key"
                 class="rtl:flex-row-reverse"
             >
@@ -82,6 +82,7 @@
                     <TableOptions
                         :data="item"
                         :model="model"
+                        :options="options"
                     />
                 </td>
             </tr>
@@ -108,7 +109,8 @@ import {Link} from "@inertiajs/vue3";
 let daysInterval = ref(null);
 let props = defineProps({
     data: Object,
-    pagination: Object | Boolean,
+    options: Object,
+
     hasSearch: Boolean
 })
 

@@ -35,6 +35,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('patients', PatientController::class);
         Route::apiResource('reservation-types', ReservationTypeController::class);
         Route::apiResource('reservations', ReservationController::class);
+
+
         Route::group(['prefix' => 'fetch', 'as' => 'fetch.'], function () {
             Route::get('patients', [PatientController::class, 'fetch'])->name('patients');
             Route::get('reservation-types', [ReservationTypeController::class, 'fetch'])->name('reservation-types');
