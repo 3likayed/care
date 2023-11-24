@@ -8,11 +8,12 @@ import UserAvatarCurrentUser from "./UserAvatarCurrentUser.vue";
 import NavBarMenuList from "./NavBarMenuList.vue";
 import BaseDivider from "./BaseDivider.vue";
 import {__} from '../../Globals.js'
+
 const props = defineProps({
-  item: {
-    type: Object,
-    required: true,
-  },
+    item: {
+        type: Object,
+        required: true,
+    },
 });
 
 const emit = defineEmits(["menu-click"]);
@@ -21,31 +22,31 @@ const itemHref = computed(() =>
 );
 
 const is = computed(() => {
-  if (props.item.href) {
-    return "a";
-  }
+    if (props.item.href) {
+        return "a";
+    }
 
-  if (props.item.route) {
-    return Link;
-  }
+    if (props.item.route) {
+        return Link;
+    }
 
-  return "div";
+    return "div";
 });
 const styleStore = useStyleStore();
 
 const componentClass = computed(() => {
-  const base = [
-    isDropdownActive.value
-        ? `${styleStore.navBarItemLabelActiveColorStyle} dark:text-slate-400`
-        : `${styleStore.navBarItemLabelStyle} dark:text-white dark:hover:text-slate-400 ${styleStore.navBarItemLabelHoverStyle}`,
-    props.item.menu ? "lg:py-2 lg:px-3" : "py-2 px-3",
-  ];
+    const base = [
+        isDropdownActive.value
+            ? `${styleStore.navBarItemLabelActiveColorStyle} dark:text-slate-400`
+            : `${styleStore.navBarItemLabelStyle} dark:text-white dark:hover:text-slate-400 ${styleStore.navBarItemLabelHoverStyle}`,
+        props.item.menu ? "lg:py-2 lg:px-3" : "py-2 px-3",
+    ];
 
-  if (props.item.isDesktopNoLabel) {
-    base.push("lg:w-16", "lg:justify-center");
-  }
+    if (props.item.isDesktopNoLabel) {
+        base.push("lg:w-16", "lg:justify-center");
+    }
 
-  return base;
+    return base;
 });
 
 const itemLabel = computed(() =>
@@ -54,81 +55,92 @@ const itemLabel = computed(() =>
 const isDropdownActive = ref(false);
 
 const menuClick = (event) => {
-  emit("menu-click", event, props.item);
+    emit("menu-click", event, props.item);
 
-  if (props.item.menu) {
-    isDropdownActive.value = !isDropdownActive.value;
-  }
+    if (props.item.menu) {
+        isDropdownActive.value = !isDropdownActive.value;
+    }
 };
 
 const menuClickDropdown = (event, item) => {
-  emit("menu-click", event, item);
+    emit("menu-click", event, item);
 };
 
 const root = ref(null);
 
 const forceClose = (event) => {
-  if (root.value && !root.value.contains(event.target)) {
-    isDropdownActive.value = false;
-  }
+    if (root.value && !root.value.contains(event.target)) {
+        isDropdownActive.value = false;
+    }
 };
 
 onMounted(() => {
-  if (props.item.menu) {
-    window.addEventListener("click", forceClose);
-  }
+    if (props.item.menu) {
+        window.addEventListener("click", forceClose);
+    }
 });
 
 onBeforeUnmount(() => {
-  if (props.item.menu) {
-    window.removeEventListener("click", forceClose);
-  }
+    if (props.item.menu) {
+        window.removeEventListener("click", forceClose);
+    }
 });
 </script>
 
 <template>
-  <BaseDivider v-if="item.isDivider" nav-bar/>
-  <component
-      :is="is"
-      v-else
-      ref="root"
-      class="block lg:flex items-center relative cursor-pointer"
-      :class="componentClass"
-      :href="itemHref"
-      :target="item.target ?? null"
-      @click="menuClick"
-  >
-    <div
-        class="flex items-center"
-        :class="{
+    <BaseDivider
+        v-if="item.isDivider"
+        nav-bar
+    />
+    <component
+        :is="is"
+        v-else
+        ref="root"
+        :class="componentClass"
+        :href="itemHref"
+        :target="item.target ?? null"
+        class="block lg:flex items-center relative cursor-pointer"
+        @click="menuClick"
+    >
+        <div
+            :class="{
         'bg-gray-100 dark:bg-slate-900 lg:bg-transparent lg:dark:bg-transparent p-3 lg:p-0':
           item.menu,
       }"
-    >
-      <UserAvatarCurrentUser
-          v-if="item.isCurrentUser"
-          class="w-6 h-6 ms-3 inline-flex"
-      />
-      <BaseIcon  :title="itemLabel" v-if="item.icon" too :path="item.icon" class="transition-colors"/>
+            class="flex items-center"
+        >
+            <UserAvatarCurrentUser
+                v-if="item.isCurrentUser"
+                class="w-6 h-6 ms-3 inline-flex"
+            />
+            <BaseIcon
+                v-if="item.icon"
+                :path="item.icon"
+                :title="itemLabel"
+                class="transition-colors"
+                too
+            />
 
-      <span
-          class="px-2 transition-colors"
-          :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
-      >{{ itemLabel }}</span
-      >
-      <BaseIcon
+            <span
+                :class="{ 'lg:hidden': item.isDesktopNoLabel && item.icon }"
+                class="px-2 transition-colors"
+            >{{ itemLabel }}</span>
+            <BaseIcon
 
-          v-if="item.menu"
-          :path="isDropdownActive ? mdiChevronUp : mdiChevronDown"
-          class="hidden lg:inline-flex transition-colors"
-      />
-    </div>
-    <div
-        v-if="item.menu"
-        class="text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:start-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg lg:dark:bg-slate-900 dark:border-slate-700"
-        :class="{ 'lg:hidden': !isDropdownActive }"
-    >
-      <NavBarMenuList :menu="item.menu" @menu-click="menuClickDropdown"/>
-    </div>
-  </component>
+                v-if="item.menu"
+                :path="isDropdownActive ? mdiChevronUp : mdiChevronDown"
+                class="hidden lg:inline-flex transition-colors"
+            />
+        </div>
+        <div
+            v-if="item.menu"
+            :class="{ 'lg:hidden': !isDropdownActive }"
+            class="text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:start-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg lg:dark:bg-slate-900 dark:border-slate-700"
+        >
+            <NavBarMenuList
+                :menu="item.menu"
+                @menu-click="menuClickDropdown"
+            />
+        </div>
+    </component>
 </template>

@@ -157,7 +157,6 @@ return $validation = [
 
     'custom' => [
 
-
     ],
 
     /*
@@ -208,12 +207,12 @@ return $validation = [
             'youtube' => 'يوتيوب',
         ],
 
-        'phone.*' => "رقم الهاتف رقم #(:position)",
-        'address.*' => "العنوان رقم #(:position)",
-        'image.*' => "الصورة رقم #(:position)",
-        'video.*' => "الفيديو رقم #(:position)",
-        'email.*' => "البريد الإليكتروني رقم #(:position)",
-        'now'=>'الآن',
+        'phone.*' => 'رقم الهاتف رقم #(:position)',
+        'address.*' => 'العنوان رقم #(:position)',
+        'image.*' => 'الصورة رقم #(:position)',
+        'video.*' => 'الفيديو رقم #(:position)',
+        'email.*' => 'البريد الإليكتروني رقم #(:position)',
+        'now' => 'الآن',
     ]),
 
 ];

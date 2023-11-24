@@ -1,6 +1,6 @@
 import {usePage} from "@inertiajs/vue3";
 import {default as ziggyRoute} from "ziggy-js";
-import Pluralize from 'pluralize';
+import Pluralize from "pluralize"
 
 export function __(key, replace = {}) {
 
@@ -68,8 +68,8 @@ export const assignMeta = (meta) => {
     }
 }
 
-export const formParameters = (model, operation, id, pluralize = true) => {
-    if (pluralize)
+export const formParameters = (model, operation, id, modelResolver = true) => {
+    if (modelResolver)
         model = model + 's';
 
     switch (operation) {
@@ -97,6 +97,11 @@ export const handleField = (form, field, action, key) => {
     }
 }
 
+export const modelResolver = (word) => {
+    word = Pluralize(word);
+    return word.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+}
+
 
 export default {
     methods: {
@@ -106,9 +111,9 @@ export default {
         handleField,
         can,
         route,
-        localesObject,
         Pluralize,
-        assignTranslatable
+        localesObject,
+        modelResolver,
     },
 
 

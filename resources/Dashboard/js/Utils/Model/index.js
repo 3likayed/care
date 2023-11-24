@@ -1,21 +1,40 @@
 import {router} from "@inertiajs/vue3";
-import {route} from "../../Globals.js";
-import Pluralize from "pluralize";
+import {modelResolver, route} from "../../Globals.js";
+
 
 export default class Model {
-    static  delete = (model, id, pluralize = true) => {
-        if (pluralize)
-            model = Pluralize(model);
+    static  delete = (model, id, modelResolve = true) => {
+        if (modelResolver)
+            model = modelResolver(model);
         router.delete(route(`dashboard.${model}.destroy`, id), {
             preserveState: (page) => Object.keys(page.props.errors).length,
             preserveScroll: true,
         });
     }
 
-    static show(model, id, pluralize = true) {
-        if (pluralize)
-            model = Pluralize(model);
+    static show(model, id, modelResolve = true) {
+        if (modelResolver)
+            model = modelResolver(model);
         router.visit(route(`dashboard.${model}.show`, id))
+    }
+
+    static showLink(model, id, modelResolve = true) {
+        if (modelResolver)
+            model = modelResolver(model);
+
+        return route(`dashboard.${model}.show`, id)
+    }
+
+    static async fetch(model, filter) {
+        try {
+            const url = route(`dashboard.fetch.${modelResolver(model)}`)
+            const parameters = new URLSearchParams(filter).toString();
+            const fullUrl = parameters ? `${url}?${parameters}` : url;
+            const response = await fetch(fullUrl);
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+        }
     }
 
     static create(model, form) {
@@ -36,10 +55,10 @@ export default class Model {
         })
     }
 
-    static submit(operation, model, form, id, pluralize = true) {
+    static submit(operation, model, form, id, modelResolve = true) {
 
-        if (pluralize)
-            model = Pluralize(model);
+        if (modelResolver)
+            model = modelResolver(model);
         switch (operation) {
             case 'edit' :
                 this.edit(model, form, id);

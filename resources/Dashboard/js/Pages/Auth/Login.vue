@@ -40,7 +40,6 @@ export default {
 }
 </script>
 <template>
-
     <Head :title="__('login')"/>
 
     <SectionFullScreen
@@ -92,10 +91,12 @@ export default {
             </FormField>
 
             <FormCheckRadioGroup class="flex justify-end">
-                <FormCheckRadio v-model="form.remember"
-                                :label="__('remember_me')"
-                                name="remember"
-                                type="switch"/>
+                <FormCheckRadio
+                    v-model="form.remember"
+                    :label="__('remember_me')"
+                    name="remember"
+                    type="switch"
+                />
             </FormCheckRadioGroup>
 
             <BaseDivider/>
@@ -108,7 +109,6 @@ export default {
                     color="info"
                     type="submit"
                 />
-
             </BaseButtons>
         </CardBox>
     </SectionFullScreen>

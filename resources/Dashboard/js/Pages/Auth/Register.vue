@@ -14,11 +14,11 @@ import BaseButtons from "../../Components/Sahred/BaseButtons.vue";
 import FormValidationErrors from "../../Components/Sahred/FormValidationErrors.vue";
 
 const form = useForm({
-  name: "",
-  email: "",
-  password: "",
-  password_confirmation: "",
-  terms: [],
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    terms: [],
 });
 
 const hasTermsAndPrivacyPolicyFeature = computed(
@@ -26,106 +26,118 @@ const hasTermsAndPrivacyPolicyFeature = computed(
 );
 
 const submit = () => {
-  form
-      .transform((data) => ({
-        ...data,
-        terms: form.terms && form.terms.length,
-      }))
-      .post(route("dashboard.register"), {
-        onFinish: () => form.reset("password", "password_confirmation"),
-      });
+    form
+        .transform((data) => ({
+            ...data,
+            terms: form.terms && form.terms.length,
+        }))
+        .post(route("dashboard.register"), {
+            onFinish: () => form.reset("password", "password_confirmation"),
+        });
 };
 </script>
 
 <template>
-  <LayoutGuest>
-    <Head title="Register"/>
+    <LayoutGuest>
+        <Head title="Register"/>
 
-    <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
-      <CardBox
-          :class="cardClass"
-          class="my-24"
-          is-form
-          @submit.prevent="submit"
-      >
-        <FormValidationErrors/>
-
-        <FormField label="Name" label-for="name" help="Please enter your name">
-          <FormControl
-              v-model="form.name"
-              id="name"
-              :icon="mdiAccount"
-              autocomplete="name"
-              type="text"
-              required
-          />
-        </FormField>
-
-        <FormField
-            label="Email"
-            label-for="email"
-            help="Please enter your email"
+        <SectionFullScreen
+            v-slot="{ cardClass }"
+            bg="purplePink"
         >
-          <FormControl
-              v-model="form.email"
-              id="email"
-              :icon="mdiEmail"
-              autocomplete="email"
-              type="email"
-              required
-          />
-        </FormField>
+            <CardBox
+                :class="cardClass"
+                class="my-24"
+                is-form
+                @submit.prevent="submit"
+            >
+                <FormValidationErrors/>
 
-        <FormField
-            label="Password"
-            label-for="password"
-            help="Please enter new password"
-        >
-          <FormControl
-              v-model="form.password"
-              id="password"
-              :icon="mdiFormTextboxPassword"
-              type="password"
-              autocomplete="new-password"
-              required
-          />
-        </FormField>
+                <FormField
+                    help="Please enter your name"
+                    label="Name"
+                    label-for="name"
+                >
+                    <FormControl
+                        id="name"
+                        v-model="form.name"
+                        :icon="mdiAccount"
+                        autocomplete="name"
+                        required
+                        type="text"
+                    />
+                </FormField>
 
-        <FormField
-            label="Confirm Password"
-            label-for="password_confirmation"
-            help="Please confirm your password"
-        >
-          <FormControl
-              v-model="form.password_confirmation"
-              id="password_confirmation"
-              :icon="mdiFormTextboxPassword"
-              type="password"
-              autocomplete="new-password"
-              required
-          />
-        </FormField>
+                <FormField
+                    help="Please enter your email"
+                    label="Email"
+                    label-for="email"
+                >
+                    <FormControl
+                        id="email"
+                        v-model="form.email"
+                        :icon="mdiEmail"
+                        autocomplete="email"
+                        required
+                        type="email"
+                    />
+                </FormField>
 
-        <FormCheckRadioGroup
-            v-if="hasTermsAndPrivacyPolicyFeature"
-            v-model="form.terms"
-            name="remember"
-            :options="{ agree: 'I agree to the Terms' }"
-        />
+                <FormField
+                    help="Please enter new password"
+                    label="Password"
+                    label-for="password"
+                >
+                    <FormControl
+                        id="password"
+                        v-model="form.password"
+                        :icon="mdiFormTextboxPassword"
+                        autocomplete="new-password"
+                        required
+                        type="password"
+                    />
+                </FormField>
 
-        <BaseDivider/>
+                <FormField
+                    help="Please confirm your password"
+                    label="Confirm Password"
+                    label-for="password_confirmation"
+                >
+                    <FormControl
+                        id="password_confirmation"
+                        v-model="form.password_confirmation"
+                        :icon="mdiFormTextboxPassword"
+                        autocomplete="new-password"
+                        required
+                        type="password"
+                    />
+                </FormField>
 
-        <BaseButtons>
-          <BaseButton
-              type="submit"
-              color="info"
-              label="Register"
-              :class="{ 'opacity-25': form.processing }"
-              :disabled="form.processing"
-          />
-          <BaseButton route-name="login" color="info" outline label="Login"/>
-        </BaseButtons>
-      </CardBox>
-    </SectionFullScreen>
-  </LayoutGuest>
+                <FormCheckRadioGroup
+                    v-if="hasTermsAndPrivacyPolicyFeature"
+                    v-model="form.terms"
+                    :options="{ agree: 'I agree to the Terms' }"
+                    name="remember"
+                />
+
+                <BaseDivider/>
+
+                <BaseButtons>
+                    <BaseButton
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        color="info"
+                        label="Register"
+                        type="submit"
+                    />
+                    <BaseButton
+                        color="info"
+                        label="Login"
+                        outline
+                        route-name="login"
+                    />
+                </BaseButtons>
+            </CardBox>
+        </SectionFullScreen>
+    </LayoutGuest>
 </template>

@@ -1,14 +1,16 @@
 import { defineStore, createPinia } from "pinia";
-import { computed, mergeProps, useSSRContext, defineComponent, h, createVNode, resolveDynamicComponent, withCtx, openBlock, createBlock, createCommentVNode, toDisplayString, ref, onMounted, onBeforeUnmount, unref, renderSlot, withModifiers, watch, createApp } from "vue";
+import { computed, mergeProps, useSSRContext, defineComponent, h, createVNode, resolveDynamicComponent, withCtx, openBlock, createBlock, createCommentVNode, toDisplayString, unref, ref, onMounted, onBeforeUnmount, renderSlot, withModifiers, watch, createApp } from "vue";
 import { usePage, Link, router, Head, createInertiaApp } from "@inertiajs/vue3";
 import ziggyRoute from "ziggy-js";
-/* empty css                                        */import { ssrRenderAttrs, ssrRenderAttr, ssrRenderSlot, ssrRenderComponent, ssrRenderVNode, ssrRenderClass, ssrInterpolate, ssrIncludeBooleanAttr, ssrRenderList, ssrRenderDynamicModel, ssrRenderSlotInner } from "vue/server-renderer";
-import { mdiMonitor, mdiViewList, mdiAccountStarOutline, mdiLockAlertOutline, mdiMessageOutline, mdiCogOutline, mdiPostOutline, mdiTable, mdiThemeLightDark, mdiLogout, mdiChevronUp, mdiChevronDown, mdiClose, mdiDotsVertical, mdiMinus, mdiPlus, mdiBackburger, mdiForwardburger, mdiMenu } from "@mdi/js";
+import Pluralize from "pluralize";
+/* empty css                                        */import { ssrRenderAttrs, ssrRenderAttr, ssrRenderSlot, ssrRenderComponent, ssrRenderVNode, ssrRenderClass, ssrInterpolate, ssrIncludeBooleanAttr, ssrRenderDynamicModel, ssrRenderList, ssrRenderSlotInner } from "vue/server-renderer";
+import { mdiMonitor, mdiViewList, mdiAccountStarOutline, mdiLockAlertOutline, mdiCogOutline, mdiCalendar, mdiNaturePeople, mdiTable, mdiThemeLightDark, mdiLogout, mdiChevronUp, mdiChevronDown, mdiClose, mdiDotsVertical, mdiMinus, mdiPlus, mdiBackburger, mdiForwardburger, mdiMenu } from "@mdi/js";
 import axios from "axios";
 import Editor from "@tinymce/tinymce-vue";
+import Dropdown from "primevue/dropdown/dropdown.esm.js";
 import Swal from "sweetalert2";
 /* empty css                             */import { r as resolvePageComponent } from "./assets/laravel-vite-plugin-af3ef812.js";
-import VueGoogleMaps from "@fawmi/vue-google-maps";
+import PrimeVue from "primevue/config/config.esm.js";
 const main = "";
 const basic = {
   aside: "bg-gray-800",
@@ -82,7 +84,10 @@ const useStyleStore = defineStore("style", {
           "dark-scrollbars"
         );
         document.documentElement.classList[this.darkMode ? "add" : "remove"](
-          "dark-scrollbars-compat"
+          ["dark-scrollbars-compat"]
+        );
+        document.documentElement.classList[this.darkMode ? "add" : "remove"](
+          ["dark"]
         );
       }
     }
@@ -136,17 +141,6 @@ const localesObject = () => {
   locales = locales.reduce((acc, curr) => (acc[curr] = null, acc), {});
   return locales;
 };
-const localesObjectOfObjects = (value = {}) => {
-  let locales = usePage().props.locales;
-  locales = locales.reduce((acc, curr) => (acc[curr] = value, acc), {});
-  return locales;
-};
-function assignTranslatable(value) {
-  if (value && value.constructor.name === "Object") {
-    return value;
-  }
-  return localesObjectOfObjects(null);
-}
 const assignMeta = (meta) => {
   return {
     title: !Array.isArray(meta == null ? void 0 : meta.title) ? (meta == null ? void 0 : meta.title) ?? {} : {},
@@ -155,14 +149,47 @@ const assignMeta = (meta) => {
     slug: !Array.isArray(meta == null ? void 0 : meta.slug) ? (meta == null ? void 0 : meta.slug) ?? {} : {}
   };
 };
+const formParameters = (model, operation, id, modelResolver2 = true) => {
+  if (modelResolver2)
+    model = model + "s";
+  switch (operation) {
+    case "edit":
+      return {
+        route: route$1(`dashboard.${model}.update`, id),
+        method: "put"
+      };
+    case "create":
+      return {
+        route: route$1(`dashboard.${model}.store`),
+        method: "post"
+      };
+  }
+};
+const handleField = (form, field, action, key) => {
+  switch (action) {
+    case "append":
+      form[field][Object.keys(form[field]).length] = null;
+      break;
+    case "delete":
+      form[field].splice(key, 1);
+      break;
+  }
+};
+const modelResolver = (word) => {
+  word = Pluralize(word);
+  return word.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+};
 const Globals = {
   methods: {
     __,
     tinyMcConfig,
+    formParameters,
+    handleField,
     can,
     route: route$1,
+    Pluralize,
     localesObject,
-    assignTranslatable
+    modelResolver
   }
 };
 const menuAside = [
@@ -177,7 +204,7 @@ const menuAside = [
     menu: [
       {
         route: "dashboard.employees.index",
-        label: "data",
+        label: "employees",
         permission: "employees.show",
         components: ["Employees/Index"],
         icon: mdiAccountStarOutline
@@ -190,13 +217,6 @@ const menuAside = [
         icon: mdiLockAlertOutline
       },
       {
-        route: "dashboard.contacts.index",
-        label: "contacts",
-        permission: "contacts.show",
-        components: ["Contacts/Index"],
-        icon: mdiMessageOutline
-      },
-      {
         route: "dashboard.settings.edit",
         label: "settings",
         permission: "settings.edit",
@@ -206,24 +226,24 @@ const menuAside = [
     ]
   },
   {
-    label: "categories_items",
-    icon: mdiViewList,
+    label: "reservations",
+    icon: mdiCalendar,
     menu: [
       {
-        route: "dashboard.pages.index",
-        label: "pages",
-        components: ["Pages/Index", "Pages/Show"],
-        permission: "pages.show",
-        icon: mdiPostOutline
-      },
-      {
-        route: "dashboard.navigations.index",
-        label: "navigations",
-        components: ["Navigations/Index", "Navigations/Show"],
-        permission: "navigations.show",
-        icon: mdiPostOutline
+        route: "dashboard.reservation-types.index",
+        label: "reservation-types",
+        permission: "reservation-types.show",
+        components: ["ReservationTypes/Index", "ReservationTypes/Show"],
+        icon: mdiAccountStarOutline
       }
     ]
+  },
+  {
+    route: "dashboard.patients.index",
+    label: "patients",
+    permission: "patients.show",
+    components: ["Patients/Index"],
+    icon: mdiNaturePeople
   },
   {
     route: "dashboard.profile.edit",
@@ -293,7 +313,7 @@ const menuNavBar = [
     isLogout: true
   }
 ];
-const _sfc_main$m = {
+const _sfc_main$n = {
   __name: "BaseIcon",
   __ssrInlineRender: true,
   props: {
@@ -321,17 +341,17 @@ const _sfc_main$m = {
     );
     const iconSize = computed(() => props.size ?? 16);
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<span${ssrRenderAttrs(mergeProps({ class: spanClass.value }, _attrs))}><svg viewBox="0 0 24 24"${ssrRenderAttr("width", iconSize.value)}${ssrRenderAttr("height", iconSize.value)} class="inline-block"><path fill="currentColor"${ssrRenderAttr("d", __props.path)}></path></svg>`);
+      _push(`<span${ssrRenderAttrs(mergeProps({ class: spanClass.value }, _attrs))}><svg${ssrRenderAttr("height", iconSize.value)}${ssrRenderAttr("width", iconSize.value)} class="inline-block" viewBox="0 0 24 24"><path${ssrRenderAttr("d", __props.path)} fill="currentColor"></path></svg>`);
       ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
       _push(`</span>`);
     };
   }
 };
-const _sfc_setup$m = _sfc_main$m.setup;
-_sfc_main$m.setup = (props, ctx) => {
+const _sfc_setup$n = _sfc_main$n.setup;
+_sfc_main$n.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/Dashboard/js/Components/Sahred/BaseIcon.vue");
-  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
+  return _sfc_setup$n ? _sfc_setup$n(props, ctx) : void 0;
 };
 const useMainStore = defineStore("main", {
   state: () => ({
@@ -368,7 +388,7 @@ const useMainStore = defineStore("main", {
     }
   }
 });
-const _sfc_main$l = {
+const _sfc_main$m = {
   __name: "FormControlIcon",
   __ssrInlineRender: true,
   props: {
@@ -383,22 +403,22 @@ const _sfc_main$l = {
   },
   setup(__props) {
     return (_ctx, _push, _parent, _attrs) => {
-      _push(ssrRenderComponent(_sfc_main$m, mergeProps({
-        path: __props.icon,
-        w: "w-10",
+      _push(ssrRenderComponent(_sfc_main$n, mergeProps({
         h: __props.h,
-        class: "absolute top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
+        path: __props.icon,
+        class: "absolute top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400",
+        w: "w-10"
       }, _attrs), null, _parent));
     };
   }
 };
-const _sfc_setup$l = _sfc_main$l.setup;
-_sfc_main$l.setup = (props, ctx) => {
+const _sfc_setup$m = _sfc_main$m.setup;
+_sfc_main$m.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/Dashboard/js/Components/Sahred/FormControlIcon.vue");
-  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
+  return _sfc_setup$m ? _sfc_setup$m(props, ctx) : void 0;
 };
-const _sfc_main$k = defineComponent({
+const _sfc_main$l = defineComponent({
   name: "BaseButtons",
   props: {
     noWrap: Boolean,
@@ -408,7 +428,7 @@ const _sfc_main$k = defineComponent({
     },
     classAddon: {
       type: String,
-      default: "me-3 lg:last:me-0 mb-3"
+      default: "me-3 last:me-0 mb-3"
     },
     mb: {
       type: String,
@@ -444,11 +464,11 @@ const _sfc_main$k = defineComponent({
     );
   }
 });
-const _sfc_setup$k = _sfc_main$k.setup;
-_sfc_main$k.setup = (props, ctx) => {
+const _sfc_setup$l = _sfc_main$l.setup;
+_sfc_main$l.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/Dashboard/js/Components/Sahred/BaseButtons.vue");
-  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
+  return _sfc_setup$l ? _sfc_setup$l(props, ctx) : void 0;
 };
 const gradientBgBase = "bg-gradient-to-tr";
 const gradientBgPurplePink = `${gradientBgBase} from-purple-400 via-pink-500 to-red-500`;
@@ -565,7 +585,7 @@ const getButtonColor = (color, isOutlined, hasHover, isActive = false) => {
   }
   return base;
 };
-const _sfc_main$j = {
+const _sfc_main$k = {
   __name: "BaseButton",
   __ssrInlineRender: true,
   props: {
@@ -672,7 +692,7 @@ const _sfc_main$j = {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
             if (__props.icon) {
-              _push2(ssrRenderComponent(_sfc_main$m, {
+              _push2(ssrRenderComponent(_sfc_main$n, {
                 path: __props.icon,
                 size: __props.iconSize
               }, null, _parent2, _scopeId));
@@ -686,7 +706,7 @@ const _sfc_main$j = {
             }
           } else {
             return [
-              __props.icon ? (openBlock(), createBlock(_sfc_main$m, {
+              __props.icon ? (openBlock(), createBlock(_sfc_main$n, {
                 key: 0,
                 path: __props.icon,
                 size: __props.iconSize
@@ -703,10 +723,94 @@ const _sfc_main$j = {
     };
   }
 };
+const _sfc_setup$k = _sfc_main$k.setup;
+_sfc_main$k.setup = (props, ctx) => {
+  const ssrContext = useSSRContext();
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/Dashboard/js/Components/Sahred/BaseButton.vue");
+  return _sfc_setup$k ? _sfc_setup$k(props, ctx) : void 0;
+};
+const _sfc_main$j = {
+  __name: "SelectControl",
+  __ssrInlineRender: true,
+  props: {
+    name: {
+      type: String,
+      default: null
+    },
+    class: [String, Array],
+    id: {
+      type: String,
+      default: null
+    },
+    placeholder: {
+      type: String,
+      default: null
+    },
+    options: {
+      type: Array,
+      default: null
+    },
+    isDisabled: {
+      type: Boolean,
+      default: false
+    },
+    type: {
+      type: String,
+      default: "text"
+    },
+    modelValue: {
+      type: [String, Number, Boolean, Array, Object],
+      default: ""
+    },
+    hasFilter: {
+      type: Boolean,
+      default: true
+    },
+    actions: Array | Object,
+    required: Boolean,
+    otherLabels: Array,
+    multiple: {
+      type: Boolean,
+      default: false
+    }
+  },
+  emits: ["update:modelValue", "filter"],
+  setup(__props, { emit: __emit }) {
+    const props = __props;
+    let emit = __emit;
+    const computedValue = computed({
+      get: () => props.modelValue,
+      set: (value) => {
+        emit("update:modelValue", value);
+      }
+    });
+    const pt = {
+      root: {
+        class: props.class
+      }
+    };
+    let computedOptions = computed(() => props.options);
+    return (_ctx, _push, _parent, _attrs) => {
+      _push(ssrRenderComponent(unref(Dropdown), mergeProps({
+        modelValue: computedValue.value,
+        "onUpdate:modelValue": ($event) => computedValue.value = $event,
+        "empty-filter-message": _ctx.__("no_data"),
+        "empty-message": _ctx.__("no_data"),
+        "empty-selection-message": _ctx.__("no_data"),
+        options: unref(computedOptions),
+        pt,
+        filter: "",
+        "option-label": "name",
+        "option-value": "id",
+        onFilter: (value) => unref(emit)("filter", value)
+      }, _attrs), null, _parent));
+    };
+  }
+};
 const _sfc_setup$j = _sfc_main$j.setup;
 _sfc_main$j.setup = (props, ctx) => {
   const ssrContext = useSSRContext();
-  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/Dashboard/js/Components/Sahred/BaseButton.vue");
+  (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/Dashboard/js/Components/Sahred/SelectControl.vue");
   return _sfc_setup$j ? _sfc_setup$j(props, ctx) : void 0;
 };
 const _sfc_main$i = {
@@ -717,6 +821,8 @@ const _sfc_main$i = {
       type: String,
       default: null
     },
+    min: String,
+    max: String,
     id: {
       type: String,
       default: null
@@ -773,9 +879,10 @@ const _sfc_main$i = {
       default: false
     }
   },
-  emits: ["update:modelValue", "setRef", "action"],
-  setup(__props, { emit }) {
+  emits: ["update:modelValue", "setRef", "action", "filter"],
+  setup(__props, { emit: __emit }) {
     const props = __props;
+    const emit = __emit;
     const computedValue = computed({
       get: () => props.modelValue,
       set: (value) => {
@@ -832,31 +939,26 @@ const _sfc_main$i = {
         mainStore.isFieldFocusRegistered = false;
       });
     }
+    let computedOptions = computed(() => props.options);
     function doAction(action, key) {
       emit("action", action, key);
     }
     if (computedType.value === "editor")
       ;
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({
-        class: [{ "flex gap-2": __props.actions }, "relative"]
-      }, _attrs))}>`);
+      _push(`<!--[--><div class="${ssrRenderClass([{ "flex flex-row gap-2": __props.actions }, "relative"])}">`);
       if (computedType.value === "select") {
-        _push(`<select${ssrRenderAttr("id", __props.id)} class="${ssrRenderClass([inputElClass.value, "text-sm"])}"${ssrIncludeBooleanAttr(__props.isDisabled) ? " disabled" : ""}${ssrRenderAttr("size", __props.multiple ? 8 : "")}${ssrIncludeBooleanAttr(__props.multiple) ? " multiple" : ""}${ssrRenderAttr("name", __props.name)}>`);
-        if (!__props.multiple) {
-          _push(`<option${ssrRenderAttr("value", null)}>${ssrInterpolate(_ctx.__("without"))}</option>`);
-        } else {
-          _push(`<!---->`);
-        }
-        _push(`<!--[-->`);
-        ssrRenderList(__props.options, (option) => {
-          _push(`<option${ssrRenderAttr("value", option.value ?? option)}>${ssrInterpolate(option.label ?? (option.value ?? option))} <!--[-->`);
-          ssrRenderList(__props.otherLabels, (label) => {
-            _push(`<span>${ssrInterpolate(option[label])}</span>`);
-          });
-          _push(`<!--]--></option>`);
-        });
-        _push(`<!--]--></select>`);
+        _push(ssrRenderComponent(_sfc_main$j, {
+          id: __props.id,
+          modelValue: computedValue.value,
+          "onUpdate:modelValue": ($event) => computedValue.value = $event,
+          class: inputElClass.value,
+          disabled: __props.isDisabled,
+          multiple: __props.multiple,
+          name: __props.name,
+          options: unref(computedOptions),
+          onFilter: (value) => emit("filter", value)
+        }, null, _parent));
       } else if (computedType.value === "textarea") {
         _push(`<textarea${ssrRenderAttr("id", __props.id)} class="${ssrRenderClass(inputElClass.value)}"${ssrIncludeBooleanAttr(__props.isDisabled) ? " disabled" : ""}${ssrRenderAttr("maxlength", __props.maxlength)}${ssrRenderAttr("name", __props.name)}${ssrRenderAttr("placeholder", __props.placeholder)}${ssrIncludeBooleanAttr(__props.required) ? " required" : ""}>${ssrInterpolate(computedValue.value)}</textarea>`);
       } else if (computedType.value === "editor") {
@@ -868,10 +970,10 @@ const _sfc_main$i = {
           class: "px-3 py-2 max-w-full focus:ring focus:outline-none border-gray-700 rounded w-full"
         }, null, _parent));
       } else {
-        _push(`<input${ssrRenderAttr("id", __props.id)}${ssrRenderDynamicModel(computedType.value, computedValue.value, null)}${ssrRenderAttr("autocomplete", __props.autocomplete)} class="${ssrRenderClass(inputElClass.value)}"${ssrIncludeBooleanAttr(__props.isDisabled) ? " disabled" : ""}${ssrRenderAttr("inputmode", __props.inputmode)}${ssrRenderAttr("maxlength", __props.maxlength)}${ssrRenderAttr("name", __props.name)}${ssrRenderAttr("placeholder", __props.placeholder)}${ssrIncludeBooleanAttr(__props.required) ? " required" : ""}${ssrRenderAttr("type", computedType.value)}>`);
+        _push(`<input${ssrRenderAttr("id", __props.id)}${ssrRenderDynamicModel(computedType.value, computedValue.value, null)}${ssrRenderAttr("autocomplete", __props.autocomplete)} class="${ssrRenderClass(inputElClass.value)}"${ssrIncludeBooleanAttr(__props.isDisabled) ? " disabled" : ""}${ssrRenderAttr("inputmode", __props.inputmode)}${ssrRenderAttr("max", __props.max)}${ssrRenderAttr("maxlength", __props.maxlength)}${ssrRenderAttr("min", __props.min)}${ssrRenderAttr("name", __props.name)}${ssrRenderAttr("placeholder", __props.placeholder)}${ssrIncludeBooleanAttr(__props.required) ? " required" : ""}${ssrRenderAttr("type", computedType.value)}>`);
       }
       if (__props.icon) {
-        _push(ssrRenderComponent(_sfc_main$l, {
+        _push(ssrRenderComponent(_sfc_main$m, {
           h: controlIconH.value,
           icon: __props.icon
         }, null, _parent));
@@ -880,10 +982,10 @@ const _sfc_main$i = {
       }
       _push(`<!--[-->`);
       ssrRenderList(__props.actions, (action, key) => {
-        _push(ssrRenderComponent(_sfc_main$k, null, {
+        _push(ssrRenderComponent(_sfc_main$l, null, {
           default: withCtx((_, _push2, _parent2, _scopeId) => {
             if (_push2) {
-              _push2(ssrRenderComponent(_sfc_main$j, {
+              _push2(ssrRenderComponent(_sfc_main$k, {
                 key,
                 color: action.color,
                 icon: action.icon,
@@ -892,7 +994,7 @@ const _sfc_main$i = {
               }, null, _parent2, _scopeId));
             } else {
               return [
-                (openBlock(), createBlock(_sfc_main$j, {
+                (openBlock(), createBlock(_sfc_main$k, {
                   key,
                   color: action.color,
                   icon: action.icon,
@@ -905,13 +1007,13 @@ const _sfc_main$i = {
           _: 2
         }, _parent));
       });
-      _push(`<!--]-->`);
+      _push(`<!--]--></div>`);
       if (__props.errors) {
-        _push(`<div class="text-xs text-red-500 dark:text-red-400 mt-1">${ssrInterpolate(__props.errors)}</div>`);
+        _push(`<div class="text-xs text-red-500 dark:text-red-400 mt-1 w-100">${ssrInterpolate(__props.errors)}</div>`);
       } else {
         _push(`<!---->`);
       }
-      _push(`</div>`);
+      _push(`<!--]-->`);
     };
   }
 };
@@ -948,7 +1050,7 @@ const _sfc_main$h = {
     );
     const username = computed(() => props.username);
     return (_ctx, _push, _parent, _attrs) => {
-      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-12 h-12 me-6" }, _attrs))}><img${ssrRenderAttr("src", avatar.value)}${ssrRenderAttr("alt", username.value)} class="rounded-full block h-auto w-full max-w-full bg-gray-100 dark:bg-slate-800">`);
+      _push(`<div${ssrRenderAttrs(mergeProps({ class: "w-12 h-12 me-6" }, _attrs))}><img${ssrRenderAttr("alt", username.value)}${ssrRenderAttr("src", avatar.value)} class="rounded-full block h-auto w-full max-w-full bg-gray-100 dark:bg-slate-800">`);
       ssrRenderSlot(_ctx.$slots, "default", {}, null, _push, _parent);
       _push(`</div>`);
     };
@@ -1024,8 +1126,9 @@ const _sfc_main$e = {
     }
   },
   emits: ["menu-click"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
     const props = __props;
+    const emit = __emit;
     const itemHref = computed(
       () => props.item.route ? route(props.item.route) : props.item.href
     );
@@ -1085,7 +1188,7 @@ const _sfc_main$e = {
         ssrRenderVNode(_push, createVNode(resolveDynamicComponent(is.value), mergeProps({
           ref_key: "root",
           ref: root,
-          class: ["block lg:flex items-center relative cursor-pointer", componentClass.value],
+          class: [componentClass.value, "block lg:flex items-center relative cursor-pointer"],
           href: itemHref.value,
           target: __props.item.target ?? null,
           onClick: menuClick
@@ -1101,18 +1204,18 @@ const _sfc_main$e = {
                 _push2(`<!---->`);
               }
               if (__props.item.icon) {
-                _push2(ssrRenderComponent(_sfc_main$m, {
-                  title: itemLabel.value,
-                  too: "",
+                _push2(ssrRenderComponent(_sfc_main$n, {
                   path: __props.item.icon,
-                  class: "transition-colors"
+                  title: itemLabel.value,
+                  class: "transition-colors",
+                  too: ""
                 }, null, _parent2, _scopeId));
               } else {
                 _push2(`<!---->`);
               }
               _push2(`<span class="${ssrRenderClass([{ "lg:hidden": __props.item.isDesktopNoLabel && __props.item.icon }, "px-2 transition-colors"])}"${_scopeId}>${ssrInterpolate(itemLabel.value)}</span>`);
               if (__props.item.menu) {
-                _push2(ssrRenderComponent(_sfc_main$m, {
+                _push2(ssrRenderComponent(_sfc_main$n, {
                   path: isDropdownActive.value ? unref(mdiChevronUp) : unref(mdiChevronDown),
                   class: "hidden lg:inline-flex transition-colors"
                 }, null, _parent2, _scopeId));
@@ -1133,25 +1236,25 @@ const _sfc_main$e = {
             } else {
               return [
                 createVNode("div", {
-                  class: ["flex items-center", {
+                  class: [{
                     "bg-gray-100 dark:bg-slate-900 lg:bg-transparent lg:dark:bg-transparent p-3 lg:p-0": __props.item.menu
-                  }]
+                  }, "flex items-center"]
                 }, [
                   __props.item.isCurrentUser ? (openBlock(), createBlock(_sfc_main$g, {
                     key: 0,
                     class: "w-6 h-6 ms-3 inline-flex"
                   })) : createCommentVNode("", true),
-                  __props.item.icon ? (openBlock(), createBlock(_sfc_main$m, {
+                  __props.item.icon ? (openBlock(), createBlock(_sfc_main$n, {
                     key: 1,
-                    title: itemLabel.value,
-                    too: "",
                     path: __props.item.icon,
-                    class: "transition-colors"
-                  }, null, 8, ["title", "path"])) : createCommentVNode("", true),
+                    title: itemLabel.value,
+                    class: "transition-colors",
+                    too: ""
+                  }, null, 8, ["path", "title"])) : createCommentVNode("", true),
                   createVNode("span", {
-                    class: ["px-2 transition-colors", { "lg:hidden": __props.item.isDesktopNoLabel && __props.item.icon }]
+                    class: [{ "lg:hidden": __props.item.isDesktopNoLabel && __props.item.icon }, "px-2 transition-colors"]
                   }, toDisplayString(itemLabel.value), 3),
-                  __props.item.menu ? (openBlock(), createBlock(_sfc_main$m, {
+                  __props.item.menu ? (openBlock(), createBlock(_sfc_main$n, {
                     key: 2,
                     path: isDropdownActive.value ? unref(mdiChevronUp) : unref(mdiChevronDown),
                     class: "hidden lg:inline-flex transition-colors"
@@ -1159,7 +1262,7 @@ const _sfc_main$e = {
                 ], 2),
                 __props.item.menu ? (openBlock(), createBlock("div", {
                   key: 0,
-                  class: ["text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:start-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg lg:dark:bg-slate-900 dark:border-slate-700", { "lg:hidden": !isDropdownActive.value }]
+                  class: [{ "lg:hidden": !isDropdownActive.value }, "text-sm border-b border-gray-100 lg:border lg:bg-white lg:absolute lg:top-full lg:start-0 lg:min-w-full lg:z-20 lg:rounded-lg lg:shadow-lg lg:dark:bg-slate-900 dark:border-slate-700"]
                 }, [
                   createVNode(_sfc_main$d, {
                     menu: __props.item.menu,
@@ -1191,7 +1294,8 @@ const _sfc_main$d = {
     }
   },
   emits: ["menu-click"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
+    const emit = __emit;
     const menuClick = (event, item) => {
       emit("menu-click", event, item);
     };
@@ -1256,7 +1360,8 @@ const _sfc_main$b = {
     }
   },
   emits: ["menu-click"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
+    const emit = __emit;
     const menuClick = (event, item) => {
       emit("menu-click", event, item);
     };
@@ -1270,13 +1375,13 @@ const _sfc_main$b = {
       }, {
         default: withCtx((_, _push2, _parent2, _scopeId) => {
           if (_push2) {
-            _push2(ssrRenderComponent(_sfc_main$m, {
+            _push2(ssrRenderComponent(_sfc_main$n, {
               path: isMenuNavBarActive.value ? unref(mdiClose) : unref(mdiDotsVertical),
               size: "24"
             }, null, _parent2, _scopeId));
           } else {
             return [
-              createVNode(_sfc_main$m, {
+              createVNode(_sfc_main$n, {
                 path: isMenuNavBarActive.value ? unref(mdiClose) : unref(mdiDotsVertical),
                 size: "24"
               }, null, 8, ["path"])
@@ -1311,8 +1416,9 @@ const _sfc_main$a = {
     isDropdownList: Boolean
   },
   emits: ["menu-click"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
     const props = __props;
+    const emit = __emit;
     const styleStore2 = useStyleStore();
     const hasColor = computed(() => props.item && props.item.color);
     const asideMenuItemActiveStyle = computed(
@@ -1372,7 +1478,7 @@ const _sfc_main$a = {
           default: withCtx((vSlot, _push2, _parent2, _scopeId) => {
             if (_push2) {
               if (__props.item.icon) {
-                _push2(ssrRenderComponent(_sfc_main$m, {
+                _push2(ssrRenderComponent(_sfc_main$n, {
                   path: __props.item.icon,
                   size: 18,
                   class: "flex-none pe-2"
@@ -1382,7 +1488,7 @@ const _sfc_main$a = {
               }
               _push2(`<span class="grow text-ellipsis line-clamp-1"${_scopeId}>${ssrInterpolate(_ctx.__(__props.item.label))}</span>`);
               if (hasDropdown.value) {
-                _push2(ssrRenderComponent(_sfc_main$m, {
+                _push2(ssrRenderComponent(_sfc_main$n, {
                   class: [[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle.value : ""], "flex-none"],
                   path: activeInactiveStyle.value ? unref(mdiMinus) : unref(mdiPlus),
                   w: "w-12"
@@ -1392,14 +1498,14 @@ const _sfc_main$a = {
               }
             } else {
               return [
-                __props.item.icon ? (openBlock(), createBlock(_sfc_main$m, {
+                __props.item.icon ? (openBlock(), createBlock(_sfc_main$n, {
                   key: 0,
                   path: __props.item.icon,
                   size: 18,
                   class: "flex-none pe-2"
                 }, null, 8, ["path"])) : createCommentVNode("", true),
                 createVNode("span", { class: "grow text-ellipsis line-clamp-1" }, toDisplayString(_ctx.__(__props.item.label)), 1),
-                hasDropdown.value ? (openBlock(), createBlock(_sfc_main$m, {
+                hasDropdown.value ? (openBlock(), createBlock(_sfc_main$n, {
                   key: 1,
                   class: [[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle.value : ""], "flex-none"],
                   path: activeInactiveStyle.value ? unref(mdiMinus) : unref(mdiPlus),
@@ -1446,7 +1552,8 @@ const _sfc_main$9 = {
     }
   },
   emits: ["menu-click"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
+    const emit = __emit;
     const menuClick = (event, item) => {
       emit("menu-click", event, item);
     };
@@ -1455,8 +1562,8 @@ const _sfc_main$9 = {
       ssrRenderList(__props.menu, (item, index) => {
         _push(ssrRenderComponent(_sfc_main$a, {
           key: index,
-          item,
           "is-dropdown-list": __props.isDropdownList,
+          item,
           onMenuClick: menuClick
         }, null, _parent));
       });
@@ -1480,7 +1587,8 @@ const _sfc_main$8 = {
     }
   },
   emits: ["menu-click", "aside-lg-close-click"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
+    const emit = __emit;
     const styleStore2 = useStyleStore();
     const logoutItem = computed(() => ({
       label: __("logout"),
@@ -1496,7 +1604,7 @@ const _sfc_main$8 = {
         id: "aside",
         class: "lg:pb-2 lg:pt-16 lg:pe-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
       }, _attrs))}><div class="${ssrRenderClass([unref(styleStore2).asideStyle, "lg:rounded-2xl flex-1 flex flex-col overflow-hidden dark:bg-slate-900"])}"><div class="${ssrRenderClass([unref(styleStore2).asideBrandStyle, "flex flex-row h-14 items-center justify-between dark:bg-slate-900"])}"><div class="text-center flex-1 lg:text-start lg:pe-6 xl:text-center xl:pe-0"><b class="font-black">${ssrInterpolate(unref(__)("dashboard"))}</b></div><button class="hidden lg:inline-block xl:hidden p-3">`);
-      _push(ssrRenderComponent(_sfc_main$m, { path: unref(mdiClose) }, null, _parent));
+      _push(ssrRenderComponent(_sfc_main$n, { path: unref(mdiClose) }, null, _parent));
       _push(`</button></div><div class="${ssrRenderClass([
         unref(styleStore2).darkMode ? "aside-scrollbars-[slate]" : unref(styleStore2).asideScrollbarsStyle,
         "flex-1 overflow-y-auto overflow-x-hidden"
@@ -1534,7 +1642,7 @@ const _sfc_main$7 = {
     }
   },
   emits: ["overlay-click"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
     const styleStore2 = useStyleStore();
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<div${ssrRenderAttrs(mergeProps({
@@ -1563,7 +1671,8 @@ const _sfc_main$6 = {
     isAsideLgActive: Boolean
   },
   emits: ["menu-click", "aside-lg-close-click"],
-  setup(__props, { emit }) {
+  setup(__props, { emit: __emit }) {
+    const emit = __emit;
     const menuClick = (event, item) => {
       emit("menu-click", event, item);
     };
@@ -1573,11 +1682,11 @@ const _sfc_main$6 = {
     return (_ctx, _push, _parent, _attrs) => {
       _push(`<!--[-->`);
       _push(ssrRenderComponent(_sfc_main$8, {
-        menu: __props.menu,
         class: [
           __props.isAsideMobileExpanded ? "start-0" : "-end-60 lg:start-0",
           { "lg:hidden xl:flex": !__props.isAsideLgActive }
         ],
+        menu: __props.menu,
         onMenuClick: menuClick,
         onAsideLgCloseClick: asideLgCloseClick
       }, null, _parent));
@@ -1710,13 +1819,13 @@ const _sfc_main$3 = {
             }, {
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 if (_push3) {
-                  _push3(ssrRenderComponent(_sfc_main$m, {
+                  _push3(ssrRenderComponent(_sfc_main$n, {
                     path: isAsideMobileExpanded.value ? unref(mdiBackburger) : unref(mdiForwardburger),
                     size: "24"
                   }, null, _parent3, _scopeId2));
                 } else {
                   return [
-                    createVNode(_sfc_main$m, {
+                    createVNode(_sfc_main$n, {
                       path: isAsideMobileExpanded.value ? unref(mdiBackburger) : unref(mdiForwardburger),
                       size: "24"
                     }, null, 8, ["path"])
@@ -1731,13 +1840,13 @@ const _sfc_main$3 = {
             }, {
               default: withCtx((_2, _push3, _parent3, _scopeId2) => {
                 if (_push3) {
-                  _push3(ssrRenderComponent(_sfc_main$m, {
+                  _push3(ssrRenderComponent(_sfc_main$n, {
                     path: unref(mdiMenu),
                     size: "24"
                   }, null, _parent3, _scopeId2));
                 } else {
                   return [
-                    createVNode(_sfc_main$m, {
+                    createVNode(_sfc_main$n, {
                       path: unref(mdiMenu),
                       size: "24"
                     }, null, 8, ["path"])
@@ -1752,7 +1861,7 @@ const _sfc_main$3 = {
                   _push3(ssrRenderComponent(_sfc_main$i, {
                     borderless: "",
                     "ctrl-k-focus": "",
-                    placeholder: "Search (ctrl+k)",
+                    placeholder: "Index (ctrl+k)",
                     transparent: ""
                   }, null, _parent3, _scopeId2));
                 } else {
@@ -1760,7 +1869,7 @@ const _sfc_main$3 = {
                     createVNode(_sfc_main$i, {
                       borderless: "",
                       "ctrl-k-focus": "",
-                      placeholder: "Search (ctrl+k)",
+                      placeholder: "Index (ctrl+k)",
                       transparent: ""
                     })
                   ];
@@ -1775,7 +1884,7 @@ const _sfc_main$3 = {
                 onClick: withModifiers(($event) => isAsideMobileExpanded.value = !isAsideMobileExpanded.value, ["prevent"])
               }, {
                 default: withCtx(() => [
-                  createVNode(_sfc_main$m, {
+                  createVNode(_sfc_main$n, {
                     path: isAsideMobileExpanded.value ? unref(mdiBackburger) : unref(mdiForwardburger),
                     size: "24"
                   }, null, 8, ["path"])
@@ -1787,7 +1896,7 @@ const _sfc_main$3 = {
                 onClick: withModifiers(($event) => isAsideLgActive.value = true, ["prevent"])
               }, {
                 default: withCtx(() => [
-                  createVNode(_sfc_main$m, {
+                  createVNode(_sfc_main$n, {
                     path: unref(mdiMenu),
                     size: "24"
                   }, null, 8, ["path"])
@@ -1799,7 +1908,7 @@ const _sfc_main$3 = {
                   createVNode(_sfc_main$i, {
                     borderless: "",
                     "ctrl-k-focus": "",
-                    placeholder: "Search (ctrl+k)",
+                    placeholder: "Index (ctrl+k)",
                     transparent: ""
                   })
                 ]),
@@ -1964,24 +2073,96 @@ _sfc_main.setup = (props, ctx) => {
   (ssrContext.modules || (ssrContext.modules = /* @__PURE__ */ new Set())).add("resources/Dashboard/js/Layouts/Layout.vue");
   return _sfc_setup ? _sfc_setup(props, ctx) : void 0;
 };
+const TRANSITIONS = {
+  overlay: {
+    enterFromClass: "opacity-0 scale-75",
+    enterActiveClass: "transition-transform transition-opacity duration-150 ease-in",
+    leaveActiveClass: "transition-opacity duration-150 ease-linear",
+    leaveToClass: "opacity-0"
+  }
+};
+const primeVuePt = {
+  dropdown: {
+    root: ({ props }) => ({
+      class: [
+        "cursor-pointer inline-flex relative select-none",
+        "bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md",
+        "dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300",
+        "w-full md:w-56",
+        "hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]",
+        { "opacity-60 select-none pointer-events-none cursor-default": props.disabled }
+      ]
+    }),
+    input: ({ props }) => ({
+      class: [
+        "cursor-pointer block flex flex-auto overflow-hidden text-ellipsis whitespace-nowrap relative",
+        "bg-transparent border-0 text-gray-800",
+        "dark:text-white/80",
+        "last:pe-3 transition duration-200 bg-transparent rounded appearance-none font-sans text-base",
+        "focus:outline-none focus:shadow-none",
+        { "pe-7": props.showClear }
+      ]
+    }),
+    trigger: {
+      class: ["flex items-center justify-center shrink-0", "bg-transparent text-gray-500 w-12 rounded-tr-lg rounded-br-lg"]
+    },
+    wrapper: {
+      class: ["max-h-[200px] overflow-auto", "bg-white text-gray-700 border-0 rounded-md shadow-lg", "dark:bg-gray-900 dark:text-white/80"]
+    },
+    list: {
+      class: "py-3 list-none m-0"
+    },
+    item: ({ context }) => ({
+      class: [
+        "cursor-pointer font-normal overflow-hidden relative whitespace-nowrap",
+        "m-0 p-3 border-0  transition-shadow duration-200 rounded-none",
+        {
+          "text-gray-700 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-gray-800": !context.focused && !context.selected,
+          "bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-gray-800": context.focused && !context.selected,
+          "bg-blue-100 text-blue-700 dark:bg-blue-400 dark:text-white/80": context.focused && context.selected,
+          "bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80": !context.focused && context.selected
+        }
+      ]
+    }),
+    itemgroup: {
+      class: ["m-0 p-3 text-gray-800 bg-white font-bold", "dark:bg-gray-900 dark:text-white/80", "cursor-auto"]
+    },
+    header: {
+      class: ["p-3 border-b border-gray-300 text-gray-700 bg-gray-100 mt-0 rounded-tl-lg rounded-tr-lg", "dark:bg-gray-800 dark:text-white/80 dark:border-blue-900/40"]
+    },
+    filtercontainer: {
+      class: "relative"
+    },
+    filterinput: {
+      class: [
+        "pe-7 -me-7",
+        "w-full",
+        "font-sans text-base text-gray-700 bg-white py-3 px-3 border border-gray-300 transition duration-200 rounded-lg appearance-none",
+        "dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300 dark:text-white/80",
+        "hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]"
+      ]
+    },
+    filtericon: {
+      class: "-mt-2 absolute top-1/2"
+    },
+    clearicon: {
+      class: "text-gray-500 right-12 -mt-2 absolute top-1/2"
+    },
+    transition: TRANSITIONS.overlay
+  }
+};
 const pinia = createPinia();
 createInertiaApp({
   title: (title) => `${title}`,
   resolve: (name) => {
-    let page = resolvePageComponent(`./Pages/${name}.vue`, /* @__PURE__ */ Object.assign({ "./Pages/Admins/Index.vue": () => import("./assets/Index-f1ff0b7a.js"), "./Pages/Auth/ConfirmPassword.vue": () => import("./assets/ConfirmPassword-819628c4.js"), "./Pages/Auth/ForgotPassword.vue": () => import("./assets/ForgotPassword-6c752d80.js"), "./Pages/Auth/Login.vue": () => import("./assets/Login-3ebc1c5d.js"), "./Pages/Auth/Profile.vue": () => import("./assets/Profile-c47015a5.js"), "./Pages/Auth/Register.vue": () => import("./assets/Register-dbdf4df0.js"), "./Pages/Auth/ResetPassword.vue": () => import("./assets/ResetPassword-28ea430f.js"), "./Pages/Auth/TwoFactorChallenge.vue": () => import("./assets/TwoFactorChallenge-39afb166.js"), "./Pages/Auth/VerifyEmail.vue": () => import("./assets/VerifyEmail-b12fe20d.js"), "./Pages/Contacts/Index.vue": () => import("./assets/Index-c639490e.js"), "./Pages/Error.vue": () => import("./assets/Error-6a146e2d.js"), "./Pages/Home.vue": () => import("./assets/Home-3ef576ef.js"), "./Pages/Navigations/Index.vue": () => import("./assets/Index-a108b654.js"), "./Pages/Navigations/Show.vue": () => import("./assets/Show-aebbdfbf.js"), "./Pages/Pages/Index.vue": () => import("./assets/Index-fdc00cb7.js"), "./Pages/Pages/Show.vue": () => import("./assets/Show-a1167fe7.js"), "./Pages/Posts/Index.vue": () => import("./assets/Index-b049c908.js"), "./Pages/Posts/Show.vue": () => import("./assets/Show-fb85781d.js"), "./Pages/Roles/Index.vue": () => import("./assets/Index-931776cc.js"), "./Pages/Sections/Index.vue": () => import("./assets/Index-9961e477.js"), "./Pages/Sections/Show.vue": () => import("./assets/Show-d4ea3e0c.js"), "./Pages/Settings/Index.vue": () => import("./assets/Index-24a1f3ee.js") }));
+    let page = resolvePageComponent(`./Pages/${name}.vue`, /* @__PURE__ */ Object.assign({ "./Pages/Auth/ConfirmPassword.vue": () => import("./assets/ConfirmPassword-9c5cca14.js"), "./Pages/Auth/ForgotPassword.vue": () => import("./assets/ForgotPassword-7ccc5e3e.js"), "./Pages/Auth/Login.vue": () => import("./assets/Login-01841788.js"), "./Pages/Auth/Profile.vue": () => import("./assets/Profile-72519c9e.js"), "./Pages/Auth/Register.vue": () => import("./assets/Register-9ec3abf9.js"), "./Pages/Auth/ResetPassword.vue": () => import("./assets/ResetPassword-83951ca8.js"), "./Pages/Auth/TwoFactorChallenge.vue": () => import("./assets/TwoFactorChallenge-7e3f408b.js"), "./Pages/Auth/VerifyEmail.vue": () => import("./assets/VerifyEmail-6bb84bfb.js"), "./Pages/Employees/Index.vue": () => import("./assets/Index-412803b0.js"), "./Pages/Employees/Show.vue": () => import("./assets/Show-9ceead86.js"), "./Pages/Error.vue": () => import("./assets/Error-f024fe39.js"), "./Pages/Home.vue": () => import("./assets/Home-6b2b8bc0.js"), "./Pages/Patients/Index.vue": () => import("./assets/Index-e3262df4.js"), "./Pages/Patients/Show.vue": () => import("./assets/Show-64bd7275.js"), "./Pages/ReservationTypes/Index.vue": () => import("./assets/Index-0d7cfa76.js"), "./Pages/ReservationTypes/Show.vue": () => import("./assets/Show-a2835731.js"), "./Pages/Reservations/Index.vue": () => import("./assets/Index-986f34bd.js"), "./Pages/Reservations/Show.vue": () => import("./assets/Show-ea55966a.js"), "./Pages/Roles/Index.vue": () => import("./assets/Index-612129c2.js"), "./Pages/Settings/Index.vue": () => import("./assets/Index-9a9bee3f.js") }));
     return page.then((page2) => {
       page2.default.layout = page2.default.layout || _sfc_main;
       return page2;
     });
   },
   setup({ el, App, props, plugin }) {
-    return createApp({ render: () => h(App, props) }).use(plugin).use(pinia).use(VueGoogleMaps, {
-      load: {
-        key: "AIzaSyAsWoXMlhZneXdzbmoCgxMwW8gnqIvAN0w",
-        libraries: "places",
-        language: props.initialPage.props.current_locale
-      }
-    }).mixin(Globals).mount(el);
+    return createApp({ render: () => h(App, props) }).use(plugin).use(pinia).use(PrimeVue, { pt: primeVuePt }).mixin(Globals).mount(el);
   },
   progress: {
     color: "#4B5563"
@@ -1993,28 +2174,29 @@ if (!localStorage[darkModeKey] && window.matchMedia("(prefers-color-scheme: dark
   styleStore.setDarkMode(true);
 }
 export {
-  _sfc_main$i as _,
-  _sfc_main$j as a,
-  _sfc_main$2 as b,
-  _sfc_main$f as c,
+  _sfc_main$2 as _,
+  _sfc_main$i as a,
+  _sfc_main$f as b,
+  _sfc_main$k as c,
   _sfc_main$5 as d,
-  _sfc_main$k as e,
+  _sfc_main$l as e,
   _sfc_main$g as f,
   __ as g,
   gradientBgDark as h,
   gradientBgPinkRed as i,
   gradientBgPurplePink as j,
-  _sfc_main$m as k,
+  _sfc_main$n as k,
   useMainStore as l,
-  colorsOutline as m,
-  colorsBgLight as n,
-  assignTranslatable as o,
-  localesObject as p,
-  assignMeta as q,
-  can as r,
-  _sfc_main$7 as s,
-  containerFluidMaxW as t,
+  modelResolver as m,
+  colorsOutline as n,
+  colorsBgLight as o,
+  assignMeta as p,
+  colorsText as q,
+  containerFluidMaxW as r,
+  containerMaxW as s,
+  route$1 as t,
   useStyleStore as u,
-  containerMaxW as v,
-  colorsText as w
+  can as v,
+  handleField as w,
+  _sfc_main$7 as x
 };

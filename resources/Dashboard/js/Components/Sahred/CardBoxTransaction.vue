@@ -7,77 +7,90 @@ import PillTag from "./PillTag.vue";
 import IconRounded from "./IconRounded.vue";
 
 const props = defineProps({
-  amount: {
-    type: Number,
-    required: true,
-  },
-  date: {
-    type: String,
-    required: true,
-  },
-  business: {
-    type: String,
-    required: true,
-  },
-  type: {
-    type: String,
-    required: true,
-  },
-  name: {
-    type: String,
-    required: true,
-  },
-  account: {
-    type: String,
-    required: true,
-  },
+    amount: {
+        type: Number,
+        required: true,
+    },
+    date: {
+        type: String,
+        required: true,
+    },
+    business: {
+        type: String,
+        required: true,
+    },
+    type: {
+        type: String,
+        required: true,
+    },
+    name: {
+        type: String,
+        required: true,
+    },
+    account: {
+        type: String,
+        required: true,
+    },
 });
 
 const icon = computed(() => {
-  if (props.type === "withdrawal") {
-    return {
-      icon: mdiCashMinus,
-      type: "danger",
-    };
-  } else if (props.type === "deposit") {
-    return {
-      icon: mdiCashPlus,
-      type: "success",
-    };
-  } else if (props.type === "invoice") {
-    return {
-      icon: mdiReceipt,
-      type: "warning",
-    };
-  }
+    if (props.type === "withdrawal") {
+        return {
+            icon: mdiCashMinus,
+            type: "danger",
+        };
+    } else if (props.type === "deposit") {
+        return {
+            icon: mdiCashPlus,
+            type: "success",
+        };
+    } else if (props.type === "invoice") {
+        return {
+            icon: mdiReceipt,
+            type: "warning",
+        };
+    }
 
-  return {
-    icon: mdiCreditCardOutline,
-    type: "info",
-  };
+    return {
+        icon: mdiCreditCardOutline,
+        type: "info",
+    };
 });
 </script>
 
 <template>
-  <CardBox class="mb-6 last:mb-0" is-hoverable>
-    <BaseLevel>
-      <BaseLevel type="justify-end">
-        <IconRounded :icon="icon.icon" :color="icon.type" class="md:ms-6"/>
-        <div class="text-center space-y-1 md:text-start md:ms-6">
-          <h4 class="text-xl">${{ amount }}</h4>
-          <p class="text-gray-500 dark:text-slate-400">
-            <b>{{ date }}</b> via {{ business }}
-          </p>
-        </div>
-      </BaseLevel>
-      <div class="text-center md:text-start space-y-2">
-        <p class="text-sm text-gray-500">
-          {{ name }}
-        </p>
-        <div>
-          <PillTag :color="icon.type" :label="type" small/>
-        </div>
-      </div>
-    </BaseLevel>
-  </CardBox>
+    <CardBox
+        class="mb-6 last:mb-0"
+        is-hoverable
+    >
+        <BaseLevel>
+            <BaseLevel type="justify-end">
+                <IconRounded
+                    :color="icon.type"
+                    :icon="icon.icon"
+                    class="md:ms-6"
+                />
+                <div class="text-center space-y-1 md:text-start md:ms-6">
+                    <h4 class="text-xl">
+                        ${{ amount }}
+                    </h4>
+                    <p class="text-gray-500 dark:text-slate-400">
+                        <b>{{ date }}</b> via {{ business }}
+                    </p>
+                </div>
+            </BaseLevel>
+            <div class="text-center md:text-start space-y-2">
+                <p class="text-sm text-gray-500">
+                    {{ name }}
+                </p>
+                <div>
+                    <PillTag
+                        :color="icon.type"
+                        :label="type"
+                        small
+                    />
+                </div>
+            </div>
+        </BaseLevel>
+    </CardBox>
 </template>

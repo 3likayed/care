@@ -2,15 +2,15 @@
 import {computed, ref} from "vue";
 import {useStyleStore} from "../Stores/style.js";
 import {
-  mdiAlert,
-  mdiAlertCircle,
-  mdiCheckCircle,
-  mdiClose,
-  mdiContrastCircle,
-  mdiInformation,
-  mdiOpenInNew,
-  mdiReload,
-  mdiTrendingUp,
+    mdiAlert,
+    mdiAlertCircle,
+    mdiCheckCircle,
+    mdiClose,
+    mdiContrastCircle,
+    mdiInformation,
+    mdiOpenInNew,
+    mdiReload,
+    mdiTrendingUp,
 } from "@mdi/js";
 import SectionMain from "../Components/Sahred/SectionMain.vue";
 import CardBox from "../Components/Sahred/CardBox.vue";
@@ -76,477 +76,521 @@ const styleStore = useStyleStore();
 </script>
 
 <template>
-  <LayoutAuthenticated>
-    <CardBoxModal
-        v-model="modalOneActive"
-        title="Please confirm action"
-        button-label="Confirm"
-        has-cancel
-    >
-      <p>This is sample modal</p>
-      <p>Lorem ipsum dolor</p>
-    </CardBoxModal>
-
-    <CardBoxModal
-        v-model="modalTwoActive"
-        title="Unhandled exception"
-        button="danger"
-    >
-      <p>This is sample modal</p>
-      <p>Lorem ipsum dolor</p>
-    </CardBoxModal>
-
-    <CardBoxModal v-model="modalThreeActive" title="Success" button="success">
-      <p>This is sample modal</p>
-      <p>Lorem ipsum dolor</p>
-    </CardBoxModal>
-
-    <SectionTitle first>Dark mode</SectionTitle>
-
-    <SectionMain>
-      <CardBox class="md:w-7/12 lg:w-5/12 xl:w-4/12 shadow-2xl md:mx-auto">
-        <div
-            class="text-center py-24 lg:py-12 text-gray-500 dark:text-slate-400"
+    <LayoutAuthenticated>
+        <CardBoxModal
+            v-model="modalOneActive"
+            button-label="Confirm"
+            has-cancel
+            title="Please confirm action"
         >
-          <BaseButton
-              label="Toggle"
-              color="contrast"
-              @click="styleStore.setDarkMode()"
-          />
-        </div>
-      </CardBox>
-    </SectionMain>
+            <p>This is sample modal</p>
+            <p>Lorem ipsum dolor</p>
+        </CardBoxModal>
 
-    <SectionTitle>Modal examples</SectionTitle>
-
-    <SectionMain>
-      <div class="space-y-12">
-        <CardBox
-            class="cursor-pointer md:w-7/12 lg:w-5/12 shadow-2xl md:mx-auto"
-            is-hoverable
-            @click="modalOneActive = true"
+        <CardBoxModal
+            v-model="modalTwoActive"
+            button="danger"
+            title="Unhandled exception"
         >
-          <CardBoxComponentTitle title="Please confirm action">
-            <BaseButton :icon="mdiClose" color="whiteDark" small rounded-full/>
-          </CardBoxComponentTitle>
-          <div class="space-y-3">
-            <p>Click to see in action</p>
-          </div>
+            <p>This is sample modal</p>
+            <p>Lorem ipsum dolor</p>
+        </CardBoxModal>
 
-          <template #footer>
-            <BaseButtons>
-              <BaseButton label="Confirm" color="info"/>
-              <BaseButton label="Cancel" color="info" outline/>
-            </BaseButtons>
-          </template>
-        </CardBox>
-
-        <CardBox
-            class="cursor-pointer md:w-7/12 lg:w-5/12 shadow-2xl md:mx-auto"
-            is-hoverable
-            @click="modalTwoActive = true"
+        <CardBoxModal
+            v-model="modalThreeActive"
+            button="success"
+            title="Success"
         >
-          <CardBoxComponentTitle title="Unhandled exception"/>
+            <p>This is sample modal</p>
+            <p>Lorem ipsum dolor</p>
+        </CardBoxModal>
 
-          <div class="space-y-3">
-            <p>Click to see in action</p>
-          </div>
+        <SectionTitle first>
+            Dark mode
+        </SectionTitle>
 
-          <template #footer>
-            <BaseButtons>
-              <BaseButton label="Done" color="danger"/>
-            </BaseButtons>
-          </template>
-        </CardBox>
+        <SectionMain>
+            <CardBox class="md:w-7/12 lg:w-5/12 xl:w-4/12 shadow-2xl md:mx-auto">
+                <div
+                    class="text-center py-24 lg:py-12 text-gray-500 dark:text-slate-400"
+                >
+                    <BaseButton
+                        color="contrast"
+                        label="Toggle"
+                        @click="styleStore.setDarkMode()"
+                    />
+                </div>
+            </CardBox>
+        </SectionMain>
 
-        <CardBox
-            class="cursor-pointer md:w-7/12 lg:w-5/12 shadow-2xl md:mx-auto"
-            is-hoverable
-            @click="modalThreeActive = true"
-        >
-          <CardBoxComponentTitle title="Success"/>
+        <SectionTitle>Modal examples</SectionTitle>
 
-          <div class="space-y-3">
-            <p>Click to see in action</p>
-          </div>
+        <SectionMain>
+            <div class="space-y-12">
+                <CardBox
+                    class="cursor-pointer md:w-7/12 lg:w-5/12 shadow-2xl md:mx-auto"
+                    is-hoverable
+                    @click="modalOneActive = true"
+                >
+                    <CardBoxComponentTitle title="Please confirm action">
+                        <BaseButton
+                            :icon="mdiClose"
+                            color="whiteDark"
+                            rounded-full
+                            small
+                        />
+                    </CardBoxComponentTitle>
+                    <div class="space-y-3">
+                        <p>Click to see in action</p>
+                    </div>
 
-          <template #footer>
-            <BaseButton label="Done" color="success"/>
-          </template>
-        </CardBox>
-      </div>
-    </SectionMain>
+                    <template #footer>
+                        <BaseButtons>
+                            <BaseButton
+                                color="info"
+                                label="Confirm"
+                            />
+                            <BaseButton
+                                color="info"
+                                label="Cancel"
+                                outline
+                            />
+                        </BaseButtons>
+                    </template>
+                </CardBox>
 
-    <SectionTitle custom>
-      <h1 class="text-2xl text-gray-500 dark:text-slate-400">Notifications</h1>
-      <div class="flex items-center justify-center mt-6">
-        <FormCheckRadioGroup
-            v-model="notificationSettingsModel"
-            type="switch"
-            name="notifications-switch"
-            :options="{ outline: 'Outline' }"
-        />
-      </div>
-    </SectionTitle>
+                <CardBox
+                    class="cursor-pointer md:w-7/12 lg:w-5/12 shadow-2xl md:mx-auto"
+                    is-hoverable
+                    @click="modalTwoActive = true"
+                >
+                    <CardBoxComponentTitle title="Unhandled exception"/>
 
-    <SectionMain>
-      <NotificationBar
-          color="info"
-          :icon="mdiInformation"
-          :outline="notificationsOutline"
-      >
-        <b>Info state</b>. NotificationBar
-        <template #right>
-          <BaseButton
-              label="Button"
-              :color="notificationsOutline ? 'info' : 'white'"
-              :outline="notificationsOutline"
-              rounded-full
-              small
-          />
-        </template>
-      </NotificationBar>
+                    <div class="space-y-3">
+                        <p>Click to see in action</p>
+                    </div>
 
-      <NotificationBar
-          color="success"
-          :icon="mdiCheckCircle"
-          :outline="notificationsOutline"
-      >
-        <b>Success state</b>. NotificationBar
-        <template #right>
-          <BaseButton
-              label="Button"
-              :color="notificationsOutline ? 'success' : 'white'"
-              :outline="notificationsOutline"
-              rounded-full
-              small
-          />
-        </template>
-      </NotificationBar>
+                    <template #footer>
+                        <BaseButtons>
+                            <BaseButton
+                                color="danger"
+                                label="Done"
+                            />
+                        </BaseButtons>
+                    </template>
+                </CardBox>
 
-      <NotificationBar
-          color="warning"
-          :icon="mdiAlert"
-          :outline="notificationsOutline"
-      >
-        <b>Warning state</b>. NotificationBar
-        <template #right>
-          <BaseButton
-              label="Button"
-              :color="notificationsOutline ? 'warning' : 'white'"
-              :outline="notificationsOutline"
-              rounded-full
-              small
-          />
-        </template>
-      </NotificationBar>
+                <CardBox
+                    class="cursor-pointer md:w-7/12 lg:w-5/12 shadow-2xl md:mx-auto"
+                    is-hoverable
+                    @click="modalThreeActive = true"
+                >
+                    <CardBoxComponentTitle title="Success"/>
 
-      <NotificationBar
-          color="danger"
-          :icon="mdiAlertCircle"
-          :outline="notificationsOutline"
-      >
-        <b>Danger state</b>. NotificationBar
-        <template #right>
-          <BaseButton
-              label="Button"
-              :color="notificationsOutline ? 'danger' : 'white'"
-              :outline="notificationsOutline"
-              rounded-full
-              small
-          />
-        </template>
-      </NotificationBar>
+                    <div class="space-y-3">
+                        <p>Click to see in action</p>
+                    </div>
 
-      <NotificationBar
-          color="contrast"
-          :icon="mdiContrastCircle"
-          :outline="notificationsOutline"
-      >
-        <b>Contrast</b>. NotificationBar
-      </NotificationBar>
-    </SectionMain>
+                    <template #footer>
+                        <BaseButton
+                            color="success"
+                            label="Done"
+                        />
+                    </template>
+                </CardBox>
+            </div>
+        </SectionMain>
 
-    <SectionTitle>Buttons</SectionTitle>
+        <SectionTitle custom>
+            <h1 class="text-2xl text-gray-500 dark:text-slate-400">
+                Notifications
+            </h1>
+            <div class="flex items-center justify-center mt-6">
+                <FormCheckRadioGroup
+                    v-model="notificationSettingsModel"
+                    :options="{ outline: 'Outline' }"
+                    name="notifications-switch"
+                    type="switch"
+                />
+            </div>
+        </SectionTitle>
 
-    <SectionMain>
-      <CardBox>
-        <FormField label="Settings">
-          <FormCheckRadioGroup
-              v-model="buttonSettingsModel"
-              name="buttons-switch"
-              type="switch"
-              :options="{
+        <SectionMain>
+            <NotificationBar
+                :icon="mdiInformation"
+                :outline="notificationsOutline"
+                color="info"
+            >
+                <b>Info state</b>. NotificationBar
+                <template #right>
+                    <BaseButton
+                        :color="notificationsOutline ? 'info' : 'white'"
+                        :outline="notificationsOutline"
+                        label="Button"
+                        rounded-full
+                        small
+                    />
+                </template>
+            </NotificationBar>
+
+            <NotificationBar
+                :icon="mdiCheckCircle"
+                :outline="notificationsOutline"
+                color="success"
+            >
+                <b>Success state</b>. NotificationBar
+                <template #right>
+                    <BaseButton
+                        :color="notificationsOutline ? 'success' : 'white'"
+                        :outline="notificationsOutline"
+                        label="Button"
+                        rounded-full
+                        small
+                    />
+                </template>
+            </NotificationBar>
+
+            <NotificationBar
+                :icon="mdiAlert"
+                :outline="notificationsOutline"
+                color="warning"
+            >
+                <b>Warning state</b>. NotificationBar
+                <template #right>
+                    <BaseButton
+                        :color="notificationsOutline ? 'warning' : 'white'"
+                        :outline="notificationsOutline"
+                        label="Button"
+                        rounded-full
+                        small
+                    />
+                </template>
+            </NotificationBar>
+
+            <NotificationBar
+                :icon="mdiAlertCircle"
+                :outline="notificationsOutline"
+                color="danger"
+            >
+                <b>Danger state</b>. NotificationBar
+                <template #right>
+                    <BaseButton
+                        :color="notificationsOutline ? 'danger' : 'white'"
+                        :outline="notificationsOutline"
+                        label="Button"
+                        rounded-full
+                        small
+                    />
+                </template>
+            </NotificationBar>
+
+            <NotificationBar
+                :icon="mdiContrastCircle"
+                :outline="notificationsOutline"
+                color="contrast"
+            >
+                <b>Contrast</b>. NotificationBar
+            </NotificationBar>
+        </SectionMain>
+
+        <SectionTitle>Buttons</SectionTitle>
+
+        <SectionMain>
+            <CardBox>
+                <FormField label="Settings">
+                    <FormCheckRadioGroup
+                        v-model="buttonSettingsModel"
+                        :options="{
               outline: 'Outline',
               small: 'Small',
               rounded: 'Rounded',
               disabled: 'Disabled',
             }"
-          />
-        </FormField>
+                        name="buttons-switch"
+                        type="switch"
+                    />
+                </FormField>
 
-        <BaseDivider/>
+                <BaseDivider/>
 
-        <BaseButtons>
-          <BaseButton
-              color="lightDark"
-              label="Button"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="contrast"
-              label="Button"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="info"
-              label="Button"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="success"
-              label="Button"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="warning"
-              label="Button"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="danger"
-              label="Button"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-        </BaseButtons>
+                <BaseButtons>
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="lightDark"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="contrast"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="info"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="success"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="warning"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="danger"
+                        label="Button"
+                    />
+                </BaseButtons>
 
-        <BaseDivider/>
+                <BaseDivider/>
 
-        <BaseButtons>
-          <BaseButton
-              color="lightDark"
-              label="Button"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="contrast"
-              label="Button"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="info"
-              label="Button"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="success"
-              label="Button"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="warning"
-              label="Button"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="danger"
-              label="Button"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-        </BaseButtons>
+                <BaseButtons>
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="lightDark"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="contrast"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="info"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="success"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="warning"
+                        label="Button"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="danger"
+                        label="Button"
+                    />
+                </BaseButtons>
 
-        <BaseDivider/>
+                <BaseDivider/>
 
-        <BaseButtons>
-          <BaseButton
-              color="lightDark"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="contrast"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="info"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="success"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="warning"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-          <BaseButton
-              color="danger"
-              :icon="mdiOpenInNew"
-              :small="buttonsSmall"
-              :outline="buttonsOutline"
-              :disabled="buttonsDisabled"
-              :rounded-full="buttonsRounded"
-          />
-        </BaseButtons>
-      </CardBox>
-    </SectionMain>
+                <BaseButtons>
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="lightDark"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="contrast"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="info"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="success"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="warning"
+                    />
+                    <BaseButton
+                        :disabled="buttonsDisabled"
+                        :icon="mdiOpenInNew"
+                        :outline="buttonsOutline"
+                        :rounded-full="buttonsRounded"
+                        :small="buttonsSmall"
+                        color="danger"
+                    />
+                </BaseButtons>
+            </CardBox>
+        </SectionMain>
 
-    <SectionTitle>Pills</SectionTitle>
+        <SectionTitle>Pills</SectionTitle>
 
-    <SectionMain>
-      <CardBox>
-        <FormField label="Settings">
-          <FormCheckRadioGroup
-              v-model="pillsSettingsModel"
-              name="buttons-switch"
-              type="switch"
-              :options="{ outline: 'Outline', small: 'Small', icon: 'Icon' }"
-          />
-        </FormField>
+        <SectionMain>
+            <CardBox>
+                <FormField label="Settings">
+                    <FormCheckRadioGroup
+                        v-model="pillsSettingsModel"
+                        :options="{ outline: 'Outline', small: 'Small', icon: 'Icon' }"
+                        name="buttons-switch"
+                        type="switch"
+                    />
+                </FormField>
 
-        <BaseDivider/>
+                <BaseDivider/>
 
-        <BaseButtons>
-          <PillTag
-              color="contrast"
-              label="Contrast"
-              :small="pillsSmall"
-              :outline="pillsOutline"
-              :icon="pillsIcon"
-          />
-          <PillTag
-              color="info"
-              label="Info"
-              :small="pillsSmall"
-              :outline="pillsOutline"
-              :icon="pillsIcon"
-          />
-          <PillTag
-              color="success"
-              label="Success"
-              :small="pillsSmall"
-              :outline="pillsOutline"
-              :icon="pillsIcon"
-          />
-          <PillTag
-              color="warning"
-              label="Warning"
-              :small="pillsSmall"
-              :outline="pillsOutline"
-              :icon="pillsIcon"
-          />
-          <PillTag
-              color="danger"
-              label="Danger"
-              :small="pillsSmall"
-              :outline="pillsOutline"
-              :icon="pillsIcon"
-          />
-        </BaseButtons>
-      </CardBox>
-    </SectionMain>
+                <BaseButtons>
+                    <PillTag
+                        :icon="pillsIcon"
+                        :outline="pillsOutline"
+                        :small="pillsSmall"
+                        color="contrast"
+                        label="Contrast"
+                    />
+                    <PillTag
+                        :icon="pillsIcon"
+                        :outline="pillsOutline"
+                        :small="pillsSmall"
+                        color="info"
+                        label="Info"
+                    />
+                    <PillTag
+                        :icon="pillsIcon"
+                        :outline="pillsOutline"
+                        :small="pillsSmall"
+                        color="success"
+                        label="Success"
+                    />
+                    <PillTag
+                        :icon="pillsIcon"
+                        :outline="pillsOutline"
+                        :small="pillsSmall"
+                        color="warning"
+                        label="Warning"
+                    />
+                    <PillTag
+                        :icon="pillsIcon"
+                        :outline="pillsOutline"
+                        :small="pillsSmall"
+                        color="danger"
+                        label="Danger"
+                    />
+                </BaseButtons>
+            </CardBox>
+        </SectionMain>
 
-    <SectionTitle>Cards</SectionTitle>
+        <SectionTitle>Cards</SectionTitle>
 
-    <SectionMain>
-      <div class="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-2">
-        <CardBox>
-          <CardBoxComponentTitle title="With title & icon">
-            <BaseButton :icon="mdiReload" color="whiteDark" rounded-full/>
-          </CardBoxComponentTitle>
-          <div class="space-y-3">
-            <p>Card with title, icon & footer</p>
-          </div>
+        <SectionMain>
+            <div class="grid grid-cols-1 gap-6 mb-6 lg:grid-cols-2">
+                <CardBox>
+                    <CardBoxComponentTitle title="With title & icon">
+                        <BaseButton
+                            :icon="mdiReload"
+                            color="whiteDark"
+                            rounded-full
+                        />
+                    </CardBoxComponentTitle>
+                    <div class="space-y-3">
+                        <p>Card with title, icon & footer</p>
+                    </div>
 
-          <template #footer>
-            <BaseButtons>
-              <BaseButton label="Confirm" color="info"/>
-              <BaseButton label="Cancel" color="info" outline/>
-            </BaseButtons>
-          </template>
-        </CardBox>
+                    <template #footer>
+                        <BaseButtons>
+                            <BaseButton
+                                color="info"
+                                label="Confirm"
+                            />
+                            <BaseButton
+                                color="info"
+                                label="Cancel"
+                                outline
+                            />
+                        </BaseButtons>
+                    </template>
+                </CardBox>
 
-        <CardBox>
-          Just body & footer
+                <CardBox>
+                    Just body & footer
 
-          <template #footer>
-            <BaseButtons>
-              <BaseButton label="Confirm" color="info"/>
-              <BaseButton label="Cancel" color="info" outline/>
-            </BaseButtons>
-          </template>
-        </CardBox>
-      </div>
+                    <template #footer>
+                        <BaseButtons>
+                            <BaseButton
+                                color="info"
+                                label="Confirm"
+                            />
+                            <BaseButton
+                                color="info"
+                                label="Cancel"
+                                outline
+                            />
+                        </BaseButtons>
+                    </template>
+                </CardBox>
+            </div>
 
-      <SectionTitleLineWithButton
-          :icon="mdiAlertCircle"
-          title="Empty variation"
-      />
+            <SectionTitleLineWithButton
+                :icon="mdiAlertCircle"
+                title="Empty variation"
+            />
 
-      <CardBox>
-        <CardBoxComponentEmpty/>
-      </CardBox>
-    </SectionMain>
-  </LayoutAuthenticated>
+            <CardBox>
+                <CardBoxComponentEmpty/>
+            </CardBox>
+        </SectionMain>
+    </LayoutAuthenticated>
 </template>

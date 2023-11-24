@@ -2,16 +2,17 @@
 import {defineAsyncComponent} from "vue";
 
 let props = defineProps({
-  data: {
-    type: Object,
-    default: {},
-  },
-  model: String,
-  isModal: {
-    type: Boolean,
-    default: true
-  },
-  operation: String,
+    data: {
+        type: Object,
+        default: {},
+    },
+    addonData:Object,
+    model: String,
+    isModal: {
+        type: Boolean,
+        default: true
+    },
+    operation: String,
 });
 
 const firstLetter = props.model.charAt(0)
@@ -25,11 +26,13 @@ let component = defineAsyncComponent(() => import(`./${capitalizedWord}/${capita
 </script>
 
 <template>
-  <component :is="component"
-             :data="data"
-             :is-modal="isModal"
-             :operation=operation
-             @cancel="$emit('cancel')"/>
+    <component
+        :is="component"
+        :data="data"
+        :is-modal="isModal"
+        :operation="operation"
+        @cancel="$emit('cancel')"
+    />
 </template>
 
 <style scoped>

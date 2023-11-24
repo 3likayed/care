@@ -2,15 +2,14 @@
 
 namespace App\Http\Controllers;
 
-
 use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Employee;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
-
 
 class EmployeeController extends Controller
 {
@@ -29,14 +28,14 @@ class EmployeeController extends Controller
     {
         return Inertia::render('Employees/Show', [
             'data' => $employee,
-            'meta' => meta()->metaValues(['title' => "$employee->name | " . __("dashboard.patients")])
+            'meta' => meta()->metaValues(['title' => "$employee->name | " . __('dashboard.patients')]),
         ]);
     }
 
-    public function index()
+    public function index(Request $request)
     {
 
-        $employees = Employee::paginate();
+        $employees = Employee::filter($request->only(['search', 'trashed']))->paginate();
 
         $roles = Role::all();
 

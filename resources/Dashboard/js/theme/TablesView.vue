@@ -11,34 +11,47 @@ import CardBoxComponentEmpty from "../Components/Sahred/CardBoxComponentEmpty.vu
 </script>
 
 <template>
-  <LayoutAuthenticated>
-    <SectionMain>
-      <SectionTitleLineWithButton :icon="mdiTableBorder" title="Tables" main>
-        <BaseButton
-            href="https://github.com/justboil/employee-one-vue-tailwind"
-            target="_blank"
-            :icon="mdiGithub"
-            label="Star on GitHub"
-            color="contrast"
-            rounded-full
-            small
-        />
-      </SectionTitleLineWithButton>
+    <LayoutAuthenticated>
+        <SectionMain>
+            <SectionTitleLineWithButton
+                :icon="mdiTableBorder"
+                main
+                title="Tables"
+            >
+                <BaseButton
+                    :icon="mdiGithub"
+                    color="contrast"
+                    href="https://github.com/justboil/employee-one-vue-tailwind"
+                    label="Star on GitHub"
+                    rounded-full
+                    small
+                    target="_blank"
+                />
+            </SectionTitleLineWithButton>
 
 
-      <CardBox class="mb-6" has-table>
-        <TableSampleClients checkable/>
-      </CardBox>
+            <CardBox
+                class="mb-6"
+                has-table
+            >
+                <TableSampleClients checkable/>
+            </CardBox>
 
-      <SectionTitleLineWithButton :icon="mdiTableOff" title="Empty variation"/>
+            <SectionTitleLineWithButton
+                :icon="mdiTableOff"
+                title="Empty variation"
+            />
 
-      <NotificationBar color="danger" :icon="mdiTableOff">
-        <b>Empty table.</b> When there's nothing to show
-      </NotificationBar>
+            <NotificationBar
+                :icon="mdiTableOff"
+                color="danger"
+            >
+                <b>Empty table.</b> When there's nothing to show
+            </NotificationBar>
 
-      <CardBox>
-        <CardBoxComponentEmpty/>
-      </CardBox>
-    </SectionMain>
-  </LayoutAuthenticated>
+            <CardBox>
+                <CardBoxComponentEmpty/>
+            </CardBox>
+        </SectionMain>
+    </LayoutAuthenticated>
 </template>

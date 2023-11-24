@@ -1,15 +1,16 @@
 <template>
-  <BaseButtons class="flex-row">
-    <BaseButton v-for="(step,key) in steps"
-                :key="key"
-                outline
-                :color="key===active ?'contrast' :'lightDark'"
-                :active="key===active"
-                :label="step"
-                class="flex-auto text-center"
-                @click="stepChange(key)">
-    </BaseButton>
-  </BaseButtons>
+    <BaseButtons class="flex-row">
+        <BaseButton
+            v-for="(step,key) in steps"
+            :key="key"
+            :active="key===active"
+            :color="key===active ?'contrast' :'lightDark'"
+            :label="step"
+            class="flex-auto text-center"
+            outline
+            @click="stepChange(key)"
+        />
+    </BaseButtons>
 </template>
 
 <script setup>
@@ -20,15 +21,15 @@ import {ref} from "vue";
 
 let active = ref(0);
 let props = defineProps({
-  steps: Object | Array,
-  modelValue: Number,
+    steps: Object | Array,
+    modelValue: Number,
 })
 
 let emit = defineEmits(['update:modelValue'])
 
 function stepChange(key) {
-  active.value = key
-  emit('update:modelValue', key)
+    active.value = key
+    emit('update:modelValue', key)
 }
 </script>
 <style scoped>

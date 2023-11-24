@@ -1,284 +1,222 @@
 {
-  "@fawmi.css": {
-    "file": "assets/@fawmi-8bee83ff.css",
-    "src": "@fawmi.css"
+  "BaseTable.css": {
+    "file": "assets/BaseTable-e4945060.css",
+    "src": "BaseTable.css"
   },
-  "ActionConfirmComponent.css": {
-    "file": "assets/ActionConfirmComponent-e4945060.css",
-    "src": "ActionConfirmComponent.css"
+  "_@inertiajs-ef8f571f.js": {
+    "file": "assets/@inertiajs-ef8f571f.js",
+    "imports": [
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_nprogress-7cc256ad.js",
+      "_@vue-3d043469.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ]
   },
-  "_@fawmi-8b2830bd.js": {
+  "_@mdi-89bdb56e.js": {
+    "file": "assets/@mdi-89bdb56e.js"
+  },
+  "_@tinymce-deed4607.js": {
+    "file": "assets/@tinymce-deed4607.js",
+    "imports": [
+      "_@vue-3d043469.js"
+    ]
+  },
+  "_@vue-3d043469.js": {
+    "file": "assets/@vue-3d043469.js"
+  },
+  "_BaseTable-00b04a5e.js": {
     "css": [
-      "assets/@fawmi-8bee83ff.css"
+      "assets/BaseTable-e4945060.css"
     ],
-    "file": "assets/@fawmi-8b2830bd.js",
+    "file": "assets/BaseTable-00b04a5e.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@googlemaps-29be2690.js"
+      "_@mdi-89bdb56e.js",
+      "resources/Dashboard/js/app.js",
+      "_@inertiajs-ef8f571f.js",
+      "_moment-3156497a.js",
+      "_index-52e82673.js",
+      "_ModelData-a3ce9cf5.js",
+      "_CardBoxModal-a716afb5.js",
+      "_@vue-3d043469.js"
     ]
   },
-  "_@googlemaps-29be2690.js": {
-    "file": "assets/@googlemaps-29be2690.js",
+  "_BreadCrumb-10645c84.js": {
+    "file": "assets/BreadCrumb-10645c84.js",
     "imports": [
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js"
+      "_@inertiajs-ef8f571f.js",
+      "resources/Dashboard/js/app.js",
+      "_@mdi-89bdb56e.js",
+      "_@vue-3d043469.js"
     ]
   },
-  "_@inertiajs-27eca87a.js": {
-    "file": "assets/@inertiajs-27eca87a.js",
+  "_CardBox-68c82576.js": {
+    "file": "assets/CardBox-68c82576.js",
     "imports": [
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_nprogress-c578ed10.js",
-      "_@vue-588772e2.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js"
+      "_@vue-3d043469.js"
     ]
   },
-  "_@kurkle-4ed993c7.js": {
-    "file": "assets/@kurkle-4ed993c7.js"
-  },
-  "_@mdi-66fc679a.js": {
-    "file": "assets/@mdi-66fc679a.js"
-  },
-  "_@tinymce-30eef72e.js": {
-    "file": "assets/@tinymce-30eef72e.js",
+  "_CardBoxModal-a716afb5.js": {
+    "file": "assets/CardBoxModal-a716afb5.js",
     "imports": [
-      "_@vue-588772e2.js"
+      "_@vue-3d043469.js",
+      "_@mdi-89bdb56e.js",
+      "resources/Dashboard/js/app.js",
+      "_CardBox-68c82576.js",
+      "_FormValidationErrors-006f6464.js",
+      "_@inertiajs-ef8f571f.js"
     ]
   },
-  "_@vue-588772e2.js": {
-    "file": "assets/@vue-588772e2.js"
+  "_FormCheckRadio-4aa9785c.js": {
+    "file": "assets/FormCheckRadio-4aa9785c.js",
+    "imports": [
+      "_@vue-3d043469.js"
+    ]
   },
-  "_ActionConfirmComponent-07d26409.js": {
-    "css": [
-      "assets/ActionConfirmComponent-e4945060.css"
+  "_FormCheckRadioGroup-2729dc66.js": {
+    "file": "assets/FormCheckRadioGroup-2729dc66.js",
+    "imports": [
+      "_@vue-3d043469.js"
+    ]
+  },
+  "_FormField-3f60007e.js": {
+    "file": "assets/FormField-3f60007e.js",
+    "imports": [
+      "resources/Dashboard/js/app.js",
+      "_@vue-3d043469.js"
+    ]
+  },
+  "_FormValidationErrors-006f6464.js": {
+    "file": "assets/FormValidationErrors-006f6464.js",
+    "imports": [
+      "_@inertiajs-ef8f571f.js",
+      "resources/Dashboard/js/app.js",
+      "_@vue-3d043469.js"
+    ]
+  },
+  "_FormWithLabelField-34459270.js": {
+    "file": "assets/FormWithLabelField-34459270.js",
+    "imports": [
+      "resources/Dashboard/js/app.js",
+      "_@vue-3d043469.js"
+    ]
+  },
+  "_ModelData-a3ce9cf5.js": {
+    "dynamicImports": [
+      "resources/Dashboard/js/Components/Models/Employee/EmployeeData.vue",
+      "resources/Dashboard/js/Components/Models/Patient/PatientData.vue",
+      "resources/Dashboard/js/Components/Models/Reservation/ReservationData.vue",
+      "resources/Dashboard/js/Components/Models/ReservationType/ReservationTypeData.vue",
+      "resources/Dashboard/js/Components/Models/Role/RoleData.vue"
     ],
-    "file": "assets/ActionConfirmComponent-07d26409.js",
-    "imports": [
-      "_@inertiajs-27eca87a.js",
-      "_@vue-588772e2.js",
-      "_@mdi-66fc679a.js",
-      "resources/Dashboard/js/app.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js"
-    ]
-  },
-  "_BreadCrumb-cdf4b251.js": {
-    "file": "assets/BreadCrumb-cdf4b251.js",
-    "imports": [
-      "_@inertiajs-27eca87a.js",
-      "resources/Dashboard/js/app.js",
-      "_@mdi-66fc679a.js",
-      "_@vue-588772e2.js"
-    ]
-  },
-  "_CardBox-62d8fdfd.js": {
-    "file": "assets/CardBox-62d8fdfd.js",
-    "imports": [
-      "_@vue-588772e2.js",
-      "_@fawmi-8b2830bd.js"
-    ]
-  },
-  "_CreateSection-bf656694.js": {
-    "file": "assets/CreateSection-bf656694.js",
-    "imports": [
-      "_TableOptions-5b065721.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_CardBox-62d8fdfd.js",
-      "_@inertiajs-27eca87a.js",
-      "_EditSection-4f5e7477.js",
-      "_sortablejs-vue3-78a6c49c.js",
-      "_@vue-588772e2.js",
-      "_FormField-dc7910ae.js",
-      "resources/Dashboard/js/app.js",
-      "_FormWithLabelField-e8758755.js",
-      "_StepsComponent-41615805.js",
-      "_ShowMediaComponent-a404520c.js"
-    ]
-  },
-  "_EditPage-1938d225.js": {
-    "file": "assets/EditPage-1938d225.js",
-    "imports": [
-      "_@vue-588772e2.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_FormField-dc7910ae.js",
-      "resources/Dashboard/js/app.js",
-      "_@inertiajs-27eca87a.js",
-      "_FormWithLabelField-e8758755.js",
-      "_StepsComponent-41615805.js",
-      "_MetaDataComponent-6ba6b588.js",
-      "_ShowMediaComponent-a404520c.js"
-    ]
-  },
-  "_EditSection-4f5e7477.js": {
-    "file": "assets/EditSection-4f5e7477.js",
-    "imports": [
-      "_@vue-588772e2.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_FormField-dc7910ae.js",
-      "resources/Dashboard/js/app.js",
-      "_@inertiajs-27eca87a.js",
-      "_FormWithLabelField-e8758755.js",
-      "_StepsComponent-41615805.js",
-      "_ShowMediaComponent-a404520c.js"
-    ]
-  },
-  "_FormCheckRadio-844df499.js": {
-    "file": "assets/FormCheckRadio-844df499.js",
-    "imports": [
-      "_@vue-588772e2.js"
-    ]
-  },
-  "_FormCheckRadioGroup-f67938a6.js": {
-    "file": "assets/FormCheckRadioGroup-f67938a6.js",
-    "imports": [
-      "_@vue-588772e2.js"
-    ]
-  },
-  "_FormField-dc7910ae.js": {
-    "file": "assets/FormField-dc7910ae.js",
-    "imports": [
-      "_@inertiajs-27eca87a.js",
-      "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js"
-    ]
-  },
-  "_FormWithLabelField-e8758755.js": {
-    "file": "assets/FormWithLabelField-e8758755.js",
+    "file": "assets/ModelData-a3ce9cf5.js",
     "imports": [
       "resources/Dashboard/js/app.js",
-      "_@inertiajs-27eca87a.js",
-      "_@vue-588772e2.js"
+      "_@vue-3d043469.js"
     ]
   },
-  "_MetaDataComponent-6ba6b588.js": {
-    "file": "assets/MetaDataComponent-6ba6b588.js",
-    "imports": [
-      "_FormField-dc7910ae.js",
-      "_FormWithLabelField-e8758755.js",
-      "_@inertiajs-27eca87a.js",
-      "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js"
-    ]
-  },
-  "_NavigationsList-8ebfe4ef.js": {
-    "file": "assets/NavigationsList-8ebfe4ef.js",
-    "imports": [
-      "_ActionConfirmComponent-07d26409.js",
-      "_FormField-dc7910ae.js",
-      "resources/Dashboard/js/app.js",
-      "_@inertiajs-27eca87a.js",
-      "_FormWithLabelField-e8758755.js",
-      "_@vue-588772e2.js",
-      "_TableOptions-5b065721.js",
-      "_CardBox-62d8fdfd.js",
-      "_sortablejs-vue3-78a6c49c.js"
-    ]
-  },
-  "_PillTag-d41acbb1.js": {
-    "file": "assets/PillTag-d41acbb1.js",
+  "_ModelList-866a1268.js": {
+    "dynamicImports": [
+      "resources/Dashboard/js/Components/Models/Employee/EmployeeList.vue",
+      "resources/Dashboard/js/Components/Models/Patient/PatientList.vue",
+      "resources/Dashboard/js/Components/Models/Reservation/ReservationList.vue",
+      "resources/Dashboard/js/Components/Models/ReservationType/ReservationTypeList.vue",
+      "resources/Dashboard/js/Components/Models/Role/RoleList.vue"
+    ],
+    "file": "assets/ModelList-866a1268.js",
     "imports": [
       "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js"
+      "_ModelData-a3ce9cf5.js",
+      "_@mdi-89bdb56e.js",
+      "_SectionTitleLineWithButton-2442347e.js",
+      "_@vue-3d043469.js"
     ]
   },
-  "_PostsList-b9559046.js": {
-    "file": "assets/PostsList-b9559046.js",
-    "imports": [
-      "_@vue-588772e2.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_FormField-dc7910ae.js",
-      "resources/Dashboard/js/app.js",
-      "_@inertiajs-27eca87a.js",
-      "_FormWithLabelField-e8758755.js",
-      "_StepsComponent-41615805.js",
-      "_ShowMediaComponent-a404520c.js",
-      "_TableOptions-5b065721.js",
-      "_CardBox-62d8fdfd.js",
-      "_sortablejs-vue3-78a6c49c.js"
-    ]
-  },
-  "_SectionFullScreen-6ed154ee.js": {
-    "file": "assets/SectionFullScreen-6ed154ee.js",
+  "_PillTag-3e78cbfe.js": {
+    "file": "assets/PillTag-3e78cbfe.js",
     "imports": [
       "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js"
+      "_@vue-3d043469.js"
     ]
   },
-  "_SectionTitleLineWithButton-fd96079e.js": {
-    "file": "assets/SectionTitleLineWithButton-fd96079e.js",
+  "_SectionFullScreen-5aa357ce.js": {
+    "file": "assets/SectionFullScreen-5aa357ce.js",
     "imports": [
       "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js"
+      "_@vue-3d043469.js"
     ]
   },
-  "_ShowMediaComponent-a404520c.js": {
-    "file": "assets/ShowMediaComponent-a404520c.js",
-    "imports": [
-      "_FormWithLabelField-e8758755.js",
-      "_@inertiajs-27eca87a.js",
-      "resources/Dashboard/js/app.js",
-      "_@mdi-66fc679a.js",
-      "_@vue-588772e2.js",
-      "_chart.js-485cbefc.js"
-    ]
-  },
-  "_StepsComponent-41615805.js": {
-    "file": "assets/StepsComponent-41615805.js",
+  "_SectionMain-797d14d3.js": {
+    "file": "assets/SectionMain-797d14d3.js",
     "imports": [
       "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js"
+      "_@vue-3d043469.js"
     ]
   },
-  "_TableOptions-5b065721.js": {
-    "file": "assets/TableOptions-5b065721.js",
+  "_SectionTitleLineWithButton-2442347e.js": {
+    "file": "assets/SectionTitleLineWithButton-2442347e.js",
     "imports": [
-      "_@mdi-66fc679a.js",
       "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js"
+      "_@vue-3d043469.js"
     ]
   },
-  "_axios-21b846bc.js": {
-    "file": "assets/axios-21b846bc.js"
-  },
-  "_call-bind-ca190c3c.js": {
-    "file": "assets/call-bind-ca190c3c.js",
+  "_StepsComponent-a72ed0da.js": {
+    "file": "assets/StepsComponent-a72ed0da.js",
     "imports": [
-      "_get-intrinsic-e274f0e2.js",
-      "_function-bind-61637ca6.js"
+      "resources/Dashboard/js/app.js",
+      "_@vue-3d043469.js"
     ]
   },
-  "_chart.js-485cbefc.js": {
-    "file": "assets/chart.js-485cbefc.js"
+  "_axios-28bc18a3.js": {
+    "file": "assets/axios-28bc18a3.js"
   },
-  "_deepmerge-6e8a2108.js": {
-    "file": "assets/deepmerge-6e8a2108.js",
+  "_call-bind-19fee3be.js": {
+    "file": "assets/call-bind-19fee3be.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_get-intrinsic-4a38020a.js",
+      "_function-bind-61637ca6.js",
+      "_set-function-length-9c361e89.js"
     ]
   },
-  "_fast-deep-equal-313c1b3e.js": {
-    "file": "assets/fast-deep-equal-313c1b3e.js",
+  "_deepmerge-92c57f0a.js": {
+    "file": "assets/deepmerge-92c57f0a.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_call-bind-19fee3be.js"
+    ]
+  },
+  "_define-data-property-bf6c9733.js": {
+    "file": "assets/define-data-property-bf6c9733.js",
+    "imports": [
+      "_has-property-descriptors-58650a95.js",
+      "_get-intrinsic-4a38020a.js",
+      "_gopd-e1d311d9.js"
     ]
   },
   "_function-bind-61637ca6.js": {
     "file": "assets/function-bind-61637ca6.js"
   },
-  "_get-intrinsic-e274f0e2.js": {
-    "file": "assets/get-intrinsic-e274f0e2.js",
+  "_get-intrinsic-4a38020a.js": {
+    "file": "assets/get-intrinsic-4a38020a.js",
     "imports": [
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js"
+      "_hasown-bc561cf0.js"
     ]
   },
-  "_has-6793fb5d.js": {
-    "file": "assets/has-6793fb5d.js"
+  "_gopd-e1d311d9.js": {
+    "file": "assets/gopd-e1d311d9.js",
+    "imports": [
+      "_get-intrinsic-4a38020a.js"
+    ]
+  },
+  "_has-property-descriptors-58650a95.js": {
+    "file": "assets/has-property-descriptors-58650a95.js",
+    "imports": [
+      "_get-intrinsic-4a38020a.js"
+    ]
   },
   "_has-proto-f7d0b240.js": {
     "file": "assets/has-proto-f7d0b240.js"
@@ -286,91 +224,121 @@
   "_has-symbols-e8f3ca0e.js": {
     "file": "assets/has-symbols-e8f3ca0e.js"
   },
-  "_kdbush-ac640998.js": {
-    "file": "assets/kdbush-ac640998.js"
+  "_hasown-bc561cf0.js": {
+    "file": "assets/hasown-bc561cf0.js",
+    "imports": [
+      "_function-bind-61637ca6.js"
+    ]
+  },
+  "_index-52e82673.js": {
+    "file": "assets/index-52e82673.js",
+    "imports": [
+      "_@inertiajs-ef8f571f.js",
+      "resources/Dashboard/js/app.js"
+    ]
+  },
+  "_index-892b5327.js": {
+    "file": "assets/index-892b5327.js",
+    "imports": [
+      "_@inertiajs-ef8f571f.js",
+      "resources/Dashboard/js/app.js",
+      "_moment-3156497a.js"
+    ]
   },
   "_laravel-vite-plugin-d10ca5e8.js": {
     "file": "assets/laravel-vite-plugin-d10ca5e8.js"
   },
-  "_lodash-097e1937.js": {
-    "file": "assets/lodash-097e1937.js",
+  "_lodash-dce9ffc4.js": {
+    "file": "assets/lodash-dce9ffc4.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_call-bind-19fee3be.js"
     ]
   },
-  "_lodash.clonedeep-230241b1.js": {
-    "file": "assets/lodash.clonedeep-230241b1.js",
+  "_lodash.clonedeep-8fa9e58b.js": {
+    "file": "assets/lodash.clonedeep-8fa9e58b.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_call-bind-19fee3be.js"
     ]
   },
-  "_lodash.isequal-5002b1a4.js": {
-    "file": "assets/lodash.isequal-5002b1a4.js",
+  "_lodash.isequal-7aa21295.js": {
+    "file": "assets/lodash.isequal-7aa21295.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_call-bind-19fee3be.js"
     ]
   },
-  "_nprogress-c578ed10.js": {
-    "file": "assets/nprogress-c578ed10.js",
+  "_moment-3156497a.js": {
+    "file": "assets/moment-3156497a.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_call-bind-19fee3be.js"
     ]
   },
-  "_numeral-67d1e735.js": {
-    "file": "assets/numeral-67d1e735.js",
+  "_nprogress-7cc256ad.js": {
+    "file": "assets/nprogress-7cc256ad.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_call-bind-19fee3be.js"
     ]
   },
-  "_object-inspect-b2565fee.js": {
-    "file": "assets/object-inspect-b2565fee.js",
+  "_numeral-ce957433.js": {
+    "file": "assets/numeral-ce957433.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_call-bind-19fee3be.js"
     ]
   },
-  "_pinia-72bd3b5b.js": {
-    "file": "assets/pinia-72bd3b5b.js",
+  "_object-inspect-a4b74234.js": {
+    "file": "assets/object-inspect-a4b74234.js",
     "imports": [
-      "_@vue-588772e2.js"
+      "_call-bind-19fee3be.js"
     ]
   },
-  "_qs-f6ae62cc.js": {
-    "file": "assets/qs-f6ae62cc.js",
+  "_pinia-a7ef4058.js": {
+    "file": "assets/pinia-a7ef4058.js",
     "imports": [
-      "_side-channel-a0dcedb6.js"
+      "_@vue-3d043469.js"
     ]
   },
-  "_side-channel-a0dcedb6.js": {
-    "file": "assets/side-channel-a0dcedb6.js",
+  "_pluralize-27b8fe86.js": {
+    "file": "assets/pluralize-27b8fe86.js",
     "imports": [
-      "_get-intrinsic-e274f0e2.js",
-      "_call-bind-ca190c3c.js",
-      "_object-inspect-b2565fee.js"
+      "_call-bind-19fee3be.js",
+      "_moment-3156497a.js"
     ]
   },
-  "_sortablejs-0d19b1d3.js": {
-    "file": "assets/sortablejs-0d19b1d3.js"
-  },
-  "_sortablejs-vue3-78a6c49c.js": {
-    "file": "assets/sortablejs-vue3-78a6c49c.js",
+  "_primevue-31afac00.js": {
+    "file": "assets/primevue-31afac00.js",
     "imports": [
-      "_sortablejs-0d19b1d3.js",
-      "_@vue-588772e2.js"
+      "_@vue-3d043469.js"
     ]
   },
-  "_supercluster-6504d485.js": {
-    "file": "assets/supercluster-6504d485.js",
+  "_qs-b9141582.js": {
+    "file": "assets/qs-b9141582.js",
     "imports": [
-      "_kdbush-ac640998.js"
+      "_side-channel-efc613fb.js"
     ]
   },
-  "_sweetalert2-58dbf6b8.js": {
+  "_set-function-length-9c361e89.js": {
+    "file": "assets/set-function-length-9c361e89.js",
+    "imports": [
+      "_get-intrinsic-4a38020a.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js"
+    ]
+  },
+  "_side-channel-efc613fb.js": {
+    "file": "assets/side-channel-efc613fb.js",
+    "imports": [
+      "_get-intrinsic-4a38020a.js",
+      "_call-bind-19fee3be.js",
+      "_object-inspect-a4b74234.js"
+    ]
+  },
+  "_sweetalert2-9fa49638.js": {
     "css": [
-      "assets/sweetalert2-2462df1f.css"
+      "assets/sweetalert2-f43e4f32.css"
     ],
-    "file": "assets/sweetalert2-58dbf6b8.js",
+    "file": "assets/sweetalert2-9fa49638.js",
     "imports": [
-      "_call-bind-ca190c3c.js"
+      "_call-bind-19fee3be.js"
     ]
   },
   "_vue-4ed993c7.js": {
@@ -379,172 +347,608 @@
   "_ziggy-js-4c580b49.js": {
     "file": "assets/ziggy-js-4c580b49.js"
   },
-  "resources/Dashboard/js/Pages/Admins/Index.vue": {
+  "resources/Dashboard/js/Components/Models/Employee/EmployeeData.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Index-a52d0d2b.js",
+    "file": "assets/EmployeeData-aef01be9.js",
     "imports": [
-      "_@mdi-66fc679a.js",
-      "_TableOptions-5b065721.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_ActionConfirmComponent-07d26409.js",
+      "_CardBoxModal-a716afb5.js",
+      "_@mdi-89bdb56e.js",
+      "_FormField-3f60007e.js",
       "resources/Dashboard/js/app.js",
-      "_FormField-dc7910ae.js",
-      "_@inertiajs-27eca87a.js",
-      "_FormCheckRadioGroup-f67938a6.js",
-      "_FormCheckRadio-844df499.js",
-      "_@vue-588772e2.js",
-      "_CardBox-62d8fdfd.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_pinia-72bd3b5b.js",
+      "_@inertiajs-ef8f571f.js",
+      "_FormCheckRadioGroup-2729dc66.js",
+      "_FormCheckRadio-4aa9785c.js",
+      "_moment-3156497a.js",
+      "_index-52e82673.js",
+      "_@vue-3d043469.js",
+      "_CardBox-68c82576.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_axios-21b846bc.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_pluralize-27b8fe86.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js"
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
     ],
     "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Admins/Index.vue"
+    "src": "resources/Dashboard/js/Components/Models/Employee/EmployeeData.vue"
+  },
+  "resources/Dashboard/js/Components/Models/Employee/EmployeeList.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/EmployeeList-e11306b3.js",
+    "imports": [
+      "_BaseTable-00b04a5e.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "resources/Dashboard/js/app.js",
+      "_index-892b5327.js",
+      "_@inertiajs-ef8f571f.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_lodash-dce9ffc4.js",
+      "_@vue-3d043469.js",
+      "_@mdi-89bdb56e.js",
+      "_moment-3156497a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_index-52e82673.js",
+      "_ModelData-a3ce9cf5.js",
+      "_CardBoxModal-a716afb5.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/Employee/EmployeeList.vue"
+  },
+  "resources/Dashboard/js/Components/Models/Patient/PatientData.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/PatientData-221c5b8b.js",
+    "imports": [
+      "_CardBoxModal-a716afb5.js",
+      "_@mdi-89bdb56e.js",
+      "_FormField-3f60007e.js",
+      "resources/Dashboard/js/app.js",
+      "_@inertiajs-ef8f571f.js",
+      "_moment-3156497a.js",
+      "_index-52e82673.js",
+      "_@vue-3d043469.js",
+      "_CardBox-68c82576.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/Patient/PatientData.vue"
+  },
+  "resources/Dashboard/js/Components/Models/Patient/PatientList.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/PatientList-c37cc910.js",
+    "imports": [
+      "_BaseTable-00b04a5e.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "resources/Dashboard/js/app.js",
+      "_index-892b5327.js",
+      "_@inertiajs-ef8f571f.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_lodash-dce9ffc4.js",
+      "_@vue-3d043469.js",
+      "_@mdi-89bdb56e.js",
+      "_moment-3156497a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_index-52e82673.js",
+      "_ModelData-a3ce9cf5.js",
+      "_CardBoxModal-a716afb5.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/Patient/PatientList.vue"
+  },
+  "resources/Dashboard/js/Components/Models/Reservation/ReservationData.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/ReservationData-77707b4f.js",
+    "imports": [
+      "_CardBoxModal-a716afb5.js",
+      "_@mdi-89bdb56e.js",
+      "_FormField-3f60007e.js",
+      "resources/Dashboard/js/app.js",
+      "_@inertiajs-ef8f571f.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_index-52e82673.js",
+      "_lodash-dce9ffc4.js",
+      "_@vue-3d043469.js",
+      "_CardBox-68c82576.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/Reservation/ReservationData.vue"
+  },
+  "resources/Dashboard/js/Components/Models/Reservation/ReservationList.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/ReservationList-3a42aeec.js",
+    "imports": [
+      "_BaseTable-00b04a5e.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "resources/Dashboard/js/app.js",
+      "_index-892b5327.js",
+      "_index-52e82673.js",
+      "_lodash-dce9ffc4.js",
+      "_@mdi-89bdb56e.js",
+      "_@inertiajs-ef8f571f.js",
+      "_@vue-3d043469.js",
+      "_moment-3156497a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_ModelData-a3ce9cf5.js",
+      "_CardBoxModal-a716afb5.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/Reservation/ReservationList.vue"
+  },
+  "resources/Dashboard/js/Components/Models/ReservationType/ReservationTypeData.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/ReservationTypeData-07c46643.js",
+    "imports": [
+      "_CardBoxModal-a716afb5.js",
+      "_@mdi-89bdb56e.js",
+      "_FormField-3f60007e.js",
+      "resources/Dashboard/js/app.js",
+      "_@inertiajs-ef8f571f.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_index-52e82673.js",
+      "_@vue-3d043469.js",
+      "_CardBox-68c82576.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/ReservationType/ReservationTypeData.vue"
+  },
+  "resources/Dashboard/js/Components/Models/ReservationType/ReservationTypeList.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/ReservationTypeList-69da3830.js",
+    "imports": [
+      "_BaseTable-00b04a5e.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "resources/Dashboard/js/app.js",
+      "_index-892b5327.js",
+      "_@inertiajs-ef8f571f.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_lodash-dce9ffc4.js",
+      "_@vue-3d043469.js",
+      "_@mdi-89bdb56e.js",
+      "_moment-3156497a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_index-52e82673.js",
+      "_ModelData-a3ce9cf5.js",
+      "_CardBoxModal-a716afb5.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/ReservationType/ReservationTypeList.vue"
+  },
+  "resources/Dashboard/js/Components/Models/Role/RoleData.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/RoleData-deae0a6a.js",
+    "imports": [
+      "_CardBoxModal-a716afb5.js",
+      "_@mdi-89bdb56e.js",
+      "_FormField-3f60007e.js",
+      "resources/Dashboard/js/app.js",
+      "_@inertiajs-ef8f571f.js",
+      "_FormCheckRadioGroup-2729dc66.js",
+      "_FormCheckRadio-4aa9785c.js",
+      "_FormWithLabelField-34459270.js",
+      "_moment-3156497a.js",
+      "_index-52e82673.js",
+      "_@vue-3d043469.js",
+      "_CardBox-68c82576.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/Role/RoleData.vue"
+  },
+  "resources/Dashboard/js/Components/Models/Role/RoleList.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/RoleList-3ae2ed33.js",
+    "imports": [
+      "_BaseTable-00b04a5e.js",
+      "_CardBox-68c82576.js",
+      "_@vue-3d043469.js",
+      "_@mdi-89bdb56e.js",
+      "resources/Dashboard/js/app.js",
+      "_pinia-a7ef4058.js",
+      "_@inertiajs-ef8f571f.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js",
+      "_index-52e82673.js",
+      "_ModelData-a3ce9cf5.js",
+      "_CardBoxModal-a716afb5.js",
+      "_FormValidationErrors-006f6464.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Components/Models/Role/RoleList.vue"
   },
   "resources/Dashboard/js/Pages/Auth/ConfirmPassword.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/ConfirmPassword-5fa5cae0.js",
+    "file": "assets/ConfirmPassword-8f1d7339.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
       "resources/Dashboard/js/app.js",
-      "_SectionFullScreen-6ed154ee.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionFullScreen-5aa357ce.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "_FormValidationErrors-006f6464.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@mdi-66fc679a.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Auth/ConfirmPassword.vue"
   },
   "resources/Dashboard/js/Pages/Auth/ForgotPassword.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/ForgotPassword-ffd35717.js",
+    "file": "assets/ForgotPassword-729183e4.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
-      "_@mdi-66fc679a.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
+      "_@mdi-89bdb56e.js",
       "resources/Dashboard/js/app.js",
-      "_SectionFullScreen-6ed154ee.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionFullScreen-5aa357ce.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "_FormValidationErrors-006f6464.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Auth/ForgotPassword.vue"
   },
   "resources/Dashboard/js/Pages/Auth/Login.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Login-964cae03.js",
+    "file": "assets/Login-86363e30.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
-      "_@mdi-66fc679a.js",
-      "_SectionFullScreen-6ed154ee.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormCheckRadioGroup-f67938a6.js",
-      "_FormField-dc7910ae.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
+      "_@mdi-89bdb56e.js",
+      "_SectionFullScreen-5aa357ce.js",
+      "_CardBox-68c82576.js",
+      "_FormCheckRadioGroup-2729dc66.js",
+      "_FormField-3f60007e.js",
       "resources/Dashboard/js/app.js",
-      "_FormCheckRadio-844df499.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_FormValidationErrors-006f6464.js",
+      "_FormCheckRadio-4aa9785c.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
@@ -552,291 +956,356 @@
   },
   "resources/Dashboard/js/Pages/Auth/Profile.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Profile-d9da2cc0.js",
+    "file": "assets/Profile-21e335ee.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@mdi-66fc679a.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_CardBox-62d8fdfd.js",
+      "_@vue-3d043469.js",
+      "_@mdi-89bdb56e.js",
+      "_SectionMain-797d14d3.js",
+      "_CardBox-68c82576.js",
       "resources/Dashboard/js/app.js",
-      "_FormField-dc7910ae.js",
-      "_FormCheckRadio-844df499.js",
-      "_PillTag-d41acbb1.js",
-      "_@inertiajs-27eca87a.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_FormField-3f60007e.js",
+      "_FormCheckRadio-4aa9785c.js",
+      "_PillTag-3e78cbfe.js",
+      "_@inertiajs-ef8f571f.js",
+      "_SectionTitleLineWithButton-2442347e.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_pinia-72bd3b5b.js",
-      "_ziggy-js-4c580b49.js",
-      "_axios-21b846bc.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_moment-3156497a.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js"
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Auth/Profile.vue"
   },
   "resources/Dashboard/js/Pages/Auth/Register.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Register-c2e439eb.js",
+    "file": "assets/Register-5667bac3.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
-      "_@mdi-66fc679a.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
+      "_@mdi-89bdb56e.js",
       "resources/Dashboard/js/app.js",
-      "_SectionFullScreen-6ed154ee.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormCheckRadioGroup-f67938a6.js",
-      "_FormField-dc7910ae.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionFullScreen-5aa357ce.js",
+      "_CardBox-68c82576.js",
+      "_FormCheckRadioGroup-2729dc66.js",
+      "_FormField-3f60007e.js",
+      "_FormValidationErrors-006f6464.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Auth/Register.vue"
   },
   "resources/Dashboard/js/Pages/Auth/ResetPassword.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/ResetPassword-0bd71bdd.js",
+    "file": "assets/ResetPassword-5b9f8f2d.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
-      "_@mdi-66fc679a.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
+      "_@mdi-89bdb56e.js",
       "resources/Dashboard/js/app.js",
-      "_SectionFullScreen-6ed154ee.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionFullScreen-5aa357ce.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "_FormValidationErrors-006f6464.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Auth/ResetPassword.vue"
   },
   "resources/Dashboard/js/Pages/Auth/TwoFactorChallenge.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/TwoFactorChallenge-9e2e81fc.js",
+    "file": "assets/TwoFactorChallenge-43999b0b.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
       "resources/Dashboard/js/app.js",
-      "_SectionFullScreen-6ed154ee.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionFullScreen-5aa357ce.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "_FormValidationErrors-006f6464.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@mdi-66fc679a.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Auth/TwoFactorChallenge.vue"
   },
   "resources/Dashboard/js/Pages/Auth/VerifyEmail.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/VerifyEmail-93e7e1c7.js",
+    "file": "assets/VerifyEmail-d49f126d.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
       "resources/Dashboard/js/app.js",
-      "_SectionFullScreen-6ed154ee.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionFullScreen-5aa357ce.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
+      "_FormValidationErrors-006f6464.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@mdi-66fc679a.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Auth/VerifyEmail.vue"
   },
-  "resources/Dashboard/js/Pages/Contacts/Index.vue": {
+  "resources/Dashboard/js/Pages/Employees/Index.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Index-d3f961fb.js",
+    "file": "assets/Index-6a47f11a.js",
     "imports": [
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_@mdi-66fc679a.js",
-      "_@inertiajs-27eca87a.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_CardBox-62d8fdfd.js",
+      "_SectionMain-797d14d3.js",
+      "_@inertiajs-ef8f571f.js",
+      "_BreadCrumb-10645c84.js",
+      "_ModelList-866a1268.js",
+      "_@mdi-89bdb56e.js",
       "resources/Dashboard/js/app.js",
-      "_FormField-dc7910ae.js",
-      "_lodash-097e1937.js",
-      "_@vue-588772e2.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionTitleLineWithButton-2442347e.js",
+      "_ModelData-a3ce9cf5.js",
+      "_FormField-3f60007e.js",
+      "_@vue-3d043469.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Contacts/Index.vue"
+    "src": "resources/Dashboard/js/Pages/Employees/Index.vue"
   },
-  "resources/Dashboard/js/Pages/Error.vue": {
+  "resources/Dashboard/js/Pages/Employees/Show.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Error-0ca84fec.js",
+    "file": "assets/Show-bafa4f7f.js",
     "imports": [
-      "_SectionFullScreen-6ed154ee.js",
-      "_CardBox-62d8fdfd.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
+      "_SectionMain-797d14d3.js",
       "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_BreadCrumb-10645c84.js",
+      "_StepsComponent-a72ed0da.js",
+      "_CardBox-68c82576.js",
+      "_ModelData-a3ce9cf5.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_pinia-72bd3b5b.js",
-      "_@inertiajs-27eca87a.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@mdi-66fc679a.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
+    ],
+    "isDynamicEntry": true,
+    "src": "resources/Dashboard/js/Pages/Employees/Show.vue"
+  },
+  "resources/Dashboard/js/Pages/Error.vue": {
+    "css": [
+      "assets/vue-toast-notification-eeef7d8b.css"
+    ],
+    "file": "assets/Error-f11aa256.js",
+    "imports": [
+      "_SectionFullScreen-5aa357ce.js",
+      "_CardBox-68c82576.js",
+      "resources/Dashboard/js/app.js",
+      "_@vue-3d043469.js",
+      "_pinia-a7ef4058.js",
+      "_@inertiajs-ef8f571f.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
+      "_has-symbols-e8f3ca0e.js",
+      "_has-proto-f7d0b240.js",
+      "_function-bind-61637ca6.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
@@ -844,560 +1313,430 @@
   },
   "resources/Dashboard/js/Pages/Home.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Home-6511ab93.js",
+    "file": "assets/Home-8af6f5dd.js",
     "imports": [
-      "_@inertiajs-27eca87a.js",
+      "_@inertiajs-ef8f571f.js",
       "resources/Dashboard/js/app.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_@mdi-66fc679a.js",
-      "_CardBox-62d8fdfd.js",
-      "_numeral-67d1e735.js",
-      "_@vue-588772e2.js",
-      "_PillTag-d41acbb1.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionTitleLineWithButton-2442347e.js",
+      "_SectionMain-797d14d3.js",
+      "_@mdi-89bdb56e.js",
+      "_CardBox-68c82576.js",
+      "_numeral-ce957433.js",
+      "_@vue-3d043469.js",
+      "_PillTag-3e78cbfe.js",
+      "_BreadCrumb-10645c84.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Home.vue"
   },
-  "resources/Dashboard/js/Pages/Navigations/Index.vue": {
+  "resources/Dashboard/js/Pages/Patients/Index.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Index-c086dc2a.js",
+    "file": "assets/Index-defbe34b.js",
     "imports": [
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_@mdi-66fc679a.js",
+      "_SectionMain-797d14d3.js",
+      "_@inertiajs-ef8f571f.js",
+      "_BreadCrumb-10645c84.js",
+      "_ModelList-866a1268.js",
+      "_@vue-3d043469.js",
       "resources/Dashboard/js/app.js",
-      "_NavigationsList-8ebfe4ef.js",
-      "_@inertiajs-27eca87a.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_@vue-588772e2.js",
-      "_pinia-72bd3b5b.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_axios-21b846bc.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_pluralize-27b8fe86.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
-      "_FormWithLabelField-e8758755.js",
-      "_TableOptions-5b065721.js",
-      "_sortablejs-vue3-78a6c49c.js",
-      "_sortablejs-0d19b1d3.js"
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_ModelData-a3ce9cf5.js",
+      "_SectionTitleLineWithButton-2442347e.js"
     ],
     "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Navigations/Index.vue"
+    "src": "resources/Dashboard/js/Pages/Patients/Index.vue"
   },
-  "resources/Dashboard/js/Pages/Navigations/Show.vue": {
+  "resources/Dashboard/js/Pages/Patients/Show.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Show-1a694814.js",
+    "file": "assets/Show-a3e28f46.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
+      "_SectionMain-797d14d3.js",
       "resources/Dashboard/js/app.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_StepsComponent-41615805.js",
-      "_CardBox-62d8fdfd.js",
-      "_NavigationsList-8ebfe4ef.js",
-      "_@mdi-66fc679a.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_BreadCrumb-10645c84.js",
+      "_StepsComponent-a72ed0da.js",
+      "_CardBox-68c82576.js",
+      "_ModelData-a3ce9cf5.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_FormField-dc7910ae.js",
-      "_FormWithLabelField-e8758755.js",
-      "_TableOptions-5b065721.js",
-      "_sortablejs-vue3-78a6c49c.js",
-      "_sortablejs-0d19b1d3.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Navigations/Show.vue"
+    "src": "resources/Dashboard/js/Pages/Patients/Show.vue"
   },
-  "resources/Dashboard/js/Pages/Pages/Index.vue": {
+  "resources/Dashboard/js/Pages/ReservationTypes/Index.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Index-1c19006c.js",
+    "file": "assets/Index-4aa61792.js",
     "imports": [
-      "_@mdi-66fc679a.js",
-      "_TableOptions-5b065721.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_ActionConfirmComponent-07d26409.js",
+      "_SectionMain-797d14d3.js",
+      "_@inertiajs-ef8f571f.js",
+      "_BreadCrumb-10645c84.js",
+      "_ModelList-866a1268.js",
       "resources/Dashboard/js/app.js",
-      "_@vue-588772e2.js",
-      "_FormField-dc7910ae.js",
-      "_@inertiajs-27eca87a.js",
-      "_FormWithLabelField-e8758755.js",
-      "_StepsComponent-41615805.js",
-      "_MetaDataComponent-6ba6b588.js",
-      "_ShowMediaComponent-a404520c.js",
-      "_CardBox-62d8fdfd.js",
-      "_EditPage-1938d225.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_pinia-72bd3b5b.js",
-      "_ziggy-js-4c580b49.js",
-      "_axios-21b846bc.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_@vue-3d043469.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_chart.js-485cbefc.js"
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_@mdi-89bdb56e.js",
+      "_ModelData-a3ce9cf5.js",
+      "_SectionTitleLineWithButton-2442347e.js",
+      "_pinia-a7ef4058.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Pages/Index.vue"
+    "src": "resources/Dashboard/js/Pages/ReservationTypes/Index.vue"
   },
-  "resources/Dashboard/js/Pages/Pages/Show.vue": {
+  "resources/Dashboard/js/Pages/ReservationTypes/Show.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Show-258d35d8.js",
+    "file": "assets/Show-a1e64772.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
+      "_SectionMain-797d14d3.js",
       "resources/Dashboard/js/app.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_EditPage-1938d225.js",
-      "_StepsComponent-41615805.js",
-      "_CardBox-62d8fdfd.js",
-      "_CreateSection-bf656694.js",
-      "_@mdi-66fc679a.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_BreadCrumb-10645c84.js",
+      "_StepsComponent-a72ed0da.js",
+      "_CardBox-68c82576.js",
+      "_ModelData-a3ce9cf5.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_FormField-dc7910ae.js",
-      "_FormWithLabelField-e8758755.js",
-      "_MetaDataComponent-6ba6b588.js",
-      "_ShowMediaComponent-a404520c.js",
-      "_chart.js-485cbefc.js",
-      "_TableOptions-5b065721.js",
-      "_EditSection-4f5e7477.js",
-      "_sortablejs-vue3-78a6c49c.js",
-      "_sortablejs-0d19b1d3.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Pages/Show.vue"
+    "src": "resources/Dashboard/js/Pages/ReservationTypes/Show.vue"
   },
-  "resources/Dashboard/js/Pages/Posts/Index.vue": {
+  "resources/Dashboard/js/Pages/Reservations/Index.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Index-fff69034.js",
+    "file": "assets/Index-3393154f.js",
     "imports": [
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_@mdi-66fc679a.js",
+      "_SectionMain-797d14d3.js",
+      "_@inertiajs-ef8f571f.js",
+      "_BreadCrumb-10645c84.js",
+      "_ModelList-866a1268.js",
+      "_@vue-3d043469.js",
       "resources/Dashboard/js/app.js",
-      "_PostsList-b9559046.js",
-      "_@inertiajs-27eca87a.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_@vue-588772e2.js",
-      "_pinia-72bd3b5b.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_axios-21b846bc.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_pluralize-27b8fe86.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
-      "_FormWithLabelField-e8758755.js",
-      "_StepsComponent-41615805.js",
-      "_ShowMediaComponent-a404520c.js",
-      "_chart.js-485cbefc.js",
-      "_TableOptions-5b065721.js",
-      "_sortablejs-vue3-78a6c49c.js",
-      "_sortablejs-0d19b1d3.js"
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_ModelData-a3ce9cf5.js",
+      "_SectionTitleLineWithButton-2442347e.js"
     ],
     "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Posts/Index.vue"
+    "src": "resources/Dashboard/js/Pages/Reservations/Index.vue"
   },
-  "resources/Dashboard/js/Pages/Posts/Show.vue": {
+  "resources/Dashboard/js/Pages/Reservations/Show.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Show-2f106235.js",
+    "file": "assets/Show-ae2eb922.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
+      "_SectionMain-797d14d3.js",
       "resources/Dashboard/js/app.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_EditPage-1938d225.js",
-      "_StepsComponent-41615805.js",
-      "_CardBox-62d8fdfd.js",
-      "_CreateSection-bf656694.js",
-      "_@mdi-66fc679a.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_BreadCrumb-10645c84.js",
+      "_StepsComponent-a72ed0da.js",
+      "_CardBox-68c82576.js",
+      "_ModelData-a3ce9cf5.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_FormField-dc7910ae.js",
-      "_FormWithLabelField-e8758755.js",
-      "_MetaDataComponent-6ba6b588.js",
-      "_ShowMediaComponent-a404520c.js",
-      "_chart.js-485cbefc.js",
-      "_TableOptions-5b065721.js",
-      "_EditSection-4f5e7477.js",
-      "_sortablejs-vue3-78a6c49c.js",
-      "_sortablejs-0d19b1d3.js"
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@mdi-89bdb56e.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
+      "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Posts/Show.vue"
+    "src": "resources/Dashboard/js/Pages/Reservations/Show.vue"
   },
   "resources/Dashboard/js/Pages/Roles/Index.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Index-03846bbf.js",
+    "file": "assets/Index-8675064d.js",
     "imports": [
-      "_CardBox-62d8fdfd.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_@inertiajs-27eca87a.js",
-      "_@mdi-66fc679a.js",
+      "_SectionMain-797d14d3.js",
+      "_@inertiajs-ef8f571f.js",
+      "_BreadCrumb-10645c84.js",
+      "_ModelList-866a1268.js",
+      "_CardBoxModal-a716afb5.js",
+      "_@mdi-89bdb56e.js",
+      "_FormField-3f60007e.js",
       "resources/Dashboard/js/app.js",
-      "_TableOptions-5b065721.js",
-      "_FormField-dc7910ae.js",
-      "_FormCheckRadioGroup-f67938a6.js",
-      "_FormCheckRadio-844df499.js",
-      "_FormWithLabelField-e8758755.js",
-      "_@vue-588772e2.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_FormCheckRadioGroup-2729dc66.js",
+      "_FormCheckRadio-4aa9785c.js",
+      "_FormWithLabelField-34459270.js",
+      "_@vue-3d043469.js",
+      "_axios-28bc18a3.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_pinia-72bd3b5b.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_ModelData-a3ce9cf5.js",
+      "_SectionTitleLineWithButton-2442347e.js",
+      "_CardBox-68c82576.js",
+      "_FormValidationErrors-006f6464.js",
+      "_pinia-a7ef4058.js",
       "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
+      "_pluralize-27b8fe86.js",
+      "_moment-3156497a.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Roles/Index.vue"
   },
-  "resources/Dashboard/js/Pages/Sections/Index.vue": {
-    "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
-    ],
-    "file": "assets/Index-64d0dc0a.js",
-    "imports": [
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_@mdi-66fc679a.js",
-      "resources/Dashboard/js/app.js",
-      "_CreateSection-bf656694.js",
-      "_@inertiajs-27eca87a.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_@vue-588772e2.js",
-      "_pinia-72bd3b5b.js",
-      "_ziggy-js-4c580b49.js",
-      "_axios-21b846bc.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
-      "_has-symbols-e8f3ca0e.js",
-      "_has-proto-f7d0b240.js",
-      "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_TableOptions-5b065721.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
-      "_EditSection-4f5e7477.js",
-      "_FormWithLabelField-e8758755.js",
-      "_StepsComponent-41615805.js",
-      "_ShowMediaComponent-a404520c.js",
-      "_chart.js-485cbefc.js",
-      "_sortablejs-vue3-78a6c49c.js",
-      "_sortablejs-0d19b1d3.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Sections/Index.vue"
-  },
-  "resources/Dashboard/js/Pages/Sections/Show.vue": {
-    "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
-    ],
-    "file": "assets/Show-cc0164ed.js",
-    "imports": [
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_EditSection-4f5e7477.js",
-      "resources/Dashboard/js/app.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_StepsComponent-41615805.js",
-      "_CardBox-62d8fdfd.js",
-      "_PostsList-b9559046.js",
-      "_@mdi-66fc679a.js",
-      "_axios-21b846bc.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
-      "_has-symbols-e8f3ca0e.js",
-      "_has-proto-f7d0b240.js",
-      "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_ActionConfirmComponent-07d26409.js",
-      "_FormField-dc7910ae.js",
-      "_FormWithLabelField-e8758755.js",
-      "_ShowMediaComponent-a404520c.js",
-      "_chart.js-485cbefc.js",
-      "_pinia-72bd3b5b.js",
-      "_ziggy-js-4c580b49.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
-      "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_TableOptions-5b065721.js",
-      "_sortablejs-vue3-78a6c49c.js",
-      "_sortablejs-0d19b1d3.js"
-    ],
-    "isDynamicEntry": true,
-    "src": "resources/Dashboard/js/Pages/Sections/Show.vue"
-  },
   "resources/Dashboard/js/Pages/Settings/Index.vue": {
     "css": [
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
-    "file": "assets/Index-a46ed52b.js",
+    "file": "assets/Index-dbf3ca25.js",
     "imports": [
-      "_@vue-588772e2.js",
-      "_@mdi-66fc679a.js",
-      "_SectionTitleLineWithButton-fd96079e.js",
-      "_CardBox-62d8fdfd.js",
-      "_FormField-dc7910ae.js",
+      "_@vue-3d043469.js",
+      "_@mdi-89bdb56e.js",
+      "_SectionMain-797d14d3.js",
+      "_CardBox-68c82576.js",
+      "_FormField-3f60007e.js",
       "resources/Dashboard/js/app.js",
-      "_@inertiajs-27eca87a.js",
-      "_FormWithLabelField-e8758755.js",
-      "_StepsComponent-41615805.js",
-      "_MetaDataComponent-6ba6b588.js",
-      "_BreadCrumb-cdf4b251.js",
-      "_@fawmi-8b2830bd.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_SectionTitleLineWithButton-2442347e.js",
+      "_@inertiajs-ef8f571f.js",
+      "_FormValidationErrors-006f6464.js",
+      "_FormWithLabelField-34459270.js",
+      "_StepsComponent-a72ed0da.js",
+      "_BreadCrumb-10645c84.js",
+      "_pinia-a7ef4058.js",
+      "_ziggy-js-4c580b49.js",
+      "_pluralize-27b8fe86.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js",
-      "_pinia-72bd3b5b.js",
-      "_ziggy-js-4c580b49.js",
-      "_axios-21b846bc.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_moment-3156497a.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js",
-      "_deepmerge-6e8a2108.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js"
+      "_deepmerge-92c57f0a.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js"
     ],
     "isDynamicEntry": true,
     "src": "resources/Dashboard/js/Pages/Settings/Index.vue"
   },
   "resources/Dashboard/js/app.css": {
-    "file": "assets/app-43374ddf.css",
+    "file": "assets/app-93e4f22f.css",
     "src": "resources/Dashboard/js/app.css"
   },
   "resources/Dashboard/js/app.js": {
     "css": [
-      "assets/app-43374ddf.css",
-      "assets/vue-toast-notification-cadf21a4.css"
+      "assets/app-93e4f22f.css",
+      "assets/vue-toast-notification-eeef7d8b.css"
     ],
     "dynamicImports": [
-      "resources/Dashboard/js/Pages/Admins/Index.vue",
       "resources/Dashboard/js/Pages/Auth/ConfirmPassword.vue",
       "resources/Dashboard/js/Pages/Auth/ForgotPassword.vue",
       "resources/Dashboard/js/Pages/Auth/Login.vue",
@@ -1406,59 +1745,60 @@
       "resources/Dashboard/js/Pages/Auth/ResetPassword.vue",
       "resources/Dashboard/js/Pages/Auth/TwoFactorChallenge.vue",
       "resources/Dashboard/js/Pages/Auth/VerifyEmail.vue",
-      "resources/Dashboard/js/Pages/Contacts/Index.vue",
+      "resources/Dashboard/js/Pages/Employees/Index.vue",
+      "resources/Dashboard/js/Pages/Employees/Show.vue",
       "resources/Dashboard/js/Pages/Error.vue",
       "resources/Dashboard/js/Pages/Home.vue",
-      "resources/Dashboard/js/Pages/Navigations/Index.vue",
-      "resources/Dashboard/js/Pages/Navigations/Show.vue",
-      "resources/Dashboard/js/Pages/Pages/Index.vue",
-      "resources/Dashboard/js/Pages/Pages/Show.vue",
-      "resources/Dashboard/js/Pages/Posts/Index.vue",
-      "resources/Dashboard/js/Pages/Posts/Show.vue",
+      "resources/Dashboard/js/Pages/Patients/Index.vue",
+      "resources/Dashboard/js/Pages/Patients/Show.vue",
+      "resources/Dashboard/js/Pages/ReservationTypes/Index.vue",
+      "resources/Dashboard/js/Pages/ReservationTypes/Show.vue",
+      "resources/Dashboard/js/Pages/Reservations/Index.vue",
+      "resources/Dashboard/js/Pages/Reservations/Show.vue",
       "resources/Dashboard/js/Pages/Roles/Index.vue",
-      "resources/Dashboard/js/Pages/Sections/Index.vue",
-      "resources/Dashboard/js/Pages/Sections/Show.vue",
       "resources/Dashboard/js/Pages/Settings/Index.vue"
     ],
-    "file": "assets/app-90a7b2da.js",
+    "file": "assets/app-edde13b8.js",
     "imports": [
-      "_pinia-72bd3b5b.js",
-      "_@vue-588772e2.js",
-      "_@inertiajs-27eca87a.js",
+      "_pinia-a7ef4058.js",
+      "_@vue-3d043469.js",
+      "_@inertiajs-ef8f571f.js",
       "_ziggy-js-4c580b49.js",
-      "_@mdi-66fc679a.js",
-      "_axios-21b846bc.js",
-      "_@tinymce-30eef72e.js",
-      "_sweetalert2-58dbf6b8.js",
+      "_pluralize-27b8fe86.js",
+      "_@mdi-89bdb56e.js",
+      "_axios-28bc18a3.js",
+      "_@tinymce-deed4607.js",
+      "_primevue-31afac00.js",
+      "_sweetalert2-9fa49638.js",
       "_laravel-vite-plugin-d10ca5e8.js",
-      "_@fawmi-8b2830bd.js",
-      "_deepmerge-6e8a2108.js",
-      "_call-bind-ca190c3c.js",
-      "_get-intrinsic-e274f0e2.js",
+      "_deepmerge-92c57f0a.js",
+      "_call-bind-19fee3be.js",
+      "_get-intrinsic-4a38020a.js",
       "_has-symbols-e8f3ca0e.js",
       "_has-proto-f7d0b240.js",
       "_function-bind-61637ca6.js",
-      "_has-6793fb5d.js",
-      "_qs-f6ae62cc.js",
-      "_side-channel-a0dcedb6.js",
-      "_object-inspect-b2565fee.js",
-      "_nprogress-c578ed10.js",
-      "_lodash.clonedeep-230241b1.js",
-      "_lodash.isequal-5002b1a4.js",
-      "_@googlemaps-29be2690.js",
-      "_fast-deep-equal-313c1b3e.js",
-      "_supercluster-6504d485.js",
-      "_kdbush-ac640998.js"
+      "_hasown-bc561cf0.js",
+      "_set-function-length-9c361e89.js",
+      "_define-data-property-bf6c9733.js",
+      "_has-property-descriptors-58650a95.js",
+      "_gopd-e1d311d9.js",
+      "_qs-b9141582.js",
+      "_side-channel-efc613fb.js",
+      "_object-inspect-a4b74234.js",
+      "_nprogress-7cc256ad.js",
+      "_lodash.clonedeep-8fa9e58b.js",
+      "_lodash.isequal-7aa21295.js",
+      "_moment-3156497a.js"
     ],
     "isEntry": true,
     "src": "resources/Dashboard/js/app.js"
   },
   "sweetalert2.css": {
-    "file": "assets/sweetalert2-2462df1f.css",
+    "file": "assets/sweetalert2-f43e4f32.css",
     "src": "sweetalert2.css"
   },
   "vue-toast-notification.css": {
-    "file": "assets/vue-toast-notification-cadf21a4.css",
+    "file": "assets/vue-toast-notification-eeef7d8b.css",
     "src": "vue-toast-notification.css"
   }
 }

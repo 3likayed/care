@@ -1,6 +1,6 @@
-import Pluralize from "pluralize";
 import {router} from "@inertiajs/vue3";
-import {route} from "../../Globals.js";
+import {modelResolver, route} from "../../Globals.js";
+import moment from "moment/moment.js";
 
 export default class Search {
     static  getParameters = () => {
@@ -11,15 +11,35 @@ export default class Search {
         }
         return search;
     }
+
+    static dateInterval(options = {}) {
+        let defaults = {interval: 1, shift: 0, modeRelative: true, mode: 1}
+        for (const [key, value] of Object.entries(options)) {
+            defaults[key] = options[key] ?? options[key];
+        }
+
+
+        let startDate = moment();
+        startDate.add(defaults.mode * defaults.shift,'d')
+
+        let endDate = moment(startDate).add(defaults.interval,'d');
+
+
+        return [
+            startDate.format("YYYY-MM-DD"),
+            endDate.format("YYYY-MM-DD")
+        ]
+    };
+
+    static setToday() {
+
+    }
+
     static  start = (value, model) => {
-        let data = {};
-        value.search ? data.search = value.search : ''
-        value.startDate ? data.startDate = value.startDate : ''
-        value.endDate ? data.endDate = value.endDate : ''
-        router.visit(route(`dashboard.${Pluralize(model)}.index`), {
+        router.visit(route(`dashboard.${modelResolver(model)}.index`), {
             replace: true,
             preserveState: true,
-            data: data
+            data: value
         })
     }
 }

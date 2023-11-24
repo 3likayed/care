@@ -12,55 +12,77 @@ import BaseButtons from "../Components/Sahred/BaseButtons.vue";
 import LayoutGuest from "../Layouts/LayoutGuest.vue";
 
 const form = reactive({
-  login: "john.doe",
-  pass: "highly-secure-password-fYjUw-",
-  remember: true,
+    login: "john.doe",
+    pass: "highly-secure-password-fYjUw-",
+    remember: true,
 });
 
 const router = useRouter();
 
 const submit = () => {
-  router.push("/dashboard");
+    router.push("/dashboard");
 };
 </script>
 
 <template>
-  <LayoutGuest>
-    <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
-      <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormField label="Login" help="Please enter your login">
-          <FormControl
-              v-model="form.login"
-              :icon="mdiAccount"
-              name="login"
-              autocomplete="username"
-          />
-        </FormField>
+    <LayoutGuest>
+        <SectionFullScreen
+            v-slot="{ cardClass }"
+            bg="purplePink"
+        >
+            <CardBox
+                :class="cardClass"
+                is-form
+                @submit.prevent="submit"
+            >
+                <FormField
+                    help="Please enter your login"
+                    label="Login"
+                >
+                    <FormControl
+                        v-model="form.login"
+                        :icon="mdiAccount"
+                        autocomplete="username"
+                        name="login"
+                    />
+                </FormField>
 
-        <FormField label="Password" help="Please enter your password">
-          <FormControl
-              v-model="form.pass"
-              :icon="mdiAsterisk"
-              type="password"
-              name="password"
-              autocomplete="current-password"
-          />
-        </FormField>
+                <FormField
+                    help="Please enter your password"
+                    label="Password"
+                >
+                    <FormControl
+                        v-model="form.pass"
+                        :icon="mdiAsterisk"
+                        autocomplete="current-password"
+                        name="password"
+                        type="password"
+                    />
+                </FormField>
 
-        <FormCheckRadio
-            v-model="form.remember"
-            name="remember"
-            label="Remember"
-            :input-value="true"
-        />
+                <FormCheckRadio
+                    v-model="form.remember"
+                    :input-value="true"
+                    label="Remember"
+                    name="remember"
+                />
 
-        <template #footer>
-          <BaseButtons>
-            <BaseButton type="submit" color="info" label="Login"/>
-            <BaseButton to="/dashboard" color="info" outline label="Back"/>
-          </BaseButtons>
-        </template>
-      </CardBox>
-    </SectionFullScreen>
-  </LayoutGuest>
+                <template #footer>
+                    <BaseButtons>
+                        <BaseButton
+                            color="info"
+                            label="Login"
+                            type="submit"
+                        />
+                        <BaseButton
+                            color="info"
+                            label="Back"
+                            outline
+                            to="/dashboard"
+                        />
+                    </BaseButtons>
+                </template>
+            </CardBox>
+        </SectionFullScreen>
+    </LayoutGuest>
 </template>

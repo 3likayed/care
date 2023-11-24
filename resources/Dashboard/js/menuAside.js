@@ -1,5 +1,6 @@
 import {
     mdiAccountStarOutline,
+    mdiCalendar,
     mdiCogOutline,
     mdiLockAlertOutline,
     mdiMonitor,
@@ -39,6 +40,19 @@ export default [
                 permission: "settings.edit",
                 components: ['Settings/Index'],
                 icon: mdiCogOutline,
+            },
+        ],
+    },
+    {
+        label: "reservations",
+        icon: mdiCalendar,
+        menu: [
+            {
+                route: "dashboard.reservation-types.index",
+                label: "reservation-types",
+                permission: "reservation-types.show",
+                components: ['ReservationTypes/Index', 'ReservationTypes/Show'],
+                icon: mdiAccountStarOutline,
             },
         ],
     },

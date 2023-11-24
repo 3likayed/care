@@ -7,13 +7,15 @@ const year = new Date().getFullYear();
 </script>
 
 <template>
-    <footer :class="containerMaxW" class="py-2 px-6">
+    <footer
+        :class="containerMaxW"
+        class="py-2 px-6"
+    >
         <BaseLevel>
             <div class="text-center md:text-start">
                 <slot/>
             </div>
-            <div class="md:py-2">
-            </div>
+            <div class="md:py-2"/>
         </BaseLevel>
     </footer>
 </template>

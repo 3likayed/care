@@ -12,10 +12,10 @@ import NotificationBarInCard from "../../Components/Sahred/NotificationBarInCard
 import BaseLevel from "../../Components/Sahred/BaseLevel.vue";
 
 const props = defineProps({
-  status: {
-    type: String,
-    default: null,
-  },
+    status: {
+        type: String,
+        default: null,
+    },
 });
 
 const form = useForm();
@@ -25,46 +25,60 @@ const verificationLinkSent = computed(
 );
 
 const submit = () => {
-  form.post(route("verification.send"));
+    form.post(route("verification.send"));
 };
 </script>
 
 <template>
-  <LayoutGuest>
-    <Head title="Email Verification"/>
+    <LayoutGuest>
+        <Head title="Email Verification"/>
 
-    <SectionFullScreen v-slot="{ cardClass }" bg="purplePink">
-      <CardBox :class="cardClass" is-form @submit.prevent="submit">
-        <FormValidationErrors/>
+        <SectionFullScreen
+            v-slot="{ cardClass }"
+            bg="purplePink"
+        >
+            <CardBox
+                :class="cardClass"
+                is-form
+                @submit.prevent="submit"
+            >
+                <FormValidationErrors/>
 
-        <NotificationBarInCard v-if="verificationLinkSent" color="info">
-          A new verification link has been sent to the email address you
-          provided during registration.
-        </NotificationBarInCard>
+                <NotificationBarInCard
+                    v-if="verificationLinkSent"
+                    color="info"
+                >
+                    A new verification link has been sent to the email address you
+                    provided during registration.
+                </NotificationBarInCard>
 
-        <FormField>
-          <div class="mb-4 text-sm text-gray-600">
-            Thanks for signing up! Before getting started, could you verify your
-            email address by clicking on the link we just emailed to you? If you
-            didn't receive the email, we will gladly send you another.
-          </div>
-        </FormField>
+                <FormField>
+                    <div class="mb-4 text-sm text-gray-600">
+                        Thanks for signing up! Before getting started, could you verify your
+                        email address by clicking on the link we just emailed to you? If you
+                        didn't receive the email, we will gladly send you another.
+                    </div>
+                </FormField>
 
-        <BaseDivider/>
+                <BaseDivider/>
 
-        <BaseLevel>
-          <BaseButton
-              type="submit"
-              color="info"
-              label="Resend Verification Email"
-              :class="{ 'opacity-25': form.processing }"
-              :disabled="form.processing"
-          />
-          <Link :href="route('logout')" method="post" as="button">
-            Logout
-          </Link>
-        </BaseLevel>
-      </CardBox>
-    </SectionFullScreen>
-  </LayoutGuest>
+                <BaseLevel>
+                    <BaseButton
+                        :class="{ 'opacity-25': form.processing }"
+                        :disabled="form.processing"
+                        color="info"
+                        label="Resend Verification Email"
+                        type="submit"
+                    />
+                    <Link
+                        :href="route('logout')"
+                        as="button"
+                        method="post"
+                    >
+                        Logout
+                    </Link>
+                </BaseLevel>
+            </CardBox>
+        </SectionFullScreen>
+    </LayoutGuest>
 </template>

@@ -7,7 +7,10 @@ const userName = computed(() => usePage().props.auth.user.name);
 </script>
 
 <template>
-  <UserAvatar :username="userName" api="initials">
-    <slot/>
-  </UserAvatar>
+    <UserAvatar
+        :username="userName"
+        api="initials"
+    >
+        <slot/>
+    </UserAvatar>
 </template>

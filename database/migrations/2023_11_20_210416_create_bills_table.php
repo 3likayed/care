@@ -13,7 +13,7 @@ return new class extends Migration {
         Schema::create('bills', function (Blueprint $table) {
             $table->id();
             $table->foreignId('reservation_id')
-                ->on('reservations')
+                ->constrained('reservations')
                 ->references('id')
                 ->cascadeOnDelete();
             $table->timestamps();

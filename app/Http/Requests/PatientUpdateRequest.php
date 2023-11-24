@@ -28,7 +28,7 @@ class PatientUpdateRequest extends FormRequest
             'phone.*' => ['required', 'numeric', 'digits:11'],
             'address' => ['required', 'array', 'min:1'],
             'address.*' => ['required', 'string', 'between:5,100'],
-            'birthday' => ['required', 'date', 'before:' . today()->format('Y-m-d')],
+            'birthday' => ['required', 'date', 'before:'.today()->format('Y-m-d')],
 
         ];
     }

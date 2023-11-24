@@ -7,21 +7,30 @@ import LayoutGuest from "../Layouts/LayoutGuest.vue";
 </script>
 
 <template>
-  <LayoutGuest>
-    <SectionFullScreen v-slot="{ cardClass }" bg="pinkRed">
-      <CardBox :class="cardClass">
-        <div class="space-y-3">
-          <h1 class="text-2xl">Unhandled exception</h1>
+    <LayoutGuest>
+        <SectionFullScreen
+            v-slot="{ cardClass }"
+            bg="pinkRed"
+        >
+            <CardBox :class="cardClass">
+                <div class="space-y-3">
+                    <h1 class="text-2xl">
+                        Unhandled exception
+                    </h1>
 
-          <p>An Error Occurred</p>
-        </div>
+                    <p>An Error Occurred</p>
+                </div>
 
-        <template #footer>
-          <BaseButtons>
-            <BaseButton label="Done" to="/dashboard" color="danger"/>
-          </BaseButtons>
-        </template>
-      </CardBox>
-    </SectionFullScreen>
-  </LayoutGuest>
+                <template #footer>
+                    <BaseButtons>
+                        <BaseButton
+                            color="danger"
+                            label="Done"
+                            to="/dashboard"
+                        />
+                    </BaseButtons>
+                </template>
+            </CardBox>
+        </SectionFullScreen>
+    </LayoutGuest>
 </template>

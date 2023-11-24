@@ -2,22 +2,22 @@
 import BaseIcon from "./BaseIcon.vue";
 
 defineProps({
-  icon: {
-    type: String,
-    default: null,
-  },
-  h: {
-    type: String,
-    default: null,
-  },
+    icon: {
+        type: String,
+        default: null,
+    },
+    h: {
+        type: String,
+        default: null,
+    },
 });
 </script>
 
 <template>
-  <BaseIcon
-      :path="icon"
-      w="w-10"
-      :h="h"
-      class="absolute top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
-  />
+    <BaseIcon
+        :h="h"
+        :path="icon"
+        class="absolute top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
+        w="w-10"
+    />
 </template>

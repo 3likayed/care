@@ -4,12 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\RoleStoreRequest;
 use App\Http\Requests\RoleUpdateRequest;
-use App\Http\Resources\PermissionResource;
-use App\Http\Resources\RoleResource;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
-
 
 class RoleController extends Controller
 {
@@ -28,6 +25,7 @@ class RoleController extends Controller
     {
         $roles = Role::with('permissions')->get();
         $permissions = Permission::orderBy('name')->get();
+
         return Inertia::render('Roles/Index', [
             'roles' => $roles,
             'permissions' => $permissions,

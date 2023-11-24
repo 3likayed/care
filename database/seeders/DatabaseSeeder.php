@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-
 use App\Models\Employee;
 use App\Models\Setting;
 use Illuminate\Database\Seeder;
@@ -35,11 +34,12 @@ class DatabaseSeeder extends Seeder
                 'roles.create', 'roles.edit', 'roles.delete', 'roles.show',
                 'patients.create', 'patients.edit', 'patients.delete', 'patients.show',
                 'reservation-type.create', 'reservation-type.edit', 'reservation-type.delete', 'reservation-type.show',
+                'reservations.create', 'reservations.edit', 'reservations.delete', 'reservations.show',
                 'settings.edit',
             ],
         ];
-        $insertPermissions = fn($role) => collect($permissionsByRole[$role])
-            ->map(fn($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'dashboard']))
+        $insertPermissions = fn ($role) => collect($permissionsByRole[$role])
+            ->map(fn ($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'dashboard']))
             ->toArray();
         $permissionIdsByRole = [
             'employee' => $insertPermissions('employee'),
@@ -49,14 +49,13 @@ class DatabaseSeeder extends Seeder
 
             DB::table('role_has_permissions')
                 ->insert(
-                    collect($permissionIds)->map(fn($id) => [
+                    collect($permissionIds)->map(fn ($id) => [
                         'role_id' => $role->id,
                         'permission_id' => $id,
                     ])->toArray()
                 );
 
-
-
+            $this->call(ReservationsTableSeeder::class);
     }
         $settings = Setting::create([]);
         $settings->meta()->create([]);

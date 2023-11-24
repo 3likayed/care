@@ -11,10 +11,9 @@ use Spatie\MediaLibrary\HasMedia;
 
 class Setting extends Model implements HasMedia
 {
+    use InteractsWithMedia;
 
-    use InteractsWithMedia ;
     protected static string $cacheName = 'settings';
-
 
     protected $fillable = ['name', 'description', 'phone', 'email', 'social', 'location', 'whatsapp'];
 

@@ -3,10 +3,10 @@ import {computed, onMounted, ref, watch} from "vue";
 import {CategoryScale, Chart, LinearScale, LineController, LineElement, PointElement, Tooltip,} from "chart.js";
 
 const props = defineProps({
-  data: {
-    type: Object,
-    required: true,
-  },
+    data: {
+        type: Object,
+        required: true,
+    },
 });
 
 const root = ref(null);
@@ -23,39 +23,39 @@ Chart.register(
 );
 
 onMounted(() => {
-  chart = new Chart(root.value, {
-    type: "line",
-    data: props.data,
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        y: {
-          display: false,
+    chart = new Chart(root.value, {
+        type: "line",
+        data: props.data,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    display: false,
+                },
+                x: {
+                    display: true,
+                },
+            },
+            plugins: {
+                legend: {
+                    display: false,
+                },
+            },
         },
-        x: {
-          display: true,
-        },
-      },
-      plugins: {
-        legend: {
-          display: false,
-        },
-      },
-    },
-  });
+    });
 });
 
 const chartData = computed(() => props.data);
 
 watch(chartData, (data) => {
-  if (chart) {
-    chart.data = data;
-    chart.update();
-  }
+    if (chart) {
+        chart.data = data;
+        chart.update();
+    }
 });
 </script>
 
 <template>
-  <canvas ref="root"/>
+    <canvas ref="root"/>
 </template>

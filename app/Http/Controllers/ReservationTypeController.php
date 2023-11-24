@@ -2,14 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PatientIndexRequest;
-use App\Http\Requests\PatientStoreRequest;
-use App\Http\Requests\PatientUpdateRequest;
-use App\Http\Resources\ModelCollection;
-use App\Models\Patient;
+use App\Http\Requests\ReservationTypeSubmitRequest;
+use App\Models\ReservationType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
 
 class ReservationTypeController extends Controller
 {
@@ -18,64 +14,65 @@ class ReservationTypeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:reservation-types.show,dashboard'])->only(['index', 'show']);
+        $this->middleware(['permission:reservation-types.show,dashboard'])->only(['index', 'show', 'fetch']);
         $this->middleware(['permission:reservation-types.edit'])->only(['update']);
         $this->middleware(['permission:reservation-types.create'])->only(['store']);
         $this->middleware(['permission:reservation-types.delete'])->only(['destroy']);
     }
 
+    public function fetch(Request $request)
+    {
+        return ReservationType::all();
+    }
+
     public function index(Request $request)
     {
-        $patients = Patient::when($request->search, function ($query) use ($request) {
-            $query->where("name", "like", "%$request->search%")
-                ->orWhere("phone", 'like', "%$request->search%")
-                ->orWhere("address", 'like', "%$request->search%");
-        })->paginate();
+        $reservationTypes = ReservationType::when($request->fetch, function ($query) use ($request) {
+            $query->where('name', 'like', "%$request->fetch%");
+        })->get();
 
-        return Inertia::render('Patients/Index', [
-            'meta' => meta()->metaValues(['title' => __('dashboard.patients')]),
-            'data' => ModelCollection::make($patients),
+        return Inertia::render('ReservationTypes/Index', [
+            'meta' => meta()->metaValues(['title' => __('dashboard.reservation-types')]),
+            'data' => $reservationTypes,
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PatientStoreRequest $request)
+    public function store(ReservationTypeSubmitRequest $request)
     {
 
         $data = $request->validated();
-        Patient::create($data);;
-
+        ReservationType::create($data);
 
         return success();
 
     }
 
-    public function update(PatientUpdateRequest $request, Patient $patient)
+    public function update(ReservationTypeSubmitRequest $request, ReservationType $reservationType)
     {
-
-
         $data = $request->validated();
-        $patient->update($data);
+        $reservationType->update($data);
 
         return success();
     }
 
-    public function show(Patient $patient)
+    public function show(ReservationType $reservationType)
     {
-        return Inertia::render('Patients/Show', [
-            'data' => $patient,
-            'meta' => meta()->metaValues(['title' => "$patient->name | " . __("dashboard.patients")])
+        return Inertia::render('ReservationTypes/Show', [
+            'data' => $reservationType,
+            'meta' => meta()->metaValues(['title' => "$reservationType->name | " . __('dashboard.patients')]),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Patient $patient)
+    public function destroy(ReservationType $reservationType)
     {
-        $patient->delete();
+        $reservationType->delete();
+
         return success();
     }
 }

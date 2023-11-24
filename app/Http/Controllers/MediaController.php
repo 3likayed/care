@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
+
 use function App\Http\Controllers\Dashboard\error;
 use function App\Http\Controllers\Dashboard\success;
 

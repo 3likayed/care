@@ -33,7 +33,6 @@ const transactionBarItems = computed(() => mainStore.history);
 </script>
 
 <template>
-
     <Head>
         <title>Dashboard</title>
     </Head>
@@ -43,8 +42,7 @@ const transactionBarItems = computed(() => mainStore.history);
             :icon="mdiChartTimelineVariant"
             main
             title="Overview"
-        >
-        </SectionTitleLineWithButton>
+        />
         <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
             <CardBoxWidget
                 v-if="can('pages.show')"
@@ -74,46 +72,44 @@ const transactionBarItems = computed(() => mainStore.history);
                 :number="$page.props.data.contacts_count"
                 color="text-blue-500"
             />
-
         </div>
 
         <!--    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-              <div class="flex flex-col justify-between">
-                <CardBoxTransaction
-                    v-for="(transaction, index) in transactionBarItems"
-                    :key="index"
-                    :account="transaction.account"
-                    :amount="transaction.amount"
-                    :business="transaction.business"
-                    :date="transaction.date"
-                    :name="transaction.name"
-                    :type="transaction.type"
-                />
-              </div>
-              <div class="flex flex-col justify-between">
-                <CardBoxClient
-                    v-for="client in clientBarItems"
-                    :key="client.id"
-                    :date="client.created"
-                    :login="client.login"
-                    :name="client.name"
-                    :progress="client.progress"
-                />
-              </div>
-            </div>-->
+                  <div class="flex flex-col justify-between">
+                    <CardBoxTransaction
+                        v-for="(transaction, index) in transactionBarItems"
+                        :key="index"
+                        :account="transaction.account"
+                        :amount="transaction.amount"
+                        :business="transaction.business"
+                        :date="transaction.date"
+                        :name="transaction.name"
+                        :type="transaction.type"
+                    />
+                  </div>
+                  <div class="flex flex-col justify-between">
+                    <CardBoxClient
+                        v-for="client in clientBarItems"
+                        :key="client.id"
+                        :date="client.created"
+                        :login="client.login"
+                        :name="client.name"
+                        :progress="client.progress"
+                    />
+                  </div>
+                </div>-->
         <!--    <SectionTitleLineWithButton :icon="mdiChartPie" title="Trends overview">
-              <BaseButton
-                  :icon="mdiReload"
-                  color="whiteDark"
-                  @click="fillChartData"
-              />
-            </SectionTitleLineWithButton>
+                  <BaseButton
+                      :icon="mdiReload"
+                      color="whiteDark"
+                      @click="fillChartData"
+                  />
+                </SectionTitleLineWithButton>
 
-            <CardBox class="mb-4">
-              <div v-if="chartData">
-                <line-chart :data="chartData" class="h-96"/>
-              </div>
-            </CardBox>-->
+                <CardBox class="mb-4">
+                  <div v-if="chartData">
+                    <line-chart :data="chartData" class="h-96"/>
+                  </div>
+                </CardBox>-->
     </SectionMain>
-
 </template>

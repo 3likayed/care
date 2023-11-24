@@ -13,18 +13,18 @@ return new class extends Migration {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('patient_id')
-                ->on('patients')
+                ->constrained('patients')
                 ->references('id')
                 ->cascadeOnDelete();
 
             $table->foreignId('reservation_type_id')
-                ->on('reservation_types')
+                ->constrained('reservation_types')
                 ->references('id')
                 ->cascadeOnDelete();
 
-            $table->string('total');
-            $table->string('discount');
-            $table->dateTime('reserved_at');
+            $table->string('price');
+            $table->dateTime('date');
+            $table->double('discount')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -38,3 +38,4 @@ return new class extends Migration {
         Schema::dropIfExists('reservations');
     }
 };
+

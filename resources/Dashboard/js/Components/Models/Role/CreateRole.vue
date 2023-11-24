@@ -37,7 +37,7 @@
 <script setup>
 
 import CardBoxModal from "../../Sahred/CardBoxModal.vue";
-import {computed, inject} from "vue";
+import {inject} from "vue";
 import {mdiAccount} from "@mdi/js";
 import FormField from "../../Sahred/FormField.vue";
 import FormControl from "../../Sahred/FormControl.vue";

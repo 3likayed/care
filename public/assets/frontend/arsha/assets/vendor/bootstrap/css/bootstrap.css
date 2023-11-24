@@ -6148,7 +6148,7 @@ textarea.form-control-lg {
   "autoRename": true,
   "stringMap":[ {
     "name"    : "prev-next",
-    "search"  : "prev",
+    "searchValue"  : "prev",
     "replace" : "next"
   } ]
 } */

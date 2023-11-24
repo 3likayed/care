@@ -9,7 +9,8 @@ import Globals from "./Globals.js";
 import 'vue-toast-notification/dist/theme-bootstrap.css';
 import Layout from "./Layouts/Layout.vue";
 import {resolvePageComponent} from "laravel-vite-plugin/inertia-helpers";
-import VueGoogleMaps from "@fawmi/vue-google-maps";
+import PrimeVue from 'primevue/config';
+import primeVuePt from "./primeVuePt.js";
 
 const pinia = createPinia();
 createInertiaApp({
@@ -28,13 +29,7 @@ createInertiaApp({
         return createApp({render: () => h(App, props)})
             .use(plugin)
             .use(pinia)
-            .use(VueGoogleMaps, {
-                load: {
-                    key: 'AIzaSyAsWoXMlhZneXdzbmoCgxMwW8gnqIvAN0w',
-                    libraries: "places",
-                    language: props.initialPage.props.current_locale
-                }
-            })
+            .use(PrimeVue, {pt:primeVuePt})
             .mixin(Globals)
             .mount(el);
     }

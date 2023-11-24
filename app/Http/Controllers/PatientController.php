@@ -2,14 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PatientIndexRequest;
 use App\Http\Requests\PatientStoreRequest;
 use App\Http\Requests\PatientUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
 
 class PatientController extends Controller
 {
@@ -18,7 +16,7 @@ class PatientController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:patients.show,dashboard'])->only(['index', 'show']);
+        $this->middleware(['permission:patients.show,dashboard'])->only(['index', 'show', 'fetch']);
         $this->middleware(['permission:patients.edit'])->only(['update']);
         $this->middleware(['permission:patients.create'])->only(['store']);
         $this->middleware(['permission:patients.delete'])->only(['destroy']);
@@ -26,16 +24,18 @@ class PatientController extends Controller
 
     public function index(Request $request)
     {
-        $patients = Patient::when($request->search, function ($query) use ($request) {
-            $query->where("name", "like", "%$request->search%")
-                ->orWhere("phone", 'like', "%$request->search%")
-                ->orWhere("address", 'like', "%$request->search%");
-        })->paginate();
-
+        $patients = $this->filter($request->only(['name', 'phone', 'start', 'end', 'trashed']))
+            ->paginate();
         return Inertia::render('Patients/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.patients')]),
             'data' => ModelCollection::make($patients),
         ]);
+    }
+
+    public function fetch(Request $request)
+    {
+
+        return Patient::filter($request->only(['search', 'phone','id']))->get();
     }
 
     /**
@@ -45,8 +45,7 @@ class PatientController extends Controller
     {
 
         $data = $request->validated();
-        Patient::create($data);;
-
+        Patient::create($data);
 
         return success();
 
@@ -54,7 +53,6 @@ class PatientController extends Controller
 
     public function update(PatientUpdateRequest $request, Patient $patient)
     {
-
 
         $data = $request->validated();
         $patient->update($data);
@@ -66,7 +64,7 @@ class PatientController extends Controller
     {
         return Inertia::render('Patients/Show', [
             'data' => $patient,
-            'meta' => meta()->metaValues(['title' => "$patient->name | " . __("dashboard.patients")])
+            'meta' => meta()->metaValues(['title' => "$patient->name | " . __('dashboard.patients')]),
         ]);
     }
 

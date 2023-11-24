@@ -133,8 +133,15 @@ return [
     'end' => 'النهاية',
     'page_from' => 'صفحة رقم  :current من أصل   :total ',
     'result_from' => 'النتائج :from إلى :to من أصل  :total ',
-    'birthday'=>"تاريخ الميلاد",
-    'patient'=>"مريض",
-    'patients'=>"المرضى",
+    'birthday' => 'تاريخ الميلاد',
+    'patient' => 'مريض',
+    'patients' => 'المرضى',
+    'previous' => 'السابق',
+    'next' => 'التالي',
+    'days' => 'الايام',
+    'reservation' => 'حجز',
+    'reservations' => 'الحجوزات',
+    'reservationType' => 'نوع الحجز',
+    'reservation-types' => 'أنواع الحجز',
 
 ];

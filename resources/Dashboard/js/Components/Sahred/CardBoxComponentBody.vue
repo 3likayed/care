@@ -1,11 +1,14 @@
 <script setup>
 defineProps({
-  noPadding: Boolean,
+    noPadding: Boolean,
 });
 </script>
 
 <template>
-  <div class="flex-1" :class="{ 'p-6': !noPadding }">
-    <slot/>
-  </div>
+    <div
+        :class="{ 'p-6': !noPadding }"
+        class="flex-1"
+    >
+        <slot/>
+    </div>
 </template>
