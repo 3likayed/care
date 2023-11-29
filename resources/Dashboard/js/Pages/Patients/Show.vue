@@ -18,6 +18,7 @@
             <ReservationsList
                 :has-search="false"
                 :items="data.reservations"
+                :sortable="false"
             >
                 <template #create>
                     <ReservationCreate :data="{patient_id:data.id}" :patients="[data]"

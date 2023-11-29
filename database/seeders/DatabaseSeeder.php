@@ -55,7 +55,7 @@ class DatabaseSeeder extends Seeder
                     ])->toArray()
                 );
 
-            $this->call(ReservationsTableSeeder::class);
+
     }
         $settings = Setting::create([]);
         $settings->meta()->create([]);

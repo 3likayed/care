@@ -10,13 +10,13 @@
         :model-value="true"
         :title="__('create_field',{field:'reservation'})"
         @cancel="showEdit=false"
-        @confirm="submit"
+        @confirm="submit() ; showEdit=false"
     >
         <FormField :errors="form.errors.patient_id" :label="__('patient')">
             <FormControl
-                v-model="data.patient_id"
+                v-model="computedData.patient_id"
                 :icon="mdiAccount"
-                :options="[data.patient]"
+                :options="[computedData.patient]"
                 autocomplete="patient"
                 is-disabled
                 name="patient"
@@ -56,7 +56,7 @@ import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__} from "../../Globals.js";
-import {inject} from "vue";
+import {computed, inject} from "vue";
 import {Model} from "../../Utils/index.js";
 import moment from "moment";
 
@@ -74,15 +74,17 @@ let props = defineProps({
     }
 })
 
+let computedData = computed(() => props.data)
 let showEdit = inject('showEdit');
 let form = useForm({
-    reservation_type_id: props.data.reservation_type_id,
-    date: moment(props.data.date).format('YYYY-MM-DDTHH:mm'),
+    reservation_type_id: computedData.value.reservation_type_id,
+    patient_id: computedData.value?.patient_id,
+    date: moment(computedData.value.date).format('YYYY-MM-DDTHH:mm'),
 
 });
 
 const submit = () => {
-    Model.submit('create', 'reservations', form)
+    Model.submit('edit', 'reservations', form,props.data.id)
 }
 
 </script>

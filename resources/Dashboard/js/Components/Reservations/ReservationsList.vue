@@ -4,7 +4,7 @@
 
         <template #create>
             <slot name="create">
-                <ReservationCreate  :reservationTypes="reservationTypes"/>
+                <ReservationCreate :reservationTypes="reservationTypes"/>
             </slot>
 
         </template>
@@ -31,8 +31,9 @@
     </DynamicSearch>
     <CardBox has-table>
         <BaseTable
-            :headers="['#','patient','reservation_type','price','date','time',{name:'created_at',sortable:true}]"
+            :headers="['#','patient','reservation_type','price',{name:'date', sortable : true },'time',{name:'created_at',sortable:true}]"
             :pagination="pagination"
+            :sortable="sortable"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ key + 1 }}</td>
@@ -95,9 +96,13 @@ let edited = ref();
 let reservationTypes = computed(() => usePage().props.reservation_types);
 
 let props = defineProps({
-    data:Object,
+    data: Object,
     items: Array,
     pagination: Object,
+    sortable: {
+        type: Boolean,
+        default: true,
+    },
     hasSearch: {
         type: Boolean,
         default: true,
@@ -106,7 +111,7 @@ let props = defineProps({
 let searchFields = [
     {name: 'start', type: 'date'},
     {name: 'end', type: 'date'},
-    {name: 'reservation_type_id', label: 'reservation-type', type: 'select', options :reservationTypes.value}
+    {name: 'reservation_type_id', label: 'reservation-type', type: 'select', options: reservationTypes.value}
 ]
 </script>
 <style>

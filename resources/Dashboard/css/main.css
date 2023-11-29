@@ -20,12 +20,12 @@ svg {
     @apply rtl:-scale-x-100
 }
 
-.sorted-asc{
+.sortable.sorted-asc{
     @apply cursor-pointer  after:content-['↑'] after:text-green-500
 }
-.sorted-desc{
-    @apply cursor-pointer after:content-['↓'] after:text-red-500
-}
+.sortable.sorted-desc{
+     @apply cursor-pointer after:content-['↓'] after:text-red-500
+ }
 
 .sortable:not(.sorted-desc):not(.sorted-asc) {
     @apply cursor-pointer after:content-['↑↓']  after:text-gray-400

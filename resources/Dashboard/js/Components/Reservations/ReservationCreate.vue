@@ -91,7 +91,6 @@ let form = useForm({
 let patientOptions = ref(props.patients);
 const fetchPatients = debounce((search) => {
     if (search) {
-        console.log(search)
         Model.fetch('patients', {name: search}).then(
             data => patientOptions.value = data
         )

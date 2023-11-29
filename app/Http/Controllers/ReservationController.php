@@ -27,10 +27,11 @@ class ReservationController extends Controller
 
     public function index(Request $request)
     {
-        $reservations=QueryBuilder::for(Reservation::class)
-            ->with(['patient','reservationType'])
-            ->allowedFilters('reservation_type_id',AllowedFilter::scope('start') , AllowedFilter::scope('end'))
-            ->paginate();
+        $reservations = QueryBuilder::for(Reservation::class)
+            ->with(['patient', 'reservationType'])
+            ->allowedFilters('reservation_type_id', AllowedFilter::scope('start'), AllowedFilter::scope('end'))
+            ->allowedSorts(['date', 'created_at'])
+            ->paginate($request->get('per_page'));
         $reservationTypes = ReservationType::all();
         return Inertia::render('Reservations/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.reservations')]),
@@ -65,7 +66,7 @@ class ReservationController extends Controller
 
     public function show(Reservation $reservation)
     {
-        $reservation->load('patient','reservationType');
+        $reservation->load('patient', 'reservationType');
         return Inertia::render('Reservations/Show', [
             'data' => $reservation,
             'meta' => meta()->metaValues(['title' => "$reservation->name | " . __('dashboard.reservations')]),
