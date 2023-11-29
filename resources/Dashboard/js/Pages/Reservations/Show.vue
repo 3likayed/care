@@ -8,24 +8,17 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <ModelData
-                :data="data"
+            <DynamicData
                 :is-modal="false"
-                :model="model"
+                :item="data"
+                :resolver="resolver"
+                model="reservation"
                 operation="edit"
-            />
+                v-on="resolver.on??{}"/>
         </section>
         <section v-show="step === 1">
-            reservations
+            payments
         </section>
-        <!--
-            <section v-show="step === 1">
-              <PostDetailsList :data="data"/>
-            </section>
-        -->
-        <!--    <section v-show="step === 1">
-              <ProjectsList :projects="patient.projects"/>
-            </section>-->
     </SectionMain>
 </template>
 
@@ -38,15 +31,16 @@ import {__, modelResolver} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import ModelData from "../../Components/Models/ModelData.vue";
+import DynamicData from "../../Components/DynamicData.vue";
+import {reservation} from "../../Resolvers";
 
 
-let steps = ref([__('data'), __('reservations')]);
+let steps = ref([__('data'), __('payments')]);
 let step = ref(0);
 let data = usePage().props.data;
 let model = "reservation";
-let breadcrumbItems = [{name: __(modelResolver(model)), href: route(`dashboard.${modelResolver(model)}.index`)}]
-breadcrumbItems.push({name: data.name, href: route(`dashboard.${modelResolver(model)}.show`, data.id)})
+let breadcrumbItems = [{name: __('reservations'), href: route(`dashboard.reservations.index`)}]
+breadcrumbItems.push({name: data.name, href: route(`dashboard.reservations.show`, data.id)})
 
 </script>
 <style scoped>

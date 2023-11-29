@@ -1,17 +1,14 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`${modelResolver(model)}.${operation}`)"
-        :button-label="__(operation)"
-        :has-cancel="isModal"
-        :has-errors="form.hasErrors"
+        :button-label="__('create')"
+        :has-cancel="true"
+        :hasErrors="form.hasErrors"
         :is-form="true"
-        :is-modal="isModal"
         :model-value="true"
-        :title="__(operation+'_field',{field:model})"
-        @cancel="$emit('cancel')"
-        @confirm="Model.submit(operation,model,form,data.id)"
-    >
+        :title="__('create_field',{field:'role'})"
+        @cancel="showCreate=false"
+        @confirm="submit">
         <FormField :errors="form.errors.name" :label="__('name')">
             <FormControl
                 v-model="form.name"
@@ -39,53 +36,46 @@
 
 <script setup>
 
-import CardBoxModal from "../../Sahred/CardBoxModal.vue";
+import CardBoxModal from "../Sahred/CardBoxModal.vue";
+import {inject} from "vue";
 import {mdiAccount} from "@mdi/js";
-import FormField from "../../Sahred/FormField.vue";
-import FormControl from "../../Sahred/FormControl.vue";
+import FormField from "../Sahred/FormField.vue";
+import FormControl from "../Sahred/FormControl.vue";
 import {useForm, usePage} from "@inertiajs/vue3";
-import FormCheckRadioGroup from "../../Sahred/FormCheckRadioGroup.vue";
-import FormCheckRadio from "../../Sahred/FormCheckRadio.vue";
-import {__} from "../../../Globals.js";
-import FormWithLabelField from "../../Sahred/FormWithLabelField.vue";
+import FormCheckRadioGroup from "../Sahred/FormCheckRadioGroup.vue";
+import FormCheckRadio from "../Sahred/FormCheckRadio.vue";
+import {__} from "../../Globals.js";
+import FormWithLabelField from "../Sahred/FormWithLabelField.vue";
+import {Model} from "../../Utils/index.js";
 
-import {Model} from "../../../Utils/index.js";
 
-let props = defineProps({
-    data: {
-        type: Object,
-        default: {},
-    },
-    show: Boolean,
-    operation: String,
-    isModal: {
-        type: Boolean,
-        default: true
-    }
-})
-let model = 'Role'
+let showCreate = inject('showCreate');
+const page = usePage()
+const allPermissions = page.props.permissions
 
-const page = usePage();
-let allPermissions = page.props.permissions;
 let formPermissions = {};
 allPermissions.map(function (item, key) {
     let splitted = item.name.split('.');
     (formPermissions[splitted[0]] = formPermissions[splitted[0]] || []).push({
         name: splitted[1],
-        checked: Boolean(props.data.permissions.find((permission) => permission.id === item.id)),
+        checked: false,
         id: item.id,
         key: key
     });
-
 })
 
+
 let form = useForm({
-    name: props.data.name,
+    name: null,
     permissions: allPermissions.map(item => {
-        item.checked = Boolean(props.data.permissions.find((permission) => permission.id === item.id));
+        item.checked = false
         return item;
     })
 });
+
+function submit() {
+    Model.submit('create', 'roles', form)
+}
 </script>
 <style scoped>
 

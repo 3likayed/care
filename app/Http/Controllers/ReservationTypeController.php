@@ -6,6 +6,7 @@ use App\Http\Requests\ReservationTypeSubmitRequest;
 use App\Models\ReservationType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ReservationTypeController extends Controller
 {
@@ -14,23 +15,18 @@ class ReservationTypeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:reservation-types.show,dashboard'])->only(['index', 'show', 'fetch']);
+        $this->middleware(['permission:reservation-types.show,dashboard'])->only(['index', 'show']);
         $this->middleware(['permission:reservation-types.edit'])->only(['update']);
         $this->middleware(['permission:reservation-types.create'])->only(['store']);
         $this->middleware(['permission:reservation-types.delete'])->only(['destroy']);
     }
 
-    public function fetch(Request $request)
-    {
-        return ReservationType::all();
-    }
-
     public function index(Request $request)
     {
-        $reservationTypes = ReservationType::when($request->fetch, function ($query) use ($request) {
-            $query->where('name', 'like', "%$request->fetch%");
-        })->get();
-
+        $reservationTypes = QueryBuilder::for(ReservationType::class)
+            ->allowedFilters(['name', 'price'])
+            ->allowedSorts(['name', 'price', 'created_at'])
+            ->paginate($request->per_page);
         return Inertia::render('ReservationTypes/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.reservation-types')]),
             'data' => $reservationTypes,
@@ -60,6 +56,7 @@ class ReservationTypeController extends Controller
 
     public function show(ReservationType $reservationType)
     {
+        $reservationType->load('reservations', 'reservations.patient', 'reservations.reservationType');
         return Inertia::render('ReservationTypes/Show', [
             'data' => $reservationType,
             'meta' => meta()->metaValues(['title' => "$reservationType->name | " . __('dashboard.patients')]),

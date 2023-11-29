@@ -1,12 +1,18 @@
 <script setup>
-import {computed, useSlots} from "vue";
+import {computed, provide, ref, useSlots} from "vue";
 import BaseIcon from "./BaseIcon.vue";
 import IconRounded from "./IconRounded.vue";
+import {mdiPlusCircle} from "@mdi/js";
+import BaseButton from "./BaseButton.vue";
 
 defineProps({
     icon: {
         type: String,
         default: null,
+    },
+    hasCreate: {
+        type: Boolean,
+        default: true
     },
     title: {
         type: String,
@@ -16,6 +22,8 @@ defineProps({
 });
 
 const hasSlot = computed(() => useSlots().default);
+let showCreate = ref(false);
+provide('showCreate', showCreate)
 </script>
 
 <template>
@@ -45,6 +53,14 @@ const hasSlot = computed(() => useSlots().default);
                 {{ title }}
             </h1>
         </div>
-        <slot v-if="hasSlot"/>
+        <slot v-if="hasSlot">
+        </slot>
+        <BaseButton v-if="hasCreate" :icon="mdiPlusCircle" color="success" @click="showCreate=true"/>
     </section>
+
+
+    <slot v-if="hasCreate && showCreate " name="create" @cancel="showCreate=false">
+
+    </slot>
+
 </template>

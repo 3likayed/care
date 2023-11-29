@@ -5,43 +5,38 @@
     >
         <BaseButton
             v-if="hasShow"
-            :disabled="model ? !can(`${modelResolver(model)}.show`) : false"
+            :disabled="model ? !can(`${model}.show`) : false"
             :icon="mdiEyeOutline"
             color="contrast"
             small
-            @click="Model.show(model,data.id)"
+            @click="Model.show(model,item.id)"
         />
         <BaseButton
             v-if="hasEdit"
-            :disabled="model ? !can(`${modelResolver(model)}.edit`) : false"
+            :disabled="model ? !can(`${model}.edit`) : false"
             :icon="mdiSquareEditOutline"
             color="info"
             small
-            @click="showEdit=true "
+            @click="showEdit=true ; emit('edit') "
         />
         <BaseButton
             v-if="hasDestroy"
-            :disabled="model ? !can(`${modelResolver(model)}.delete`) : false "
+            :disabled="model ? !can(`${model}.delete`) : false "
             :icon="mdiTrashCanOutline"
             color="danger"
             small
-            @click="showDelete=true"
+            @click="showDelete=true "
         />
         <slot/>
     </BaseButtons>
 
-    <ModelData
-        v-if="showEdit"
-        :data="data"
-        :model="model"
-        :options="options?.update"
-        :show="showEdit"
-        operation="edit"
-        @cancel="showEdit=false"
-    />
+    <slot v-if="showEdit" name="edit">
+
+    </slot>
+
     <ActionConfirmComponent
         v-model="showDelete"
-        @confirm="Model.delete(model,data.id)"
+        @confirm="Model.delete(model,item.id)"
     />
 </template>
 
@@ -52,14 +47,14 @@ import BaseButton from "./BaseButton.vue";
 import BaseButtons from "./BaseButtons.vue";
 import {can} from "../../Globals.js";
 import {Model} from "../../Utils";
-import ModelData from "../Models/ModelData.vue";
-import {ref} from "vue";
+import {provide, ref} from "vue";
 import ActionConfirmComponent from "./ActionConfirmComponent.vue";
 
 
 let showEdit = ref(false);
 let showDelete = ref(false);
-
+provide('showEdit', showEdit)
+let emit = defineEmits(['edit'])
 let props = defineProps({
     hasEdit: {
         type: Boolean,
@@ -73,9 +68,9 @@ let props = defineProps({
         type: Boolean,
         default: true,
     },
-    options : Object,
+
     model: String,
-    data: Object
+    item: Object
 })
 
 </script>

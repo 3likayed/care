@@ -32,23 +32,11 @@ class Patient extends Model
         return $this->hasManyDeep(Bill::class, [Reservation::class, Payment::class]);
     }
 
-    public function scopeFilter($query, array $filters)
+    public function scopeSearch( $query, $date)
     {
-
-        return $query
-            ->when($filters['id'] ?? null, function ($query, $id) {
-                $query->where('id', '=', $id);
-            })
-            ->when($filters['search'] ?? null, function ($query, $search) {
-                $query->orWhere('name', 'like', "%$search%")
-                    ->orWhere('phone', 'like', "%$search%");
-            })->when($filters['trashed'] ?? null, function ($query, $trashed) {
-                if ($trashed === 'with') {
-                    $query->withTrashed();
-                } elseif ($trashed === 'only') {
-                    $query->onlyTrashed();
-                }
-            });
+        return $query->where('name', 'like', "%$date%")
+            ->orWhere('email','like',"%$date%")
+            ->orWhere('phone','like',"%$date%");
     }
 
     protected function asJson($value): bool|string

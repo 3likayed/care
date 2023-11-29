@@ -125,7 +125,7 @@ function changePrice(reservationTypeId) {
 onMounted(() => {
 
     const fetchPatients = (searchData) => {
-        searchData.id = form.patient_id ??''
+        searchData.id = form.patient_id ?? ''
         Model.fetch('patients', searchData)
             .then(data => patients.value = data)
     }

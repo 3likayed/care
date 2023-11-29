@@ -29,7 +29,7 @@ createInertiaApp({
         return createApp({render: () => h(App, props)})
             .use(plugin)
             .use(pinia)
-            .use(PrimeVue, {pt:primeVuePt})
+            .use(PrimeVue, {pt: primeVuePt})
             .mixin(Globals)
             .mount(el);
     }

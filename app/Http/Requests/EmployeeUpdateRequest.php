@@ -31,7 +31,7 @@ class EmployeeUpdateRequest extends FormRequest
             'phone.*' => ['required', 'numeric', 'digits:11'],
             'address' => ['required', 'array', 'min:1'],
             'address.*' => ['required', 'string', 'between:5,100'],
-            'role' => ['required', 'exists:roles,id'],
+            'role' => ['required','numeric' ,'exists:roles,id']
         ];
     }
 }

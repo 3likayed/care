@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class EmployeeController extends Controller
 {
@@ -26,6 +28,7 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
+
         return Inertia::render('Employees/Show', [
             'data' => $employee,
             'meta' => meta()->metaValues(['title' => "$employee->name | " . __('dashboard.patients')]),
@@ -35,8 +38,13 @@ class EmployeeController extends Controller
     public function index(Request $request)
     {
 
-        $employees = Employee::filter($request->only(['search', 'trashed']))->paginate();
-
+        $employees = QueryBuilder::for(Employee::class)
+            ->allowedFilters(
+                AllowedFilter::scope('search'),
+                'name',
+                'email'
+            )
+            ->get();
         $roles = Role::all();
 
         return Inertia::render('Employees/Index', [
@@ -55,7 +63,7 @@ class EmployeeController extends Controller
         DB::beginTransaction();
         $data = $request->validated();
         $employee = Employee::create($data);
-        $employee->assignRole(Role::findById($data['role']));
+        $employee->assignRole(Role::find($data['role']));
         DB::commit();
 
         return success();
@@ -67,7 +75,7 @@ class EmployeeController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        if (!$data['password']) {
+        if (!isset($data['password']) || !$data['password']) {
             unset($data['password']);
         }
         $employee->update($data);

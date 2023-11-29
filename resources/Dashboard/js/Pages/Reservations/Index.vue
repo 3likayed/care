@@ -1,36 +1,50 @@
 <template>
     <SectionMain>
         <BreadCrumb
-            :items="[{name: __(`${modelResolver(model)}`), href: route(`dashboard.${modelResolver(model)}.index`)}]"/>
-        <ModelList
-            :data="data"
-            :model="model"
-            :options="options"
-            :icon="mdiFormatListBulleted"
-            has-pagination
-            has-search
-
+            :items="[{name: __(`reservations`), }]"/>
+        <ReservationsList
+            :items="data.data"
+            :pagination="data.meta"
         />
+        <!--        <DynamicList
+                    :icon="mdiFormatListBulleted"
+                    :model="model"
+                    :resolver="resolver"
+                >
+                    <template #search>
+                        <div class="col-span-full ">
+                            <FormField :label="__('days')" class-addon="grid md:grid-cols-3 gap-5">
+                                <FormControl
+                                    v-model="daysInterval"
+                                    autocomplete="search"
+                                    name="search"
+                                >
+                                </FormControl>
+                                <BaseButton :icon="mdiCalendarToday" :label="__('next')"
+                                            color="success"
+                                            @click="Search.start(Search.dateInterval({ interval:daysInterval }),'reservations',true)"/>
+                                <BaseButton :icon="mdiCalendarToday" :label="__('previous')"
+                                            color="danger"
+                                            @click="Search.start(Search.dateInterval({ interval:daysInterval,mode:-1 }),'reservations',true)"/>
+                            </FormField>
+                        </div>
+                    </template>
+                </DynamicList>-->
     </SectionMain>
+
 </template>
 
 <script setup>
 
 import SectionMain from "../../Components/Sahred/SectionMain.vue";
-
-import {computed} from "vue";
-import {usePage} from "@inertiajs/vue3";
+import {computed, ref} from "vue";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
-import ModelList from "../../Components/Models/ModelList.vue";
-import {mdiFormatListBulleted} from "@mdi/js";
+import ReservationsList from "../../Components/Reservations/ReservationsList.vue";
+import {usePage} from "@inertiajs/vue3";
 
-let model = "reservation"
-let data = computed(() => usePage().props.data);
-let options = {
-    update: {
-        disabled: ['patient_id']
-    }
-}
+let daysInterval = ref()
+let patients = ref([]);
+let data = computed(() => usePage().props.data)
 
 </script>
 <style scoped>

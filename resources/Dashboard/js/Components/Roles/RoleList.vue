@@ -1,9 +1,9 @@
 <script setup>
 
 import {ref} from "vue";
-import BaseTable from "../../Sahred/BaseTable.vue";
-import TableOptions from "../../Sahred/TableOptions.vue";
-import CardBox from "../../Sahred/CardBox.vue";
+import BaseTable from "../Sahred/BaseTable.vue";
+import TableOptions from "../Sahred/TableOptions.vue";
+import CardBox from "../Sahred/CardBox.vue";
 
 
 let props = defineProps({

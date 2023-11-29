@@ -73,7 +73,7 @@ const props = defineProps({
     },
 });
 
-const emit = defineEmits(["update:modelValue", "setRef", "action", 'filter']);
+const emit = defineEmits(["update:modelValue", "setRef", "action", 'filter', 'render']);
 
 const computedValue = computed({
     get: () => props.modelValue,
@@ -121,6 +121,8 @@ onMounted(() => {
     } else {
         emit("setRef", inputEl.value);
     }
+    emit('render', computedValue.value);
+
 });
 
 if (props.ctrlKFocus) {
@@ -167,19 +169,21 @@ if (computedType.value === "editor") {
         <SelectControl
             v-if="computedType==='select'"
             :id="id"
+            ref="inputEl"
             v-model="computedValue"
             :class="inputElClass"
             :disabled="isDisabled"
             :multiple="multiple"
             :name="name"
             :options="computedOptions"
-            @filter="(value)=>emit('filter',value)">
+            @filter="(value)=>emit('filter',value.value)">
 
         </SelectControl>
 
         <textarea
             v-else-if="computedType === 'textarea'"
             :id="id"
+            ref="inputEl"
             v-model="computedValue"
             :class="inputElClass"
             :disabled="isDisabled"
@@ -203,7 +207,7 @@ if (computedType.value === "editor") {
             :id="id"
             ref="inputEl"
             v-model="computedValue"
-            :autocomplete="autocomplete"
+            :autocomplete="autocomplete??name"
             :class="inputElClass"
             :disabled="isDisabled"
             :inputmode="inputmode"
@@ -232,7 +236,7 @@ if (computedType.value === "editor") {
     </div>
     <div
         v-if="errors"
-        class="text-xs text-red-500 dark:text-red-400 mt-1 w-100 "
+        class="text-start text-xs text-red-500 dark:text-red-400 mt-1 w-100 "
     >
         {{ errors }}
     </div>

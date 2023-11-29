@@ -6,8 +6,11 @@ use App\Http\Requests\PatientStoreRequest;
 use App\Http\Requests\PatientUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Patient;
+use App\Models\ReservationType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class PatientController extends Controller
 {
@@ -24,8 +27,10 @@ class PatientController extends Controller
 
     public function index(Request $request)
     {
-        $patients = Patient::filter($request->only(['search', 'trashed']))
-            ->paginate();
+        $patients = QueryBuilder::for(Patient::class)
+            ->allowedFilters([AllowedFilter::scope('search'), 'name', 'email', 'phone'])
+            ->allowedSorts(['name', 'email', 'birthday'])
+            ->paginate($request->per_page);
         return Inertia::render('Patients/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.patients')]),
             'data' => ModelCollection::make($patients),
@@ -35,7 +40,9 @@ class PatientController extends Controller
     public function fetch(Request $request)
     {
 
-        return Patient::filter($request->only(['search', 'id']))->get();
+        return QueryBuilder::for(Patient::class)
+            ->allowedFilters(['name'])
+            ->get();
     }
 
     /**
@@ -62,9 +69,10 @@ class PatientController extends Controller
 
     public function show(Patient $patient)
     {
-        $patient->load('reservations','reservations.patient','reservations.reservationType');
+        $patient->load('reservations', 'reservations.patient', 'reservations.reservationType');
         return Inertia::render('Patients/Show', [
             'data' => $patient,
+            'reservation_types' => ReservationType::all(),
             'meta' => meta()->metaValues(['title' => "$patient->name | " . __('dashboard.patients')]),
         ]);
     }

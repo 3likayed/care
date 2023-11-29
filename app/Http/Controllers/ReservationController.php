@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ReservationStoreRequest;
+use App\Http\Requests\ReservationUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Reservation;
 use App\Models\ReservationType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ReservationController extends Controller
 {
@@ -24,13 +27,15 @@ class ReservationController extends Controller
 
     public function index(Request $request)
     {
-        $reservations = Reservation::filter($request->only(['name', 'start', 'end', 'trashed']))
-            ->with(['patient', 'reservationType'])
+        $reservations=QueryBuilder::for(Reservation::class)
+            ->with(['patient','reservationType'])
+            ->allowedFilters('reservation_type_id',AllowedFilter::scope('start') , AllowedFilter::scope('end'))
             ->paginate();
-
+        $reservationTypes = ReservationType::all();
         return Inertia::render('Reservations/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.reservations')]),
             'data' => ModelCollection::make($reservations),
+            'reservation_types' => $reservationTypes,
         ]);
     }
 
@@ -48,10 +53,11 @@ class ReservationController extends Controller
 
     }
 
-    public function update(ReservationStoreRequest $request, Reservation $reservation)
+    public function update(ReservationUpdateRequest $request, Reservation $reservation)
     {
 
         $data = $request->validated();
+        $data['price'] = ReservationType::find($data['reservation_type_id'])->price;
         $reservation->update($data);
 
         return success();
@@ -59,9 +65,10 @@ class ReservationController extends Controller
 
     public function show(Reservation $reservation)
     {
+        $reservation->load('patient','reservationType');
         return Inertia::render('Reservations/Show', [
             'data' => $reservation,
-            'meta' => meta()->metaValues(['title' => "$reservation->name | " . __('dashboard.patients')]),
+            'meta' => meta()->metaValues(['title' => "$reservation->name | " . __('dashboard.reservations')]),
         ]);
     }
 

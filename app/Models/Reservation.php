@@ -25,6 +25,16 @@ class Reservation extends Model
         return $this->belongsTo(ReservationType::class);
     }
 
+    public function scopeStart($query, $value)
+    {
+        return $query->where('date', '>=', $value);
+    }
+
+    public function scopeEnd($query, $value)
+    {
+        return $query->where('date', '<=', Carbon::parse($value)->addDay() );
+    }
+
     public function scopeFilter($query, array $filters)
     {
 

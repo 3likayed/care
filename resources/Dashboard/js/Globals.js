@@ -56,18 +56,6 @@ export function assignTranslatable(value) {
     return localesObjectOfObjects(null);
 }
 
-export const assignMeta = (meta) => {
-
-
-    return {
-        title: !Array.isArray(meta?.title) ? (meta?.title ?? {}) : {},
-        description: !Array.isArray(meta?.description) ? (meta?.description ?? {}) : {},
-        keywords: !Array.isArray(meta?.keywords) ? (meta?.keywords ?? {}) : {},
-        slug: !Array.isArray(meta?.slug) ? (meta?.slug ?? {}) : {},
-
-    }
-}
-
 export const formParameters = (model, operation, id, modelResolver = true) => {
     if (modelResolver)
         model = model + 's';
@@ -99,9 +87,8 @@ export const handleField = (form, field, action, key) => {
 
 export const modelResolver = (word) => {
     word = Pluralize(word);
-    return word.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
+    return word.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/_/g, '-').toLowerCase();
 }
-
 
 export default {
     methods: {

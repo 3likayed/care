@@ -1,28 +1,26 @@
 <template>
+
     <SectionMain>
-        <BreadCrumb :items="[{name: __(`${modelResolver(model)}`), href: route(`dashboard.${modelResolver(model)}.index`)}]"/>
-        <ModelList
-            :data="data"
-            :model="model"
-            has-pagination
-            has-search
-        />
+        <BreadCrumb :items="[{name: __('patients'), href: route('dashboard.patients.index')}]"/>
+        <PatientsList :items="items" :pagination="pagination"/>
     </SectionMain>
+
+
 </template>
 
 <script setup>
 
 import SectionMain from "../../Components/Sahred/SectionMain.vue";
-
-import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
+import {computed} from "vue";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
-import ModelList from "../../Components/Models/ModelList.vue";
+import PatientsList from "../../Components/Patients/PatientsList.vue";
 
-let model = "patient"
-let data = computed(() => usePage().props.data);
 
+let items = computed(() => usePage().props.data.data);
+let pagination = computed(() => usePage().props.data.meta);
 </script>
-<style scoped>
+<style>
+
 
 </style>

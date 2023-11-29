@@ -31,16 +31,11 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         });
         Route::apiResource('roles', RoleController::class)->except(['show']);
         Route::apiResource('employees', EmployeeController::class);
-        Route::apiResource('patients', PatientController::class);
-        Route::apiResource('patients', PatientController::class);
+        Route::apiResource('patients', PatientController::class);;
+        Route::get('fetch/patients', [PatientController::class,'fetch'])->name('fetch.patients');
         Route::apiResource('reservation-types', ReservationTypeController::class);
         Route::apiResource('reservations', ReservationController::class);
 
-
-        Route::group(['prefix' => 'fetch', 'as' => 'fetch.'], function () {
-            Route::get('patients', [PatientController::class, 'fetch'])->name('patients');
-            Route::get('reservation-types', [ReservationTypeController::class, 'fetch'])->name('reservation-types');
-        });
 
     });
 

@@ -1,31 +1,81 @@
 <template>
+
     <SectionMain>
-        <BreadCrumb
-            :items="[{name: __(`${modelResolver(model)}`), href: route(`dashboard.${modelResolver(model)}.index`)}]"/>
-        <ModelList
-            :data="data"
-            :model="model"
-            has-pagination
-            has-search
-        />
+        <BreadCrumb :items="[{name: __('employees'), href: route('dashboard.employees.index')}]"/>
+        <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('employees')" main>
+            <template #create>
+                <CreateEmployee/>
+            </template>
+
+        </SectionTitleLineWithButton>
+        <DynamicSearch :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="employees"/>
+
+        <CardBox has-table>
+            <BaseTable :headers="['#',__('name'),__('email'),__('phone'),__('address'),__('created_at')]">
+                <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
+                    <td data-label="# ">{{ key + 1 }}</td>
+                    <td :data-label="__('name')">
+                        {{ item.name }}
+                    </td>
+                    <td :data-label="__('email')">
+                        {{ item.email }}
+                    </td>
+                    <td :data-label="__('phone')">
+
+                        <ul class="list-decimal">
+                            <li v-for="(phone,key) in item.phone">
+                                {{ phone }}
+                            </li>
+                        </ul>
+                    </td>
+                    <td :data-label="__('address')">
+
+                        <ul class="list-decimal">
+                            <li v-for="(address,key) in item.address">
+                                {{ address }}
+                            </li>
+                        </ul>
+                    </td>
+                    <td :data-label="__('created_at')">
+                        {{ moment(item.created_at).format('YYYY-MM-DD') }}
+                    </td>
+                    <td :data-label="__('options')">
+                        <TableOptions :has-show="false" :item="item" model="employees" @edit="edited=item">
+                            <template #edit>
+                                <EditEmployee :data="edited"/>
+                            </template>
+                        </TableOptions>
+                    </td>
+                </tr>
+
+            </BaseTable>
+        </CardBox>
     </SectionMain>
+
+
 </template>
 
 <script setup>
 
+import CardBox from "../../Components/Sahred/CardBox.vue";
+import BaseTable from "../../Components/Sahred/BaseTable.vue";
 import SectionMain from "../../Components/Sahred/SectionMain.vue";
-import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
+import {mdiLockAlertOutline} from "@mdi/js";
+import {computed, ref} from "vue";
+import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
-import ModelList from "../../Components/Models/ModelList.vue";
-import {modelResolver} from "../../Globals.js";
+import DynamicSearch from "../../Components/DynamicSearch.vue";
+import moment from "moment";
+import TableOptions from "../../Components/Sahred/TableOptions.vue";
+import EditEmployee from "../../Components/Employees/EmployeeEdit.vue";
+import CreateEmployee from "../../Components/Employees/EmployeeCreate.vue";
 
 
-let model = "employee"
-
-let data = computed(() => usePage().props.data)
-
+let items = computed(() => usePage().props.data.data);
+let edited = ref({})
 </script>
-<style scoped>
+<style>
+
 
 </style>

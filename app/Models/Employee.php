@@ -50,27 +50,18 @@ class Employee extends Authenticatable
 
     protected $appends = ['role'];
 
-    public function scopeFilter($query, array $filters)
-    {
-        return $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where('name', 'like', "%$search%")
-                ->orWhere('phone', 'like', "%$search%")
-                ->orWhere('email', 'like', "%$search%");
-        })->when($filters['trashed'] ?? null, function ($query, $trashed) {
-            if ($trashed === 'with') {
-                $query->withTrashed();
-            } elseif ($trashed === 'only') {
-                $query->onlyTrashed();
-            }
-        });
-    }
-
     protected function role(): Attribute
     {
         return Attribute::get(
             fn() => $this->roles()->first(),
         );
     }
+    public function scopeSearch( $query, $date)
+    {
+        return $query->where('name', 'like', "%$date%")
+            ->orWhere('email','like','%$date%');
+    }
+
 
     protected function permissionNames(): Attribute
     {

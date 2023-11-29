@@ -141,7 +141,7 @@ return [
     'days' => 'الايام',
     'reservation' => 'حجز',
     'reservations' => 'الحجوزات',
-    'reservationType' => 'نوع الحجز',
+    'reservation-type' => 'نوع الحجز',
     'reservation-types' => 'أنواع الحجز',
 
 ];

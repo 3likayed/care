@@ -7,6 +7,7 @@ use App\Http\Requests\RoleUpdateRequest;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class RoleController extends Controller
 {
@@ -18,12 +19,16 @@ class RoleController extends Controller
         $this->middleware(['permission:roles.delete'])->only(['destroy']);
     }
 
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $roles = Role::with('permissions')->get();
+        $roles = QueryBuilder::for(Role::class)
+            ->allowedFilters(['name'])
+            ->with('permissions')
+            ->get();
         $permissions = Permission::orderBy('name')->get();
 
         return Inertia::render('Roles/Index', [

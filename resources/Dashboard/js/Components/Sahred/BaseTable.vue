@@ -1,9 +1,11 @@
 <script setup>
 import {useSlots} from "vue";
 import {Link} from "@inertiajs/vue3";
+import {Search} from "../../Utils/index.js";
 
 let props = defineProps({
     headers: Array,
+    model: String,
     pagination: Object,
     isDraggable: Boolean
 })
@@ -24,6 +26,10 @@ function calculatedUrl(paginationUrl) {
     }
 
 }
+
+const headerName = (header) => typeof header === 'string' ? header : header.name
+const isSortable = (header) => typeof header === 'string' ? false : header.sortable
+
 </script>
 
 <template>
@@ -33,8 +39,14 @@ function calculatedUrl(paginationUrl) {
             <th
                 v-for="(header, key) in headers"
                 :key="key"
+                :class='{
+            "sortable": isSortable(header) ,
+            "sorted-asc" : Search.isSortExist(header.name) && Search.isAsc(header.name),
+            "sorted-desc" : Search.isSortExist(header.name) && !Search.isAsc(header.name),
+             }'
+                @click="()=>isSortable(header) ? Search.sort(header.name,props.model):''"
             >
-                {{ header }}
+                {{ __(headerName(header)) }}
             </th>
         </tr>
         </thead>
@@ -107,8 +119,5 @@ function calculatedUrl(paginationUrl) {
     </div>
 </template>
 <style>
-th, td {
-    text-align: center;
-}
 
 </style>

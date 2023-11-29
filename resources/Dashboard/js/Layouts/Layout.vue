@@ -7,6 +7,7 @@ import Flash from "../Components/Sahred/Flash.vue";
 
 let user = usePage().props.auth.user
 let meta = computed(() => usePage().props.meta ?? {});
+;
 
 </script>
 

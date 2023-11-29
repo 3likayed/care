@@ -27,11 +27,12 @@ export default class Model {
 
     static async fetch(model, filter) {
         try {
-            const url = route(`dashboard.fetch.${modelResolver(model)}`)
-            const parameters = new URLSearchParams(filter).toString();
-            const fullUrl = parameters ? `${url}?${parameters}` : url;
-            const response = await fetch(fullUrl);
-            return await response.json();
+            const url = route(`dashboard.fetch.${model}`)
+            let result = Object.entries(filter)
+                .map(([key, value]) => `filter[${key}]=${value}`)
+                .join('&');
+            const fullUrl = result ? `${url}?${result}` : url;
+            return (await fetch(fullUrl)).json();
         } catch (error) {
             console.error(error);
         }
@@ -57,8 +58,7 @@ export default class Model {
 
     static submit(operation, model, form, id, modelResolve = true) {
 
-        if (modelResolver)
-            model = modelResolver(model);
+
         switch (operation) {
             case 'edit' :
                 this.edit(model, form, id);
