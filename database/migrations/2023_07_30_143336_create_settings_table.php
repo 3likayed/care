@@ -13,14 +13,13 @@ return new class extends Migration
     {
         Schema::create('settings', function (Blueprint $table) {
             $table->id();
-            $table->longText('description')->nullable();
-            $table->string('title')->nullable();
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
-            $table->string('whatsapp')->nullable();
             $table->string('email')->nullable();
-            $table->string('social')->nullable();
-            $table->string('location')->nullable();
+            $table->foreignId('doctor_role')
+                ->nullable()
+                ->constrained('roles')
+                ->references('id');
             $table->timestamps();
         });
     }

@@ -44,7 +44,7 @@ class ProfileController extends Controller
 
     public function updatePassword(ProfilePasswordUpdateReuest $request)
     {
-        $user = $request->user('dashboard');
+        $user = $request->user();
 
         if (! Hash::check($request->current_password, $user->password)) {
             throw ValidationException::withMessages([
@@ -66,7 +66,7 @@ class ProfileController extends Controller
 
         $user = $request->user();
 
-        Auth::guard('dashboard')->logout();
+        Auth::guard()->logout();
 
         $user->delete();
 

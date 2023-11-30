@@ -1,12 +1,12 @@
 <script setup>
 import {computed, onBeforeUnmount, onMounted, ref} from "vue";
 import {useMainStore} from "../../Stores/main.js";
-import FormControlIcon from "./FormControlIcon.vue";
 import BaseButtons from "./BaseButtons.vue";
 import BaseButton from "./BaseButton.vue";
 import Editor from '@tinymce/tinymce-vue'
 import {tinyMcConfig} from "../../Globals.js";
 import SelectControl from "./SelectControl.vue";
+import BaseIcon from "./BaseIcon.vue";
 
 
 const props = defineProps({
@@ -67,7 +67,7 @@ const props = defineProps({
     ctrlKFocus: Boolean,
     otherLabels: Array,
     dir: String,
-    multiple: {
+    isMultiple: {
         type: Boolean,
         default: false
     },
@@ -86,7 +86,7 @@ const inputElClass = computed(() => {
     const base = [
         "px-3 py-2 max-w-full focus:ring focus:outline-none border-gray-700 rounded w-full",
         "dark:placeholder-gray-400",
-        computedType.value === "textarea" ? "h-24" : ((computedType.value === "select" && props.multiple) ? "" : "h-12"),
+        computedType.value === "textarea" ? "h-24" : ((computedType.value === "select" && props.isMultiple) ? "" : "h-12"),
         props.borderless ? "border-0" : "border",
         props.transparent ? "bg-transparent" : (props.isDisabled ? 'bg-gray-100 dark:bg-slate-700' : "bg-white dark:bg-slate-800"),
 
@@ -173,7 +173,7 @@ if (computedType.value === "editor") {
             v-model="computedValue"
             :class="inputElClass"
             :disabled="isDisabled"
-            :multiple="multiple"
+            :is-multiple="isMultiple"
             :name="name"
             :options="computedOptions"
             @filter="(value)=>emit('filter',value.value)">
@@ -219,10 +219,12 @@ if (computedType.value === "editor") {
             :required="required"
             :type="computedType"
         >
-        <FormControlIcon
+
+        <BaseIcon
             v-if="icon"
-            :h="controlIconH"
-            :icon="icon"
+            :path="icon"
+            class="absolute h-full top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
+            w="w-10"
         />
         <BaseButtons v-for="(action,key) in actions">
             <BaseButton

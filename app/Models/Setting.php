@@ -15,15 +15,11 @@ class Setting extends Model implements HasMedia
 
     protected static string $cacheName = 'settings';
 
-    protected $fillable = ['name', 'description', 'phone', 'email', 'social', 'location', 'whatsapp'];
+    protected $fillable = ['name', 'doctor_role', 'phone', 'email'];
 
     protected $casts = [
-        'description' => 'json',
-        'phone' => 'json',
-        'email' => 'json',
-        'social' => 'json',
-        'whatsapp' => 'json',
-        'location' => 'json',
+        'phone' => 'array',
+        'email' => 'array',
     ];
 
     protected $appends = ['logo_link'];

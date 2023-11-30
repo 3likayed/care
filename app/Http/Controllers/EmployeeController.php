@@ -6,11 +6,13 @@ use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Employee;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class EmployeeController extends Controller
@@ -20,7 +22,7 @@ class EmployeeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:employees.show,dashboard'])->only(['index', 'show']);
+        $this->middleware(['permission:employees.show'])->only(['index', 'show']);
         $this->middleware(['permission:employees.edit'])->only(['update']);
         $this->middleware(['permission:employees.create'])->only(['store']);
         $this->middleware(['permission:employees.delete'])->only(['destroy']);
@@ -28,10 +30,12 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
+        $roles = Role::all();
 
         return Inertia::render('Employees/Show', [
             'data' => $employee,
             'meta' => meta()->metaValues(['title' => "$employee->name | " . __('dashboard.patients')]),
+            'roles' => $roles,
         ]);
     }
 
@@ -42,8 +46,11 @@ class EmployeeController extends Controller
             ->allowedFilters(
                 AllowedFilter::scope('search'),
                 'name',
-                'email'
+                'phone',
+                'user.email',
+
             )
+            ->allowedSorts('name','email',AllowedSort::field('has_user','user_id'),'created_at')
             ->get();
         $roles = Role::all();
 
@@ -62,8 +69,15 @@ class EmployeeController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        $employee = Employee::create($data);
-        $employee->assignRole(Role::find($data['role']));
+
+        if (isset($data['user']['email'])) {
+            $user = User::create($data['user']);
+            $user->assignRole($data['user']['role']);
+            $user->employee()
+                ->create($data);
+        } else {
+            Employee::create($data);
+        }
         DB::commit();
 
         return success();
@@ -75,14 +89,25 @@ class EmployeeController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        if (!isset($data['password']) || !$data['password']) {
-            unset($data['password']);
-        }
+
         $employee->update($data);
-        if ($employee->role->id != $data['role']) {
-            $employee->syncRoles(Role::find($data['role'])->name);
-            $employee->save();
+        if (isset($data['user']['email'])) {
+            $user = $employee->user;
+            if ($user) {
+                if (!isset($data['user']['password']) || !$data['user']['password']) {
+                    unset($data['user']['password']);
+                }
+                $user->update($data['user']);
+            } else {
+                $user = User::create($data['user']);
+                $employee->update(['user_id' => $user->id]);
+            }
+            if ($user->role?->id != $data['user']['role']) {
+                $user->syncRoles($data['user']['role']);
+                $user->save();
+            }
         }
+
         DB::commit();
 
         return success();

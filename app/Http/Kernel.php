@@ -68,16 +68,6 @@ class Kernel extends HttpKernel
             HandleDashboardInertiaRequests::class,
             AddLinkHeadersForPreloadedAssets::class,
         ],
-        'dashboard' => [
-            EncryptCookies::class,
-            AddQueuedCookiesToResponse::class,
-            StartSession::class,
-            ShareErrorsFromSession::class,
-            VerifyCsrfToken::class,
-            SubstituteBindings::class,
-            HandleDashboardInertiaRequests::class,
-            AddLinkHeadersForPreloadedAssets::class,
-        ],
         'site' => [
             EncryptCookies::class,
             AddQueuedCookiesToResponse::class,

@@ -18,7 +18,7 @@ class MetaResource extends JsonResource
     {
         $title = $this['title'] ?? '';
         $title .= $this['with_site_title'] ? ' | ' : '';
-        $title .= $this['with_site_title'] ? settings()?->meta->title : '';
+        $title .= $this['with_site_title'] ? settings()?->name : '';
 
         return [
             'title' => $this->trim($title),

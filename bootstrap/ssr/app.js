@@ -233,7 +233,7 @@ const menuAside = [
         route: "dashboard.reservation-types.index",
         label: "reservation-types",
         permission: "reservation-types.show",
-        components: ["ReservationTypes/Index", "ReservationTypes/Show"],
+        components: ["AppointmentTypes/Index", "AppointmentTypes/Show"],
         icon: mdiAccountStarOutline
       }
     ]

@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class ReservationsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -15,24 +14,21 @@ class ReservationsTableSeeder extends Seeder
     public function run()
     {
 
+        \DB::table('appointments')->delete();
 
-        \DB::table('reservations')->delete();
-
-        \DB::table('reservations')->insert(array (
-            0 =>
-            array (
+        \DB::table('appointments')->insert([
+            0 => [
                 'id' => 1,
                 'patient_id' => 1,
-                'reservation_type_id' => 2,
+                'appointment_type_id' => 2,
                 'price' => '100',
                 'date' => 1700703878000,
-                'discount' => NULL,
-                'deleted_at' => NULL,
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-
+                'discount' => null,
+                'deleted_at' => null,
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
 
     }
 }

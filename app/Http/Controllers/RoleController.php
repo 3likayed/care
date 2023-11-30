@@ -13,12 +13,11 @@ class RoleController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:roles.show,dashboard'])->only(['index', 'show']);
+        $this->middleware(['permission:roles.show'])->only(['index', 'show']);
         $this->middleware(['permission:roles.edit'])->only(['update']);
         $this->middleware(['permission:roles.create'])->only(['store']);
         $this->middleware(['permission:roles.delete'])->only(['destroy']);
     }
-
 
     /**
      * Display a listing of the resource.
@@ -27,6 +26,7 @@ class RoleController extends Controller
     {
         $roles = QueryBuilder::for(Role::class)
             ->allowedFilters(['name'])
+            ->allowedSorts(['name','created_at'])
             ->with('permissions')
             ->get();
         $permissions = Permission::orderBy('name')->get();
@@ -45,7 +45,7 @@ class RoleController extends Controller
     public function store(RoleStoreRequest $request)
     {
         $data = $request->validated();
-        $role = Role::create(['name' => $data['name'], 'guard_name' => 'dashboard']);
+        $role = Role::create(['name' => $data['name'],]);
         foreach (collect($data['permissions'])->where('checked', '=', true) as $permission) {
             $role->givePermissionTo($permission['name']);
         }

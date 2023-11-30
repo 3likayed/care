@@ -2,16 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
 class Employee extends Authenticatable
 {
-    use HasApiTokens, HasRoles, Notifiable, SoftDeletes;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -20,21 +17,17 @@ class Employee extends Authenticatable
      */
     protected $fillable = [
         'name',
-        'email',
-        'password',
         'address',
         'phone',
+        'user_id',
     ];
 
+    protected $with = ['user'];
     /**
      * The attributes that should be hidden for serialization.
      *
      * @var array<int, string>
      */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
 
     /**
      * The attributes that should be cast.
@@ -42,36 +35,20 @@ class Employee extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
-        'password' => 'hashed',
+
         'address' => 'array',
         'phone' => 'array',
     ];
 
-    protected $appends = ['role'];
-
-    protected function role(): Attribute
-    {
-        return Attribute::get(
-            fn() => $this->roles()->first(),
-        );
-    }
-    public function scopeSearch( $query, $date)
+    public function scopeSearch($query, $date)
     {
         return $query->where('name', 'like', "%$date%")
-            ->orWhere('email','like','%$date%');
+            ->orWhere('email', 'like', '%$date%');
     }
 
-
-    protected function permissionNames(): Attribute
+    public function user(): BelongsTo
     {
-        return Attribute::get(
-            function () {
-                return $this->getAllPermissions()->map(
-                    fn($permission) => $permission = $permission->name
-                );
-            }
-        );
+        return $this->belongsTo(User::class);
     }
 
     protected function asJson($value): bool|string
