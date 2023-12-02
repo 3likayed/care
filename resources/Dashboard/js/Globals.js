@@ -74,10 +74,10 @@ export const formParameters = (model, operation, id, modelResolver = true) => {
             }
     }
 }
-export const handleField = (form, field, action, key) => {
+export const handleField = (form, field, action, key , value=null) => {
     switch (action) {
         case 'append' :
-            form[field][Object.keys(form[field]).length] = null;
+            form[field][Object.keys(form[field]).length] = value;
             break;
         case 'delete' :
             form[field].splice(key, 1);

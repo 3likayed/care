@@ -23,7 +23,7 @@
                     v-model="form.name"
                     :icon="mdiAccount"
                     autocomplete="name"
-                    name="phone"
+                    name="name"
                     required
                 />
             </FormField>
