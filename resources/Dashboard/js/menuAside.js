@@ -1,14 +1,21 @@
 import {
     mdiAccountStarOutline,
+    mdiBilliards,
     mdiCalendar,
     mdiCogOutline, mdiDoctor,
     mdiFormatListBulletedType,
     mdiListBoxOutline,
+    mdiCashCheck,
+    mdiCogOutline, mdiFormatListBulleted, mdiFormatListBulletedType, mdiInformationVariantCircle, mdiInformationVariantCircleOutline, mdiListBox, mdiListBoxOutline,
     mdiLockAlertOutline,
+    mdiMagicStaff,
     mdiMonitor,
     mdiNaturePeople, mdiTab,
     mdiTable,
     mdiViewList,
+    mdiTruckDelivery,
+    mdiViewList, mdiViewListOutline, mdiWarehouse,
+
 } from "@mdi/js";
 
 export default [
@@ -99,6 +106,31 @@ export default [
         components: ['Auth/Profile'],
         icon: mdiTable,
     },
-
-
+    {
+        label: "inventory",
+        icon: mdiWarehouse,
+        menu: [
+            {
+                route: "dashboard.products.index",
+                label: "products",
+                permission: "products.show",
+                components: ['Products/Index', 'Products/Show'],
+                icon:mdiMagicStaff,
+            },
+            {
+                route: "dashboard.purchaseBills.index",
+                label: "purchaseBills",
+                permission: "purchase-bills.show",
+                components: ['PurchaseBills/Index', 'PurchaseBills/Show'],
+                icon: mdiCashCheck,
+            },
+        ],
+    },
+    {
+        route: "dashboard.suppliers.index",
+        permission: "suppliers.show",
+        label: "suppliers",
+        components: ['Suppliers/Index'],
+        icon: mdiTruckDelivery,
+    },
 ];
