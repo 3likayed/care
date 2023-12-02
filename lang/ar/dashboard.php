@@ -150,5 +150,18 @@ return [
     'doctors' => 'الأطباء',
     'user_data' => 'بيانات المستخدم',
     'has_user' => 'لديه مستخدم',
+   'reservation' => 'حجز',
+    'reservations' => 'الحجوزات',
+    'reservation-type' => 'نوع الحجز',
+    'reservation-types' => 'أنواع الحجز',
+    'inventory' => 'المخزن',
+    'products' => 'الأصناف',
+    'purchase-bills' => 'فواتير الشراء',
+    'suppliers' => 'الموردين',
+    'reservation_type' => 'نوع الحجز',
+    'supplier_credit' => 'حساب المورد',
+    'supplier' => 'مورد',
+    'qunatity' => 'الكمية'
+
 
 ];
