@@ -30,9 +30,7 @@ class Product extends Model
 	use SoftDeletes;
 	protected $table = 'products';
 
-	protected $casts = [
-		'quantity' => 'datetime'
-	];
+	
 
 	protected $fillable = [
 		'name',

@@ -22,54 +22,31 @@
             />
         </FormField>
         
+        <FormField :errors="form.errors.name" :label="__('quantity')">
+            <FormControl
+                v-model="form.quantity"
+                :icon="mdiStocking"
+                name="quantity"
+                required
+            />
+        </FormField>
         
-        <FormField
-            :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
-            :errors="form.errors[`quantity`]"
-            :label="__('quantity')"
-            @action="(action , key)=>handleField(form,'phone',action ) ">
-            <FormControl
-                v-for="(phone,key) in form.phone"
-                :key="key"
-                v-model="form.phone[key]"
-                :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
-                :errors="form.errors[`phone.${key}`]"
-                :icon="mdiPhone"
-                autocomplete="phone"
-                name="phone[]"
-                @action="(action )=>handleField(form,'phone',action ,key)"
-            />
-        </FormField>
-        <FormField
-            :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
-            :errors="form.errors[`address`]"
-            :label="__('address')"
-            @action="(action , key)=>handleField(form,'address',action ) ">
-            <FormControl
-                v-for="(address,key) in form.address"
-                :key="key"
-                v-model="form.address[key]"
-                :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
-                :errors="form.errors[`address.${key}`]"
-                :icon="mdiMapMarker"
-                autocomplete="address"
-                name="address[]"
-                @action="(action )=>handleField(form,'address',action ,key)"
-            />
-        </FormField>
+        
+       
     </CardBoxModal>
 </template>
 
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiAt, mdiCalendar, mdiMapMarker, mdiPhone, mdiPlusCircle, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiAt, mdiCalendar, mdiMapMarker, mdiPhone, mdiPlusCircle, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
 import {inject} from "vue";
 import {Model} from "../../Utils/index.js";
+import { formToJSON } from "axios";
 
 let props = defineProps({
     isModal: {
@@ -81,11 +58,15 @@ let props = defineProps({
 let showCreate = inject('showCreate');
 let form = useForm({
     name: null,
-    quantity: null,
+    quantity: 0,
     
 
 });
 const submit = () => {
+    if(!form.quantity){
+        form.transform(data => {data.quantity=0 ;
+            return data})
+    }
     Model.submit('create', 'products', form)
 }
 

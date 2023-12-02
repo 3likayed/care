@@ -117,8 +117,8 @@ export default [
                 icon: mdiMagicStaff,
             },
             {
-                route: "dashboard.purchaseBills.index",
-                label: "purchaseBills",
+                route: "dashboard.purchase-bills.index",
+                label: "purchase-bills",
                 permission: "purchase-bills.show",
                 components: ['PurchaseBills/Index', 'PurchaseBills/Show'],
                 icon: mdiCashCheck,

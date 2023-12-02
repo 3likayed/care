@@ -24,12 +24,8 @@ class ProductStoreRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'between:5,50'],
-            'email' => ['nullable','email','max:255','unique:products:email'],
-            'phone' => ['required', 'array', 'min:1'],
-            'phone.*' => ['required', 'numeric', 'digits:11'],
-            'address' => ['required', 'array', 'min:1'],
-            'address.*' => ['required', 'string', 'between:5,100'],
-            'birthday' => ['required', 'date', 'before:'.today()->format('Y-m-d')],
+            'quantity' => ['nullable', 'numeric'],
+            
 
         ];
     }

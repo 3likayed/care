@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('products')" main>
+    <SectionTitleLineWithButton :icon="mdiStoreCheck" :title="__('products')" main>
         <slot name="create">
 
         </slot>
@@ -8,10 +8,10 @@
             <productCreate/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="products"/>
+    <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'}]" model="products"/>
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'name',sortable:true},{name:'qunatity',sortable:true},{name:'created_at',sortable:true}]"
+            :headers="['#',{name:'name',sortable:true},{name:'quantity',sortable:true},{name:'created_at',sortable:true}]"
             :pagination="pagination"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
@@ -20,13 +20,8 @@
                     {{ item.name }}
                 </td>
                
-                <td :data-label="__('phone')">
-
-                    <ul class="list-decimal">
-                        <li v-for="(phone,key) in item.phone">
-                            {{ phone }}
-                        </li>
-                    </ul>
+                <td :data-label="__('quantity')">
+                    {{ item.quantity }}
                 </td>
                 
 
@@ -50,7 +45,7 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiLockAlertOutline} from "@mdi/js";
+import {mdiLockAlertOutline, mdiReproduction, mdiStoreCheck} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";

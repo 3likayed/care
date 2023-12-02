@@ -161,8 +161,7 @@ return [
     'reservation_type' => 'نوع الحجز',
     'supplier_credit' => 'حساب المورد',
     'supplier' => 'مورد',
-    'qunatity' => 'الكمية',
-    'id' => 'الرقم التسلسلي'
+    'qunatity' => 'الكمية'
 
 
 ];

@@ -5,7 +5,7 @@
 
         </slot>
         <template #create>
-            <PurchaseBillsCreate/>
+            <PurchaseBillCreate/>
         </template>
     </SectionTitleLineWithButton>
     <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="PurchaseBills"/>
@@ -67,7 +67,7 @@ import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import PurchaseBillsEdit from "./PurchaseBillEdit.vue";
 import moment from "moment";
-import PurchaseBillsCreate from "./PurchaseBillsCreate.vue";
+import PurchaseBillCreate from "./PurchaseBillCreate.vue";
 import {ref} from "vue";
 
 let edited = ref();
