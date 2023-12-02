@@ -3,23 +3,18 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\SettingUpdateRequest;
-use App\Http\Resources\SettingsResource;
 use App\Models\Setting;
-use App\Services\FilesService;
 use DB;
 use Inertia\Inertia;
+use Spatie\Permission\Models\Role;
 use Throwable;
-
-use function App\Http\Controllers\Dashboard\success;
 
 class SettingController extends Controller
 {
-    private $filesService;
-
-    public function __construct(FilesService $filesService)
+    public function __construct()
     {
         $this->middleware(['permission:settings.edit'])->only(['update', 'edit']);
-        $this->filesService = $filesService;
+
     }
 
     /**
@@ -29,7 +24,8 @@ class SettingController extends Controller
     {
 
         return Inertia::render('Settings/Index', [
-            'settings' => SettingsResource::make(settings()),
+            'data' => settings(),
+            'roles' => Role::all(),
             'meta' => meta()->metaValues(['title' => __('dashboard.settings')]),
         ]);
     }
@@ -43,17 +39,7 @@ class SettingController extends Controller
     {
         $data = $request->validated();
         DB::beginTransaction();
-
-        $setting = Setting::first();
-        if (! empty($data['logo'])) {
-            $this->filesService->deleteFile($setting->logo);
-            $extension = $data['logo']->getExtension() ?? 'webp';
-            $data['logo'] = $this->uploadFile($data['logo'], 'assets', "logo.$extension");
-        } else {
-            unset($data['logo']);
-        }
         $setting = Setting::updateOrCreate([], $data);
-        $setting->meta()->update($data['meta']);
         DB::commit();
 
         return success();

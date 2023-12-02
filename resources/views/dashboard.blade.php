@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title inertia>{{ settings()->meta->title ?? "" }}</title>
+        <title inertia>{{ settings()->name ?? "" }}</title>
         <!-- Scripts -->
         @routes
         @vite(['resources/Dashboard/js/app.js', "resources/Dashboard/js/Pages/{$page['component']}.vue"])

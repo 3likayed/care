@@ -12,8 +12,8 @@ class Payment extends Model
 
     protected $guarded = [];
 
-    public function reservation(): BelongsTo
+    public function appointment(): BelongsTo
     {
-        return $this->belongsTo(Reservation::class);
+        return $this->belongsTo(Appointment::class);
     }
 }

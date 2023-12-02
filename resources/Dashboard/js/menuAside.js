@@ -2,15 +2,20 @@ import {
     mdiAccountStarOutline,
     mdiBilliards,
     mdiCalendar,
+    mdiCogOutline, mdiDoctor,
+    mdiFormatListBulletedType,
+    mdiListBoxOutline,
     mdiCashCheck,
     mdiCogOutline, mdiFormatListBulleted, mdiFormatListBulletedType, mdiInformationVariantCircle, mdiInformationVariantCircleOutline, mdiListBox, mdiListBoxOutline,
     mdiLockAlertOutline,
     mdiMagicStaff,
     mdiMonitor,
-    mdiNaturePeople,
+    mdiNaturePeople, mdiTab,
     mdiTable,
+    mdiViewList,
     mdiTruckDelivery,
     mdiViewList, mdiViewListOutline, mdiWarehouse,
+
 } from "@mdi/js";
 
 export default [
@@ -27,7 +32,7 @@ export default [
                 route: "dashboard.employees.index",
                 label: "employees",
                 permission: "employees.show",
-                components: ['Employees/Index'],
+                components: ['Users/Index'],
                 icon: mdiAccountStarOutline,
             },
             {
@@ -36,6 +41,7 @@ export default [
                 permission: "roles.show",
                 components: ['Roles/Index'],
                 icon: mdiLockAlertOutline,
+
             },
 
             {
@@ -48,21 +54,21 @@ export default [
         ],
     },
     {
-        label: "reservations",
+        label: "appointments",
         icon: mdiCalendar,
         menu: [
             {
-                route: "dashboard.reservation-types.index",
-                label: "reservation-types",
-                permission: "reservation-types.show",
-                components: ['ReservationTypes/Index', 'ReservationTypes/Show'],
+                route: "dashboard.appointment-types.index",
+                label: "appointment-types",
+                permission: "appointment-types.show",
+                components: ['AppointmentTypes/Index', 'AppointmentTypes/Show'],
                 icon: mdiListBoxOutline,
             },
             {
-                route: "dashboard.reservations.index",
-                label: "reservations",
-                permission: "reservations.show",
-                components: ['Reservations/Index', 'Reservations/Show'],
+                route: "dashboard.appointments.index",
+                label: "appointments",
+                permission: "appointments.show",
+                components: ['Appointments/Index', 'Appointments/Show'],
                 icon: mdiFormatListBulletedType,
             },
         ],
@@ -71,8 +77,28 @@ export default [
         route: "dashboard.patients.index",
         label: "patients",
         permission: "patients.show",
-        components: ['Patients/Index'],
+        components: ['Patients/Index', 'Patients/Show'],
         icon: mdiNaturePeople,
+    },
+    {
+        label: "doctors",
+        icon: mdiDoctor,
+        menu: [
+            {
+                route: "dashboard.doctors.index",
+                label: "doctors",
+                permission: "doctors.show",
+                components: ['Doctors/Index', 'Doctors/Show'],
+                icon: mdiDoctor,
+            },
+            {
+                route: "dashboard.specializations.index",
+                label: "specializations",
+                permission: "specializations.show",
+                components: ['Specializations/Index', 'Specializations/Show'],
+                icon: mdiTab,
+            }
+        ]
     },
     {
         route: "dashboard.profile.edit",

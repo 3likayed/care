@@ -5,6 +5,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Almarai:wght@300;400;700;800&display=swap');
 
 @layer tailwind-base, primevue, tailwind-utilities;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -16,16 +17,14 @@
     @tailwind components;
     @tailwind utilities;
 }
-svg {
-    @apply rtl:-scale-x-100
-}
 
-.sortable.sorted-asc{
+.sortable.sorted-asc {
     @apply cursor-pointer  after:content-['↑'] after:text-green-500
 }
-.sortable.sorted-desc{
-     @apply cursor-pointer after:content-['↓'] after:text-red-500
- }
+
+.sortable.sorted-desc {
+    @apply cursor-pointer after:content-['↓'] after:text-red-500
+}
 
 .sortable:not(.sorted-desc):not(.sorted-asc) {
     @apply cursor-pointer after:content-['↑↓']  after:text-gray-400

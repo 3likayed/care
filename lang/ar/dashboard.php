@@ -139,7 +139,18 @@ return [
     'previous' => 'السابق',
     'next' => 'التالي',
     'days' => 'الايام',
-    'reservation' => 'حجز',
+    'appointment' => 'موعد',
+    'appointments' => 'المواعيد',
+    'appointment-type' => 'نوع الموعد',
+    'appointment_type' => 'نوع الموعد',
+    'appointment-types' => 'أنواع الموعيد',
+    'specializations' => 'التخصصات',
+    'specialization' => 'تخصص',
+    'doctor' => 'طبيب',
+    'doctors' => 'الأطباء',
+    'user_data' => 'بيانات المستخدم',
+    'has_user' => 'لديه مستخدم',
+   'reservation' => 'حجز',
     'reservations' => 'الحجوزات',
     'reservation-type' => 'نوع الحجز',
     'reservation-types' => 'أنواع الحجز',
@@ -151,5 +162,6 @@ return [
     'supplier_credit' => 'حساب المورد',
     'supplier' => 'مورد',
     'qunatity' => 'الكمية'
+
 
 ];

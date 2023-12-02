@@ -15,16 +15,16 @@
             />
         </section>
         <section v-show="step === 1">
-            <ReservationsList
+            <AppointmentsList
                 :has-search="false"
-                :items="data.reservations"
+                :items="data.appointments"
                 :sortable="false"
             >
                 <template #create>
-                    <ReservationCreate :data="{patient_id:data.id}" :patients="[data]"
-                                       :reservationTypes="reservationTypes"/>
+                    <AppointmentCreate :data="{patient_id:data.id}" :patients="[data]"
+                                       :appointmentTypes="appointmentTypes"/>
                 </template>
-            </ReservationsList>
+            </AppointmentsList>
         </section>
         <section v-show="step === 2">
             sdadasdas
@@ -50,15 +50,15 @@ import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import PatientEdit from "../../Components/Patients/PatientEdit.vue";
-import ReservationsList from "../../Components/Reservations/ReservationsList.vue";
-import ReservationCreate from "../../Components/Reservations/ReservationCreate.vue";
+import AppointmentsList from "../../Components/Appointments/AppointmentsList.vue";
+import AppointmentCreate from "../../Components/Appointments/AppointmentCreate.vue";
 
 
-let steps = ref([__('data'), __('reservations'), __('home')]);
+let steps = ref([__('data'), __('appointments'), __('home')]);
 let step = ref(0);
 
 let data = computed(() => usePage().props.data);
-let reservationTypes = usePage().props.reservation_types;
+let appointmentTypes = usePage().props.appointment_types;
 
 </script>
 <style scoped>

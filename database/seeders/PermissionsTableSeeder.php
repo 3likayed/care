@@ -6,7 +6,6 @@ use Illuminate\Database\Seeder;
 
 class PermissionsTableSeeder extends Seeder
 {
-
     /**
      * Auto generated seed file
      *
@@ -14,181 +13,158 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
-        
 
         \DB::table('permissions')->delete();
-        
-        \DB::table('permissions')->insert(array (
-            0 => 
-            array (
+
+        \DB::table('permissions')->insert([
+            0 => [
                 'id' => 1,
                 'name' => 'employees.create',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            1 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            1 => [
                 'id' => 2,
                 'name' => 'employees.edit',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            2 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            2 => [
                 'id' => 3,
                 'name' => 'employees.delete',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            3 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            3 => [
                 'id' => 4,
                 'name' => 'employees.show',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            4 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            4 => [
                 'id' => 5,
                 'name' => 'roles.create',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            5 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            5 => [
                 'id' => 6,
                 'name' => 'roles.edit',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            6 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            6 => [
                 'id' => 7,
                 'name' => 'roles.delete',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            7 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            7 => [
                 'id' => 8,
                 'name' => 'roles.show',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            8 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            8 => [
                 'id' => 9,
                 'name' => 'patients.create',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            9 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            9 => [
                 'id' => 10,
                 'name' => 'patients.edit',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            10 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            10 => [
                 'id' => 11,
                 'name' => 'patients.delete',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            11 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            11 => [
                 'id' => 12,
                 'name' => 'patients.show',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            12 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            12 => [
                 'id' => 13,
                 'name' => 'settings.edit',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            13 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            13 => [
                 'id' => 14,
-                'name' => 'reservation-types.edit',
+                'name' => 'appointment-types.edit',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            14 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            14 => [
                 'id' => 15,
-                'name' => 'reservation-types.delete',
+                'name' => 'appointment-types.delete',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            15 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            15 => [
                 'id' => 16,
-                'name' => 'reservation-types.show',
+                'name' => 'appointment-types.show',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            16 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            16 => [
                 'id' => 17,
-                'name' => 'reservation-types.create',
+                'name' => 'appointment-types.create',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            17 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            17 => [
                 'id' => 18,
-                'name' => 'reservations.edit',
+                'name' => 'appointments.edit',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            18 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            18 => [
                 'id' => 19,
-                'name' => 'reservations.delete',
+                'name' => 'appointments.delete',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            19 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            19 => [
                 'id' => 20,
-                'name' => 'reservations.show',
+                'name' => 'appointments.show',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-            20 => 
-            array (
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+            20 => [
                 'id' => 21,
-                'name' => 'reservations.create',
+                'name' => 'appointments.create',
                 'guard_name' => 'dashboard',
-                'created_at' => NULL,
-                'updated_at' => NULL,
-            ),
-        ));
-        
-        
+                'created_at' => null,
+                'updated_at' => null,
+            ],
+        ]);
+
     }
 }

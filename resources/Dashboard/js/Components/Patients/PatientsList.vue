@@ -1,9 +1,6 @@
 <template>
 
     <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('patients')" main>
-        <slot name="create">
-
-        </slot>
         <template #create>
             <PatientCreate/>
         </template>

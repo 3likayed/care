@@ -39,7 +39,7 @@ class HandleDashboardInertiaRequests extends Middleware
 
     public function getSharedDate()
     {
-        $employee = \request()->user('dashboard');
+        $employee = \request()->user();
 
         return [
             'auth' => [

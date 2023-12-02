@@ -123,7 +123,7 @@ return $validation = [
     'required_if' => ' :attribute مطلوب في حال ما إذا كان :other يساوي :value.',
     'required_if_accepted' => 'The :attribute field is required when :other is accepted.',
     'required_unless' => ' :attribute مطلوب في حال ما لم يكن :other يساوي :values.',
-    'required_with' => ' :attribute إذا توفّر :values.',
+    'required_with' => ' حقل :attribute مطلوب إذا توفّر :values.',
     'required_with_all' => ' :attribute إذا توفّر :values.',
     'required_without' => ' :attribute إذا لم يتوفّر :values.',
     'required_without_all' => ' :attribute إذا لم يتوفّر :values.',
@@ -171,48 +171,22 @@ return $validation = [
     */
 
     'attributes' => array_merge(translations('dashboard', 'ar'), [
-        'meta' => [
-
-            'description' => [
-                'ar' => 'وصف البيانات وصفية باللغة العربية ',
-                'en' => 'وصف البيانات وصفية باللغة الإنجليزية',
-            ],
-            'keywords' => [
-                'ar' => 'كلمات البيانات وصفية المفتاحية باللغة العربية',
-                'en' => 'كلمات البيانات وصفية المفتاحية باللغة الإنجليزية',
-            ],
-            'title' => [
-                'ar' => 'عنوان البيانات وصفية باللغة العربية',
-                'en' => 'عنوان البيانات وصفية باللغة الإنجليزية',
-            ],
-        ],
-        'content' => [
-            'ar' => 'المحتوي باللغة العربية',
-            'en' => 'المحتوى باللغة الإنجليزية',
-        ],
-        'description' => [
-            'ar' => 'الوصف باللغة العربية',
-            'en' => 'الوصف باللغة الإنجليزية',
-        ],
         'title' => 'العنوان',
         'order' => 'الترتيب',
         'image' => 'الصورة',
         'images' => 'الصور',
         'service_id' => 'الخدمة',
         'icon' => 'الأيقونة',
-        'social' => [
-            'facebook' => 'فيسبوك',
-            'twitter' => 'تويتر',
-            'instagram' => 'انستجرام',
-            'youtube' => 'يوتيوب',
-        ],
-
         'phone.*' => 'رقم الهاتف رقم #(:position)',
         'address.*' => 'العنوان رقم #(:position)',
         'image.*' => 'الصورة رقم #(:position)',
         'video.*' => 'الفيديو رقم #(:position)',
         'email.*' => 'البريد الإليكتروني رقم #(:position)',
         'now' => 'الآن',
+        'user.email' => 'البريد الإليكتروني',
+        'user.password' => 'كلمة المرور',
+        'user.password_confirmation' => 'تأكيد كلمة المرور',
+        'user.role' => 'الصلاحية',
     ]),
 
 ];
