@@ -33,14 +33,11 @@ class DatabaseSeeder extends Seeder
                 'employees.create', 'employees.edit', 'employees.delete', 'employees.show',
                 'roles.create', 'roles.edit', 'roles.delete', 'roles.show',
                 'patients.create', 'patients.edit', 'patients.delete', 'patients.show',
-
                 'appointment-types.create', 'appointment-types.edit', 'appointment-types.delete', 'appointment-types.show',
                 'appointments.create', 'appointments.edit', 'appointments.delete', 'appointments.show',
                 'doctors.create', 'doctors.edit', 'doctors.delete', 'doctors.show',
                 'specializations.create', 'specializations.edit', 'specializations.delete', 'specializations.show',
                 'settings.edit',
-
-            
                 'products.create', 'products.edit', 'products.delete', 'products.show',
                 'purchase-bills.create', 'purchase-bills.edit', 'purchase-bills.delete', 'purchase-bills.show',
                 'settings.edit','suppliers.create', 'suppliers.edit', 'suppliers.delete', 'suppliers.show',

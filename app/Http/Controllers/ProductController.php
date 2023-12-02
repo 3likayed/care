@@ -18,7 +18,7 @@ class ProductController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:products.show,dashboard'])->only(['index', 'show', 'fetch']);
+        $this->middleware(['permission:products.show'])->only(['index', 'show', 'fetch']);
         $this->middleware(['permission:products.edit'])->only(['update']);
         $this->middleware(['permission:products.create'])->only(['store']);
         $this->middleware(['permission:products.delete'])->only(['destroy']);
