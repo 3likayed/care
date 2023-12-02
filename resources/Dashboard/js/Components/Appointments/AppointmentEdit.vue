@@ -1,14 +1,14 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`appointments.create`)"
-        :button-label="__('create')"
+        v-if="can(`appointments.edit`)"
+        :button-label="__('edit')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"
         :is-form="true"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('create_field',{field:'appointment'})"
+        :title="__('edit_field',{field:'appointment'})"
         @cancel="showEdit=false"
         @confirm="submit() ; showEdit=false"
     >
@@ -45,20 +45,31 @@
                 type="datetime-local"
             />
         </FormField>
+        <FormField :label="__('price')">
+            <FormControl
+                v-model="price"
+                :icon="mdiCash"
+                autocomplete="price"
+                is-disabled
+                name="price"
+                required
+            />
+        </FormField>
     </CardBoxModal>
 </template>
 
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiCalendar} from "@mdi/js";
+import {mdiAccount, mdiCalendar, mdiCash} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__} from "../../Globals.js";
-import {computed, inject} from "vue";
+import {computed, inject, ref} from "vue";
 import {Model} from "../../Utils/index.js";
 import moment from "moment";
+import {collect} from "collect.js";
 
 
 let props = defineProps({
@@ -75,16 +86,21 @@ let props = defineProps({
 })
 
 let computedData = computed(() => props.data)
-let showEdit = inject('showEdit');
+let showEdit = props.isModal ? inject('showEdit') : true;
 let form = useForm({
     appointment_type_id: computedData.value.appointment_type_id,
     patient_id: computedData.value?.patient_id,
     date: moment(computedData.value.date).format('YYYY-MM-DDTHH:mm'),
 
 });
+let price = ref(props.data.price);
+
+const setPrice = (appointmentTypeId) => {
+    price.value = collect(props.appointmentTypes).firstWhere('id', appointmentTypeId).price
+}
 
 const submit = () => {
-    Model.submit('edit', 'appointments', form,props.data.id)
+    Model.submit('edit', 'appointments', form, props.data.id)
 }
 
 </script>

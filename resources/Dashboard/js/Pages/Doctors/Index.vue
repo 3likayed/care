@@ -15,18 +15,22 @@
                 <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                     <td data-label="# ">{{ key + 1 }}</td>
                     <td :data-label="__('name')">
-                        {{ item.name }}
+                        {{ item.employee.name }}
                     </td>
                     <td :data-label="__('email')">
-                        {{ item.email }}
+                        {{ item.employee.user.email }}
                     </td>
-                    <td :data-label="__('specialization')">
-                        {{ item.specialization.name }}
+                    <td :data-label="__('specializations')">
+                        <ul>
+                            <li v-for="(specialization) in item.specializations">
+                                {{ specialization.name }}
+                            </li>
+                        </ul>
                     </td>
                     <td :data-label="__('phone')">
 
                         <ul class="list-decimal">
-                            <li v-for="(phone,key) in item.phone">
+                            <li v-for="(phone,key) in item.employee.phone">
                                 {{ phone }}
                             </li>
                         </ul>
@@ -34,7 +38,7 @@
                     <td :data-label="__('address')">
 
                         <ul class="list-decimal">
-                            <li v-for="(address,key) in item.address">
+                            <li v-for="(address,key) in item.employee.address">
                                 {{ address }}
                             </li>
                         </ul>

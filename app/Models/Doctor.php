@@ -12,7 +12,7 @@ use Spatie\Permission\Traits\HasRoles;
 
 class Doctor extends Authenticatable
 {
-    use HasApiTokens, HasRoles, Notifiable, SoftDeletes;
+    use HasApiTokens, SoftDeletes;
 
     protected $fillable = [];
 
@@ -26,16 +26,17 @@ class Doctor extends Authenticatable
         'remember_token',
     ];
 
-    protected $appends = ['role'];
+    protected $with = ['employee'];
 
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
     }
 
+
     public function specializations(): BelongsToMany
     {
-        return $this->belongsToMany(Doctor::class);
+        return $this->belongsToMany(Specialization::class, 'doctor_specialization', 'doctor_id', 'specialization_id');
     }
 
     public function scopeSearch($query, $date)

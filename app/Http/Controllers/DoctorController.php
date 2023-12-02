@@ -6,8 +6,8 @@ use App\Http\Requests\DoctorStoreRequest;
 use App\Http\Requests\DoctorUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Doctor;
-use App\Models\Employee;
 use App\Models\Specialization;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -33,7 +33,7 @@ class DoctorController extends Controller
 
         return Inertia::render('Doctors/Show', [
             'data' => $doctor,
-            'meta' => meta()->metaValues(['title' => "$doctor->name | ".__('dashboard.patients')]),
+            'meta' => meta()->metaValues(['title' => "$doctor->name | " . __('dashboard.patients')]),
         ]);
     }
 
@@ -41,6 +41,7 @@ class DoctorController extends Controller
     {
 
         $doctors = QueryBuilder::for(Doctor::class)
+            ->with('specializations')
             ->allowedFilters(
                 AllowedFilter::scope('search'),
                 'name',
@@ -64,9 +65,9 @@ class DoctorController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        $employee = Employee::create($data);
-        $employee->assignRole(settings()->doctor_role);
-
+        $user = User::create($data['user']);
+        $user->assignRole(settings()->doctor_role);
+        $employee = $user->employee()->create($data);
         $doctor = $employee->doctor()->create();
         $doctor->specializations()->sync($data['specializations']);
 
@@ -81,7 +82,7 @@ class DoctorController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        if (! isset($data['password']) || ! $data['password']) {
+        if (!isset($data['password']) || !$data['password']) {
             unset($data['password']);
         }
         $doctor->employee()->update($data);

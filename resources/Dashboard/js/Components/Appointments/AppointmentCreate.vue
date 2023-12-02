@@ -46,7 +46,7 @@
                 type="datetime-local"
             />
         </FormField>
-        <FormField :errors="form.errors.date" :label="__('price')">
+        <FormField :label="__('price')">
             <FormControl
                 v-model="price"
                 :icon="mdiCash"
@@ -70,7 +70,7 @@ import {__} from "../../Globals.js";
 import {inject, ref} from "vue";
 import {Model} from "../../Utils/index.js";
 import {debounce} from "lodash";
-import {find} from "lodash/collection.js";
+import {collect} from "collect.js";
 
 
 let props = defineProps({
@@ -109,9 +109,9 @@ const fetchPatients = debounce((search) => {
 }, 500)
 
 let price = ref();
-const setPrice = (appointmentTypeId) => {
 
-    price.value = find(props.appointmentTypes , {id:appointmentTypeId}).price;
+const setPrice = (appointmentTypeId) => {
+    price.value = collect(props.appointmentTypes).firstWhere('id', appointmentTypeId).price
 }
 const submit = () => {
     Model.submit('create', 'appointments', form)

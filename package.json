@@ -34,6 +34,7 @@
         "@tinymce/tinymce-vue": "^5.1.1",
         "@vueup/vue-quill": "^1.2.0",
         "aos": "^2.3.4",
+        "collect.js": "^4.36.1",
         "lodash": "^4.17.21",
         "moment": "^2.29.4",
         "pluralize": "^8.0.0",

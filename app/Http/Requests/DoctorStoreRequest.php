@@ -5,7 +5,6 @@ namespace App\Http\Requests;
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rules\Password;
-
 class DoctorStoreRequest extends FormRequest
 {
     /**
@@ -23,17 +22,16 @@ class DoctorStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:employees,email',
-            'password' => ['required', 'sometimes', 'confirmed', Password::defaults()],
             'phone' => ['required', 'array', 'min:1'],
             'phone.*' => ['required', 'numeric', 'digits:11'],
             'address' => ['required', 'array', 'min:1'],
             'address.*' => ['required', 'string', 'between:5,100'],
             'specializations' => ['required', 'Array'],
             'specializations.*' => ['required', 'numeric', 'exists:specializations,id'],
+            'user.email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'user.password' => ['required', 'confirmed', Password::defaults()],
         ];
     }
 }

@@ -8,12 +8,11 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <DynamicData
+            <AppointmentEdit
+                :appointment-types="appointmentTypes"
+                :data="computedData"
                 :is-modal="false"
-                :item="data"
-                model="appointment"
-                operation="edit"
-                v-on="resolver.on??{}"/>
+            />
         </section>
         <section v-show="step === 1">
             payments
@@ -30,21 +29,20 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import DynamicData from "../../Components/DynamicData.vue";
+import AppointmentEdit from "../../Components/Appointments/AppointmentEdit.vue";
 
 
 let steps = ref([__('data'), __('payments')]);
 let step = ref(0);
-let computedData = computed(()=>usePage().props.data);
-
+let computedData = computed(() => usePage().props.data);
+let appointmentTypes = usePage().props.appointment_types
 let breadcrumbItems = [
     {
         name: __('appointments'),
         href: route(`dashboard.appointments.index`)
     },
     {
-        name: computedData.value.name,
-        href: route(`dashboard.appointments.show`, computedData.value.id)
+        name: computedData.value.id,
     }]
 
 

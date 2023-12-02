@@ -22,6 +22,6 @@ class Specialization extends Authenticatable
 
     public function doctors(): BelongsToMany
     {
-        return $this->belongsToMany(Doctor::class);
+        return $this->belongsToMany(Doctor::class, 'doctor_specialization', 'specialization_id', 'doctor_id');
     }
 }
