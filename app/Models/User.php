@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -46,17 +47,22 @@ class User extends Authenticatable
 
     protected $appends = ['role'];
 
-    protected function role(): Attribute
-    {
-        return Attribute::get(
-            fn () => $this->roles()->first(),
-        );
-    }
-
     public function scopeSearch($query, $date)
     {
         return $query->where('name', 'like', "%$date%")
             ->orWhere('email', 'like', '%$date%');
+    }
+
+    public function employee(): HasOne
+    {
+        return $this->hasOne(Employee::class);
+    }
+
+    protected function role(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->roles()->first(),
+        );
     }
 
     protected function permissionNames(): Attribute
@@ -64,15 +70,10 @@ class User extends Authenticatable
         return Attribute::get(
             function () {
                 return $this->getAllPermissions()->map(
-                    fn ($permission) => $permission = $permission->name
+                    fn($permission) => $permission = $permission->name
                 );
             }
         );
-    }
-
-    public function employee(): \Illuminate\Database\Eloquent\Relations\HasOne
-    {
-        return $this->hasOne(Employee::class);
     }
 
     protected function asJson($value): bool|string

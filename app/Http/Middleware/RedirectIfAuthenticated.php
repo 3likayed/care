@@ -22,9 +22,8 @@ class RedirectIfAuthenticated
                 if ($guard === 'dashboard') {
                     return redirect(route('dashboard.index'));
                 }
-                if ($guard === 'web') {
-                    return redirect(route('profile.edit'));
-                }
+                return  redirect(route('dashboard.index'));
+
             }
         }
 
