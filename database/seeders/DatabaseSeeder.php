@@ -35,7 +35,9 @@ class DatabaseSeeder extends Seeder
                 'patients.create', 'patients.edit', 'patients.delete', 'patients.show',
                 'reservation-type.create', 'reservation-type.edit', 'reservation-type.delete', 'reservation-type.show',
                 'reservations.create', 'reservations.edit', 'reservations.delete', 'reservations.show',
-                'settings.edit',
+                'products.create', 'products.edit', 'products.delete', 'products.show',
+                'purchase-bills.create', 'purchase-bills.edit', 'purchase-bills.delete', 'purchase-bills.show',
+                'settings.edit','suppliers.create', 'suppliers.edit', 'suppliers.delete', 'suppliers.show',
             ],
         ];
         $insertPermissions = fn ($role) => collect($permissionsByRole[$role])
