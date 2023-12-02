@@ -1,0 +1,1 @@
+import{s as o,t}from"./app-edde13b8.js";import{A as n,B as r,D as l,O as c,U as a}from"./@vue-3d043469.js";const u={__name:"SectionMain",props:{fluid:{type:Boolean,default:!1}},setup(e){return(s,i)=>(n(),r("section",{class:c([e.fluid?a(o):a(t),"p-6"])},[l(s.$slots,"default")],2))}};export{u as _};
