@@ -51,6 +51,7 @@ class ProductController extends Controller
     {
 
         $data = $request->validated();
+        
         product::create($data);
 
         return success();

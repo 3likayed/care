@@ -1,7 +1,7 @@
 <template>
     <SectionMain>
         <BreadCrumb
-            :items="[{name: __('patients'), href: route(`dashboard.patients.index`)},{name: data.name, href: route(`dashboard.patients.show`, data.id)}]"/>
+            :items="[{name: __('products'), href: route(`dashboard.products.index`)},{name: data.name, href: route(`dashboard.products.show`, data.id)}]"/>
         <CardBox class="mb-4">
             <StepsComponent
                 v-model="step"
@@ -9,22 +9,22 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <PatientEdit
+            <ProductEdit
                 :data="data"
                 :is-modal="false"
             />
         </section>
         <section v-show="step === 1">
-            <ReservationsList
+            <ProductsList
                 :has-search="false"
-                :items="data.reservations"
+                :items="data.products"
                 :sortable="false"
             >
                 <template #create>
-                    <ReservationCreate :data="{patient_id:data.id}" :patients="[data]"
-                                       :reservationTypes="reservationTypes"/>
+                    <ProductCreate :data="{product_id:data.id}" :products="[data]"
+                                       :productTypes="productTypes"/>
                 </template>
-            </ReservationsList>
+            </ProductsList>
         </section>
         <section v-show="step === 2">
             sdadasdas
@@ -35,7 +35,7 @@
             </section>
         -->
         <!--    <section v-show="step === 1">
-              <ProjectsList :projects="patient.projects"/>
+              <ProjectsList :projects="product.projects"/>
             </section>-->
     </SectionMain>
 </template>
@@ -49,16 +49,18 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import PatientEdit from "../../Components/Patients/PatientEdit.vue";
-import ReservationsList from "../../Components/Reservations/ReservationsList.vue";
-import ReservationCreate from "../../Components/Reservations/ReservationCreate.vue";
+import productEdit from "../../Components/Products/ProductEdit.vue";
+import productsList from "../../Components/Products/ProductsList.vue";
+import productCreate from "../../Components/Products/ProductCreate.vue";
+import ProductsList from "../../Components/Products/ProductsList.vue";
+import ProductCreate from "../../Components/Products/ProductCreate.vue";
 
 
-let steps = ref([__('data'), __('reservations'), __('home')]);
+let steps = ref([__('data'), __('products'), __('home')]);
 let step = ref(0);
 
 let data = computed(() => usePage().props.data);
-let reservationTypes = usePage().props.reservation_types;
+let productTypes = usePage().props.product_types;
 
 </script>
 <style scoped>

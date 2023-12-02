@@ -47,8 +47,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::get('fetch/suppliers', [SupplierController::class, 'fetch'])->name('fetch.suppliers');
         Route::apiResource('products', ProductController::class);
         Route::get('fetch/products', [ProductController::class, 'fetch'])->name('fetch.products');
-        Route::apiResource('purchaseBills', PurchaseBillController::class);
-        Route::get('fetch/purchaseBills', [PurchaseBillController::class, 'fetch'])->name('fetch.purchaseBills');
+        Route::apiResource('purchase-bills', PurchaseBillController::class);
+        Route::get('fetch/purchase-bills', [PurchaseBillController::class, 'fetch'])->name('fetch.purchase-bills');
     });
 
 });
