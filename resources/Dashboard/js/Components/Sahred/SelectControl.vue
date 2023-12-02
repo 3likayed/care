@@ -2,6 +2,8 @@
 import Dropdown from 'primevue/dropdown';
 import {computed} from "vue";
 
+import MultiSelect from 'primevue/multiselect';
+
 const props = defineProps({
     name: {
         type: String,
@@ -39,7 +41,7 @@ const props = defineProps({
     actions: Array | Object,
     required: Boolean,
     otherLabels: Array,
-    multiple: {
+    isMultiple: {
         type: Boolean,
         default: false
     },
@@ -62,19 +64,36 @@ let computedOptions = computed(() => props.options)
 </script>
 
 <template>
-    <Dropdown v-model="computedValue"
-              :empty-filter-message="__('no_data')"
-              :empty-message="__('no_data')"
-              :empty-selection-message="__('no_data')"
-              :options="computedOptions"
-              :pt="pt"
-              :disabled="isDisabled"
-              filter
-              showClear
-              option-label="name"
-              option-value="id"
-              @filter="(value)=>emit('filter',value)"
+    <Dropdown
+        v-if="!isMultiple"
+        v-model="computedValue"
+        :disabled="isDisabled"
+        :empty-filter-message="__('no_data')"
+        :empty-message="__('no_data')"
+        :empty-selection-message="__('no_data')"
+        :options="computedOptions"
+        :pt="pt"
+        filter
+        option-label="name"
+        option-value="id"
+        showClear
+        @filter="(value)=>emit('filter',value)"
     />
+    <MultiSelect
+        v-else
+        v-model="computedValue"
+        :disabled="isDisabled"
+        :empty-filter-message="__('no_data')"
+        :empty-message="__('no_data')"
+        :empty-selection-message="__('no_data')"
+        :options="computedOptions"
+        :pt="pt"
+        display="chip"
+        filter
+        option-label="name"
+        option-value="id"
+        showClear
+        @filter="(value)=>emit('filter',value)"/>
 
 </template>
 

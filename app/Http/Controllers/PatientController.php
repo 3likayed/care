@@ -6,7 +6,7 @@ use App\Http\Requests\PatientStoreRequest;
 use App\Http\Requests\PatientUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Patient;
-use App\Models\ReservationType;
+use App\Models\AppointmentType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -19,7 +19,7 @@ class PatientController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:patients.show,dashboard'])->only(['index', 'show', 'fetch']);
+        $this->middleware(['permission:patients.show'])->only(['index', 'show', 'fetch']);
         $this->middleware(['permission:patients.edit'])->only(['update']);
         $this->middleware(['permission:patients.create'])->only(['store']);
         $this->middleware(['permission:patients.delete'])->only(['destroy']);
@@ -29,8 +29,9 @@ class PatientController extends Controller
     {
         $patients = QueryBuilder::for(Patient::class)
             ->allowedFilters([AllowedFilter::scope('search'), 'name', 'email', 'phone'])
-            ->allowedSorts(['name', 'email', 'birthday'])
+            ->allowedSorts(['name', 'email', 'birthday', 'created_at'])
             ->paginate($request->per_page);
+
         return Inertia::render('Patients/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.patients')]),
             'data' => ModelCollection::make($patients),
@@ -69,11 +70,12 @@ class PatientController extends Controller
 
     public function show(Patient $patient)
     {
-        $patient->load('reservations', 'reservations.patient', 'reservations.reservationType');
+        $patient->load('appointments', 'appointments.patient', 'appointments.appointmentType');
+
         return Inertia::render('Patients/Show', [
             'data' => $patient,
-            'reservation_types' => ReservationType::all(),
-            'meta' => meta()->metaValues(['title' => "$patient->name | " . __('dashboard.patients')]),
+            'appointment_types' => AppointmentType::all(),
+            'meta' => meta()->metaValues(['title' => "$patient->name | ".__('dashboard.patients')]),
         ]);
     }
 

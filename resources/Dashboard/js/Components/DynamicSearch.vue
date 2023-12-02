@@ -11,6 +11,7 @@ let props = defineProps({
         type: Array,
         default: [{name: 'search'}],
     },
+
     model: String
 })
 
@@ -57,7 +58,7 @@ onMounted(() => {
 </script>
 
 <template>
-    <div class=" grid  md:grid-cols-3 w-full gap-x-5">
+    <div class="grid  md:grid-cols-4 w-full gap-x-5">
         <FormField
             v-for="(field,key) in fieldValues"
             :key="key"
@@ -72,7 +73,6 @@ onMounted(() => {
                 :type="field.type"
                 required
                 @update:model-value="value=>searchStart(field.name,value)"
-
             />
         </FormField>
         <slot/>

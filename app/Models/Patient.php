@@ -17,26 +17,26 @@ class Patient extends Model
 
     protected $casts = ['phone' => 'array', 'address' => 'array'];
 
-    public function reservations(): HasMany
+    public function appointments(): HasMany
     {
-        return $this->hasMany(Reservation::class);
+        return $this->hasMany(Appointment::class);
     }
 
     public function payments(): HasManyThrough
     {
-        return $this->hasManyThrough(Payment::class, Reservation::class);
+        return $this->hasManyThrough(Payment::class, Appointment::class);
     }
 
     public function bills(): HasManyDeep
     {
-        return $this->hasManyDeep(Bill::class, [Reservation::class, Payment::class]);
+        return $this->hasManyDeep(Bill::class, [Appointment::class, Payment::class]);
     }
 
-    public function scopeSearch( $query, $date)
+    public function scopeSearch($query, $date)
     {
         return $query->where('name', 'like', "%$date%")
-            ->orWhere('email','like',"%$date%")
-            ->orWhere('phone','like',"%$date%");
+            ->orWhere('email', 'like', "%$date%")
+            ->orWhere('phone', 'like', "%$date%");
     }
 
     protected function asJson($value): bool|string

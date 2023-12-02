@@ -25,13 +25,14 @@ class EmployeeStoreRequest extends FormRequest
 
         return [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:employees,email',
-            'password' => ['required', 'sometimes', 'confirmed', Password::defaults()],
             'phone' => ['required', 'array', 'min:1'],
             'phone.*' => ['required', 'numeric', 'digits:11'],
             'address' => ['required', 'array', 'min:1'],
             'address.*' => ['required', 'string', 'between:5,100'],
-            'role' => ['required', 'exists:roles,id'],
+            'user.email' => ['required_with:user.password,user.role', 'nullable', 'email', 'max:255', 'unique:users,email'],
+            'user.role' => ['required_with:user.email,user.password', 'nullable', 'exists:roles,id'],
+            'user.password' => ['required_with:user.email,user.role', 'nullable', 'confirmed', Password::defaults()],
+
         ];
     }
 }

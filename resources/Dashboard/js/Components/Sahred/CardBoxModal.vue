@@ -70,8 +70,8 @@ if (props.isModal) {
         <CardBox
             v-show="value"
             :is-form="isForm"
-            class="shadow-lg max-h-screen-menu w-11/12 md:w-4/5 lg:w-2/5 xl:w-8/12 z-50 overflow-y-auto  "
-            is-modal="is-modal"
+            class="shadow-lg max-h-screen-menu w-11/12 md:w-4/5 lg:w-4/6 xl:w-8/12 z-50 overflow-y-auto  "
+            :is-modal="isModal"
         >
             <FormValidationErrors/>
             <CardBoxComponentTitle :title="title">
