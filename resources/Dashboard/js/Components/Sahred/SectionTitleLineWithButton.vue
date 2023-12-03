@@ -10,7 +10,7 @@ let props = defineProps({
         type: String,
         default: null,
     },
-    model : String,
+    model: String,
     hasCreate: {
         type: Boolean,
         default: true
@@ -22,17 +22,38 @@ let props = defineProps({
 
     main: Boolean,
 });
-function capitalizeAndRemoveLast(str) {
-    // Capitalize the first letter
-    const capitalizedString = str.charAt(0).toUpperCase() + str.slice(1);
 
-    // Remove the last letter
-    return capitalizedString.slice(0, -1);
-}
+const convertToPascalCaseAndRemoveLast = (inputString) => {
+    // Capitalize the first letter of the input string
+    const capitalizedInput = inputString.charAt(0).toUpperCase() + inputString.slice(1);
+
+    if (capitalizedInput.includes('-')) {
+        // Split the string into words using '-'
+        const words = capitalizedInput.split('-');
+
+        // Capitalize the first letter of each word
+        const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+
+        // Join the words back together
+        const pascalCaseString = capitalizedWords.join('');
+
+        // Remove the last letter
+        return pascalCaseString.slice(0, -1);
+    } else {
+        // String is already in PascalCase
+        // Remove the last letter
+        return capitalizedInput.slice(0, -1);
+    }
+};
+
 
 const hasSlot = computed(() => useSlots().default);
 let showCreate = ref(false);
-provide(`showCreate${capitalizeAndRemoveLast(props.model)}`, showCreate)
+if (props.model) {
+    console.log(props.model, `showCreate${convertToPascalCaseAndRemoveLast(props.model)}`)
+    provide(`showCreate${convertToPascalCaseAndRemoveLast(props.model)}`, showCreate)
+}
+
 </script>
 
 <template>

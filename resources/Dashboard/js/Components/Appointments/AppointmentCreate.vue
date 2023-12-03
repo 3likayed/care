@@ -114,7 +114,7 @@ let form = useForm({
     patient_id: props.data?.patient_id,
     appointment_type_id: props.data?.appointment_type_id,
     doctor_id: props.data?.doctor_id,
-    date: null,
+    date: props.data?.date,
 
 });
 let patientOptions = ref(props.patients);
@@ -135,7 +135,6 @@ const setPrice = (appointmentTypeId) => {
 const submit = () => {
     Model.submit('create', 'appointments', form)
 }
-
 </script>
 <style scoped>
 

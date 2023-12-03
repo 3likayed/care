@@ -20,6 +20,10 @@ class HomeController extends Controller
         return Inertia::render('Home', [
             'data' => [
                 'employees_count' => Employee::count(),
+                'doctors_count' => $doctors->count(),
+                'patients_count' => $doctors->count(),
+                'appointments_count' => $appointments->count(),
+                'visits_count' => $visits->count(),
             ],
             'appointments' => $appointments,
             'appointment_types' => $appointmentTypes,

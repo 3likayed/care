@@ -2,7 +2,7 @@
 
     <SectionMain>
         <BreadCrumb :items="[{name: __('doctors'), href: route('dashboard.doctors.index')}]"/>
-        <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('doctors')" main>
+        <SectionTitleLineWithButton model="doctors" :icon="mdiLockAlertOutline" :title="__('doctors')" main>
             <template #create>
                 <CreateDoctor/>
             </template>

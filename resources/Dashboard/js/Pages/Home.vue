@@ -5,11 +5,15 @@ import * as chartConfig from "../Components/Charts/chart.config.js";
 import SectionTitleLineWithButton from "../Components/Sahred/SectionTitleLineWithButton.vue";
 import SectionMain from "../Components/Sahred/SectionMain.vue";
 import CardBoxWidget from "../Components/Sahred/CardBoxWidget.vue";
-import {mdiAccountStarOutline, mdiChartTimelineVariant} from "@mdi/js";
+import {mdiAccountStarOutline, mdiChartTimelineVariant, mdiDoctor, mdiNaturePeople} from "@mdi/js";
 import BreadCrumb from "../Components/Sahred/BreadCrumb.vue";
 import AppointmentsList from "../Components/Appointments/AppointmentsList.vue";
+import AppointmentCreate from "../Components/Appointments/AppointmentCreate.vue";
 import EmployeeCreate from "../Components/Employees/EmployeeCreate.vue";
 import DoctorCreate from "../Components/Doctors/DoctorCreate.vue";
+import PatientCreate from "../Components/Patients/PatientCreate.vue";
+import moment from "moment";
+
 
 const chartData = ref(null);
 
@@ -27,8 +31,13 @@ const transactionBarItems = computed(() => mainStore.history);
 
 let employeeCreate = ref(false);
 let doctorCreate = ref(false);
-provide('showCreateEmployee', employeeCreate );
-provide('showCreateDoctor', doctorCreate );
+let patientCreate = ref(false);
+let appointmentCreate = ref(false);
+provide('showCreateEmployee', employeeCreate);
+provide('showCreateDoctor', doctorCreate);
+provide('showCreatePatient', patientCreate);
+provide('showCreateAppointment', appointmentCreate);
+let appointmentData = ref();
 </script>
 
 <template>
@@ -39,24 +48,48 @@ provide('showCreateDoctor', doctorCreate );
             :title="__('home')"
             main
         />
-        <div class="grid grid-cols-1 gap-6 lg:grid-cols-2 mb-6">
+        <div class="grid grid-cols-1 gap-6 lg:grid-cols-3 mb-6">
             <CardBoxWidget
                 v-if="can('employees.show')"
                 :icon="mdiAccountStarOutline"
-                :label="__('data')"
+                :label="__('employees')"
                 :number="$page.props.data.employees_count"
-                color="text-red-500"
                 has-action
                 @action="employeeCreate=true"
             />
             <CardBoxWidget
                 v-if="can('doctors.show')"
-                :icon="mdiAccountStarOutline"
-                :label="__('data')"
-                :number="$page.props.data.employees_count"
-                color="text-red-500"
+                :icon="mdiDoctor"
+                :label="__('doctors')"
+                :number="$page.props.data.doctors_count"
                 has-action
                 @action="doctorCreate=true"
+            />
+            <CardBoxWidget
+                v-if="can('patients.show')"
+                :icon="mdiNaturePeople"
+                :label="__('patients')"
+                :number="$page.props.data.patients_count"
+                has-action
+                @action="patientCreate=true"
+            />
+            <CardBoxWidget
+                v-if="can('appointments.show')"
+                :icon="mdiAccountStarOutline"
+                :label="__('today_appointments')"
+                :number="$page.props.data.appointments_count"
+                color="text-red-500"
+                has-action
+                @action="appointmentData=null;appointmentCreate=true"
+            />
+            <CardBoxWidget
+                v-if="can('appointments.show')"
+                :icon="mdiAccountStarOutline"
+                :label="__('today_visits')"
+                :number="$page.props.data.visits_count"
+                color="text-red-500"
+                has-action
+                @action="appointmentData={date:moment().format('YYYY-MM-DDTHH:mm')}; appointmentCreate=true"
             />
         </div>
 
@@ -73,6 +106,9 @@ provide('showCreateDoctor', doctorCreate );
         </div>
         <EmployeeCreate v-if="employeeCreate"/>
         <DoctorCreate v-if="doctorCreate"/>
+        <PatientCreate v-if="patientCreate"/>
+        <AppointmentCreate v-if="appointmentCreate" :data="appointmentData  "/>
+
         <!--    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                   <div class="flex flex-col justify-between">
                     <CardBoxTransaction
