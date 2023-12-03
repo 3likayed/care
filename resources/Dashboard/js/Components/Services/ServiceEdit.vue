@@ -1,15 +1,15 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`PurchaseBills.create`)"
-        :button-label="__('create')"
+        v-if="can(`Service.edit`)"
+        :button-label="__('edit')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"
         :is-form="true"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('create_field',{field:'PurchaseBills'})"
-        @cancel="showCreate=false"
+        :title="__('edit_field',{field:'Service'})"
+        @cancel="showEdit=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.name" :label="__('name')">
@@ -17,7 +17,7 @@
                 v-model="form.name"
                 :icon="mdiAccount"
                 autocomplete="name"
-                name="name"
+                name="phone"
                 required
             />
         </FormField>
@@ -28,7 +28,6 @@
                 autocomplete="email"
                 name="email"
                 required
-                type="email"
             />
         </FormField>
         <FormField :errors="form.errors.birthday" :label="__('birthday')">
@@ -88,27 +87,34 @@ import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
 import {inject} from "vue";
 import {Model} from "../../Utils/index.js";
+import moment from "moment";
 
 let props = defineProps({
+    data: {
+        type: Object,
+        default: {},
+    },
     isModal: {
         type: Boolean,
         default: true
     }
 })
 
-let showCreate = inject('showCreate');
+let showEdit = props.isModal ? inject('showEdit') : true;
+
+
 let form = useForm({
-    name: null,
-    email: null,
-    phone: [null],
-    address: [null],
-    password: null,
-    birthday: null,
-    password_confirmation: null,
+    name: props.data.name,
+    email: props.data.email,
+    phone: props.data.phone,
+    address: props.data.address,
+    birthday: moment(props.data.birthday).format('YYYY-MM-DD'),
 
 });
+
+
 const submit = () => {
-    Model.submit('create', 'PurchaseBills', form)
+    Model.submit('edit', 'Service', form, props.data.id)
 }
 
 </script>

@@ -30,30 +30,15 @@
                 required
             />
         </FormField>
-        <FormField
-            :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
-            :errors="form.errors[`product`]"
-            :label="__('product')"
-            @action="(action , key)=>handleField(form,'product',action ,null,{name:null,quantity:null}) ">
-            <div v-for="(product,key) in form.product" :key="key" class="grid grid-cols-2 gap-5">
-                <FormControl
-                    v-model="form.product[key].name"
-                    :errors="form.errors[`product.${key}`]"
-                    :icon="mdiPhone"
-                    autocomplete="product"
-                    name="product[]"
-                />
-                <FormControl
-                    v-model="form.product[key].quantity"
-                    :errors="form.errors[`product.${key}`]"
-                    :icon="mdiPhone"
-                    autocomplete="product"
-                    :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
-                    @action="(action )=>handleField(form,'product',action ,key)"
-                    name="product[]"
-                />
-            </div>
+        <FormField :errors="form.errors.name" :label="__('price')">
+            <FormControl
+                v-model="form.price"
+                :icon="mdiCash"
+                name="price"
+                required
+            />
         </FormField>
+       
 
 
     </CardBoxModal>
@@ -62,7 +47,7 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiPhone, mdiPlusCircle, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiCash, mdiPhone, mdiPlusCircle, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -81,8 +66,8 @@ let showCreate = inject('showCreate');
 let form = useForm({
     name: null,
     quantity: 0,
-    product: [{name: null, quantity: null}],
-
+    price: null,
+    type:'product'
 
 });
 const submit = () => {

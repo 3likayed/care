@@ -1,14 +1,14 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`PurchaseBills.edit`)"
+        v-if="can(`purchasetransaction.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"
         :is-form="true"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('edit_field',{field:'PurchaseBills'})"
+        :title="__('edit_field',{field:'purchasetransaction'})"
         @cancel="showEdit=false"
         @confirm="submit"
     >
@@ -114,7 +114,7 @@ let form = useForm({
 
 
 const submit = () => {
-    Model.submit('edit', 'PurchaseBills', form, props.data.id)
+    Model.submit('edit', 'purchasetransaction', form, props.data.id)
 }
 
 </script>

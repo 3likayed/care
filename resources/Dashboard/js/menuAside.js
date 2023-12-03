@@ -117,10 +117,10 @@ export default [
                 icon: mdiMagicStaff,
             },
             {
-                route: "dashboard.purchase-bills.index",
+                route: "dashboard.purchase-transactions.index",
                 label: "purchase-bills",
-                permission: "purchase-bills.show",
-                components: ['PurchaseBills/Index', 'PurchaseBills/Show'],
+                permission: "purchase-transactions.show",
+                components: ['PurchaseTransactions/Index', 'PurchaseTransactions/Show'],
                 icon: mdiCashCheck,
             },
         ],
@@ -130,6 +130,13 @@ export default [
         permission: "suppliers.show",
         label: "suppliers",
         components: ['Suppliers/Index'],
+        icon: mdiTruckDelivery,
+    },
+    {
+        route: "dashboard.services.index",
+        permission: "services.show",
+        label: "services",
+        components: ['Service/Index'],
         icon: mdiTruckDelivery,
     },
 ];

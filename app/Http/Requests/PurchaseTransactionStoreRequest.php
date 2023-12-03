@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PurchaseBillStoreRequest extends FormRequest
+class PurchaseTransactionStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,6 +25,7 @@ class PurchaseBillStoreRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'between:5,50'],
             'quantity' => ['nullable', 'numeric'],
+            
 
         ];
     }

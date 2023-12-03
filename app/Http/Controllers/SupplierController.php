@@ -18,7 +18,7 @@ class SupplierController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:suppliers.show,dashboard'])->only(['index', 'show', 'fetch']);
+        $this->middleware(['permission:suppliers.show'])->only(['index', 'show', 'fetch']);
         $this->middleware(['permission:suppliers.edit'])->only(['update']);
         $this->middleware(['permission:suppliers.create'])->only(['store']);
         $this->middleware(['permission:suppliers.delete'])->only(['destroy']);

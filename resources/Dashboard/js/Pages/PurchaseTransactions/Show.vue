@@ -1,7 +1,7 @@
 <template>
     <SectionMain>
         <BreadCrumb
-            :items="[{name: __('PurchaseBillss'), href: route(`dashboard.PurchaseBillss.index`)},{name: data.name, href: route(`dashboard.PurchaseBillss.show`, data.id)}]"/>
+            :items="[{name: __('PurchaseTransactions'), href: route(`dashboard.PurchaseTransactions.index`)},{name: data.name, href: route(`dashboard.PurchaseTransactionss.show`, data.id)}]"/>
         <CardBox class="mb-4">
             <StepsComponent
                 v-model="step"
@@ -9,7 +9,7 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <PurchaseBillsEdit
+            <PurchaseTransactionsEdit
                 :data="data"
                 :is-modal="false"
             />
@@ -21,7 +21,7 @@
                 :sortable="false"
             >
                 <template #create>
-                    <ReservationCreate :data="{PurchaseBills_id:data.id}" :PurchaseBillss="[data]"
+                    <ReservationCreate :data="{PurchaseTransactions_id:data.id}" :PurchaseTransactions="[data]"
                                        :reservationTypes="reservationTypes"/>
                 </template>
             </ReservationsList>
@@ -35,7 +35,7 @@
             </section>
         -->
         <!--    <section v-show="step === 1">
-              <ProjectsList :projects="PurchaseBills.projects"/>
+              <ProjectsList :projects="PurchaseTransactions.projects"/>
             </section>-->
     </SectionMain>
 </template>
@@ -49,7 +49,7 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import PurchaseBillsEdit from "../../Components/PurchaseBillss/PurchaseBillsEdit.vue";
+import PurchaseTransactionsEdit from "../../Components/PurchaseTransactionss/PurchaseTransactionsEdit.vue";
 import ReservationsList from "../../Components/Reservations/ReservationsList.vue";
 import ReservationCreate from "../../Components/Reservations/ReservationCreate.vue";
 

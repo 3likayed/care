@@ -29,6 +29,14 @@
                 required
             />
         </FormField>
+        <FormField :errors="form.errors.name" :label="__('price')">
+            <FormControl
+                v-model="form.price"
+                :icon="mdiCash"
+                name="price"
+                required
+            />
+        </FormField>
         
     </CardBoxModal>
 </template>
@@ -62,8 +70,9 @@ let showEdit = props.isModal ? inject('showEdit') : true;
 let form = useForm({
     name: props.data.name,
     quantity: props.data.quantity,
+    price: props.data.price,
+
     
-    birthday: moment(props.data.birthday).format('YYYY-MM-DD'),
 
 });
 
