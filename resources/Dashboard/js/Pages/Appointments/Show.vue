@@ -14,8 +14,15 @@
                 :is-modal="false"
             />
         </section>
-        <section v-show="step === 1">
-            payments
+        <section v-if="step===1">
+            <PatientShow
+
+                :data="computedData.patient"
+
+            />
+        </section>
+        <section v-show="step === 2">
+            <AppointmentProducts/>
         </section>
     </SectionMain>
 </template>
@@ -30,9 +37,11 @@ import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import AppointmentEdit from "../../Components/Appointments/AppointmentEdit.vue";
+import AppointmentProducts from "../../Components/Appointments/AppointmentProducts.vue";
+import PatientShow from "../../Components/Patients/PatientShow.vue";
 
 
-let steps = ref([__('data'), __('payments')]);
+let steps = ref(['data',{name:'patient',permission: 'patients.show'}, {name: 'products', permission: 'appointment-product.show'}]);
 let step = ref(0);
 let computedData = computed(() => usePage().props.data);
 let appointmentTypes = usePage().props.appointment_types

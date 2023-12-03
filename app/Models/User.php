@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -22,6 +23,8 @@ class User extends Authenticatable
     protected $fillable = [
         'email',
         'password',
+        'userable_type',
+        'userable_id'
 
     ];
 
@@ -34,7 +37,6 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
-
     /**
      * The attributes that should be cast.
      *
@@ -53,9 +55,9 @@ class User extends Authenticatable
             ->orWhere('email', 'like', '%$date%');
     }
 
-    public function employee(): HasOne
+    public function userable(): MorphTo
     {
-        return $this->hasOne(Employee::class);
+        return $this->morphTo();
     }
 
     protected function role(): Attribute

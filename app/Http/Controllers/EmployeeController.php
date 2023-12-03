@@ -6,7 +6,7 @@ use App\Http\Requests\EmployeeStoreRequest;
 use App\Http\Requests\EmployeeUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Employee;
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -30,11 +30,13 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
+        if ($employee->employable)
+            abort(404);
         $roles = Role::all();
 
         return Inertia::render('Employees/Show', [
             'data' => $employee,
-            'meta' => meta()->metaValues(['title' => "$employee->name | " . __('dashboard.patients')]),
+            'meta' => meta()->metaValues(['title' => "$employee->name | " . __('dashboard.employees')]),
             'roles' => $roles,
         ]);
     }
@@ -43,6 +45,7 @@ class EmployeeController extends Controller
     {
 
         $employees = QueryBuilder::for(Employee::class)
+            ->whereNull('employable_id')
             ->allowedFilters(
                 AllowedFilter::scope('search'),
                 'name',
@@ -50,7 +53,7 @@ class EmployeeController extends Controller
                 'user.email',
 
             )
-            ->allowedSorts('name','email',AllowedSort::field('has_user','user_id'),'created_at')
+            ->allowedSorts('name', 'email', AllowedSort::field('has_user', 'user_id'), 'created_at')
             ->get();
         $roles = Role::all();
 
@@ -69,45 +72,28 @@ class EmployeeController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-
+        $employee = Employee::create($data)->get();
         if (isset($data['user']['email'])) {
-            $user = User::create($data['user']);
-            $user->assignRole($data['user']['role']);
-            $user->employee()
-                ->create($data);
-        } else {
-            Employee::create($data);
+            UserService::updateOrCreateUser($employee, $data['user']);
         }
+
         DB::commit();
 
         return success();
-
     }
+
 
     public function update(EmployeeUpdateRequest $request, Employee $employee)
     {
-
+        if ($employee->employable)
+            abort(404);
         DB::beginTransaction();
         $data = $request->validated();
+        $employee->update($data['user']);
 
-        $employee->update($data);
         if (isset($data['user']['email'])) {
-            $user = $employee->user;
-            if ($user) {
-                if (!isset($data['user']['password']) || !$data['user']['password']) {
-                    unset($data['user']['password']);
-                }
-                $user->update($data['user']);
-            } else {
-                $user = User::create($data['user']);
-                $employee->update(['user_id' => $user->id]);
-            }
-            if ($user->role?->id != $data['user']['role']) {
-                $user->syncRoles($data['user']['role']);
-                $user->save();
-            }
+            UserService::updateOrCreateUser($employee, $data['user']);
         }
-
         DB::commit();
 
         return success();
@@ -118,8 +104,9 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        if ($employee->employable)
+            abort(404);
         $employee->delete();
-
         return success();
     }
 }

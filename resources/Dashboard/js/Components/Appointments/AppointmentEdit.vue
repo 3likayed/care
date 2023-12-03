@@ -10,7 +10,7 @@
         :model-value="true"
         :title="__('edit_field',{field:'appointment'})"
         @cancel="showEdit=false"
-        @confirm="submit() ; showEdit=false"
+        @confirm="submit();"
     >
         <FormField :errors="form.errors.patient_id" :label="__('patient')">
             <FormControl

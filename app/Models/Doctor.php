@@ -2,19 +2,17 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
-use Spatie\Permission\Traits\HasRoles;
 
 class Doctor extends Authenticatable
 {
     use HasApiTokens, SoftDeletes;
 
-    protected $fillable = [];
+    protected $fillable = ['name'];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -28,11 +26,15 @@ class Doctor extends Authenticatable
 
     protected $with = ['employee'];
 
-    public function employee(): BelongsTo
+    public function user()
     {
-        return $this->belongsTo(Employee::class);
+        return $this->employee->user();
     }
 
+    public function employee(): MorphOne
+    {
+        return $this->morphOne(Employee::class, 'employable');
+    }
 
     public function specializations(): BelongsToMany
     {

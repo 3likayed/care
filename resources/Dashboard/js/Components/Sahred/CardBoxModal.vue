@@ -29,6 +29,10 @@ const props = defineProps({
     },
 
     hasCancel: Boolean,
+    hasConfirm: {
+        type: Boolean,
+        default:true
+    },
     modelValue: {
         type: [String, Number, Boolean],
         default: null,
@@ -117,6 +121,7 @@ if (props.isModal) {
         <template #footer>
             <BaseButtons>
                 <BaseButton
+                    v-if="hasConfirm"
                     :color="button"
                     :label="buttonLabel"
                     @click="confirm"

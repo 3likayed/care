@@ -7,7 +7,7 @@ use App\Http\Requests\DoctorUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Doctor;
 use App\Models\Specialization;
-use App\Models\User;
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -41,7 +41,7 @@ class DoctorController extends Controller
     {
 
         $doctors = QueryBuilder::for(Doctor::class)
-            ->with('specializations')
+            ->with('specializations', 'employee.user')
             ->allowedFilters(
                 AllowedFilter::scope('search'),
                 'name',
@@ -49,11 +49,13 @@ class DoctorController extends Controller
             )
             ->get();
         $specializations = Specialization::all();
+        $roles = Role::all();
 
         return Inertia::render('Doctors/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.doctors')]),
             'data' => ModelCollection::make($doctors),
             'specializations' => $specializations,
+            'roles' => $roles,
         ]);
     }
 
@@ -65,12 +67,13 @@ class DoctorController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        $user = User::create($data['user']);
-        $user->assignRole(settings()->doctor_role);
-        $employee = $user->employee()->create($data);
-        $doctor = $employee->doctor()->create();
+        $doctor = Doctor::create();
         $doctor->specializations()->sync($data['specializations']);
 
+        $employee = $doctor->employee()->create($data);
+        $data['user']['role'] = settings('doctor_role');
+        $user = UserService::updateOrCreateUser($employee, $data['user']);
+        $user->assignRole(settings()->doctor_role);
         DB::commit();
 
         return success();
@@ -82,14 +85,10 @@ class DoctorController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        if (!isset($data['password']) || !$data['password']) {
-            unset($data['password']);
-        }
-        $doctor->employee()->update($data);
-        if ($doctor->role->id != $data['role']) {
-            $doctor->syncRoles(Role::find($data['role'])->name);
-            $doctor->save();
-        }
+        $employee = $doctor->employee ;
+        $employee->update($data);
+        UserService::updateOrCreateUser($employee, $data['user']);
+        $doctor->specializations()->sync($data['specializations']);
         DB::commit();
 
         return success();

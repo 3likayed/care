@@ -3,8 +3,11 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
@@ -22,9 +25,36 @@ class Appointment extends Model
         return $this->belongsTo(Patient::class);
     }
 
+    public function doctor(): BelongsTo
+    {
+        return $this->belongsTo(Doctor::class);
+    }
+
     public function appointmentType(): BelongsTo
     {
         return $this->belongsTo(AppointmentType::class);
+    }
+
+    public function transactions(): MorphMany
+    {
+        return $this->morphMany(Transaction::class, 'transactionable');
+    }
+
+    public function total(): Attribute
+    {
+        return Attribute::get(function () {
+            $sum = 0;
+            $products = $this->products;
+            foreach ($products as $product) {
+                $sum += $product->pivot->quantity * $product->price;
+            }
+            return ($this->price + $sum) - $this->discount;
+        });
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'appointment_products', 'appointment_id', 'product_id');
     }
 
     public function scopePatientSearch($query, $value)

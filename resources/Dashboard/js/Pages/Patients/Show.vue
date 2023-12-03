@@ -9,25 +9,28 @@
             />
         </CardBox>
         <section v-if="step===0">
+            <PatientShow
+                :data="data"
+                :is-modal="false"
+            />
+        </section>
+        <section v-if="step===1">
             <PatientEdit
                 :data="data"
                 :is-modal="false"
             />
         </section>
-        <section v-show="step === 1">
+        <section v-show="step === 2">
             <AppointmentsList
                 :has-search="false"
                 :items="data.appointments"
                 :sortable="false"
             >
                 <template #create>
-                    <AppointmentCreate :data="{patient_id:data.id}" :patients="[data]"
-                                       :appointmentTypes="appointmentTypes"/>
+                    <AppointmentCreate :appointmentTypes="appointmentTypes" :data="{patient_id:data.id}"
+                                       :patients="[data]"/>
                 </template>
             </AppointmentsList>
-        </section>
-        <section v-show="step === 2">
-            sdadasdas
         </section>
         <!--
             <section v-show="step === 1">
@@ -52,9 +55,10 @@ import CardBox from "../../Components/Sahred/CardBox.vue";
 import PatientEdit from "../../Components/Patients/PatientEdit.vue";
 import AppointmentsList from "../../Components/Appointments/AppointmentsList.vue";
 import AppointmentCreate from "../../Components/Appointments/AppointmentCreate.vue";
+import PatientShow from "../../Components/Patients/PatientShow.vue";
 
 
-let steps = ref([__('data'), __('appointments'), __('home')]);
+let steps = ref([__('data'), __('edit'), __('appointments')]);
 let step = ref(0);
 
 let data = computed(() => usePage().props.data);

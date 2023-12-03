@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
 use App\Models\Setting;
-use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
@@ -19,13 +19,16 @@ class DatabaseSeeder extends Seeder
 
         // \App\Models\User::factory(10)->create();
 
-        $user = User::create(['email' => 'admin@app.com',
-            'password' => bcrypt(12345678)]);
-        $user->employee()->create([
+        $user = Employee::create([
             'name' => 'Test User',
             'phone' => ['01159169615'],
             'address' => ['address1'],
-        ]);
+        ])->user()->create(
+            [
+                'email' => 'admin@app.com',
+                'password' => bcrypt(12345678)
+            ]
+        );
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
         Role::create(['name' => 'super-admin']);
         $permissionsByRole = [
@@ -40,6 +43,7 @@ class DatabaseSeeder extends Seeder
                 'products.create', 'products.edit', 'products.delete', 'products.show',
                 'purchase-bills.create', 'purchase-bills.edit', 'purchase-bills.delete', 'purchase-bills.show',
                 'suppliers.create', 'suppliers.edit', 'suppliers.delete', 'suppliers.show',
+                'appointment-product.create', 'appointment-product.edit', 'appointment-product.delete', 'appointment-product.show',
                 'settings.edit',
             ],
         ];
@@ -64,5 +68,7 @@ class DatabaseSeeder extends Seeder
         $settings = Setting::create([]);
         $user->assignRole('super-admin');
         $this->call(PatientsTableSeeder::class);
+        $this->call(UsersTableSeeder::class);
+        $this->call(EmployeesTableSeeder::class);
     }
 }

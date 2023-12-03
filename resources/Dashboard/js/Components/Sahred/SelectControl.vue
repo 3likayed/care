@@ -76,10 +76,12 @@ let computedOptions = computed(() => props.options)
         filter
         option-label="name"
         option-value="id"
+        :placeholder="placeholder"
         showClear
         @filter="(value)=>emit('filter',value)"
     />
     <MultiSelect
+        :placeholder="placeholder"
         v-else
         v-model="computedValue"
         :disabled="isDisabled"

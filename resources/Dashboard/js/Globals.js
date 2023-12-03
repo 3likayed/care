@@ -34,6 +34,7 @@ export function route(name, params, absolute, config = usePage().props.ziggy) {
 }
 
 export function can(permission) {
+
     return permission ? usePage().props.auth.permissions?.includes(permission) : true;
 }
 
@@ -74,7 +75,7 @@ export const formParameters = (model, operation, id, modelResolver = true) => {
             }
     }
 }
-export const handleField = (form, field, action, key , value=null) => {
+export const handleField = (form, field, action, key, value = null) => {
     switch (action) {
         case 'append' :
             form[field][Object.keys(form[field]).length] = value;

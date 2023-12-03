@@ -12,7 +12,7 @@ use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class AppointmentController extends Controller
+class AppointmentProductController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -72,7 +72,6 @@ class AppointmentController extends Controller
 
     public function show(Appointment $appointment)
     {
-
         $appointment->load('patient', 'appointmentType');
         $appointmentTypes = AppointmentType::all();
         return Inertia::render('Appointments/Show', [

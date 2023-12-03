@@ -46,7 +46,7 @@
             <FormField
                 :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
                 :errors="form.errors[`address`]"
-                :label="__('adress')"
+                :label="__('addresss')"
                 @action="(action , key)=>handleField(form,'address',action ) ">
                 <FormControl
                     v-for="(address,key) in form.address"

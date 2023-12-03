@@ -170,6 +170,7 @@ if (computedType.value === "editor") {
             v-if="computedType==='select'"
             :id="id"
             ref="inputEl"
+            :placeholder="placeholder"
             v-model="computedValue"
             :class="inputElClass"
             :disabled="isDisabled"
