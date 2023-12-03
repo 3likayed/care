@@ -23,6 +23,7 @@ return new class extends Migration {
                 ->cascadeOnDelete();
 
             $table->foreignId('doctor_id')
+                ->nullable()
                 ->constrained('doctors')
                 ->references('id')
                 ->cascadeOnDelete();

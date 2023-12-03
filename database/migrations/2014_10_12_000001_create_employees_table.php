@@ -15,6 +15,7 @@ return new class extends Migration {
             $table->string('name');
             $table->string('phone');
             $table->string('address');
+            $table->morphs('employable');
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
