@@ -1,6 +1,61 @@
+<script setup>
+
+import CardBox from "../../Components/Sahred/CardBox.vue";
+import BaseTable from "../../Components/Sahred/BaseTable.vue";
+import {mdiCalendarToday, mdiFormatListBulleted} from "@mdi/js";
+import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
+import DynamicSearch from "../../Components/DynamicSearch.vue";
+import TableOptions from "../../Components/Sahred/TableOptions.vue";
+import AppointmentEdit from "./AppointmentEdit.vue";
+import moment from "moment";
+import AppointmentCreate from "./AppointmentCreate.vue";
+import {computed, ref} from "vue";
+import {Link, usePage} from "@inertiajs/vue3";
+import BaseButton from "../Sahred/BaseButton.vue";
+import FormControl from "../Sahred/FormControl.vue";
+import FormField from "../Sahred/FormField.vue";
+import {Search} from "../../Utils/index.js";
+
+
+let daysInterval = ref();
+let edited = ref();
+let appointmentTypes = computed(() => usePage().props.appointment_types);
+
+let props = defineProps({
+    title: String,
+    items: Array,
+    pagination: Object,
+    sortable: {
+        type: Boolean,
+        default: true,
+    },
+    hasSearch: {
+        type: Boolean,
+        default: true,
+    },
+})
+let searchFields = [
+    {name: 'id'},
+    {name: 'start', type: 'date'},
+    {name: 'end', type: 'date'},
+    {name: 'patient'},
+    {name: 'appointment_type_id', label: 'appointment-type', type: 'select', options: appointmentTypes.value}
+]
+
+let headerFields = [
+    {name: 'id', sortable: true, label: '#'},
+    {name: 'doctors.name', label: 'doctor', sortable: true},
+    {name: 'patients.name', label: 'patient', sortable: true},
+    {name: 'appointment_types.name', label: 'appointment_type', sortable: true},
+    {name: 'price', sortable: true},
+    {name: 'date', sortable: true},
+    'time',
+    {name: 'created_at', sortable: true}]
+</script>
+
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiFormatListBulleted" :title="__('appointments')" main>
+    <SectionTitleLineWithButton :icon="mdiFormatListBulleted" :title="title ??__('appointments')" main>
 
         <template #create>
             <slot name="create">
@@ -37,11 +92,15 @@
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ item.id }}</td>
+                <td :data-label="__('doctor')">
+                    <Link :href="route('dashboard.doctors.show',item.doctor.id)">
+                        {{ item.doctor.employee.name }}
+                    </Link>
+                </td>
                 <td :data-label="__('patient')">
                     <Link :href="route('dashboard.patients.show',item.patient.id)">
                         {{ item.patient.name }}
                     </Link>
-
                 </td>
                 <td :data-label="__('appointment_type')">
                     {{ item.appointment_type.name }}
@@ -72,59 +131,6 @@
     </CardBox>
 </template>
 
-<script setup>
-
-import CardBox from "../../Components/Sahred/CardBox.vue";
-import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiCalendarToday, mdiFormatListBulleted} from "@mdi/js";
-import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
-import DynamicSearch from "../../Components/DynamicSearch.vue";
-import TableOptions from "../../Components/Sahred/TableOptions.vue";
-import AppointmentEdit from "./AppointmentEdit.vue";
-import moment from "moment";
-import AppointmentCreate from "./AppointmentCreate.vue";
-import {computed, ref} from "vue";
-import {Link, usePage} from "@inertiajs/vue3";
-import BaseButton from "../Sahred/BaseButton.vue";
-import FormControl from "../Sahred/FormControl.vue";
-import FormField from "../Sahred/FormField.vue";
-import {Search} from "../../Utils/index.js";
-
-
-let daysInterval = ref();
-let edited = ref();
-let appointmentTypes = computed(() => usePage().props.appointment_types);
-
-let props = defineProps({
-    data: Object,
-    items: Array,
-    pagination: Object,
-    sortable: {
-        type: Boolean,
-        default: true,
-    },
-    hasSearch: {
-        type: Boolean,
-        default: true,
-    },
-})
-let searchFields = [
-    {name: 'id' },
-    {name: 'start', type: 'date'},
-    {name: 'end', type: 'date'},
-    {name: 'patient'},
-    {name: 'appointment_type_id', label: 'appointment-type', type: 'select', options: appointmentTypes.value}
-]
-
-let headerFields = [
-    {name: 'id', sortable: true, label: '#'},
-    {name: 'patients.name', label: 'patient', sortable: true},
-    {name: 'appointment_types.name', label: 'appointment_type', sortable: true},
-    {name: 'price', sortable: true},
-    {name: 'date', sortable: true},
-    'time',
-    {name: 'created_at', sortable: true}]
-</script>
 <style>
 
 

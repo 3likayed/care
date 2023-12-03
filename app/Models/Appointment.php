@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -19,6 +20,7 @@ class Appointment extends Model
     protected $casts = ['date' => 'datetime:Y-m-d g:i A', 'created_at' => 'datetime:Y-m-d g:i A'];
 
     protected $dateFormat = 'Y-m-d g:i A';
+    protected $with = ['patient', 'appointmentType','doctor'];
 
     public function patient(): BelongsTo
     {
@@ -29,6 +31,7 @@ class Appointment extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
+
 
     public function appointmentType(): BelongsTo
     {
@@ -74,5 +77,13 @@ class Appointment extends Model
         return $query->where('date', '<=', Carbon::parse($value)->addDay());
     }
 
+    public function scopeToday(Builder $query)
+    {
+        return $query->whereDate('date', Carbon::today());
+    }
 
+    public function scopeVisit(Builder $query)
+    {
+        return $query->whereNotNull('doctor_id');
+    }
 }

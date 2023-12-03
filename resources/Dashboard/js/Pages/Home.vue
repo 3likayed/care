@@ -14,6 +14,7 @@ import {
     mdiPostOutline
 } from "@mdi/js";
 import BreadCrumb from "../Components/Sahred/BreadCrumb.vue";
+import AppointmentsList from "../Components/Appointments/AppointmentsList.vue";
 
 const chartData = ref(null);
 
@@ -74,6 +75,7 @@ const transactionBarItems = computed(() => mainStore.history);
             />
         </div>
 
+        <AppointmentsList :title="__('today_appointments')" :has-search="false" :items="$page.props.appointments"/>
         <!--    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
                   <div class="flex flex-col justify-between">
                     <CardBoxTransaction

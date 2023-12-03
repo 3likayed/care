@@ -141,6 +141,7 @@ return [
     'days' => 'الايام',
     'appointment' => 'موعد',
     'appointments' => 'المواعيد',
+    'today_appointments' => 'مواعيد اليوم',
     'appointment-type' => 'نوع الموعد',
     'appointment_type' => 'نوع الموعد',
     'appointment-types' => 'أنواع الموعيد',
