@@ -5,11 +5,12 @@ import IconRounded from "./IconRounded.vue";
 import {mdiPlusCircle} from "@mdi/js";
 import BaseButton from "./BaseButton.vue";
 
-defineProps({
+let props = defineProps({
     icon: {
         type: String,
         default: null,
     },
+    model : String,
     hasCreate: {
         type: Boolean,
         default: true
@@ -18,12 +19,20 @@ defineProps({
         type: String,
         required: false,
     },
+
     main: Boolean,
 });
+function capitalizeAndRemoveLast(str) {
+    // Capitalize the first letter
+    const capitalizedString = str.charAt(0).toUpperCase() + str.slice(1);
+
+    // Remove the last letter
+    return capitalizedString.slice(0, -1);
+}
 
 const hasSlot = computed(() => useSlots().default);
 let showCreate = ref(false);
-provide('showCreate', showCreate)
+provide(`showCreate${capitalizeAndRemoveLast(props.model)}`, showCreate)
 </script>
 
 <template>

@@ -7,6 +7,8 @@ use App\Http\Requests\AppointmentUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Appointment;
 use App\Models\AppointmentType;
+use App\Models\Doctor;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -43,6 +45,7 @@ class AppointmentController extends Controller
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
             'appointment_types' => $appointmentTypes,
+            'doctors' => Doctor::all()
         ]);
     }
 
@@ -53,6 +56,10 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
+        if (!Carbon::parse($data['date'])->isToday()) {
+            $data['doctor_id'] = null;
+        }
+
         $data['price'] = AppointmentType::find($data['appointment_type_id'])->price;
         Appointment::create($data);
 
@@ -64,9 +71,13 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
+
+        if (!Carbon::parse($data['date'])->isToday()) {
+            $data['doctor_id'] = null;
+        }
+
         $data['price'] = AppointmentType::find($data['appointment_type_id'])->price;
         $appointment->update($data);
-
         return success();
     }
 
@@ -78,6 +89,7 @@ class AppointmentController extends Controller
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,
             'appointment_types' => $appointmentTypes,
+            'doctors' => Doctor::all(),
             'meta' => meta()->metaValues(['title' => "$appointment->name | " . __('dashboard.appointments')]),
         ]);
     }

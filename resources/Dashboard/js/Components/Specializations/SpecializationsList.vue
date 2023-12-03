@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('specializations')" main>
+    <SectionTitleLineWithButton  model="specializations" :icon="mdiLockAlertOutline" :title="__('specializations')" main>
         <slot name="create">
 
         </slot>

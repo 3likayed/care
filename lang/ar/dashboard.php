@@ -142,6 +142,7 @@ return [
     'appointment' => 'موعد',
     'appointments' => 'المواعيد',
     'today_appointments' => 'مواعيد اليوم',
+    'today_visits' => 'زيارات اليوم',
     'appointment-type' => 'نوع الموعد',
     'appointment_type' => 'نوع الموعد',
     'appointment-types' => 'أنواع الموعيد',

@@ -7,7 +7,7 @@
         :is-form="true"
         :model-value="true"
         :title="__('create_field',{field:'role'})"
-        @cancel="showCreate=false"
+        @cancel="showCreateRole=false"
         @confirm="submit">
         <FormField :errors="form.errors.name" :label="__('name')">
             <FormControl
@@ -49,7 +49,7 @@ import FormWithLabelField from "../Sahred/FormWithLabelField.vue";
 import {Model} from "../../Utils/index.js";
 
 
-let showCreate = inject('showCreate');
+let showCreateRole = inject('showCreateRole');
 const page = usePage()
 const allPermissions = page.props.permissions
 

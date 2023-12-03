@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('purchasetransaction')" main>
+    <SectionTitleLineWithButton model="purchaceTransactions"  :icon="mdiLockAlertOutline" :title="__('purchasetransaction')" main>
         <slot name="create">
 
         </slot>
@@ -45,7 +45,7 @@
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </td>
                 <td :data-label="__('options')">
-                    <TableOptions :item="item" model="purchasetransaction" @edit="edited=item">
+                    <TableOptions :item="item" model="purchaseTransaction" @edit="edited=item">
                         <template #edit>
                             <purchasetransactionEdit :data="edited"/>
                         </template>
@@ -74,7 +74,7 @@ let edited = ref();
 let props = defineProps({
     suppliers : {
         type : Array ,
-        default : [] 
+        default : []
     },
     items: Array,
     pagination: Object,

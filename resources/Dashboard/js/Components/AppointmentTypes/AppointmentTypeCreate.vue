@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'appointment-type'})"
-        @cancel="showCreate=false"
+        @cancel="showCreateAppointmentType=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.name" :label="__('name')">
@@ -51,7 +51,7 @@ let props = defineProps({
     }
 })
 
-let showCreate = inject('showCreate');
+let showCreateAppointmentType = inject('showCreateAppointmentType');
 let form = useForm({
     name: null,
     price: null,

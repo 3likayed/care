@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiStoreCheck" :title="__('products')" main>
+    <SectionTitleLineWithButton model="prdoucts"  :icon="mdiStoreCheck" :title="__('products')" main>
         <slot name="create">
 
         </slot>
@@ -19,14 +19,14 @@
                 <td :data-label="__('name')">
                     {{ item.name }}
                 </td>
-               
+
                 <td :data-label="__('quantity')">
                     {{ item.quantity }}
                 </td>
                 <td :data-label="__('price')">
                     {{ item.price }}
                 </td>
-                
+
 
                 <td :data-label="__('created_at')">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}

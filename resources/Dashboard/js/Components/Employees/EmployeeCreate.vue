@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'employee'})"
-        @cancel="showCreate=false"
+        @cancel="showCreateEmployee=false"
         @confirm="submit"
     >
 
@@ -142,7 +142,7 @@ let props = defineProps({
 let steps = ref([__('data'), __('user_data')]);
 let step = ref(0);
 
-let showCreate = inject('showCreate');
+let showCreateEmployee = inject('showCreateEmployee');
 let roles = usePage().props.roles;
 let form = useForm({
     name: null,

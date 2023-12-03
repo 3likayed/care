@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('appointment-types')" main>
+    <SectionTitleLineWithButton model="appointmentTypes"  :icon="mdiLockAlertOutline" :title="__('appointment-types')" main>
         <slot name="create">
 
         </slot>

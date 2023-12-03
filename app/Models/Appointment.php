@@ -20,7 +20,7 @@ class Appointment extends Model
     protected $casts = ['date' => 'datetime:Y-m-d g:i A', 'created_at' => 'datetime:Y-m-d g:i A'];
 
     protected $dateFormat = 'Y-m-d g:i A';
-    protected $with = ['patient', 'appointmentType','doctor'];
+    protected $with = ['patient', 'appointmentType', 'doctor'];
 
     public function patient(): BelongsTo
     {
@@ -79,11 +79,11 @@ class Appointment extends Model
 
     public function scopeToday(Builder $query)
     {
-        return $query->whereDate('date', Carbon::today());
+        return $query->whereDate('date', Carbon::today())->orderBy('date');
     }
 
     public function scopeVisit(Builder $query)
     {
-        return $query->whereNotNull('doctor_id');
+        return $query->whereNotNull('doctor_id')->orderBy('data');
     }
 }

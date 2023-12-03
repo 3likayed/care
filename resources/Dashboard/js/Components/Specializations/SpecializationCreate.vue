@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'specialization'})"
-        @cancel="showCreate=false"
+        @cancel="showCreateSpecialization=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.name" :label="__('name')">
@@ -42,7 +42,7 @@ let props = defineProps({
     }
 })
 
-let showCreate = inject('showCreate');
+let showCreateSpecialization = inject('showCreateSpecialization');
 let form = useForm({
     name: null,
 

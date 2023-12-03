@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('suppliers')" main>
+    <SectionTitleLineWithButton model="suppliers" :icon="mdiLockAlertOutline" :title="__('suppliers')" main>
         <slot name="create">
 
         </slot>
@@ -19,7 +19,7 @@
                 <td :data-label="__('name')">
                     {{ item.name }}
                 </td>
-                
+
                 <td :data-label="__('phone')">
 
                     <ul class="list-decimal">

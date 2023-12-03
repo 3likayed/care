@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'doctor'})"
-        @cancel="showCreate=false"
+        @cancel="showCreateDoctor=false"
         @confirm="submit"
     >
         <StepsComponent
@@ -137,7 +137,7 @@ let props = defineProps({
         default: true
     }
 })
-let showCreate = inject('showCreate');
+let showCreateDoctor = inject('showCreateDoctor');
 let specializations = usePage().props.specializations;
 let form = useForm({
     name: null,

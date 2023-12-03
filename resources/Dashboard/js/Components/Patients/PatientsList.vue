@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('patients')" main>
+    <SectionTitleLineWithButton model="patients"  :icon="mdiLockAlertOutline" :title="__('patients')" main>
         <template #create>
             <PatientCreate/>
         </template>

@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'appointment'})"
-        @cancel="showCreate=false"
+        @cancel="showCreateAppointment=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.patient_id" :label="__('patient')">
@@ -46,6 +46,19 @@
                 type="datetime-local"
             />
         </FormField>
+        <FormField :errors="form.errors.doctor_id" :label="__('doctor')">
+            <FormControl
+                v-model="form.doctor_id"
+                :icon="mdiAccount"
+                :is-disabled="!moment(form.date).isSame(moment(),'day')"
+                :model-value="!moment(form.date).isSame(moment(),'day') ? null : form.doctor_id"
+                :options="doctors"
+                autocomplete="doctor_id"
+                name="doctor_id"
+                required
+                type="select"
+            />
+        </FormField>
         <FormField :label="__('price')">
             <FormControl
                 v-model="price"
@@ -71,6 +84,7 @@ import {inject, ref} from "vue";
 import {Model} from "../../Utils/index.js";
 import {debounce} from "lodash";
 import {collect} from "collect.js";
+import moment from "moment/moment.js";
 
 
 let props = defineProps({
@@ -79,6 +93,10 @@ let props = defineProps({
         type: Array,
         default: []
 
+    },
+    doctors: {
+        type: Array,
+        default: []
     },
     patients: {
         type: Array,
@@ -91,10 +109,11 @@ let props = defineProps({
     }
 })
 
-let showCreate = inject('showCreate');
+let showCreateAppointment = inject('showCreateAppointment');
 let form = useForm({
     patient_id: props.data?.patient_id,
     appointment_type_id: props.data?.appointment_type_id,
+    doctor_id: props.data?.doctor_id,
     date: null,
 
 });

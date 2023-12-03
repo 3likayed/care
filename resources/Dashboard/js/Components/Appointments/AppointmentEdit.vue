@@ -45,6 +45,19 @@
                 type="datetime-local"
             />
         </FormField>
+        <FormField :errors="form.errors.doctor_id" :label="__('doctor')">
+            <FormControl
+                v-model="form.doctor_id"
+                :icon="mdiAccount"
+                :is-disabled="!moment(form.date).isSame(moment(),'day')"
+                :model-value="!moment(form.date).isSame(moment(),'day') ? null : form.doctor_id"
+                :options="doctors"
+                autocomplete="doctor_id"
+                name="doctor_id"
+                required
+                type="select"
+            />
+        </FormField>
         <FormField :label="__('price')">
             <FormControl
                 v-model="price"
@@ -79,6 +92,11 @@ let props = defineProps({
         default: []
 
     },
+    doctors: {
+        type: Array,
+        default: []
+
+    },
     isModal: {
         type: Boolean,
         default: true
@@ -90,6 +108,7 @@ let showEdit = props.isModal ? inject('showEdit') : true;
 let form = useForm({
     appointment_type_id: computedData.value.appointment_type_id,
     patient_id: computedData.value?.patient_id,
+    doctor_id: computedData.value?.doctor_id,
     date: moment(computedData.value.date).format('YYYY-MM-DDTHH:mm'),
 
 });

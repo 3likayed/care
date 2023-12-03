@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'purchasetransaction'})"
-        @cancel="showCreate=false"
+        @cancel="showCreatePurchaseTransaction=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.name" :label="__('supplier_name')">
@@ -75,7 +75,7 @@ import {Model} from "../../Utils/index.js";
 let props = defineProps({
     suppliers : {
         type : Array ,
-        default : [] 
+        default : []
     },
     isModal: {
         type: Boolean,
@@ -83,7 +83,7 @@ let props = defineProps({
     }
 })
 
-let showCreate = inject('showCreate');
+let showCreatePurchaseTransaction = inject('showCreatePurchaseTransaction');
 let form = useForm({
     name: null,
     supplier_id : null ,

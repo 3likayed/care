@@ -53,11 +53,11 @@ const computedValue = computed({
         emit("update:modelValue", value);
     },
 });
-const pt = {
+const pt = computed(() => ({
     root: {
         class: props.class,
     },
-}
+}))
 
 let computedOptions = computed(() => props.options)
 
@@ -72,16 +72,15 @@ let computedOptions = computed(() => props.options)
         :empty-message="__('no_data')"
         :empty-selection-message="__('no_data')"
         :options="computedOptions"
+        :placeholder="placeholder"
         :pt="pt"
         filter
         option-label="name"
         option-value="id"
-        :placeholder="placeholder"
         showClear
         @filter="(value)=>emit('filter',value)"
     />
     <MultiSelect
-        :placeholder="placeholder"
         v-else
         v-model="computedValue"
         :disabled="isDisabled"
@@ -89,6 +88,7 @@ let computedOptions = computed(() => props.options)
         :empty-message="__('no_data')"
         :empty-selection-message="__('no_data')"
         :options="computedOptions"
+        :placeholder="placeholder"
         :pt="pt"
         display="chip"
         filter

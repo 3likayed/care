@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('Service')" main>
+    <SectionTitleLineWithButton model="services"  :icon="mdiLockAlertOutline" :title="__('Service')" main>
         <slot name="create">
 
         </slot>
@@ -74,7 +74,7 @@ let edited = ref();
 let props = defineProps({
     suppliers : {
         type : Array ,
-        default : [] 
+        default : []
     },
     items: Array,
     pagination: Object,

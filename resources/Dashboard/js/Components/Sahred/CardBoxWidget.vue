@@ -1,5 +1,5 @@
 <script setup>
-import {mdiCog} from "@mdi/js";
+import {mdiPlusCircle} from "@mdi/js";
 import CardBox from "./CardBox.vue";
 import NumberDynamic from "./NumberDynamic.vue";
 import BaseIcon from "./BaseIcon.vue";
@@ -36,6 +36,7 @@ defineProps({
         type: String,
         default: null,
     },
+    hasAction: Boolean,
     trendType: {
         type: String,
         default: null,
@@ -55,19 +56,29 @@ defineProps({
                 :trend-type="trendType"
                 small
             />
+
+        </BaseLevel>
+
+
+        <div class="flex justify-between mb-2">
+
+            <h3 class="text-lg leading-tight text-gray-500 dark:text-slate-400">
+                {{ label }}
+            </h3>
+
             <BaseButton
-                :icon="mdiCog"
-                color="lightDark"
+                v-if="hasAction"
+                :icon="mdiPlusCircle"
+                color="success"
                 icon-h="h-4"
                 icon-w="w-4"
                 small
+                @click="$emit('action') ; "
             />
-        </BaseLevel>
-        <BaseLevel mobile>
-            <div>
-                <h3 class="text-lg leading-tight text-gray-500 dark:text-slate-400">
-                    {{ label }}
-                </h3>
+        </div>
+        <div class="flex justify-between items-stretch">
+            <div class="my-auto">
+
                 <h1 class="text-3xl leading-tight font-semibold">
                     <NumberDynamic
                         :prefix="prefix"
@@ -82,8 +93,8 @@ defineProps({
                 :path="icon"
                 h="h-16"
                 size="48"
-                w=""
-            />
-        </BaseLevel>
+                w=""/>
+        </div>
+
     </CardBox>
 </template>

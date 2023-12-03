@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'product'})"
-        @cancel="showCreate=false"
+        @cancel="showCreateProduct=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.name" :label="__('name')">
@@ -38,7 +38,7 @@
                 required
             />
         </FormField>
-       
+
 
 
     </CardBoxModal>
@@ -62,7 +62,7 @@ let props = defineProps({
     }
 })
 
-let showCreate = inject('showCreate');
+let showCreateProduct = inject('showCreateProduct');
 let form = useForm({
     name: null,
     quantity: 0,

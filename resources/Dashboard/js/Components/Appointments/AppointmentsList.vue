@@ -20,6 +20,7 @@ import {Search} from "../../Utils/index.js";
 let daysInterval = ref();
 let edited = ref();
 let appointmentTypes = computed(() => usePage().props.appointment_types);
+let doctors = computed(() => usePage().props.doctors);
 
 let props = defineProps({
     title: String,
@@ -55,11 +56,11 @@ let headerFields = [
 
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiFormatListBulleted" :title="title ??__('appointments')" main>
+    <SectionTitleLineWithButton model="appointments" :icon="mdiFormatListBulleted" :title="title ??__('appointments')" main>
 
         <template #create>
             <slot name="create">
-                <AppointmentCreate :appointmentTypes="appointmentTypes"/>
+                <AppointmentCreate :appointmentTypes="appointmentTypes" :doctors="doctors"/>
             </slot>
 
         </template>
@@ -93,9 +94,13 @@ let headerFields = [
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ item.id }}</td>
                 <td :data-label="__('doctor')">
-                    <Link :href="route('dashboard.doctors.show',item.doctor.id)">
+
+                    <Link v-if="item.doctor" :href="route('dashboard.doctors.show',item.doctor.id)">
                         {{ item.doctor.employee.name }}
                     </Link>
+                    <div v-else>
+                        {{ __('no_data') }}
+                    </div>
                 </td>
                 <td :data-label="__('patient')">
                     <Link :href="route('dashboard.patients.show',item.patient.id)">
@@ -121,7 +126,7 @@ let headerFields = [
                 <td :data-label="__('options')">
                     <TableOptions :item="item" model="appointments" @edit="edited=item">
                         <template #edit>
-                            <AppointmentEdit :appointmentTypes="appointmentTypes" :data="edited"/>
+                            <AppointmentEdit :appointmentTypes="appointmentTypes" :data="edited" :doctors="doctors"/>
                         </template>
                     </TableOptions>
                 </td>

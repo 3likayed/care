@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'supplier'})"
-        @cancel="showCreate=false"
+        @cancel="showCreateSupplier=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.name" :label="__('name')">
@@ -21,7 +21,7 @@
                 required
             />
         </FormField>
-        
+
         <FormField
             :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`phone`]"
@@ -85,7 +85,7 @@ let props = defineProps({
     }
 })
 
-let showCreate = inject('showCreate');
+let showCreateSupplier = inject('showCreateSupplier');
 let form = useForm({
     name: null,
     phone: [null],

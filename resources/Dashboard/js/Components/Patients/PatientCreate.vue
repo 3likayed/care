@@ -9,7 +9,7 @@
         :is-modal="isModal"
         :model-value="true"
         :title="__('create_field',{field:'patient'})"
-        @cancel="showCreate=false"
+        @cancel="showCreatePatient=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.name" :label="__('name')">
@@ -96,7 +96,7 @@ let props = defineProps({
     }
 })
 
-let showCreate = inject('showCreate');
+let showCreatePatient = inject('showCreatePatient');
 let form = useForm({
     name: null,
     email: null,
