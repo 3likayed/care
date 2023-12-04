@@ -74,8 +74,8 @@ let emit = defineEmits(['update:modelValue'])
 
 const computedValue = computed({
     get: () => {
-
-        let value = props.modelValue.split('|');
+        let value = props.modelValue ?? ''
+        value = value.split('|');
         value = value.map(item => {
             return item !== "" ? moment(item).toDate() : undefined;
         }).filter(e => e)

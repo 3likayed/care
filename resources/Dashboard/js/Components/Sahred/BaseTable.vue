@@ -32,7 +32,7 @@ function calculatedUrl(paginationUrl) {
 
 }
 
-console.log(props.searchable)
+
 
 let searchParameters = computed(() => Search.getParameters())
 let searchableFields = collect(props.headers).where('searchable', true).pluck('name').all();
@@ -40,7 +40,7 @@ let search = reactive({});
 
 watchEffect(() => {
     Object.assign(search, searchParameters.value.filter)
-    console.log(search)
+
 })
 
 
@@ -57,9 +57,9 @@ const searchableValues = (header, key, defaultKey = null) => {
 const searchStart = debounce((key, value) => {
 
     let newValue = {[key]: value}
-    console.log(search)
+
     Object.assign(search, newValue)
-    console.log(search, newValue)
+
     Search.start(search)
 }, 500)
 

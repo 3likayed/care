@@ -80,7 +80,7 @@ let props = defineProps({
     items: Array,
     searchable: Boolean,
     pagination: Object,
-    hasSearch: {
+    searchable: {
         type: Boolean,
         default: true,
     },

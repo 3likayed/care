@@ -94,9 +94,9 @@ onMounted(function () {
     emit('render', computedItem.value);
 });
 const submit = () => {
-    console.log(form, inertiaForm)
+
     inertiaForm.transform(data => form)
-    console.log(inertiaForm);
+
     Model.submit(props.operation, props.model, inertiaForm, computedItem.value?.id)
 }
 </script>
