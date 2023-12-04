@@ -12,12 +12,13 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
+
 class PurchaseTransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    
+
     public function __construct()
     {
         $this->middleware(['permission:purchase-transactions.show'])->only(['index', 'show', 'fetch']);
@@ -28,16 +29,16 @@ class PurchaseTransactionController extends Controller
 
     public function index(Request $request)
     {
-        $PurchaseTransactions = QueryBuilder::for(PurchaseTransaction::class)->join('suppliers','suppliers.id','purchase_transactions.supplier_id')
+        $PurchaseTransactions = QueryBuilder::for(PurchaseTransaction::class)->join('suppliers', 'suppliers.id', 'purchase_transactions.supplier_id')
             ->allowedFilters([AllowedFilter::scope('search'), 'name', 'supplier.name'])
             ->allowedSorts(['name', 'supplier.name', 'total', 'created_at'])
             ->paginate($request->per_page);
-            $suppliers = Supplier::all();
+        $suppliers = Supplier::all();
         return Inertia::render('PurchaseTransactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.PurchaseTransaction')]),
             'data' => ModelCollection::make($PurchaseTransactions),
             'suppliers' => $suppliers,
-        ]); 
+        ]);
     }
 
     public function fetch(Request $request)
@@ -77,7 +78,7 @@ class PurchaseTransactionController extends Controller
         return Inertia::render('PurchaseTransactions/Show', [
             'data' => $PurchaseTransaction,
             'appointment_types' => AppointmentType::all(),
-            'meta' => meta()->metaValues(['title' => "$PurchaseTransaction->name | ".__('dashboard.PurchaseTransactions')]),
+            'meta' => meta()->metaValues(['title' => "$PurchaseTransaction->name | " . __('dashboard.PurchaseTransactions')]),
         ]);
     }
 

@@ -1,14 +1,15 @@
 <template>
 
-    <SectionTitleLineWithButton model="purchaceTransactions"  :icon="mdiLockAlertOutline" :title="__('purchasetransaction')" main>
+    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('purchase-transactions')"
+                                main model="purchase-transactions">
         <slot name="create">
-
         </slot>
         <template #create>
             <PurchaseTransactionCreate :suppliers="suppliers"/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="purchasetransaction"/>
+    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'},{name:'email'}]"
+                   model="purchase-transactions"/>
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'name',sortable:true},{name:'email',sortable:true},'phone','address','birthday',{name:'created_at',sortable:true}]"
@@ -72,11 +73,12 @@ import {ref} from "vue";
 
 let edited = ref();
 let props = defineProps({
-    suppliers : {
-        type : Array ,
-        default : []
+    suppliers: {
+        type: Array,
+        default: []
     },
     items: Array,
+    searchable: Boolean,
     pagination: Object,
     hasSearch: {
         type: Boolean,
