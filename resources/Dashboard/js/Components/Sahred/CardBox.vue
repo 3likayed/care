@@ -27,6 +27,7 @@ const hasFooterSlot = computed(() => slots.footer && !!slots.footer());
 
 const componentClass = computed(() => {
     const base = [
+        'overflow-x-auto',
         props.rounded,
         props.flex,
         props.isModal ? "dark:bg-slate-900" : "dark:bg-slate-900/70",

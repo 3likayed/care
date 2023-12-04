@@ -72,9 +72,14 @@ class Appointment extends Model
         return $query->where('date', '>=', $value);
     }
 
-    public function scopeEnd($query, $value)
+    public function scopeDateInterval($query, $value)
     {
-        return $query->where('date', '<=', Carbon::parse($value)->addDay());
+        $value = explode('|', $value);
+        $query->whereDate('your_date_column', '>=', $value[0]);
+        if (isset($value[1])) {
+            $query->whereDate('your_date_column', '<=', $value[1] ?? null);
+        }
+        return $query;
     }
 
     public function scopeToday(Builder $query)

@@ -41,7 +41,7 @@ const fieldValue = (itemKey, index) => {
 
     let result;
     const fieldType = fieldData(index, 'type', null, 'text');
-    if (fieldType === 'datetime-local') {
+    if (fieldType === 'datetime') {
         result = moment(value).format('YYYY-MM-DDTHH:MM');
     } else {
         result = value;

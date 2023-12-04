@@ -71,7 +71,6 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         $patient->load('appointments', 'appointments.patient', 'appointments.appointmentType');
-
         return Inertia::render('Patients/Show', [
             'data' => $patient,
             'appointment_types' => AppointmentType::all(),

@@ -38,11 +38,12 @@
         <FormField :errors="form.errors.date" :label="__('date')">
             <FormControl
                 v-model="form.date"
+                inline
                 :icon="mdiCalendar"
                 autocomplete="date"
                 name="date"
                 required
-                type="datetime-local"
+                type="datetime"
             />
         </FormField>
         <FormField :errors="form.errors.doctor_id" :label="__('doctor')">

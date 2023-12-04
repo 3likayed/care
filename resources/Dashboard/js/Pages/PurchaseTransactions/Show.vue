@@ -16,7 +16,7 @@
         </section>
         <section v-show="step === 1">
             <ReservationsList
-                :has-search="false"
+                :searchable="false"
                 :items="data.reservations"
                 :sortable="false"
             >

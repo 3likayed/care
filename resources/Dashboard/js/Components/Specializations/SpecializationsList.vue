@@ -8,7 +8,7 @@
             <CreateSpecialization/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="hasSearch" :fields="[{name:'name'}]" model="specializations"/>
+    <DynamicSearch v-if="searchable" :fields="[{name:'name'}]" model="specializations"/>
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'name',sortable:true},{name:'created_at',sortable:true}]"

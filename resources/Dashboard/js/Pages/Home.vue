@@ -95,11 +95,11 @@ let appointmentData = ref();
 
 
         <div class="space-y-14">
-            <AppointmentsList :has-search="false"
+            <AppointmentsList :searchable="false"
                               :items="$page.props.appointments"
                               :sortable="false"
                               :title="__('today_appointments')"/>
-            <AppointmentsList :has-search="false"
+            <AppointmentsList :searchable="false"
                               :items="$page.props.visits"
                               :sortable="false"
                               :title="__('today_visits')"/>

@@ -8,7 +8,7 @@
             <supplierCreate/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'}]" model="suppliers"/>
+    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]" model="suppliers"/>
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'name',sortable:true},'phone','address',{name:'supplier_credit',sortable:true},'created_at']"

@@ -8,7 +8,7 @@
             <CreateAppointmentType/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="hasSearch" :fields="[{name:'name'}]" model="appointment-types"/>
+    <DynamicSearch v-if="searchable" :fields="[{name:'name'}]" model="appointment-types"/>
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'name',sortable:true},{name:'price',sortable:true},{name:'created_at',sortable:true}]"

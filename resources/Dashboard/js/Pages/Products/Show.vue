@@ -16,7 +16,7 @@
         </section>
         <section v-show="step === 1">
             <ProductsList
-                :has-search="false"
+                :searchable="false"
                 :items="data.products"
                 :sortable="false"
             >

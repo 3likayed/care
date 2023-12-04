@@ -22,7 +22,7 @@
         </section>
         <section v-show="step === 2">
             <AppointmentsList
-                :has-search="false"
+                :searchable="false"
                 :items="data.appointments"
                 :sortable="false"
             >
