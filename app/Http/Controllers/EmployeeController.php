@@ -72,7 +72,7 @@ class EmployeeController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        $employee = Employee::create($data)->get();
+        $employee = Employee::create($data) ;
         if (isset($data['user']['email'])) {
             UserService::updateOrCreateUser($employee, $data['user']);
         }

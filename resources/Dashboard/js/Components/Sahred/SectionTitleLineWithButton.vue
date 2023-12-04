@@ -25,25 +25,15 @@ let props = defineProps({
 });
 
 const convertToPascalCaseAndRemoveLast = (inputString) => {
-    // Capitalize the first letter of the input string
+
 
     const capitalizedInput = pluralize(inputString, 1);
 
-    if (capitalizedInput.includes('-')) {
-        // Split the string into words using '-'
-        const words = capitalizedInput.split('-');
 
-        // Capitalize the first letter of each word
-        const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    const words = capitalizedInput.split('-');
+    const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
+    return capitalizedWords.join('')
 
-        // Join the words back together
-        // Remove the last letter
-        return capitalizedWords.join('')
-    } else {
-        // String is already in PascalCase
-        // Remove the last letter
-        return capitalizedInput;
-    }
 };
 
 
