@@ -118,13 +118,7 @@ let form = useForm({
 
 });
 const submit = () => {
-    if (!form.quantity) {
-        form.transform(data => {
-            data.quantity = 0;
-            return data
-        })
-    }
-    Model.submit('create', 'purchasetransactions', form)
+    Model.submit('create', 'purchase-transactions', form)
 }
 
 let computedProducts = computed(() => collect(props.products).whereNotIn('id',

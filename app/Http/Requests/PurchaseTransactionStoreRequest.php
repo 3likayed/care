@@ -21,12 +21,9 @@ class PurchaseTransactionStoreRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
             'name' => ['required', 'string', 'between:5,50'],
             'quantity' => ['nullable', 'numeric'],
-            
-
         ];
     }
 }
