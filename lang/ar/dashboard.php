@@ -167,7 +167,11 @@ return [
     'supplier_credit' => 'حساب المورد',
     'supplier' => 'مورد',
     'qunatity' => 'الكمية',
-    'id' => 'الرقم التسلسلي'
+    'id' => 'الرقم التسلسلي',
+    'services' => 'الخدمات',
+    'PurchaseTransactions' => ' فواتير الشراء'
+
+
 
 
 ];

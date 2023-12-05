@@ -11,6 +11,7 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseTransactionController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\SupplierController;
@@ -49,8 +50,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::get('fetch/products', [ProductController::class, 'fetch'])->name('fetch.products');
         Route::apiResource('purchase-transactions', PurchaseTransactionController::class);
         Route::get('fetch/purchase-transactions', [PurchaseTransactionController::class, 'fetch'])->name('fetch.purchase-transactions');
-        Route::apiResource('services', ProductController::class);
-        Route::get('fetch/services', [ProductController::class, 'fetch'])->name('fetch.services');
+        Route::apiResource('services', ServiceController::class);
+        Route::get('fetch/services', [ServiceController::class, 'fetch'])->name('fetch.services');
     });
 
 });

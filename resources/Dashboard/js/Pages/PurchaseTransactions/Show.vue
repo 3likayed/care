@@ -1,7 +1,7 @@
 <template>
     <SectionMain>
         <BreadCrumb
-            :items="[{name: __('PurchaseTransactions'), href: route(`dashboard.PurchaseTransactions.index`)},{name: data.name, href: route(`dashboard.PurchaseTransactionss.show`, data.id)}]"/>
+            :items="[{name: __('PurchaseTransactions'), href: route(`dashboard.PurchaseTransactions.index`)},{name: data.name, href: route(`dashboard.PurchaseTransactions.show`, data.id)}]"/>
         <CardBox class="mb-4">
             <StepsComponent
                 v-model="step"

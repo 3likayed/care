@@ -26,7 +26,7 @@ class ProductUpdateRequest extends FormRequest
             'name' => ['required', 'string', 'between:5,50'],
             'quantity' => ['nullable', 'numeric'],
             'price' => ['required', 'numeric'],
-
+            
 
         ];
     }

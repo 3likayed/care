@@ -2,36 +2,36 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\product;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class ProductController extends Controller
+class ServiceController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function __construct()
     {
-        $this->middleware(['permission:products.show'])->only(['index', 'show', 'fetch']);
-        $this->middleware(['permission:products.edit'])->only(['update']);
-        $this->middleware(['permission:products.create'])->only(['store']);
-        $this->middleware(['permission:products.delete'])->only(['destroy']);
+        $this->middleware(['permission:services.show'])->only(['index', 'show', 'fetch']);
+        $this->middleware(['permission:services.edit'])->only(['update']);
+        $this->middleware(['permission:services.create'])->only(['store']);
+        $this->middleware(['permission:services.delete'])->only(['destroy']);
     }
 
     public function index(Request $request)
     {
-        $products = QueryBuilder::for(Product::class)->where('type','product')
+        $products = QueryBuilder::for(Product::class)->where('type','service')
             ->allowedFilters([AllowedFilter::scope('search'), 'name'])
             ->allowedSorts(['name','quantity'])
             ->paginate($request->per_page);
-        return Inertia::render('Products/Index', [
-            'meta' => meta()->metaValues(['title' => __('dashboard.products')]),
+        return Inertia::render('Services/Index', [
+            'meta' => meta()->metaValues(['title' => __('dashboard.services')]),
             'data' => ModelCollection::make($products),
         ]);
     }

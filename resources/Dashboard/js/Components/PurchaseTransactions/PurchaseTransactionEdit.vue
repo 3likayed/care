@@ -1,7 +1,7 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`purchasetransaction.edit`)"
+        v-if="can(`purchase-transactions.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"

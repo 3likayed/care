@@ -1,7 +1,7 @@
 <template>
     <SectionMain>
         <BreadCrumb
-            :items="[{name: __('Services'), href: route(`dashboard.Services.index`)},{name: data.name, href: route(`dashboard.Servicess.show`, data.id)}]"/>
+            :items="[{name: __('services'), href: route(`dashboard.services.index`)},{name: data.name, href: route(`dashboard.services.show`, data.id)}]"/>
         <CardBox class="mb-4">
             <StepsComponent
                 v-model="step"
@@ -9,22 +9,22 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <ServicesEdit
+            <serviceEdit
                 :data="data"
                 :is-modal="false"
             />
         </section>
         <section v-show="step === 1">
-            <ReservationsList
+            <servicesList
                 :has-search="false"
-                :items="data.reservations"
+                :items="data.services"
                 :sortable="false"
             >
                 <template #create>
-                    <ReservationCreate :data="{Services_id:data.id}" :Services="[data]"
-                                       :reservationTypes="reservationTypes"/>
+                    <serviceCreate :data="{service_id:data.id}" :services="[data]"
+                                       :serviceTypes="serviceTypes"/>
                 </template>
-            </ReservationsList>
+            </servicesList>
         </section>
         <section v-show="step === 2">
             sdadasdas
@@ -35,7 +35,7 @@
             </section>
         -->
         <!--    <section v-show="step === 1">
-              <ProjectsList :projects="Services.projects"/>
+              <ProjectsList :projects="service.projects"/>
             </section>-->
     </SectionMain>
 </template>
@@ -49,16 +49,18 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import ServicesEdit from "../../Components/Servicess/ServicesEdit.vue";
-import ReservationsList from "../../Components/Reservations/ReservationsList.vue";
-import ReservationCreate from "../../Components/Reservations/ReservationCreate.vue";
+import serviceEdit from "../../Components/Services/ServiceEdit.vue";
+import servicesList from "../../Components/Services/ServicesList.vue";
+import serviceCreate from "../../Components/Services/ServiceCreate.vue";
+import servicesList from "../../Components/Services/ServicesList.vue";
+import serviceCreate from "../../Components/Services/ServiceCreate.vue";
 
 
-let steps = ref([__('data'), __('reservations'), __('home')]);
+let steps = ref([__('data'), __('services'), __('home')]);
 let step = ref(0);
 
 let data = computed(() => usePage().props.data);
-let reservationTypes = usePage().props.reservation_types;
+let serviceTypes = usePage().props.service_types;
 
 </script>
 <style scoped>

@@ -1,11 +1,11 @@
 <template>
 
-    <SectionTitleLineWithButton model="prdoucts"  :icon="mdiStoreCheck" :title="__('products')" main>
+    <SectionTitleLineWithButton model="products"  :icon="mdiStoreCheck" :title="__('products')" main>
         <slot name="create">
 
         </slot>
         <template #create>
-            <productCreate/>
+            <ProductCreate/>
         </template>
     </SectionTitleLineWithButton>
     <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'}]" model="products"/>
@@ -54,7 +54,7 @@ import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import productEdit from "./ProductEdit.vue";
 import moment from "moment";
-import productCreate from "./ProductCreate.vue";
+import ProductCreate from "./ProductCreate.vue";
 import {ref} from "vue";
 
 let edited = ref();

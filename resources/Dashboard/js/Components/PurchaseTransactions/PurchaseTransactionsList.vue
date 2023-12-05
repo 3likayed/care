@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton model="purchaceTransactions"  :icon="mdiLockAlertOutline" :title="__('purchasetransaction')" main>
+    <SectionTitleLineWithButton model="PurchaseTransaction"  :icon="mdiLockAlertOutline" :title="__('PurchaseTransactions')" main>
         <slot name="create">
 
         </slot>
@@ -8,7 +8,7 @@
             <PurchaseTransactionCreate :suppliers="suppliers"/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="purchasetransaction"/>
+    <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="PurchaseTransaction"/>
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'name',sortable:true},{name:'email',sortable:true},'phone','address','birthday',{name:'created_at',sortable:true}]"
@@ -45,7 +45,7 @@
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </td>
                 <td :data-label="__('options')">
-                    <TableOptions :item="item" model="purchaseTransaction" @edit="edited=item">
+                    <TableOptions :item="item" model="PurchaseTransaction" @edit="edited=item">
                         <template #edit>
                             <purchasetransactionEdit :data="edited"/>
                         </template>

@@ -1,61 +1,37 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`purchase-transactions.create`)"
+        v-if="can(`services.create`)"
         :button-label="__('create')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"
         :is-form="true"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('create_field',{field:'Service'})"
+        :title="__('create_field',{field:'service'})"
         @cancel="showCreateService=false"
         @confirm="submit"
     >
-        <FormField :errors="form.errors.name" :label="__('supplier_name')">
+        <FormField :errors="form.errors.name" :label="__('name')">
             <FormControl
-                v-model="form.supplier_id"
+                v-model="form.name"
                 :icon="mdiAccount"
                 autocomplete="name"
                 name="name"
-                type="select"
-                :options="suppliers"
                 required
             />
         </FormField>
 
-        <FormField :errors="form.errors.name" :label="__('quantity')">
+        
+        <FormField :errors="form.errors.price" :label="__('price')">
             <FormControl
-                v-model="form.quantity"
-                :icon="mdiStocking"
-                name="quantity"
+                v-model="form.price"
+                :icon="mdiCash"
+                name="price"
                 required
             />
         </FormField>
-        <FormField
-            :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
-            :errors="form.errors[`Service`]"
-            :label="__('Service')"
-            @action="(action , key)=>handleField(form,'Service',action ,null,{name:null,quantity:null}) ">
-            <div v-for="(Service,key) in form.Service" :key="key" class="grid grid-cols-2 gap-5">
-                <FormControl
-                    v-model="form.Service[key].name"
-                    :errors="form.errors[`Service.${key}`]"
-                    :icon="mdiPhone"
-                    autocomplete="Service"
-                    name="Service[]"
-                />
-                <FormControl
-                    v-model="form.Service[key].quantity"
-                    :errors="form.errors[`Service.${key}`]"
-                    :icon="mdiPhone"
-                    autocomplete="Service"
-                    :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
-                    @action="(action )=>handleField(form,'Service',action ,key)"
-                    name="Service[]"
-                />
-            </div>
-        </FormField>
+
 
 
     </CardBoxModal>
@@ -64,7 +40,7 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiPhone, mdiPlusCircle, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiCash, mdiPhone, mdiPlusCircle, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -73,10 +49,6 @@ import {inject} from "vue";
 import {Model} from "../../Utils/index.js";
 
 let props = defineProps({
-    suppliers : {
-        type : Array ,
-        default : []
-    },
     isModal: {
         type: Boolean,
         default: true
@@ -86,10 +58,9 @@ let props = defineProps({
 let showCreateService = inject('showCreateService');
 let form = useForm({
     name: null,
-    supplier_id : null ,
-    quantity: 0,
-    Service: [{name: null, quantity: null}],
-
+    quantity: null,
+    price: null,
+    type:"service"
 
 });
 const submit = () => {
@@ -99,7 +70,7 @@ const submit = () => {
             return data
         })
     }
-    Model.submit('create', 'Services', form)
+    Model.submit('create', 'services', form)
 }
 
 </script>

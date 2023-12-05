@@ -8,7 +8,7 @@
         :is-form="true"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('create_field',{field:'purchasetransaction'})"
+        :title="__('create_field',{field:'PurchaseTransactions'})"
         @cancel="showCreatePurchaseTransaction=false"
         @confirm="submit"
     >
@@ -36,7 +36,7 @@
             :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`purchasetransaction`]"
             :label="__('purchasetransaction')"
-            @action="(action , key)=>handleField(form,'purchasetransaction',action ,null,{name:null,quantity:null}) ">
+            @action="(action , key)=>handleField(form,'purchasetransactions',action ,null,{name:null,quantity:null}) ">
             <div v-for="(purchasetransaction,key) in form.purchasetransaction" :key="key" class="grid grid-cols-2 gap-5">
                 <FormControl
                     v-model="form.purchasetransaction[key].name"
@@ -47,11 +47,11 @@
                 />
                 <FormControl
                     v-model="form.purchasetransaction[key].quantity"
-                    :errors="form.errors[`purchasetransaction.${key}`]"
+                    :errors="form.errors[`purchasetransactions.${key}`]"
                     :icon="mdiPhone"
                     autocomplete="purchasetransaction"
                     :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
-                    @action="(action )=>handleField(form,'purchasetransaction',action ,key)"
+                    @action="(action )=>handleField(form,'purchasetransactions',action ,key)"
                     name="purchasetransaction[]"
                 />
             </div>
