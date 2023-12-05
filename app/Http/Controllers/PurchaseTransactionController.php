@@ -6,6 +6,7 @@ use App\Http\Requests\PurchaseTransactionStoreRequest;
 use App\Http\Requests\PurchaseTransactionUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\AppointmentType;
+use App\Models\Product;
 use App\Models\PurchaseTransaction;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -34,10 +35,12 @@ class PurchaseTransactionController extends Controller
             ->allowedSorts(['name', 'supplier.name', 'total', 'created_at'])
             ->paginate($request->per_page);
         $suppliers = Supplier::all();
+        $products = Product::Where('type','product')->get();
         return Inertia::render('PurchaseTransactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.PurchaseTransaction')]),
             'data' => ModelCollection::make($PurchaseTransactions),
             'suppliers' => $suppliers,
+            'products' => $products
         ]);
     }
 

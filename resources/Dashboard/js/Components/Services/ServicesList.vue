@@ -8,11 +8,9 @@
             <serviceCreate/>
         </template>
     </SectionTitleLineWithButton>
-<<<<<<< HEAD
     <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'}]" model="services"/>
 =======
     <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="Service"/>
->>>>>>> 00f97b0546fe4e08bb2b3a1200ac9e1b5430143f
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'name',sortable:true},{name:'price',sortable:true},{name:'created_at',sortable:true}]"

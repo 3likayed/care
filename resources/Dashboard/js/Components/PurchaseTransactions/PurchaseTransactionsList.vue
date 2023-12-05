@@ -1,26 +1,18 @@
 <template>
 
-<<<<<<< HEAD
-    <SectionTitleLineWithButton model="PurchaseTransaction"  :icon="mdiLockAlertOutline" :title="__('PurchaseTransactions')" main>
-=======
     <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('purchase-transactions')"
                                 main model="purchase-transactions">
->>>>>>> 00f97b0546fe4e08bb2b3a1200ac9e1b5430143f
         <slot name="create">
         </slot>
         <template #create>
-            <PurchaseTransactionCreate :suppliers="suppliers"/>
+            <PurchaseTransactionCreate :products="products" :suppliers="suppliers"/>
         </template>
     </SectionTitleLineWithButton>
-<<<<<<< HEAD
-    <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="PurchaseTransaction"/>
-=======
-    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'},{name:'email'}]"
+    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]"
                    model="purchase-transactions"/>
->>>>>>> 00f97b0546fe4e08bb2b3a1200ac9e1b5430143f
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'name',sortable:true},{name:'email',sortable:true},'phone','address','birthday',{name:'created_at',sortable:true}]"
+            :headers="['#',{name:'name',sortable:true},{name:'supplier_name',sortable:true},{name:'total',sortable:true},{name:'created_at',sortable:true},'notes']"
             :pagination="pagination"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
@@ -28,33 +20,22 @@
                 <td :data-label="__('name')">
                     {{ item.name }}
                 </td>
-                <td :data-label="__('email')">
-                    {{ item.email }}
+                <td :data-label="__('supplier_name')">
+                    {{ item.supplier.supplier_name }}
                 </td>
-                <td :data-label="__('phone')">
-
-                    <ul class="list-decimal">
-                        <li v-for="(phone,key) in item.phone">
-                            {{ phone }}
-                        </li>
-                    </ul>
-                </td>
-                <td :data-label="__('address')">
-                    <ul class="list-decimal">
-                        <li v-for="(address,key) in item.address">
-                            {{ address }}
-                        </li>
-                    </ul>
-                </td>
-                <td :data-label="__('birthday')">
-                    {{ item.birthday }} ( {{ moment(item.birthday).fromNow(1) }} )
+                
+                <td :data-label="__('total')">
+                    {{ item.total }} 
                 </td>
 
                 <td :data-label="__('created_at')">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </td>
+                <td :data-label="__('notes')">
+                    {{ item.notes }} 
+                </td>
                 <td :data-label="__('options')">
-                    <TableOptions :item="item" model="PurchaseTransaction" @edit="edited=item">
+                    <TableOptions :item="item" model="purchase-transactions" @edit="edited=item">
                         <template #edit>
                             <purchasetransactionEdit :data="edited"/>
                         </template>
@@ -82,6 +63,10 @@ import {ref} from "vue";
 let edited = ref();
 let props = defineProps({
     suppliers: {
+        type: Array,
+        default: []
+    },
+    products: {
         type: Array,
         default: []
     },

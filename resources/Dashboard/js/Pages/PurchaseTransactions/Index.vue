@@ -2,7 +2,7 @@
 
     <SectionMain>
         <BreadCrumb :items="[{name: __('PurchaseTransactions'), href: route('dashboard.purchase-transactions.index')}]"/>
-        <PurchaseTransactionsList :suppliers="suppliers" :items="items" :pagination="pagination"/>
+        <PurchaseTransactionsList :suppliers="suppliers" :items="items" :products="products" :pagination="pagination"/>
     </SectionMain>
 
 
@@ -20,6 +20,10 @@ import PurchaseTransactionsList from "../../Components/PurchaseTransactions/Purc
 let items = computed(() => usePage().props.data.data);
 let pagination = computed(() => usePage().props.data.meta);
 let suppliers = computed(() => usePage().props.suppliers);
+let products = computed(() => usePage().props.products);
+
+
+
 </script>
 <style>
 

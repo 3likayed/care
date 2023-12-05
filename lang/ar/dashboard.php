@@ -169,7 +169,11 @@ return [
     'qunatity' => 'الكمية',
     'id' => 'الرقم التسلسلي',
     'services' => 'الخدمات',
-    'PurchaseTransactions' => ' فواتير الشراء'
+    'purchase-transactions' => ' فواتير الشراء',
+    'supplier_name' => 'إسم المورد',
+    'total' => 'القيمة',
+    'notes' => 'ملاحظات',
+    'PurchaseTransactions' => 'فواتير الشراء',
 
 
 
