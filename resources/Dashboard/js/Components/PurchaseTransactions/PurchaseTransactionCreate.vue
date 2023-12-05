@@ -32,7 +32,6 @@
                 required
                 type="select"
                 @update:model-value="(value)=>appendProduct(value)"
-
             />
         </FormField>
 
@@ -65,9 +64,11 @@
                     :icon="mdiCash"
                     :placeholder="__('price')"
                     name="product_price"
+                    @update:model-value="(value)=>setProductTotal(value,key)"
 
                 />
                 <FormControl
+                    v-model="form.products[key].total"
                     :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
                     :icon="mdiCash"
                     :placeholder="__('total')"
@@ -141,8 +142,9 @@ const appendProduct = (product_id) => {
     form.products.push({id: product.id, name: product.name});
 
 }
-const setProductTotal = (value,key) =>{
-
+const setProductTotal = (value, key) => {
+    let total = form.products[key].quantity * form.products[key].price;
+    form.products[key].total = total > 0 ? total : null;
 }
 
 </script>
