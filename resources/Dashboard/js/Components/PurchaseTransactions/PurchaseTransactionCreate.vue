@@ -11,70 +11,69 @@
         :title="__('create_field',{field:'PurchaseTransactions'})"
         @cancel="showCreatePurchaseTransaction=false"
         @confirm="submit"
-    > 
+    >
         <FormField :errors="form.errors.supplier_name" :label="__('supplier_name')">
             <FormControl
                 v-model="form.supplier_id"
                 :icon="mdiAccount"
-                name="supplier_id"
-                type="select"
                 :options="suppliers"
+                name="supplier_id"
                 required
-                
+                type="select"
+
             />
         </FormField>
 
-        <FormField :errors="form.errors.product_name" :label="__('product_name')">
+        <FormField :label="__('product_name')">
             <FormControl
-                v-model="form.product_id"
                 :icon="mdiBoxCutter"
+                :options="productsOptions"
                 name="product_id"
-                type="select"
-                :options="products"
-                @update:model-value="setProductName"
                 required
-                
+                type="select"
+                @update:model-value="setProductName"
+
             />
         </FormField>
 
         <FormField
-            :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
-            :errors="form.errors[`purchasetransaction`]"
+            :errors="form.errors[`products`]"
             :label="__('products')"
-            @action="(action , key)=>handleField(form,'purchasetransaction',action ,null,{name:null,quantity:null
-                ,price:null,total:null}) ">
-            <div v-for="(purchasetransaction,key) in form.purchasetransaction" :key="key" class="grid grid-cols-4 gap-5">
+        >
+            <div v-for="(products,key) in form.products" :key="key"
+                 class="grid grid-cols-4 gap-5">
                 <FormControl
-                    v-model="form.purchasetransaction[key].name"
-                    :errors="form.errors[`purchasetransaction.${key}`]"
+                    v-model="form.products[key].name"
+                    :errors="form.errors[`products.${key}.name`]"
                     :icon="mdiFormatLetterCase"
                     is-disabled
                     name="product_name[]"
-                    
+
                 />
                 <FormControl
-                    v-model="form.purchasetransaction[key].quantity"
-                    :errors="form.errors[`purchasetransaction.${key}`]"
+                    v-model="form.products[key].quantity"
+                    :errors="form.errors[`products.${key}.quantity`]"
                     :icon="mdiStocking"
                     name="quantity[]"
-                    
+
                 />
                 <FormControl
-                    v-model="form.purchasetransaction[key].name"
-                    :errors="form.errors[`purchasetransaction.${key}`]"
+                    v-model="form.products[key].price"
+                    :errors="form.errors[`products.${key}.price`]"
                     :icon="mdiCash"
-                    name="product_name[]"
-                    
+                    name="product_price]"
+
                 />
                 <FormControl
-                    v-model="form.purchasetransaction[key].quantity"
+                    v-model="form.products[key].total"
+                    :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
                     :errors="form.errors[`quantity.${key}`]"
                     :icon="mdiCash"
-                    :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
-                    @action="(action )=>handleField(form,'purchasetransaction',action ,key)"
+                    is-disabled
                     name="quantity[]"
+                    @action="(action )=>handleField(form,'products',action ,key)"
                 />
-                
+
             </div>
         </FormField>
 
@@ -85,23 +84,23 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiBagPersonal, mdiBox, mdiBoxCutter, mdiCash, mdiFormatLetterCase, mdiPhone, mdiPlusCircle, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiBoxCutter, mdiCash, mdiFormatLetterCase, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
-import {inject,ref} from "vue";
+import {computed, inject, ref, watchEffect} from "vue";
 import {Model} from "../../Utils/index.js";
 import {collect} from "collect.js";
 
 let props = defineProps({
-    suppliers : {
-        type : Array ,
-        default : []
+    suppliers: {
+        type: Array,
+        default: []
     },
-    products : {
-        type : Array ,
-        default : []
+    products: {
+        type: Array,
+        default: []
     },
     isModal: {
         type: Boolean,
@@ -112,10 +111,8 @@ let props = defineProps({
 let showCreatePurchaseTransaction = inject('showCreatePurchaseTransaction');
 let form = useForm({
     name: null,
-    supplier_id : null ,
-    product_id : null,
-    purchasetransaction: [{name: null, quantity: null,price:null,total:null}],
-
+    supplier_id: null,
+    products: [],
 
 });
 const submit = () => {
@@ -128,10 +125,20 @@ const submit = () => {
     Model.submit('create', 'purchasetransactions', form)
 }
 
-let price = ref();
+let computedProducts = computed(() => collect(props.products).whereNotIn('id',
+    collect(form.products).pluck('id').all()
+).all());
+
+let productsOptions = ref();
+
+watchEffect(() => {
+    productsOptions.value = computedProducts.value
+})
 
 const setProductName = (product_id) => {
-    price.value = collect(props.products).firstWhere('id',product_id).form.purchasetransaction[key].name
+    let product = collect(props.products).firstWhere('id', '=', product_id)
+    form.products.push({id: product.id, name: product.name});
+
 }
 
 </script>
