@@ -156,7 +156,7 @@ let form = useForm({
 
 const submit = () => {
     Model.submit('edit', 'doctors', form, props.data.id)
-    console.log(form.errors)
+
 }
 let steps = ref([__('data'), __('user_data')]);
 let step = ref(0);

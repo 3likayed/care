@@ -43,7 +43,8 @@
                 autocomplete="date"
                 name="date"
                 required
-                type="datetime-local"
+                inline
+                type="datetime"
             />
         </FormField>
         <FormField :errors="form.errors.doctor_id" :label="__('doctor')">

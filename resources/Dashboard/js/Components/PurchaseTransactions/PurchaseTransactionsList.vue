@@ -1,14 +1,23 @@
 <template>
 
+<<<<<<< HEAD
     <SectionTitleLineWithButton model="PurchaseTransaction"  :icon="mdiLockAlertOutline" :title="__('PurchaseTransactions')" main>
+=======
+    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('purchase-transactions')"
+                                main model="purchase-transactions">
+>>>>>>> 00f97b0546fe4e08bb2b3a1200ac9e1b5430143f
         <slot name="create">
-
         </slot>
         <template #create>
             <PurchaseTransactionCreate :suppliers="suppliers"/>
         </template>
     </SectionTitleLineWithButton>
+<<<<<<< HEAD
     <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="PurchaseTransaction"/>
+=======
+    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'},{name:'email'}]"
+                   model="purchase-transactions"/>
+>>>>>>> 00f97b0546fe4e08bb2b3a1200ac9e1b5430143f
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'name',sortable:true},{name:'email',sortable:true},'phone','address','birthday',{name:'created_at',sortable:true}]"
@@ -72,13 +81,14 @@ import {ref} from "vue";
 
 let edited = ref();
 let props = defineProps({
-    suppliers : {
-        type : Array ,
-        default : []
+    suppliers: {
+        type: Array,
+        default: []
     },
     items: Array,
+    searchable: Boolean,
     pagination: Object,
-    hasSearch: {
+    searchable: {
         type: Boolean,
         default: true,
     },

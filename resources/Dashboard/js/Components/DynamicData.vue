@@ -41,7 +41,7 @@ const fieldValue = (itemKey, index) => {
 
     let result;
     const fieldType = fieldData(index, 'type', null, 'text');
-    if (fieldType === 'datetime-local') {
+    if (fieldType === 'datetime') {
         result = moment(value).format('YYYY-MM-DDTHH:MM');
     } else {
         result = value;
@@ -94,9 +94,9 @@ onMounted(function () {
     emit('render', computedItem.value);
 });
 const submit = () => {
-    console.log(form, inertiaForm)
+
     inertiaForm.transform(data => form)
-    console.log(inertiaForm);
+
     Model.submit(props.operation, props.model, inertiaForm, computedItem.value?.id)
 }
 </script>

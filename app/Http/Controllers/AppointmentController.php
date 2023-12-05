@@ -38,7 +38,7 @@ class AppointmentController extends Controller
             ->allowedSorts('date', 'created_at', 'patients.name', 'appointment_types.name', 'price', 'id')
 
             //filtering
-            ->allowedFilters('id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('start'), AllowedFilter::scope('end'))
+            ->allowedFilters('id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date_interval'))
             ->paginate($request->get('per_page'));
         $appointmentTypes = AppointmentType::all();
         return Inertia::render('Appointments/Index', [

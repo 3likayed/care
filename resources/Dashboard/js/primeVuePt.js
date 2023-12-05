@@ -8,14 +8,152 @@ export const TRANSITIONS = {
 };
 
 export default {
+    calendar: {
+        root: ({props}) => ({
+            class: [
+                'cursor-pointer inline-flex relative select-none',
+                'bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md',
+                'dark:bg-gray-900 dark:border-slate-900/40 dark:hover:border-slate-300',
+                'w-full md:w-56 ',
+                'hover:border-slate-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                {'opacity-60 select-none pointer-events-none cursor-default': props.disabled}
+            ]
+        }),
+        input: ({props}) => ({
+            class: [
+                'cursor-pointer block flex flex-auto overflow-hidden text-ellipsis whitespace-nowrap relative',
+                'bg-transparent border-0 text-gray-800',
+                'dark:text-white/80',
+                'last:pe-3 transition duration-200 bg-transparent rounded appearance-none font-sans text-base',
+                'focus:outline-none focus:shadow-none',
+                {'pe-7': props.showClear}
+            ]
+        }),
+        panel: ({props}) => ({
+            dir: 'rtl',
+            class: [
+                'bg-white dark:bg-gray-900 rounded-xl ',
+                {
+                    'shadow-md absolute': !props.inline,
+                    'inline-block overflow-x-auto border border-gray-300 dark:border-slate-900/40 p-2 rounded-lg my-2 lg:my-4': props.inline
+                }
+            ]
+        }),
+        header: {
+            class: ['flex items-center justify-between', 'p-2 text-gray-700 dark:text-white/80 bg-white dark:bg-gray-900 font-semibold m-0 border-b border-gray-300 dark:border-slate-900/40 rounded-t-lg']
+        },
+        previousbutton: {
+            class: [
+                'flex items-center justify-center cursor-pointer overflow-hidden relative rtl:-scale-x-100',
+                'w-8 h-8 text-gray-600 dark:text-white/70 border-0 bg-transparent rounded-full transition-colors duration-200 ease-in-out',
+                'hover:text-gray-700 dark:hover:text-white/80 hover:border-transparent hover:bg-gray-200 dark:hover:bg-gray-800/80 '
+            ]
+        },
+        title: 'leading-8 mx-auto',
+        monthTitle: {
+            class: ['text-gray-700 dark:text-white/80 transition duration-200 font-semibold p-2', 'me-2', 'hover:text-slate-500']
+        },
+        yearTitle: {
+            class: ['text-gray-700 dark:text-white/80 transition duration-200 font-semibold p-2', 'hover:text-slate-500']
+        },
+        nextbutton: {
+            class: [
+                'flex items-center justify-center cursor-pointer overflow-hidden relative rtl:-scale-x-100',
+                'w-8 h-8 text-gray-600 dark:text-white/70 border-0 bg-transparent rounded-full transition-colors duration-200 ease-in-out',
+                'hover:text-gray-700 dark:hover:text-white/80 hover:border-transparent hover:bg-gray-200 dark:hover:bg-gray-800/80 '
+            ]
+        },
+        table: {
+            class: ['border-collapse w-full', 'my-2']
+        },
+        tableheadercell: 'p-2',
+        weekday: 'text-gray-600 dark:text-white/70',
+        day: 'p-0 lg:p-2',
+        daylabel: ({context}) => ({
+            class: [
+                'w-6 h-6 md:w-10 md:h-10 rounded-full transition-shadow duration-200 border-transparent border',
+                'flex items-center justify-center mx-auto overflow-hidden relative',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                {
+                    'opacity-60 cursor-default': context.disabled,
+                    'cursor-pointer': !context.disabled
+                },
+                {
+                    'text-gray-600 dark:text-white/70 bg-transprent hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.selected && !context.disabled,
+                    'text-slate-700 bg-slate-100 hover:bg-slate-200': context.selected && !context.disabled
+                }
+            ]
+        }),
+        monthpicker: 'my-2',
+        month: ({context}) => ({
+            class: [
+                'w-1/3 inline-flex items-center justify-center cursor-pointer overflow-hidden relative',
+                'p-2 transition-shadow duration-200 rounded-lg',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                {
+                    'text-gray-600 dark:text-white/70 bg-transprent hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.selected && !context.disabled,
+                    'text-slate-700 bg-slate-100 hover:bg-slate-200': context.selected && !context.disabled
+                }
+            ]
+        }),
+        yearpicker: {
+            class: ['my-2']
+        },
+        year: ({context}) => ({
+            class: [
+                'w-1/2 inline-flex items-center justify-center cursor-pointer overflow-hidden relative',
+                'p-2 transition-shadow duration-200 rounded-lg',
+                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                {
+                    'text-gray-600 dark:text-white/70 bg-transprent hover:bg-gray-200 dark:hover:bg-gray-800/80': !context.selected && !context.disabled,
+                    'text-slate-700 bg-slate-100 hover:bg-slate-200': context.selected && !context.disabled
+                }
+            ]
+        }),
+        timepicker: {
+            dir: 'ltr',
+            class: ['flex justify-center items-center', 'border-t-1 border-solid border-gray-300 p-2 text-gray-600 dark:text-white/70 ']
+        },
+        buttonbar : 'p-2 lg:p-3' ,
+        todayButton: {
+           label: {class: ['text-gray-600 dark:text-white/70 bg-gray-100 dark:bg-slate-400 p-1 ']}
+        },
+        clearButton: {
+            label: {class: ['text-gray-600 dark:text-white/70 bg-gray-100 dark:bg-slate-400 p-1 ']}
+        },
+        separatorcontainer: 'flex items-center flex-col px-2',
+        separator: 'text-xl',
+        hourpicker: 'flex items-center flex-col px-2',
+        minutepicker: 'flex items-center flex-col px-2',
+        ampmpicker: 'flex items-center flex-col px-2',
+        incrementbutton: {
+            class: [
+                'flex items-center justify-center cursor-pointer overflow-hidden relative',
+                'w-8 h-8 text-gray-600 dark:text-white/70 border-0 bg-transparent rounded-full transition-colors duration-200 ease-in-out',
+                'hover:text-gray-700 dark:hover:text-white/80 hover:border-transparent hover:bg-gray-200 dark:hover:bg-gray-800/80 '
+            ]
+        },
+        decrementbutton: {
+            class: [
+                'flex items-center justify-center cursor-pointer overflow-hidden relative',
+                'w-8 h-8 text-gray-600 dark:text-white/70 border-0 bg-transparent rounded-full transition-colors duration-200 ease-in-out',
+                'hover:text-gray-700 dark:hover:text-white/80 hover:border-transparent hover:bg-gray-200 dark:hover:bg-gray-800/80 '
+            ]
+        },
+        groupcontainer: 'flex',
+        group: {
+            class: ['flex-1', 'border-gray-300 pe-0.5 ps-0.5 pt-0 pb-0', 'first:ps-0 first:border-s-0']
+        },
+        transition: TRANSITIONS.overlay
+    },
     dropdown: {
         root: ({props}) => ({
             class: [
                 'cursor-pointer inline-flex relative select-none',
                 'bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md',
-                'dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300',
+                'dark:bg-gray-900 dark:border-slate-900/40 dark:hover:border-slate-300',
                 'w-full md:w-56',
-                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                'hover:border-slate-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
                 {'opacity-60 select-none pointer-events-none cursor-default': props.disabled}
             ]
         }),
@@ -45,8 +183,8 @@ export default {
                 {
                     'text-gray-700 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-gray-800': !context.focused && !context.selected,
                     'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-gray-800': context.focused && !context.selected,
-                    'bg-blue-100 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.selected,
-                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.selected
+                    'bg-slate-100 text-slate-700 dark:bg-slate-400 dark:text-white/80': context.focused && context.selected,
+                    'bg-slate-50 text-slate-700 dark:bg-slate-300 dark:text-white/80': !context.focused && context.selected
                 }
             ]
         }),
@@ -54,7 +192,7 @@ export default {
             class: ['m-0 p-3 text-gray-800 bg-white font-bold', 'dark:bg-gray-900 dark:text-white/80', 'cursor-auto']
         },
         header: {
-            class: ['p-3 border-b border-gray-300 text-gray-700 bg-gray-100 mt-0 rounded-tl-lg rounded-tr-lg', 'dark:bg-gray-800 dark:text-white/80 dark:border-blue-900/40']
+            class: ['p-3 border-b border-gray-300 text-gray-700 bg-gray-100 mt-0 rounded-tl-lg rounded-tr-lg', 'dark:bg-gray-800 dark:text-white/80 dark:border-slate-900/40']
         },
         filtercontainer: {
             class: 'relative'
@@ -64,8 +202,8 @@ export default {
                 'pe-7 -me-7',
                 'w-full',
                 'font-sans text-base text-gray-700 bg-white py-3 px-3 border border-gray-300 transition duration-200 rounded-lg appearance-none',
-                'dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300 dark:text-white/80',
-                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+                'dark:bg-gray-900 dark:border-slate-900/40 dark:hover:border-slate-300 dark:text-white/80',
+                'hover:border-slate-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
         filtericon: {
@@ -80,7 +218,7 @@ export default {
         root: ({props}) => ({
             class: [
                 'inline-flex cursor-pointer select-none',
-                'bg-white dark:bg-gray-900 border border-gray-400 dark:border-blue-900/40  transition-colors duration-200 ease-in-out rounded-md',
+                'bg-white dark:bg-gray-900 border border-gray-400 dark:border-slate-900/40  transition-colors duration-200 ease-in-out rounded-md',
                 'w-full md:w-80',
                 {'opacity-60 select-none pointer-events-none cursor-default': props?.disabled}
             ]
@@ -113,7 +251,7 @@ export default {
             class: ['bg-white dark:bg-gray-900 text-gray-700 dark:text-white/80 border-0 rounded-md shadow-lg']
         },
         header: {
-            class: ['p-3 border-b border-gray-300 dark:border-blue-900/40 text-gray-700 dark:text-white/80 bg-gray-100 dark:bg-gray-800 rounded-t-lg', 'flex items-center justify-between']
+            class: ['p-3 border-b border-gray-300 dark:border-slate-900/40 text-gray-700 dark:text-white/80 bg-gray-100 dark:bg-gray-800 rounded-t-lg', 'flex items-center justify-between']
         },
         headerCheckboxContainer: {
             class: ['inline-flex cursor-pointer select-none align-bottom relative', 'me-2', 'w-6 h-6']
@@ -122,10 +260,10 @@ export default {
             class: [
                 'flex items-center justify-center',
                 'border-2 w-6 h-6 text-gray-600 dark:text-white/70 rounded-lg transition-colors duration-200',
-                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                'hover:border-slate-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
                 {
-                    'border-gray-300 dark:border-blue-900/40 bg-white dark:bg-gray-900': !context?.selected,
-                    'border-blue-500 bg-blue-500': context?.selected
+                    'border-gray-300 dark:border-slate-900/40 bg-white dark:bg-gray-900': !context?.selected,
+                    'border-slate-500 bg-slate-500': context?.selected
                 }
             ]
         }),
@@ -156,8 +294,8 @@ export default {
                 {
                     'text-gray-700 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-gray-800': !context.focused && !context.selected,
                     'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-gray-800': context.focused && !context.selected,
-                    'bg-blue-100 text-blue-700 dark:bg-blue-400 dark:text-white/80': context.focused && context.selected,
-                    'bg-blue-50 text-blue-700 dark:bg-blue-300 dark:text-white/80': !context.focused && context.selected
+                    'bg-slate-100 text-slate-700 dark:bg-slate-400 dark:text-white/80': context.focused && context.selected,
+                    'bg-slate-50 text-slate-700 dark:bg-slate-300 dark:text-white/80': !context.focused && context.selected
                 }
             ]
         }),
@@ -168,10 +306,10 @@ export default {
             class: [
                 'flex items-center justify-center',
                 'border-2 w-6 h-6 text-gray-600 dark:text-white/80 rounded-lg transition-colors duration-200',
-                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                'hover:border-slate-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
                 {
-                    'border-gray-300 dark:border-blue-900/40  bg-white dark:bg-gray-900': !context?.selected,
-                    'border-blue-500 bg-blue-500': context?.selected
+                    'border-gray-300 dark:border-slate-900/40  bg-white dark:bg-gray-900': !context?.selected,
+                    'border-slate-500 bg-slate-500': context?.selected
                 }
             ]
         }),
@@ -189,15 +327,15 @@ export default {
                 'pe-7 -me-7',
                 'w-full',
                 'font-sans text-base text-gray-700 bg-white py-3 px-3 border border-gray-300 transition duration-200 rounded-lg appearance-none',
-                'dark:bg-gray-900 dark:border-blue-900/40 dark:hover:border-blue-300 dark:text-white/80',
-                'hover:border-blue-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
+                'dark:bg-gray-900 dark:border-slate-900/40 dark:hover:border-slate-300 dark:text-white/80',
+                'hover:border-slate-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]'
             ]
         },
         filtericon: {
             class: '-mt-2 absolute top-1/2'
         },
         clearicon: {
-            class: 'text-gray-500 right-12 -mt-2 absolute top-1/2'
+            class: 'text-gray-500 end-12 -mt-2 absolute top-1/2'
         },
         transition: TRANSITIONS.overlay
     },
@@ -213,183 +351,6 @@ export default {
         },
 
     },
-    paginator: {
-        root: {
-            class: [
-                'flex items-center justify-center flex-wrap',
-                'text-gray-500 border-0 px-4 py-1',
-                'bg-gray-200 d hover:bg-gray-300 dark:hover:bg-slate-700/70 bg-gray-200 dark:bg-slate-800/50' // Dark Mode
-            ]
-        },
-        firstpagebutton: ({context}) => ({
-            class: [
-                'relative inline-flex items-center justify-center user-none overflow-hidden leading-none',
-                'border-0 text-gray-500  min-w-[3rem] h-12 m-[0.143rem] rounded-md',
-                'transition duration-200',
-                'dark:text-white', //Dark Mode
-                {
-                    'cursor-default pointer-events-none opacity-60': context.disabled,
-                    'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]': !context.disabled // Focus
-                }
-            ]
-        }),
-        previouspagebutton: ({context}) => ({
-            class: [
-                'relative inline-flex items-center justify-center user-none overflow-hidden leading-none',
-                'border-0 text-gray-500 min-w-[3rem] h-12 m-[0.143rem] rounded-md',
-                'transition duration-200',
-                'dark:text-white', //Dark Mode
-                {
-                    'cursor-default pointer-events-none opacity-60': context.disabled,
-                    'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]': !context.disabled // Focus
-                }
-            ]
-        }),
-        nextpagebutton: ({context}) => ({
-            class: [
-                'relative inline-flex items-center justify-center user-none overflow-hidden leading-none',
-                'border-0 text-gray-500 min-w-[3rem] h-12 m-[0.143rem] rounded-md',
-                'transition duration-200',
-                'dark:text-white', //Dark Mode
-                {
-                    'cursor-default pointer-events-none opacity-60': context.disabled,
-                    'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]': !context.disabled // Focus
-                }
-            ]
-        }),
-        lastpagebutton: ({context}) => ({
-            class: [
-                'relative inline-flex items-center justify-center user-none overflow-hidden leading-none',
-                'border-0 text-gray-500 min-w-[3rem] h-12 m-[0.143rem] rounded-md',
-                'transition duration-200',
-                'dark:text-white', //Dark Mode
-                {
-                    'cursor-default pointer-events-none opacity-60': context.disabled,
-                    'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]': !context.disabled // Focus
-                }
-            ]
-        }),
-        pagebutton: ({context}) => ({
-            class: [
-                'relative inline-flex items-center justify-center user-none overflow-hidden leading-none',
-                'border-0 text-gray-500 min-w-[2rem] min-h-[2rem]   m-2 rounded-full',
-                'transition duration-200',
-                'dark:border-blue-300 dark:text-white', // Dark Mode
-                'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)]', // Focus
-                {
-                    'bg-white dark:bg-slate-800': context.active
-                }
-            ]
-        }),
-        rowperpagedropdown: {
-            root: ({props, state}) => ({
-                class: [
-                    'inline-flex relative cursor-pointer user-none',
-                    'bg-white border rounded-md',
-                    'transition duration-200',
-                    'h-10 mx-2',
-                    'dark:bg-gray-950 dark:border-blue-900/40', //DarkMode
-                    {
-                        'outline-none outline-offset-0 shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] border-blue-500': state.focused && !props.disabled, //Focus
-                        'border-gray-300': !state.focused,
-                        'hover:border-blue-500': !props.disabled //Hover
-                    }
-                ]
-            }),
-            input: {
-                class: [
-                    'font-sans text-base text-gray-600 p-3 w-26 m-0 rounded-md apperance-none',
-                    'block whitespace-nowrap overflow-hidden flex-auto w-[1%] cursor-pointer text-ellipsis border-0 pe-3',
-                    'focus:outline-none focus:outline-offset-0',
-                    'dark:text-white' //Dark Mode
-                ]
-            },
-            trigger: {
-                class: ['flex items-center justify-center shrink-0', 'text-gray-500 dark:text-white w-8 rounded-e-md']
-            },
-            panel: {
-                class: [
-                    'bg-white text-gray-600 border-0 rounded-md shadow-[0_2px_12px_rgba(0,0,0,0.1)]',
-                    'dark:bg-gray-900 dark:text-white/80 dark:border-blue-900/40' //Dark Mode
-                ]
-            },
-            wrapper: 'overflow-auto',
-            list: 'm-0 p-0 py-3 list-none',
-            item: ({context}) => ({
-                class: [
-                    'relative font-normal cursor-pointer space-nowrap overflow-hidden',
-                    'm-0 py-3 px-5 border-none text-gray-600 rounded-none',
-                    'transition duration-200',
-                    'dark:text-white/80', // Dark Mode
-                    {
-                        'text-blue-700 bg-blue-50 dark:text-white/80 dark:bg-blue-300': !context.focused && context.selected,
-                        'bg-blue-300/40': context.focused && context.selected,
-                        'text-gray-600 bg-gray-300 dark:text-white/80 dark:bg-blue-900/40': context.focused && !context.selected
-                    }
-                ]
-            })
-        },
-        jumptopageinput: {
-            root: 'inline-flex mx-2',
-            input: {
-                class: [
-                    'font-sans text-base text-gray-600 p-3 m-0 rounded-md apperance-none',
-                    'block whitespace-nowrap overflow-hidden flex-auto w-[1%] cursor-pointer text-ellipsis border border-gray-300 pe-0',
-                    'focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] focus:border-blue-300',
-                    'dark:text-white dark:bg-gray-950 dark:border-blue-900/40', //Dark Mode
-                    'm-0 flex-auto max-w-[3rem]'
-                ]
-            }
-        },
-        jumptopagedropdown: {
-            root: ({props, state}) => ({
-                class: [
-                    'inline-flex relative cursor-pointer user-none',
-                    'bg-white border rounded-md',
-                    'transition duration-200',
-                    'h-12 mx-2',
-                    'dark:bg-gray-950 dark:border-blue-900/40', //DarkMode
-                    {
-                        'outline-none outline-offset-0 shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] border-blue-500': state.focused && !props.disabled, //Focus
-                        'border-gray-300': !state.focused,
-                        'hover:border-blue-500': !props.disabled //Hover
-                    }
-                ]
-            }),
-            input: {
-                class: [
-                    'font-sans text-base text-gray-600 p-3 m-0 rounded-md apperance-none',
-                    'block whitespace-nowrap overflow-hidden flex-auto w-[1%] cursor-pointer text-ellipsis border-0 pe-0',
-                    'focus:outline-none focus:outline-offset-0',
-                    'dark:text-white' //Dark Mode
-                ]
-            },
-            trigger: {
-                class: ['flex items-center justify-center shrink-0', 'text-gray-500 dark:text-white w-12 rounded-e-md']
-            },
-            panel: {
-                class: [
-                    'bg-white text-gray-600 border-0 rounded-md shadow-[0_2px_12px_rgba(0,0,0,0.1)]',
-                    'dark:bg-gray-900 dark:text-white/80 dark:border-blue-900/40' //Dark Mode
-                ]
-            },
-            wrapper: 'overflow-auto',
-            list: 'm-0 p-0 py-3 list-none',
-            item: ({context}) => ({
-                class: [
-                    'relative font-normal cursor-pointer space-nowrap overflow-hidden',
-                    'm-0 py-3 px-5 border-none text-gray-600 rounded-none',
-                    'transition duration-200',
-                    'dark:text-white/80', // Dark Mode
-                    {
-                        'text-blue-700 bg-blue-50 dark:text-white/80 dark:bg-blue-300': !context.focused && context.selected,
-                        'bg-blue-300/40': context.focused && context.selected,
-                        'text-gray-600 bg-gray-300 dark:text-white/80 dark:bg-blue-900/40': context.focused && !context.selected
-                    }
-                ]
-            })
-        }
-    }
 
 
 }

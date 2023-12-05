@@ -15,7 +15,7 @@ import DynamicSearch from "../DynamicSearch.vue";
 let props = defineProps({
     items: Object,
     hasPagination: Boolean,
-    hasSearch: Boolean
+    searchable: Boolean
 
 })
 

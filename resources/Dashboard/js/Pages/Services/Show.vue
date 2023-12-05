@@ -15,9 +15,15 @@
             />
         </section>
         <section v-show="step === 1">
+<<<<<<< HEAD
             <servicesList
                 :has-search="false"
                 :items="data.services"
+=======
+            <ReservationsList
+                :searchable="false"
+                :items="data.reservations"
+>>>>>>> 00f97b0546fe4e08bb2b3a1200ac9e1b5430143f
                 :sortable="false"
             >
                 <template #create>

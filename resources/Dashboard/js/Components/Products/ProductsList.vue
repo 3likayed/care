@@ -8,7 +8,7 @@
             <ProductCreate/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'}]" model="products"/>
+    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]" model="products"/>
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'name',sortable:true},{name:'quantity',sortable:true},{name:'price',sortable:true},{name:'created_at',sortable:true}]"
@@ -61,7 +61,7 @@ let edited = ref();
 let props = defineProps({
     items: Array,
     pagination: Object,
-    hasSearch: {
+    searchable: {
         type: Boolean,
         default: true,
     },

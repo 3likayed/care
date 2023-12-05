@@ -6,6 +6,7 @@ class UserService
 {
     public static function updateOrCreateUser($userable, array $data)
     {
+
         $user = $userable->user;
         return $user ?
             self::updateExistingUser($userable, $data) :
@@ -38,7 +39,7 @@ class UserService
 
     private static function createNewUser($userable, array $data)
     {
-        $user = $userable->user->create($data);
+        $user = $userable->user()->create($data);
         self::syncUserRole($user, $data['role']);
         return $user;
     }

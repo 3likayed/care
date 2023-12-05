@@ -7,15 +7,17 @@ import Editor from '@tinymce/tinymce-vue'
 import {tinyMcConfig} from "../../Globals.js";
 import SelectControl from "./SelectControl.vue";
 import BaseIcon from "./BaseIcon.vue";
-
+import DateControl from "./DateControl.vue";
 
 const props = defineProps({
     name: {
         type: String,
         default: null,
     },
+    inline: Boolean,
     min: String,
     max: String,
+    maxWidth: String,
     id: {
         type: String,
         default: null,
@@ -81,29 +83,26 @@ const computedValue = computed({
         emit("update:modelValue", value);
     },
 });
-
+const computedType = computed(() => (props.options ? "select" : props.type));
+const isDate = (computedType.value === "datetime" || computedType.value === "date" || computedType.value === "date-range")
 const inputElClass = computed(() => {
     const base = [
-        "px-3 py-2 max-w-full focus:ring focus:outline-none border-gray-700 rounded w-full",
+        "px-3  focus:ring focus:outline-none border-gray-700 rounded ",
         "dark:placeholder-gray-400",
-        computedType.value === "textarea" ? "h-24" : ((computedType.value === "select" && props.isMultiple) ? "" : "h-12"),
+        props.maxWidth ?? 'max-w-full w-full ',
+        computedType.value === "textarea" ? "h-24" : ((computedType.value === "select" && props.isMultiple) || isDate) ? "" : "h-12 py-2",
         props.borderless ? "border-0" : "border",
         props.transparent ? "bg-transparent" : (props.isDisabled ? 'bg-gray-100 dark:bg-slate-700' : "bg-white dark:bg-slate-800"),
 
     ];
 
-    if (props.icon) {
+    if (props.icon && !isDate) {
         base.push("ps-8");
     }
 
     return base;
 });
 
-const computedType = computed(() => (props.options ? "select" : props.type));
-
-const controlIconH = computed(() =>
-    props.type === "textarea" ? "h-full" : "h-12"
-);
 
 const mainStore = useMainStore();
 
@@ -170,16 +169,34 @@ if (computedType.value === "editor") {
             v-if="computedType==='select'"
             :id="id"
             ref="inputEl"
-            :placeholder="placeholder"
             v-model="computedValue"
             :class="inputElClass"
             :disabled="isDisabled"
             :is-multiple="isMultiple"
             :name="name"
             :options="computedOptions"
+            :placeholder="placeholder"
             @filter="(value)=>emit('filter',value.value)">
 
         </SelectControl>
+        <DateControl
+            v-else-if="isDate"
+            :id="id"
+            ref="inputEl"
+            v-model="computedValue"
+            :autocomplete="autocomplete??name"
+            :class="inputElClass"
+            :disabled="isDisabled"
+            :inline="inline"
+            :inputmode="inputmode"
+            :max="max"
+            :maxlength="maxlength"
+            :min="min"
+            :name="name"
+            :placeholder="placeholder"
+            :required="required"
+            :type="computedType"
+        />
 
         <textarea
             v-else-if="computedType === 'textarea'"
@@ -222,7 +239,7 @@ if (computedType.value === "editor") {
         >
 
         <BaseIcon
-            v-if="icon"
+            v-if="icon && !isDate"
             :path="icon"
             class="absolute h-full top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
             w="w-10"

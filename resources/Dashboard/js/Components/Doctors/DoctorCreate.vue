@@ -154,7 +154,7 @@ let form = useForm({
 
 const submit = () => {
     Model.submit('create', 'doctors', form)
-    console.log(form.errors)
+
 }
 let steps = ref([__('data'), __('user_data')]);
 let step = ref(0);
