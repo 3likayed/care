@@ -31,7 +31,7 @@
                 name="product_id"
                 required
                 type="select"
-                @update:model-value="setProductName"
+                @update:model-value="(value)=>appendProduct(value)"
 
             />
         </FormField>
@@ -54,23 +54,24 @@
                     v-model="form.products[key].quantity"
                     :errors="form.errors[`products.${key}.quantity`]"
                     :icon="mdiStocking"
+                    :placeholder="__('quantity')"
                     name="quantity[]"
+                    @update:model-value="(value)=>setProductTotal(value,key)"
 
                 />
                 <FormControl
                     v-model="form.products[key].price"
                     :errors="form.errors[`products.${key}.price`]"
                     :icon="mdiCash"
-                    name="product_price]"
+                    :placeholder="__('price')"
+                    name="product_price"
 
                 />
                 <FormControl
-                    v-model="form.products[key].total"
                     :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
-                    :errors="form.errors[`quantity.${key}`]"
                     :icon="mdiCash"
+                    :placeholder="__('total')"
                     is-disabled
-                    name="quantity[]"
                     @action="(action )=>handleField(form,'products',action ,key)"
                 />
 
@@ -135,9 +136,12 @@ watchEffect(() => {
     productsOptions.value = computedProducts.value
 })
 
-const setProductName = (product_id) => {
+const appendProduct = (product_id) => {
     let product = collect(props.products).firstWhere('id', '=', product_id)
     form.products.push({id: product.id, name: product.name});
+
+}
+const setProductTotal = (value,key) =>{
 
 }
 
