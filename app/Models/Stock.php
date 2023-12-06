@@ -44,7 +44,8 @@ class Stock extends Model
         'product_id',
         'price',
         'unit_price',
-        'quantity'
+        'quantity',
+        'available'
     ];
 
     public function purchase()

@@ -83,6 +83,7 @@ class PurchaseController extends Controller
             [
                 'amount' => $sum,
                 'status' => 'pending',
+                'type' => 'deposit',
             ]
         );
 
