@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -33,7 +34,7 @@ class Stock extends Model
     use SoftDeletes;
 
     protected $casts = [
-        'bill_id' => 'int',
+        'purchase_id' => 'int',
         'product_id' => 'int',
         'unit_price' => 'double',
         'quantity' => 'float'
@@ -42,18 +43,17 @@ class Stock extends Model
     protected $fillable = [
         'purchase_id',
         'product_id',
-        'price',
         'unit_price',
         'quantity',
         'available'
     ];
 
-    public function purchase()
+    public function purchase(): BelongsTo
     {
         return $this->belongsTo(Purchase::class);
     }
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

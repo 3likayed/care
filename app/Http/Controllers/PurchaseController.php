@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PurchaseStoreRequest;
+use App\Http\Requests\PurchaseTransactionRequest;
 use App\Http\Requests\PurchaseUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Product;
@@ -32,27 +33,20 @@ class PurchaseController extends Controller
     public function index(Request $request)
     {
         $purchases = QueryBuilder::for(Purchase::class)
-            ->join('suppliers', 'suppliers.id', 'purchases.supplier_id')
+            ->with('supplier')
+            ->join('suppliers', 'suppliers.id', '=', 'purchases.supplier_id')
+            ->select('purchases.*', 'suppliers.name')
             ->allowedFilters([AllowedFilter::scope('search'), 'name', 'supplier.name'])
-            ->allowedSorts(['name', 'supplier.name', 'total', 'created_at'])
+            ->allowedSorts(['name', 'suppliers.name', 'total_price', 'created_at'])
             ->paginate($request->per_page);
         $suppliers = Supplier::all();
         $products = Product::Where('type', 'product')->get();
-        // dd($purchases);
         return Inertia::render('Purchases/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.purchase')]),
             'data' => ModelCollection::make($purchases),
             'suppliers' => $suppliers,
             'products' => $products
         ]);
-    }
-
-    public function fetch(Request $request)
-    {
-
-        return QueryBuilder::for(Purchase::class)
-            ->allowedFilters(['name'])
-            ->get();
     }
 
     /**
@@ -62,35 +56,38 @@ class PurchaseController extends Controller
     {
         DB::beginTransaction();
         $data = $request->validated();
-        $sum = 0;
+        $totalPrice = 0;
+        $employeeId = auth()->user()->userable_id;
+        $data['employee_id'] = $employeeId;
         $purchase = Purchase::create($data);
         foreach ($data['products'] as $product) {
-            $sum += $product['quantity'] * $product['price'];
+            $totalPrice += $product['quantity'] * $product['price'];
             Stock::create
             ([
-
                 'purchase_id' => $purchase->id,
                 'product_id' => $product['id'],
-                'price' => $product['quantity'] * $product['price'],
                 'unit_price' => $product['price'],
                 'quantity' => $product['quantity'],
-                'available' => $product['quantity']
+                'available' => $product['quantity'],
+                'expires_at' => $product['expires_at'] ?? null,
 
             ]);
         }
+        $purchase->update(['total_price' => $totalPrice]);
+        if ($data['paid_price']) {
+            $purchase->transactions()->create(
+                [
+                    'amount' => $data['paid_price'],
+                    'status' => 'confirmed',
+                    'type' => 'withdraw',
+                    'employee_id' => $employeeId,
+                ]
+            );
 
-        $purchase->transaction()->create(
-            [
-                'amount' => $sum,
-                'status' => 'pending',
-                'type' => 'deposit',
-            ]
-        );
-
-        // update supplier product
+        }
         $supplier = Supplier::where('id', $data['supplier_id'])->first();
         $supplier->update([
-            'credit' => $sum + $supplier['credit']
+            'credit' => $totalPrice - $data['paid_price'] + $supplier['credit']
         ]);
 
         DB::commit();
@@ -98,32 +95,47 @@ class PurchaseController extends Controller
 
     }
 
-    public function update(PurchaseUpdateRequest $request, Purchase $Purchase)
+    public function update(PurchaseUpdateRequest $request, Purchase $purchase)
     {
 
         $data = $request->validated();
-        $Purchase->update($data);
+        $purchase->update($data);
 
         return success();
     }
 
-    public function show(Purchase $Purchase)
+    public function show(Purchase $purchase)
     {
-        $Purchase->load('stock.product');
-        return $Purchase;
+        $purchase->load('supplier', 'transactions.employee', 'stocks', 'employee');
+
         return Inertia::render('Purchases/Show', [
-            'data' => $Purchase,
+            'data' => $purchase,
             // 'appointment_types' => AppointmentType::all(),
-            'meta' => meta()->metaValues(['title' => "$Purchase->name | " . __('dashboard.purchases')]),
+            'meta' => meta()->metaValues(['title' => "$purchase->name | " . __('dashboard.purchases')]),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Purchase $Purchase)
+    public function destroy(Purchase $purchase)
     {
-        /*$Purchase->delete();*/
+        $purchase->transactions()->delete();
+        $purchase->stocks()->delete();
+        $purchase->delete();
         return success();
     }
+
+    public function transaction(PurchaseTransactionRequest $request, Purchase $purchase)
+    {
+        $data = $request->validated();
+        $purchase->transactions()->create([
+            'employee_id' => auth()->user()->id,
+            'amount' => $data['amount'],
+            'status' => 'confirmed',
+            'type' => 'withdraw',
+        ]);
+        return success();
+    }
+
 }

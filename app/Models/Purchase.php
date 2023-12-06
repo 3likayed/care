@@ -7,9 +7,11 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphOne;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
@@ -32,27 +34,55 @@ class Purchase extends Model
     use SoftDeletes;
 
     protected $casts = [
-        'supplier_id' => 'int'
+        'supplier_id' => 'int',
+        'expires_at' => 'date',
+
     ];
 
     protected $fillable = [
         'supplier_id',
+        'total_price',
+        'employee_id',
+        'total_price',
         'notes'
     ];
 
-    public function supplier()
+    protected $appends = ['total_paid', 'total_remaining'];
+
+    public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class);
     }
 
-    public function stock(): HasMany
+
+    public function stocks(): HasMany
     {
-        return $this->hasMany(Stock::class, );
+        return $this->hasMany(Stock::class);
     }
 
-    public function transaction(): MorphOne
+
+    public function totalRemaining(): Attribute
     {
-        return $this->morphOne(Transaction::class, 'transactionable');
+        return Attribute::get(function () {
+            return $this->total_price - $this->total_paid;
+        });
+    }
+
+    public function totalPaid(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->transactions()->sum('amount');
+        });
+    }
+
+    public function transactions(): MorphMany
+    {
+        return $this->morphMany(Transaction::class, 'transactionable');
+    }
+
+    public function employee()
+    {
+        return $this->belongsTo(Employee::class);
     }
 
 }

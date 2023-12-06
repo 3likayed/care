@@ -21,8 +21,8 @@
                 required
             />
         </FormField>
-       
-        
+
+
         <FormField
             :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`phone`]"
@@ -91,7 +91,6 @@ let form = useForm({
     email: props.data.email,
     phone: props.data.phone,
     address: props.data.address,
-    birthday: moment(props.data.birthday).format('YYYY-MM-DD'),
 
 });
 

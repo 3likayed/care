@@ -21,21 +21,26 @@ import BaseButtons from "./BaseButtons.vue";
 import BaseButton from "./BaseButton.vue";
 import {ref} from "vue";
 import {can} from "../../Globals.js";
+import {useStepStore} from "../../Stores/step.js";
 
-let active = ref(0);
 let props = defineProps({
     steps: Object | Array,
     modelValue: Number,
 })
-const stepName = (step) => typeof step === 'string' ? step : step.name
-const stepPermission = (step) => typeof step === 'string' ? null : step.permission;
 
+let active = ref(useStepStore().step);
 let emit = defineEmits(['update:modelValue'])
 
 function stepChange(key) {
     active.value = key
     emit('update:modelValue', key)
+    useStepStore().setStep(key)
 }
+
+const stepName = (step) => typeof step === 'string' ? step : step.name
+const stepPermission = (step) => typeof step === 'string' ? null : step.permission;
+
+
 </script>
 <style scoped>
 

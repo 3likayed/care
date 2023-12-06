@@ -1,15 +1,15 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`suppliers.create`)"
-        :button-label="__('create')"
+        v-if="can(`patients.edit`)"
+        :button-label="__('edit')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"
         :is-form="true"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('create_field',{field:'supplier'})"
-        @cancel="showCreateSupplier=false"
+        :title="__('edit_field',{field:'patient'})"
+        @cancel="showEdit=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.name" :label="__('name')">
@@ -17,11 +17,29 @@
                 v-model="form.name"
                 :icon="mdiAccount"
                 autocomplete="name"
-                name="name"
+                name="phone"
                 required
             />
         </FormField>
-
+        <FormField :errors="form.errors.email" :label="__('email')">
+            <FormControl
+                v-model="form.email"
+                :icon="mdiAt"
+                autocomplete="email"
+                name="email"
+                required
+            />
+        </FormField>
+        <FormField :errors="form.errors.birthday" :label="__('birthday')">
+            <FormControl
+                v-model="form.birthday"
+                :icon="mdiCalendar"
+                autocomplete="birthday"
+                name="birthday"
+                required
+                type="date"
+            />
+        </FormField>
         <FormField
             :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`phone`]"
@@ -56,45 +74,47 @@
                 @action="(action )=>handleField(form,'address',action ,key)"
             />
         </FormField>
-        <FormField :errors="form.errors.credit" :label="__('supplier_credit')">
-            <FormControl
-                v-model="form.credit"
-                :icon="mdiCreditCardChip"
-                name="credit"
-                required
-            />
-        </FormField>
     </CardBoxModal>
 </template>
 
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiAt, mdiCalendar, mdiCreditCardChip, mdiMapMarker, mdiPhone, mdiPlusCircle, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiAt, mdiCalendar, mdiMapMarker, mdiPhone, mdiPlusCircle, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
 import {inject} from "vue";
 import {Model} from "../../Utils/index.js";
+import moment from "moment";
 
 let props = defineProps({
+    data: {
+        type: Object,
+        default: {},
+    },
     isModal: {
         type: Boolean,
         default: true
     }
 })
 
-let showCreateSupplier = inject('showCreateSupplier');
+let showEdit = props.isModal ? inject('showEdit') : true;
+
+
 let form = useForm({
-    name: null,
-    phone: [null],
-    address: [null],
-    credit: null
+    name: props.data.name,
+    email: props.data.email,
+    phone: props.data.phone,
+    address: props.data.address,
+    birthday: moment(props.data.birthday).format('YYYY-MM-DD'),
 
 });
+
+
 const submit = () => {
-    Model.submit('create', 'suppliers', form)
+    Model.submit('edit', 'patients', form, props.data.id)
 }
 
 </script>

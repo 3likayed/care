@@ -26,9 +26,9 @@ class ProductController extends Controller
 
     public function index(Request $request)
     {
-        $products = QueryBuilder::for(Product::class)->where('type','product')
+        $products = QueryBuilder::for(Product::class)->where('type', 'product')
             ->allowedFilters([AllowedFilter::scope('search'), 'name'])
-            ->allowedSorts(['name','quantity'])
+            ->allowedSorts(['name', 'quantity'])
             ->paginate($request->per_page);
         return Inertia::render('Products/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.products')]),
@@ -51,7 +51,7 @@ class ProductController extends Controller
     {
 
         $data = $request->validated();
-        
+
         product::create($data);
 
         return success();

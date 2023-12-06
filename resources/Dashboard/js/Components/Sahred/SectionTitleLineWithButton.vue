@@ -74,7 +74,8 @@ if (props.model) {
         </div>
         <slot v-if="hasSlot">
         </slot>
-        <BaseButton v-if="hasCreate" :icon="mdiPlusCircle" color="success" @click="showCreate=true"/>
+        <BaseButton v-if="hasCreate && can(`${model}.create`)" :icon="mdiPlusCircle" color="success"
+                    @click="showCreate=true"/>
     </section>
 
 

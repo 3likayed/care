@@ -16,6 +16,11 @@ return new class extends Migration {
                 ->constrained('suppliers')
                 ->references('id')
                 ->cascadeOnDelete();
+            $table->foreignId('employee_id')
+                ->constrained('employees')
+                ->references('id')
+                ->cascadeOnDelete();
+            $table->double('total_price')->default(0);
             $table->string('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();

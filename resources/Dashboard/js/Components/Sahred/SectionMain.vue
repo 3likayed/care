@@ -12,7 +12,7 @@ let props = defineProps({
 <template>
     <section
         :class="fluid?containerFluidMaxW: containerMaxW"
-        class="p-6"
+        class="p-1 lg:p-6"
     >
         <slot/>
     </section>

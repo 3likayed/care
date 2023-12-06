@@ -12,20 +12,25 @@
                    model="purchases"/>
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'supplier_name',sortable:true},{name:'total',sortable:true},{name:'created_at',sortable:true},'notes']"
+            :headers="['id',{label:'supplier_name',name:'suppliers.name',sortable:true},{name:'total_price'},{name:'total_paid'},{name:'total_remaining'},{name:'created_at',sortable:true},'notes']"
             :pagination="pagination"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
-                <td data-label="# ">{{ key + 1 }}</td>
+                <td data-label="# ">{{ item.id }}</td>
 
                 <td :data-label="__('supplier_name')">
-                    {{ item.name }}
+                    {{ item.supplier.name }}
                 </td>
 
                 <td :data-label="__('total')">
-                    {{ item.total }}
+                    {{ item.total_price }}
                 </td>
-
+                <td :data-label="__('total')">
+                    {{ item.total_paid }}
+                </td>
+                <td :data-label="__('total')">
+                    {{ item.total_remaining }}
+                </td>
                 <td :data-label="__('created_at')">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </td>
@@ -69,7 +74,6 @@ let props = defineProps({
         default: []
     },
     items: Array,
-    searchable: Boolean,
     pagination: Object,
     searchable: {
         type: Boolean,

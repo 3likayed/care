@@ -24,7 +24,12 @@
             />
         </FormField>
 
-        <FormField :label="__('product_name')">
+
+        <FormField
+            :errors="form.errors[`products`]"
+            :label="__('product_name')"
+            class-addon=" space-y-5"
+        >
             <FormControl
                 :icon="mdiBoxCutter"
                 :options="productsOptions"
@@ -33,14 +38,8 @@
                 type="select"
                 @update:model-value="(value)=>appendProduct(value)"
             />
-        </FormField>
-
-        <FormField
-            :errors="form.errors[`products`]"
-            :label="__('products')"
-        >
             <div v-for="(products,key) in form.products" :key="key"
-                 class="grid grid-cols-4 gap-5">
+                 class="grid grid-cols-1 lg:grid-cols-5  gap-5 ">
                 <FormControl
                     v-model="form.products[key].name"
                     :errors="form.errors[`products.${key}.name`]"
@@ -68,6 +67,13 @@
 
                 />
                 <FormControl
+                    v-model="form.products[key].expires_at"
+                    :errors="form.errors[`products.${key}.expires_at`]"
+                    :icon="mdiCash"
+                    :placeholder="__('expires_at')"
+                    type="date"
+                />
+                <FormControl
                     v-model="form.products[key].total"
                     :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
                     :icon="mdiCash"
@@ -75,8 +81,31 @@
                     is-disabled
                     @action="(action )=>handleField(form,'products',action ,key)"
                 />
-
             </div>
+
+        </FormField>
+
+        <FormField class="space-y-2">
+            <FormControl
+                v-model="form.paid_price" :errors="form.errors.paid_price"
+                :icon="mdiCash"
+                :label="__('paid_price')"
+                name="paid_price"
+            />
+            <FormControl
+                v-model="totalPrice"
+                :icon="mdiCash"
+                :label="__('total_price')"
+                is-disabled
+                name="paid_price"
+            />
+            <FormControl
+                v-model="remainingPrice"
+                :icon="mdiCash"
+                :label="__('remaining_price')"
+                is-disabled
+                name="paid_price"
+            />
         </FormField>
         <FormField :errors="form.errors.notes" :label="__('notes')">
             <FormControl
@@ -85,20 +114,26 @@
                 name="notes"
             />
         </FormField>
-
-
     </CardBoxModal>
 </template>
 
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiBoxCutter, mdiCash, mdiFormatLetterCase, mdiInformation, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
+import {
+    mdiAccount,
+    mdiBoxCutter,
+    mdiCash,
+    mdiFormatLetterCase,
+    mdiInformation,
+    mdiStocking,
+    mdiTrashCanOutline
+} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
-import {computed, inject, ref, watchEffect} from "vue";
+import {inject, ref, watchEffect} from "vue";
 import {Model} from "../../Utils/index.js";
 import {collect} from "collect.js";
 
@@ -116,31 +151,54 @@ let props = defineProps({
         default: true
     },
     notes:
-    {
-        type: String,
-        default: " "
-    }
+        {
+            type: String,
+            default: " "
+        }
 })
 
 let showCreatePurchase = inject('showCreatePurchase');
 let form = useForm({
     supplier_id: null,
     products: [],
-    notes: 'N/A',
+    notes: null,
+    paid_price: null,
     total: 0
 
 });
-const submit = () => {
 
-        form.transform(data => {
-            data.total = 0;
-            return data
-        })
+const submit = () => {
 
     Model.submit('create', 'purchases', form)
 }
 
-let computedProducts = computed(() => collect(props.products).whereNotIn('id',
+let productsOptions = ref(props.products);
+
+
+const appendProduct = (product_id) => {
+    let product = collect(props.products).firstWhere('id', '=', product_id)
+    form.products.push({id: product.id, name: product.name, total: ''});
+
+}
+const setProductTotal = (value, key) => {
+    let total = form.products[key].quantity * form.products[key].price;
+    form.products[key].total = total > 0 ? total : '';
+}
+
+
+let totalPrice = ref();
+let remainingPrice = ref();
+
+watchEffect(() => {
+    let total = collect(form.products).sum('total');
+    total = total > 0 ? total : '';
+    totalPrice.value = total
+    let remaining = total - form.paid_price;
+    remainingPrice.value = remaining > 0 ? remaining : '';
+})
+
+
+/*let computedProducts = computed(() => collect(props.products).whereNotIn('id',
     collect(form.products).pluck('id').all()
 ).all());
 
@@ -148,17 +206,7 @@ let productsOptions = ref();
 
 watchEffect(() => {
     productsOptions.value = computedProducts.value
-})
-
-const appendProduct = (product_id) => {
-    let product = collect(props.products).firstWhere('id', '=', product_id)
-    form.products.push({id: product.id, name: product.name});
-
-}
-const setProductTotal = (value, key) => {
-    let total = form.products[key].quantity * form.products[key].price;
-    form.products[key].total = total > 0 ? total : null;
-}
+})*/
 
 </script>
 <style scoped>

@@ -28,6 +28,10 @@ return new class extends Migration {
                 ->references('id')
                 ->cascadeOnDelete();
 
+            $table->foreignId('employee_id')
+                ->constrained('employees')
+                ->references('id')
+                ->cascadeOnDelete();
 
             $table->string('price');
             $table->dateTime('date');

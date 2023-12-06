@@ -166,14 +166,24 @@ return [
     'reservation_type' => 'نوع الحجز',
     'supplier_credit' => 'حساب المورد',
     'supplier' => 'مورد',
-    'qunatity' => 'الكمية',
     'id' => 'الرقم التسلسلي',
     'services' => 'الخدمات',
     'purchases' => 'المشتروات',
+    'purchase' => 'شراء',
     'supplier_name' => 'إسم المورد',
     'total' => 'القيمة',
     'notes' => 'ملاحظات',
-    'bill-no ' => 'فاتورة رقم'
+    'bill-no ' => 'فاتورة رقم',
+    'expires_at' => 'تاريخ الإنتهاء',
+    'paid_price' => 'المبلغ المدفوع',
+    'total_price' => 'إجمالي المبلغ',
+    'total_paid' => 'إجمالي المدفوع',
+    'total_remaining' => 'إجمالي المتبقى',
+    'remaining_price' => 'المبلغ المتبقي',
+    'transactions' => 'المعاملات النقدية',
+    'transaction' => 'معاملة نقدية',
+    'model' => 'النموذج',
+    'amount' => 'المبلغ',
 
 
 ];

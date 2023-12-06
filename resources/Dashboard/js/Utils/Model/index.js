@@ -55,9 +55,14 @@ export default class Model {
             preserveState: (page) => Object.keys(page.props.errors).length,
         })
     }
+    static transaction(model, form, id) {
 
+        form.post(route(`dashboard.${model}.transaction`, id), {
+            preserveScroll: true,
+            preserveState: (page) => Object.keys(page.props.errors).length,
+        })
+    }
     static submit(operation, model, form, id, modelResolve = true) {
-
 
         switch (operation) {
             case 'edit' :

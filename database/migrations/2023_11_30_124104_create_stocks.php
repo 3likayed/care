@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -22,13 +21,13 @@ return new class extends Migration
                 ->constrained('products')
                 ->references('id')
                 ->cascadeOnDelete();
-
-            $table->double('price');
             $table->double('unit_price');
             $table->double('quantity');
             $table->double('available');
+            $table->date('expires_at')->nullable();
             $table->softDeletes();
             $table->timestamps();
+            $table->unique(['purchase_id', 'product_id', 'expires_at']);
         });
     }
 

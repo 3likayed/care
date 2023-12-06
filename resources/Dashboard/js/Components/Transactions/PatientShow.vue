@@ -9,7 +9,7 @@ let props = defineProps({
 
 <template>
     <CardBox
-        v-if="can(`purchases.show`)"
+        v-if="can(`patients.show`)"
         :has-confirm="false"
     >
         <div class="grid grid-cols-2">

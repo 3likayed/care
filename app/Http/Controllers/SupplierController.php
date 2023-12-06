@@ -11,7 +11,7 @@ use App\Http\Requests\supplierStoreRequest;
 use App\Http\Requests\supplierUpdateRequest;
 
 class SupplierController extends Controller
-{   
+{
 
     /**
      * Display a listing of the resource.
@@ -25,10 +25,10 @@ class SupplierController extends Controller
     }
 
     public function index(Request $request)
-    {                  
+    {
         $suppliers = QueryBuilder::for(Supplier::class)
             ->allowedFilters([AllowedFilter::scope('search'), 'name', 'phone'])
-            ->allowedSorts(['name','supplier_credit'])
+            ->allowedSorts(['name','credit'])
             ->paginate($request->per_page);
         return Inertia::render('Suppliers/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.suppliers')]),
@@ -49,7 +49,7 @@ class SupplierController extends Controller
      */
     public function store(supplierStoreRequest $request)
     {
-        
+
         $data = $request->validated();
         // dd($data);
         Supplier::create($data);

@@ -15,16 +15,16 @@ export default {
                 'bg-white border border-gray-400 transition-colors duration-200 ease-in-out rounded-md',
                 'dark:bg-gray-900 dark:border-slate-900/40 dark:hover:border-slate-300',
                 'w-full md:w-56 ',
-                'hover:border-slate-500 focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
+                'hover:border-slate-500  focus:outline-none focus:outline-offset-0 focus:shadow-[0_0_0_0.2rem_rgba(191,219,254,1)] dark:focus:shadow-[0_0_0_0.2rem_rgba(147,197,253,0.5)]',
                 {'opacity-60 select-none pointer-events-none cursor-default': props.disabled}
             ]
         }),
         input: ({props}) => ({
             class: [
-                'cursor-pointer block flex flex-auto overflow-hidden text-ellipsis whitespace-nowrap relative',
+                'cursor-pointer block flex flex-auto overflow-hidden text-ellipsis py-1 whitespace-nowrap relative',
                 'bg-transparent border-0 text-gray-800',
-                'dark:text-white/80',
-                'last:pe-3 transition duration-200 bg-transparent rounded appearance-none font-sans text-base',
+                'dark:text-white/80 p-0',
+                'transition duration-200 bg-transparent rounded appearance-none font-sans text-base',
                 'focus:outline-none focus:shadow-none',
                 {'pe-7': props.showClear}
             ]

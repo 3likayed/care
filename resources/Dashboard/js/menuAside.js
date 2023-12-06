@@ -99,12 +99,7 @@ export default [
             }
         ]
     },
-    {
-        route: "dashboard.profile.edit",
-        label: "profile",
-        components: ['Auth/Profile'],
-        icon: mdiTable,
-    },
+
     {
         label: "inventory",
         icon: mdiWarehouse,
@@ -123,20 +118,28 @@ export default [
                 components: ['Purchases/Index', 'Purchases/Show'],
                 icon: mdiCashCheck,
             },
+            {
+                route: "dashboard.suppliers.index",
+                permission: "suppliers.show",
+                label: "suppliers",
+                components: ['Suppliers/Index'],
+                icon: mdiTruckDelivery,
+            },
         ],
+
     },
-    {
-        route: "dashboard.suppliers.index",
-        permission: "suppliers.show",
-        label: "suppliers",
-        components: ['Suppliers/Index'],
-        icon: mdiTruckDelivery,
-    },
+
     {
         route: "dashboard.services.index",
         permission: "services.show",
         label: "services",
         components: ['Service/Index'],
         icon: mdiTruckDelivery,
+    },
+    {
+        route: "dashboard.profile.edit",
+        label: "profile",
+        components: ['Auth/Profile'],
+        icon: mdiTable,
     },
 ];

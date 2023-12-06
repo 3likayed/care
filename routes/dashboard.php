@@ -50,6 +50,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('products', ProductController::class);
         Route::get('fetch/products', [ProductController::class, 'fetch'])->name('fetch.products');
         Route::apiResource('purchases', PurchaseController::class);
+        Route::post('purchases/{purchase}/transaction', [PurchaseController::class,'transaction'])->name('purchases.transaction');
+
         Route::apiResource('services', ServiceController::class);
         Route::get('fetch/services', [ServiceController::class, 'fetch'])->name('fetch.services');
     });

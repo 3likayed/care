@@ -21,12 +21,19 @@ class PurchaseStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $sum = 0;
+        foreach ($this->products as $product) {
+            $sum += $product['quantity'] * $product['price'];
+        }
         return [
-            'supplier_id' =>['required'],
-            'products.*.id' => ['distinct', 'min:1','required'],
-            'products.*.quantity' => ['numeric', 'min:0','required'],
-            'products.*.price' => ['numeric', 'min:1','required'],
-            'notes' =>['nullable','string','max:150'],
+            'supplier_id' => ['required'],
+            'products.*.id' => ['required', 'min:1'],
+            'products.*.quantity' => ['numeric', 'min:0', 'required'],
+            'products.*.price' => ['numeric', 'min:1', 'required'],
+            'products.*.expires_at' => ['nullable', 'date', 'after:' . now()],
+            'notes' => ['nullable', 'string', 'max:150'],
+            'paid_price' => ['nullable', 'numeric', "between:1,$sum"],
+
 
         ];
     }

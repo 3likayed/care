@@ -44,6 +44,7 @@ class DatabaseSeeder extends Seeder
                 'services.create', 'services.edit', 'services.delete', 'services.show',
                 'purchases.create', 'purchases.edit', 'purchases.delete', 'purchases.show',
                 'suppliers.create', 'suppliers.edit', 'suppliers.delete', 'suppliers.show',
+                'transactions.create', 'transactions.edit', 'transactions.delete', 'transactions.show',
                 'appointment-product.create', 'appointment-product.edit', 'appointment-product.delete', 'appointment-product.show',
                 'settings.edit',
             ],

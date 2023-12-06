@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class SupplierStoreRequest extends FormRequest
+class PurchaseTransactionRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -21,15 +21,10 @@ class SupplierStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+        $purchase = $this->route('purchase');
 
         return [
-            'name' => ['required', 'string', 'between:5,50'],
-            'phone' => ['required', 'array', 'min:1'],
-            'phone.*' => ['required', 'numeric', 'digits:11'],
-            'address' => ['required', 'array', 'min:1'],
-            'address.*' => ['required', 'string', 'between:5,100'],
-            'credit' => ['required', 'numeric', 'min:0']
-
+            'amount' => ['required', 'numeric', 'between:0,'.$purchase->total_remaining ],
         ];
     }
 }

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 
 /**
  * Class Supplier
- * 
+ *
  * @property int $id
  * @property string $name
  * @property string $phone
@@ -20,7 +20,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $supplier_credit
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * 
+ *
  * @property Collection|PurchaseBill[] $purchase_bills
  *
  * @package App\Models
@@ -34,7 +34,7 @@ class Supplier extends Model
 		'name',
 		'phone',
 		'address',
-		'supplier_credit'
+		'credit'
 	];
 
 	public function purchase_bills()
