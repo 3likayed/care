@@ -35,7 +35,7 @@ class Stock extends Model
     protected $casts = [
         'bill_id' => 'int',
         'product_id' => 'int',
-        'price_unit' => 'datetime',
+        'unit_price' => 'double',
         'quantity' => 'float'
     ];
 
@@ -43,7 +43,7 @@ class Stock extends Model
         'purchase_id',
         'product_id',
         'price',
-        'price_unit',
+        'unit_price',
         'quantity'
     ];
 
