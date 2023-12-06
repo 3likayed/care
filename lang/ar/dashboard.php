@@ -152,7 +152,7 @@ return [
     'doctors' => 'الأطباء',
     'user_data' => 'بيانات المستخدم',
     'has_user' => 'لديه مستخدم',
-   'reservation' => 'حجز',
+    'reservation' => 'حجز',
     'reservations' => 'الحجوزات',
     'reservation-type' => 'نوع الحجز',
     'reservation-types' => 'أنواع الحجز',
@@ -169,14 +169,11 @@ return [
     'qunatity' => 'الكمية',
     'id' => 'الرقم التسلسلي',
     'services' => 'الخدمات',
-    'purchase-transactions' => ' فواتير الشراء',
+    'purchases' => 'المشتروات',
     'supplier_name' => 'إسم المورد',
     'total' => 'القيمة',
     'notes' => 'ملاحظات',
-    'PurchaseTransactions' => 'فواتير الشراء',
-    'bill-no ' =>'فاتورة رقم'
-
-
+    'bill-no ' => 'فاتورة رقم'
 
 
 ];

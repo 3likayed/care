@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PurchaseTransactionStoreRequest extends FormRequest
+class PurchaseStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,7 @@ class PurchaseTransactionStoreRequest extends FormRequest
             'products.*.id' => ['distinct', 'min:1','required'],
             'products.*.quantity' => ['numeric', 'min:0','required'],
             'products.*.price' => ['numeric', 'min:1','required'],
-            'notes' =>[],
-            'total' =>[]
+            'notes' =>['nullable','string','max:150'],
 
         ];
     }

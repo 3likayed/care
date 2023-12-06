@@ -1,15 +1,15 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('purchase-transactions')"
-                                main model="purchase-transactions">
+    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('purchases')"
+                                main model="purchases">
         <slot name="create">
         </slot>
         <template #create>
-            <PurchaseTransactionCreate :products="products" :suppliers="suppliers"/>
+            <PurchaseCreate :products="products" :suppliers="suppliers"/>
         </template>
     </SectionTitleLineWithButton>
     <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]"
-                   model="purchase-transactions"/>
+                   model="purchases"/>
     <CardBox has-table>
         <BaseTable
             :headers="['#',{name:'supplier_name',sortable:true},{name:'total',sortable:true},{name:'created_at',sortable:true},'notes']"
@@ -17,23 +17,23 @@
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ key + 1 }}</td>
-                
+
                 <td :data-label="__('supplier_name')">
                     {{ item.name }}
                 </td>
-                
+
                 <td :data-label="__('total')">
-                    {{ item.total }} 
+                    {{ item.total }}
                 </td>
 
                 <td :data-label="__('created_at')">
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </td>
                 <td :data-label="__('notes')">
-                    {{ item.notes }} 
+                    {{ item.notes }}
                 </td>
                 <td :data-label="__('options')">
-                    <TableOptions :item="item" model="purchase-transactions" @edit="edited=item">
+                    <TableOptions :item="item" model="purchases" @edit="edited=item">
                         <template #edit>
                             <purchasetransactionEdit :data="edited"/>
                         </template>
@@ -53,9 +53,9 @@ import {mdiLockAlertOutline} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
-import purchasetransactionEdit from "./PurchaseTransactionEdit.vue";
+import purchasetransactionEdit from "./PurchaseEdit.vue";
 import moment from "moment";
-import PurchaseTransactionCreate from "./PurchaseTransactionCreate.vue";
+import PurchaseCreate from "./PurchaseCreate.vue";
 import {ref} from "vue";
 
 let edited = ref();

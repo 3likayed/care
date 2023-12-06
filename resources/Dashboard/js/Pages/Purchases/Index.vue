@@ -1,8 +1,8 @@
 <template>
 
     <SectionMain>
-        <BreadCrumb :items="[{name: __('PurchaseTransactions'), href: route('dashboard.purchase-transactions.index')}]"/>
-        <PurchaseTransactionsList :suppliers="suppliers" :items="items" :products="products" :pagination="pagination"/>
+        <BreadCrumb :items="[{name: __('purchases'), href: route('dashboard.purchases.index')}]"/>
+        <PurchasesList :suppliers="suppliers" :items="items" :products="products" :pagination="pagination"/>
     </SectionMain>
 
 
@@ -14,7 +14,7 @@ import SectionMain from "../../Components/Sahred/SectionMain.vue";
 import {usePage} from "@inertiajs/vue3";
 import {computed} from "vue";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
-import PurchaseTransactionsList from "../../Components/PurchaseTransactions/PurchaseTransactionsList.vue";
+import PurchasesList from "../../Components/Purchases/PurchasesList.vue";
 
 
 let items = computed(() => usePage().props.data.data);

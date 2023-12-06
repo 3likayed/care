@@ -1,15 +1,15 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`purchase-transactions.create`)"
+        v-if="can(`purchases.create`)"
         :button-label="__('create')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"
         :is-form="true"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('create_field',{field:'PurchaseTransactions'})"
-        @cancel="showCreatePurchaseTransaction=false"
+        :title="__('create_field',{field:'purchases'})"
+        @cancel="showCreatePurchase=false"
         @confirm="submit"
     >
         <FormField :errors="form.errors.supplier_name" :label="__('supplier_name')">
@@ -122,7 +122,7 @@ let props = defineProps({
     }
 })
 
-let showCreatePurchaseTransaction = inject('showCreatePurchaseTransaction');
+let showCreatePurchase = inject('showCreatePurchase');
 let form = useForm({
     supplier_id: null,
     products: [],
@@ -136,8 +136,8 @@ const submit = () => {
             data.total = 0;
             return data
         })
-    
-    Model.submit('create', 'purchase-transactions', form)
+
+    Model.submit('create', 'purchases', form)
 }
 
 let computedProducts = computed(() => collect(props.products).whereNotIn('id',

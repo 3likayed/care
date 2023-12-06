@@ -117,10 +117,10 @@ export default [
                 icon: mdiMagicStaff,
             },
             {
-                route: "dashboard.purchase-transactions.index",
+                route: "dashboard.purchases.index",
                 label: "purchase-bills",
-                permission: "purchase-transactions.show",
-                components: ['PurchaseTransactions/Index', 'PurchaseTransactions/Show'],
+                permission: "purchases.show",
+                components: ['Purchases/Index', 'Purchases/Show'],
                 icon: mdiCashCheck,
             },
         ],

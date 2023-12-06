@@ -1,7 +1,7 @@
 <template>
     <SectionMain>
         <BreadCrumb
-            :items="[{name: __('PurchaseTransactions'), href: route(`dashboard.purchase-transactions.index`)},{name:__('bill-no ')+data.id, href: route(`dashboard.purchase-transactions.show`, data.id)}]"/>
+            :items="[{name: __('purchases'), href: route(`dashboard.purchases.index`)},{name:__('bill-no ')+data.id, href: route(`dashboard.purchases.show`, data.id)}]"/>
         <CardBox class="mb-4">
             <StepsComponent
                 v-model="step"
@@ -9,7 +9,7 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <PurchaseTransactionProducts
+            <PurchaseProducts
                 :data="data"
                 :is-modal="false"
             />
@@ -26,7 +26,7 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import PurchaseTransactionProducts from "../../Components/PurchaseTransactions/PurchaseTransactionProducts.vue";
+import PurchaseProducts from "../../Components/Purchases/PurchaseProducts.vue";
 
 
 let steps = ref([__('data')]);
