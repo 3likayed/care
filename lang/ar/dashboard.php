@@ -174,6 +174,7 @@ return [
     'total' => 'القيمة',
     'notes' => 'ملاحظات',
     'PurchaseTransactions' => 'فواتير الشراء',
+    'bill-no ' =>'فاتورة رقم'
 
 
 

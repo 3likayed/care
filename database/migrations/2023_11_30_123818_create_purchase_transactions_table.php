@@ -18,8 +18,7 @@ return new class extends Migration
                 ->references('id')
                 ->cascadeOnDelete();
             $table->string('total');
-            $table->dateTime('date');
-            $table->string('notes');
+            $table->string('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

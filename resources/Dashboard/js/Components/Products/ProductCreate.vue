@@ -22,7 +22,7 @@
             />
         </FormField>
 
-        <FormField :errors="form.errors.name" :label="__('quantity')">
+        <FormField :errors="form.errors.quantity" :label="__('quantity')">
             <FormControl
                 v-model="form.quantity"
                 :icon="mdiStocking"
@@ -30,7 +30,7 @@
                 required
             />
         </FormField>
-        <FormField :errors="form.errors.name" :label="__('price')">
+        <FormField :errors="form.errors.price" :label="__('price')">
             <FormControl
                 v-model="form.price"
                 :icon="mdiCash"
@@ -71,12 +71,6 @@ let form = useForm({
 
 });
 const submit = () => {
-    if (!form.quantity) {
-        form.transform(data => {
-            data.quantity = 0;
-            return data
-        })
-    }
     Model.submit('create', 'products', form)
 }
 

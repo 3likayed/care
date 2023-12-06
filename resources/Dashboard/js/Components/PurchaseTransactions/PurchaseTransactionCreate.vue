@@ -78,6 +78,13 @@
 
             </div>
         </FormField>
+        <FormField :errors="form.errors.notes" :label="__('notes')">
+            <FormControl
+                v-model="form.notes"
+                :icon="mdiInformation"
+                name="notes"
+            />
+        </FormField>
 
 
     </CardBoxModal>
@@ -86,7 +93,7 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiBoxCutter, mdiCash, mdiFormatLetterCase, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiBoxCutter, mdiCash, mdiFormatLetterCase, mdiInformation, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -107,17 +114,29 @@ let props = defineProps({
     isModal: {
         type: Boolean,
         default: true
+    },
+    notes:
+    {
+        type: String,
+        default: " "
     }
 })
 
 let showCreatePurchaseTransaction = inject('showCreatePurchaseTransaction');
 let form = useForm({
-    name: null,
     supplier_id: null,
     products: [],
+    notes: 'N/A',
+    total: 0
 
 });
 const submit = () => {
+
+        form.transform(data => {
+            data.total = 0;
+            return data
+        })
+    
     Model.submit('create', 'purchase-transactions', form)
 }
 

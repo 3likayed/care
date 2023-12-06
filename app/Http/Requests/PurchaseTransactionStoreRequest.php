@@ -22,8 +22,13 @@ class PurchaseTransactionStoreRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'between:5,50'],
-            'quantity' => ['nullable', 'numeric'],
+            'supplier_id' =>['required'],
+            'products.*.id' => ['distinct', 'min:1','required'],
+            'products.*.quantity' => ['numeric', 'min:0','required'],
+            'products.*.price' => ['numeric', 'min:1','required'],
+            'notes' =>[],
+            'total' =>[]
+
         ];
     }
 }

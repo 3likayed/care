@@ -12,16 +12,14 @@
                    model="purchase-transactions"/>
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'name',sortable:true},{name:'supplier_name',sortable:true},{name:'total',sortable:true},{name:'created_at',sortable:true},'notes']"
+            :headers="['#',{name:'supplier_name',sortable:true},{name:'total',sortable:true},{name:'created_at',sortable:true},'notes']"
             :pagination="pagination"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ key + 1 }}</td>
-                <td :data-label="__('name')">
-                    {{ item.name }}
-                </td>
+                
                 <td :data-label="__('supplier_name')">
-                    {{ item.supplier.supplier_name }}
+                    {{ item.name }}
                 </td>
                 
                 <td :data-label="__('total')">

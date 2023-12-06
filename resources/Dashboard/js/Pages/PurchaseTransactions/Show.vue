@@ -1,7 +1,7 @@
 <template>
     <SectionMain>
         <BreadCrumb
-            :items="[{name: __('PurchaseTransactions'), href: route(`dashboard.PurchaseTransactions.index`)},{name: data.name, href: route(`dashboard.PurchaseTransactions.show`, data.id)}]"/>
+            :items="[{name: __('PurchaseTransactions'), href: route(`dashboard.purchase-transactions.index`)},{name:__('bill-no ')+data.id, href: route(`dashboard.purchase-transactions.show`, data.id)}]"/>
         <CardBox class="mb-4">
             <StepsComponent
                 v-model="step"
@@ -9,34 +9,11 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <PurchaseTransactionsEdit
+            <PurchaseTransactionProducts
                 :data="data"
                 :is-modal="false"
             />
         </section>
-        <section v-show="step === 1">
-            <ReservationsList
-                :searchable="false"
-                :items="data.reservations"
-                :sortable="false"
-            >
-                <template #create>
-                    <ReservationCreate :data="{PurchaseTransactions_id:data.id}" :PurchaseTransactions="[data]"
-                                       :reservationTypes="reservationTypes"/>
-                </template>
-            </ReservationsList>
-        </section>
-        <section v-show="step === 2">
-            sdadasdas
-        </section>
-        <!--
-            <section v-show="step === 1">
-              <PostDetailsList :data="data"/>
-            </section>
-        -->
-        <!--    <section v-show="step === 1">
-              <ProjectsList :projects="PurchaseTransactions.projects"/>
-            </section>-->
     </SectionMain>
 </template>
 
@@ -49,16 +26,13 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import PurchaseTransactionsEdit from "../../Components/PurchaseTransactionss/PurchaseTransactionsEdit.vue";
-import ReservationsList from "../../Components/Reservations/ReservationsList.vue";
-import ReservationCreate from "../../Components/Reservations/ReservationCreate.vue";
+import PurchaseTransactionProducts from "../../Components/PurchaseTransactions/PurchaseTransactionProducts.vue";
 
 
-let steps = ref([__('data'), __('reservations'), __('home')]);
+let steps = ref([__('data')]);
 let step = ref(0);
 
 let data = computed(() => usePage().props.data);
-let reservationTypes = usePage().props.reservation_types;
 
 </script>
 <style scoped>

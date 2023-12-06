@@ -16,8 +16,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $id
  * @property int|null $supplier_id
  * @property string|null $total
- * @property Carbon|null $date
- * @property string|null $notes
+ * @property string $notes
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -32,14 +31,12 @@ class PurchaseTransaction extends Model
 	protected $table = 'purchase_transactions';
 
 	protected $casts = [
-		'supplier_id' => 'int',
-		'date' => 'datetime'
+		'supplier_id' => 'int'
 	];
 
 	protected $fillable = [
 		'supplier_id',
 		'total',
-		'date',
 		'notes'
 	];
 
@@ -47,4 +44,13 @@ class PurchaseTransaction extends Model
 	{
 		return $this->belongsTo(Supplier::class);
 	}
+	public function purchase_transaction_product()
+	{
+		return $this->hasMany(PurchaseTransactionsProduct::class, 'bill_id');
+	}
+	protected function asJson($value): bool|string
+    {
+
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
 }
