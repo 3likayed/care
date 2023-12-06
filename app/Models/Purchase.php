@@ -47,7 +47,7 @@ class Purchase extends Model
 
     public function stock(): HasMany
     {
-        return $this->hasMany(Stock::class, 'bill_id');
+        return $this->hasMany(Stock::class, );
     }
 
     public function transaction(): MorphOne
