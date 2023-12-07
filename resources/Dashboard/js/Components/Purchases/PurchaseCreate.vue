@@ -134,7 +134,7 @@ import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
-import {inject, ref, watchEffect} from "vue";
+import {inject, ref, watch, watchEffect} from "vue";
 import {Model} from "../../Utils/index.js";
 import {collect} from "collect.js";
 
@@ -200,9 +200,15 @@ watchEffect(() => {
     totalPrice.value = total
     let remaining = total - form.paid_price;
     remainingPrice.value = remaining > 0 ? remaining : '';
+
 })
 
+watch(() => form.paid_price, (newValue) => {
 
+    if (form.paid_price > totalPrice.value) {
+        form.paid_price = totalPrice.value
+    }
+})
 /*let computedProducts = computed(() => collect(props.products).whereNotIn('id',
     collect(form.products).pluck('id').all()
 ).all());
