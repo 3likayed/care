@@ -25,7 +25,6 @@ class PurchaseStoreRequest extends FormRequest
         foreach ($this->products as $product) {
             $sum += ($product['quantity'] ?? 0) * ($product['price'] ?? 0);
         }
-        dd($this->request);
         return [
             'supplier_id' => ['required'],
             'products' => ['required', 'array', 'min:1'],
