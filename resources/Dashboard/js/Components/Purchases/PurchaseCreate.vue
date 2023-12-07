@@ -195,11 +195,11 @@ let totalPrice = ref();
 let remainingPrice = ref();
 
 watchEffect(() => {
-    let total = collect(form.products).sum('total');
+    let total = parseFloat(collect(form.products).sum('total'));
     total = total > 0 ? total : '';
     totalPrice.value = total
-    let remaining = total - form.paid_price;
-    remainingPrice.value = remaining > 0 ? remaining : '';
+    let remaining = total - parseFloat(form.paid_price);
+    remainingPrice.value = parseFloat(remaining > 0 ? remaining : '');
 
 })
 
