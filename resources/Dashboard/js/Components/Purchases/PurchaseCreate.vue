@@ -199,7 +199,7 @@ watchEffect(() => {
     total = total > 0 ? total : '';
     totalPrice.value = total
     let remaining = total - parseFloat(form.paid_price);
-    remainingPrice.value = parseFloat(remaining > 0 ? remaining : '');
+    remainingPrice.value = parseFloat(remaining) > 0 ? parseFloat(remaining) : '';
 
 })
 
