@@ -56,10 +56,11 @@ import PatientEdit from "../../Components/Patients/PatientEdit.vue";
 import AppointmentsList from "../../Components/Appointments/AppointmentsList.vue";
 import AppointmentCreate from "../../Components/Appointments/AppointmentCreate.vue";
 import PatientShow from "../../Components/Patients/PatientShow.vue";
+import {useStepStore} from "../../Stores/step.js";
 
 
 let steps = ref([__('data'), __('edit'), __('appointments')]);
-let step = ref(0);
+let step = ref( useStepStore().getStep())
 
 let data = computed(() => usePage().props.data);
 let appointmentTypes = usePage().props.appointment_types;

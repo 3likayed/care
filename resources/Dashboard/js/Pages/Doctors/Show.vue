@@ -45,9 +45,10 @@ import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import DynamicData from "../../Components/DynamicData.vue";
-import {employee} from "../../Resolvers/index.js";
+import {useStepStore} from "../../Stores/step.js";
+
 let steps = ref([__('data'), __('appointments')]);
-let step = ref(0);
+let step = ref( useStepStore().getStep())
 let data = usePage().props.data;
 let model = "employee";
 let breadcrumbItems = [{name: __(modelResolver(model)), href: route(`dashboard.${modelResolver(model)}.index`)}]

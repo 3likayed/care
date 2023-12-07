@@ -54,10 +54,11 @@ import productsList from "../../Components/Products/ProductsList.vue";
 import productCreate from "../../Components/Products/ProductCreate.vue";
 import ProductsList from "../../Components/Products/ProductsList.vue";
 import ProductCreate from "../../Components/Products/ProductCreate.vue";
+import {useStepStore} from "../../Stores/step.js";
 
 
 let steps = ref([__('data'), __('products'), __('home')]);
-let step = ref(0);
+let step = ref( useStepStore().getStep())
 
 let data = computed(() => usePage().props.data);
 let productTypes = usePage().props.product_types;

@@ -5,6 +5,7 @@
         <CardBox class="mb-4">
             <StepsComponent
                 :steps="steps"
+                v-model="step"
             />
         </CardBox>
         <section v-if="step===0">
@@ -53,7 +54,7 @@ import {useStepStore} from "../../Stores/step.js";
 
 
 let steps = ref([__('data'), __('transactions')]);
-let step = computed(() => useStepStore().getStep());
+let step = ref( useStepStore().getStep());
 
 let data = computed(() => usePage().props.data);
 

@@ -42,9 +42,10 @@ import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import EmployeeEdit from "../../Components/Employees/EmployeeEdit.vue";
+import {useStepStore} from "../../Stores/step.js";
 
 let steps = ref([__('data'), __('others')]);
-let step = ref(0);
+let step = ref( useStepStore().getStep())
 let data = computed(() => usePage().props.data);
 
 </script>
