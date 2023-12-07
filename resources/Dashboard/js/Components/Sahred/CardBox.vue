@@ -50,7 +50,7 @@ const submit = (event) => {
         :is="isForm ? 'form' : 'div'"
         :class="componentClass"
         class="bg-white flex"
-        @submit.prevent="submit"
+        @submit="submit"
     >
         <slot v-if="hasComponentLayout"/>
         <template v-else>
