@@ -89,11 +89,12 @@
 
     <FormField class="space-y-2">
       <FormControl
+          v-model="form.paid_price"
+          :errors="form.errors.paid_price"
+          :icon="mdiCash" :label="__('paid_price')"
           :max="totalPrice"
+          id="sss"
           :min="0"
-          v-model="form.paid_price" :errors="form.errors.paid_price"
-          :icon="mdiCash"
-          :label="__('paid_price')"
           name="paid_price"
       />
       <FormControl
@@ -137,7 +138,7 @@ import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
-import {inject, ref, watchEffect} from "vue";
+import {inject, ref, watch, watchEffect} from "vue";
 import {Model} from "../../Utils/index.js";
 import {collect} from "collect.js";
 
@@ -185,26 +186,27 @@ let productsOptions = ref(props.products);
 
 const appendProduct = (product_id) => {
   let product = collect(props.products).firstWhere('id', '=', product_id)
-  form.products.push({id: product.id, name: product.name, total: ''});
+  form.products.push({id: product.id, name: product.name, total: 0});
 
 }
 const setProductTotal = (value, key) => {
   let total = parseFloat(form.products[key].quantity * form.products[key].price).toFixed(2);
-  form.products[key].total = total > 0 ? total : '';
+  form.products[key].total = total > 0 ? total : 0;
 }
 
 
-let totalPrice = ref();
+let totalPrice = ref(0);
 let remainingPrice = ref(0);
 
 watchEffect(() => {
   let total = collect(form.products).sum('total');
-  total = total > 0 ? total : '';
+  total = total > 0 ? total : 0;
   totalPrice.value = total
   let remaining = total - form.paid_price;
-  remainingPrice.value = remaining > 0 ? remaining : '';
+  remainingPrice.value = remaining > 0 ? remaining : 0;
 
 })
+
 
 
 /*let computedProducts = computed(() => collect(props.products).whereNotIn('id',

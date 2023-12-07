@@ -1,5 +1,5 @@
 <script setup>
-import {computed, onBeforeUnmount, onMounted, ref} from "vue";
+import {computed, getCurrentInstance, onBeforeUnmount, onMounted, ref} from "vue";
 import {useMainStore} from "../../Stores/main.js";
 import BaseButtons from "./BaseButtons.vue";
 import BaseButton from "./BaseButton.vue";
@@ -8,6 +8,8 @@ import {tinyMcConfig} from "../../Globals.js";
 import SelectControl from "./SelectControl.vue";
 import BaseIcon from "./BaseIcon.vue";
 import DateControl from "./DateControl.vue";
+
+const instance = getCurrentInstance();
 
 const props = defineProps({
   name: {
@@ -82,17 +84,17 @@ const emit = defineEmits(["update:modelValue", "setRef", "action", 'filter', 're
 const computedValue = computed({
   get: () => props.modelValue,
   set: (value) => {
-
-    if (typeof props.min ==="number" && value < props.min) {
-      console.log(props.min)
+    if (typeof props.min === "number" && value < props.min) {
       value = props.min
-    } else if (typeof props.max ==="number" && value > props.max) {
+    } else if (typeof props.max === "number" && value > props.max) {
       value = props.max
     }
     emit("update:modelValue", value);
-    inputEl.value.value = value
+    instance?.proxy?.$forceUpdate();
   },
 });
+
+
 const computedType = computed(() => (props.options ? "select" : props.type));
 const isDate = (computedType.value === "datetime" || computedType.value === "date" || computedType.value === "date-range")
 const inputElClass = computed(() => {
@@ -165,9 +167,6 @@ function doAction(action, key) {
 }
 
 
-if (computedType.value === "editor") {
-
-}
 </script>
 
 <template>
@@ -243,6 +242,7 @@ if (computedType.value === "editor") {
       <input
           v-else
           :id="id"
+          :key="id"
           ref="inputEl"
           v-model="computedValue"
           :autocomplete="autocomplete??name"
@@ -256,6 +256,7 @@ if (computedType.value === "editor") {
           :placeholder="placeholder"
           :required="required"
           :type="computedType"
+
       >
 
       <BaseIcon
