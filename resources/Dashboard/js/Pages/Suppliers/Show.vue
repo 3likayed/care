@@ -17,30 +17,22 @@
         <section v-show="step === 1">
             <PurchasesList
                 :data="{supplier_id:data.id}"
-                :suppliers="[data]"
-                :products="products"
                 :items="data.purchases"
+                :products="products"
                 :searchable="false"
                 :sortable="false"
+                :suppliers="[data]"
             />
         </section>
         <section v-show="step === 2">
             <TransactionsList
+                :has-create="false"
                 :items="data.transactions"
                 :searchable="false"
                 :sortable="false"
-                :has-create="false"
                 model="suppliers"
             />
         </section>
-        <!--
-            <section v-show="step === 1">
-              <PostDetailsList :data="data"/>
-            </section>
-        -->
-        <!--    <section v-show="step === 1">
-              <ProjectsList :projects="supplier.projects"/>
-            </section>-->
     </SectionMain>
 </template>
 
@@ -63,7 +55,6 @@ let step = ref(useStepStore().getStep());
 
 let data = computed(() => usePage().props.data);
 let products = computed(() => usePage().props.products);
-let reservationTypes = usePage().props.reservation_types;
 
 </script>
 <style scoped>

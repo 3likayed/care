@@ -14,9 +14,9 @@
     >
         <FormField :errors="form.errors.supplier_name" :label="__('supplier_name')">
             <FormControl
-                :is-disabled="data.supplier_id"
                 v-model="form.supplier_id"
                 :icon="mdiAccount"
+                :is-disabled="data.supplier_id"
                 :options="suppliers"
                 name="supplier_id"
                 required
@@ -139,7 +139,10 @@ import {Model} from "../../Utils/index.js";
 import {collect} from "collect.js";
 
 let props = defineProps({
-    data: Object,
+    data: {
+        type: Object,
+        default: {}
+    },
     suppliers: {
         type: Array,
         default: []
