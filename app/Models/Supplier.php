@@ -9,6 +9,9 @@ namespace App\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 
 /**
  * Class Supplier
@@ -24,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Supplier extends Model
 {
+    use HasRelationships;
+
     protected $table = 'suppliers';
 
     protected $casts = ['phone' => 'array', 'address' => 'array'];
@@ -35,9 +40,18 @@ class Supplier extends Model
         'credit',
     ];
 
-    public function purchase_bills()
+    public function transactions(): HasManyDeep
     {
-        return $this->hasMany(PurchaseBill::class);
+
+        return $this->hasManyDeep(Transaction::class,
+            [Purchase::class],
+            [null, ['transactionable_type', 'transactionable_id']]
+        );
+    }
+
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class);
     }
 
     public function scopeSearch($query, $date)

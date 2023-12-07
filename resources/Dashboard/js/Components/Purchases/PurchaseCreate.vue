@@ -14,6 +14,7 @@
     >
         <FormField :errors="form.errors.supplier_name" :label="__('supplier_name')">
             <FormControl
+                :is-disabled="data.supplier_id"
                 v-model="form.supplier_id"
                 :icon="mdiAccount"
                 :options="suppliers"
@@ -138,6 +139,7 @@ import {Model} from "../../Utils/index.js";
 import {collect} from "collect.js";
 
 let props = defineProps({
+    data: Object,
     suppliers: {
         type: Array,
         default: []
@@ -159,11 +161,11 @@ let props = defineProps({
 
 let showCreatePurchase = inject('showCreatePurchase');
 let form = useForm({
-    supplier_id: null,
-    products: [],
+    supplier_id: props.data?.supplier_id,
+    products: props.data?.products ?? [],
     notes: null,
     paid_price: null,
-    total: 0
+    total: null
 
 });
 

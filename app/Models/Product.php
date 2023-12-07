@@ -44,7 +44,7 @@ class Product extends Model
 
     protected $appends = ['available'];
 
-    public function stock(): HasMany
+    public function stocks(): HasMany
     {
         return $this->hasMany(Stock::class);
     }
@@ -52,7 +52,7 @@ class Product extends Model
     public function available(): Attribute
     {
         return Attribute::get(function () {
-            return $this->stock()->sum('available') + $this->quantity;
+            return $this->stocks()->sum('available') + $this->quantity;
         });
     }
 }

@@ -28,7 +28,7 @@ let props = defineProps({
     modelValue: Number,
 })
 
-let active = ref(useStepStore().step);
+let active = ref(useStepStore().getStep());
 let emit = defineEmits(['update:modelValue'])
 
 function stepChange(key) {

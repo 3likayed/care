@@ -2,6 +2,7 @@
 
 import {__} from "../../Globals.js";
 import PatientEdit from "../Transactions/PatientEdit.vue";
+import AppointmentEdit from "./AppointmentEdit.vue";
 
 let props = defineProps({
     data: Object,
@@ -9,9 +10,10 @@ let props = defineProps({
 </script>
 
 <template>
-    <PatientEdit
+    <AppointmentEdit
         is-disabled
-        :title="__('field_data',{field:'patient'})"
+        :appointment-types="$page.props.appointment_types"
+        :title="__('field_data',{field:'appointment'})"
         :data="data"
         :is-modal="false"
     />

@@ -53,7 +53,7 @@ import {useStepStore} from "../../Stores/step.js";
 
 
 let steps = ref([__('data'), __('transactions')]);
-let step = computed(() => useStepStore().step);
+let step = computed(() => useStepStore().getStep());
 
 let data = computed(() => usePage().props.data);
 

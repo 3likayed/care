@@ -3,7 +3,6 @@ import {default as ziggyRoute} from "ziggy-js";
 import Pluralize from "pluralize"
 
 export function __(key, replace = {}) {
-
     var translation = usePage().props.language[key] ? usePage().props.language[key] : key
     Object.keys(replace).forEach(function (key) {
         translation = translation.replace(':' + key, __(replace[key]))

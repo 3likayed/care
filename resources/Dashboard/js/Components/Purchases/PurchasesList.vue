@@ -2,18 +2,18 @@
 
     <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('purchases')"
                                 main model="purchases">
-        <slot name="create">
-        </slot>
+
         <template #create>
-            <PurchaseCreate :products="products" :suppliers="suppliers"/>
+            <PurchaseCreate :data="data" :products="products" :suppliers="suppliers"/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]"
-                   model="purchases"/>
+    <!--    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]"
+                       model="purchases"/>-->
     <CardBox has-table>
         <BaseTable
             :headers="['id',{label:'supplier_name',name:'suppliers.name',sortable:true},{name:'total_price'},{name:'total_paid'},{name:'total_remaining'},{name:'created_at',sortable:true},'notes']"
             :pagination="pagination"
+            :sortable="sortable"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ item.id }}</td>
@@ -40,7 +40,7 @@
                 <td :data-label="__('options')">
                     <TableOptions :item="item" model="purchases" @edit="edited=item">
                         <template #edit>
-                            <purchasetransactionEdit :data="edited"/>
+                            <!--                            <purchasetransactionEdit :data="edited"/>-->
                         </template>
                     </TableOptions>
                 </td>
@@ -56,15 +56,14 @@ import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
 import {mdiLockAlertOutline} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
-import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
-import purchasetransactionEdit from "./PurchaseEdit.vue";
 import moment from "moment";
 import PurchaseCreate from "./PurchaseCreate.vue";
 import {ref} from "vue";
 
 let edited = ref();
 let props = defineProps({
+    data: Object,
     suppliers: {
         type: Array,
         default: []
@@ -76,6 +75,10 @@ let props = defineProps({
     items: Array,
     pagination: Object,
     searchable: {
+        type: Boolean,
+        default: true,
+    },
+    sortable: {
         type: Boolean,
         default: true,
     },

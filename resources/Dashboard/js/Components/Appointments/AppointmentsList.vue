@@ -36,7 +36,7 @@ let props = defineProps({
 })
 
 let headerFields = [
-    {name: 'id', sortable: true, label: '#', searchable: true},
+    {name: 'id', sortable: true, searchable: true},
     {name: 'doctors.name', label: 'doctor', sortable: true},
     {name: 'patients.name', label: 'patient', sortable: true, searchable: {name: 'patient'}},
     {
@@ -45,10 +45,10 @@ let headerFields = [
         sortable: true,
         searchable: {name: 'appointment_type_id', options: appointmentTypes.value}
     },
-    {name: 'price', sortable: true },
-    {name: 'date', sortable: true,searchable: {name:'date_interval',type:'date-range'}},
+    {name: 'price', sortable: true},
+    {name: 'date', sortable: true, searchable: {name: 'date_interval', type: 'date-range'}},
     'time',
-    {name: 'created_at', sortable: true , }]
+    {name: 'created_at', sortable: true,}]
 </script>
 
 <template>

@@ -4,11 +4,12 @@
         v-if="can(`patients.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"
+        :has-confirm="!isDisabled"
         :has-errors="form.hasErrors"
-        :is-form="true"
+        :is-form="!isDisabled"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('edit_field',{field:'patient'})"
+        :title="title ?? __('edit_field', {field: 'patient'})"
         @cancel="showEdit=false"
         @confirm="submit"
     >
@@ -16,6 +17,7 @@
             <FormControl
                 v-model="form.name"
                 :icon="mdiAccount"
+                :is-disabled="isDisabled"
                 autocomplete="name"
                 name="phone"
                 required
@@ -25,6 +27,7 @@
             <FormControl
                 v-model="form.email"
                 :icon="mdiAt"
+                :is-disabled="isDisabled"
                 autocomplete="email"
                 name="email"
                 required
@@ -34,6 +37,7 @@
             <FormControl
                 v-model="form.birthday"
                 :icon="mdiCalendar"
+                :is-disabled="isDisabled"
                 autocomplete="birthday"
                 name="birthday"
                 required
@@ -41,7 +45,7 @@
             />
         </FormField>
         <FormField
-            :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
+            :actions="isDisabled ? {} :{append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`phone`]"
             :label="__('phone')"
             @action="(action , key)=>handleField(form,'phone',action ) ">
@@ -49,16 +53,17 @@
                 v-for="(phone,key) in form.phone"
                 :key="key"
                 v-model="form.phone[key]"
-                :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
+                :actions="isDisabled ? {} : {delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
                 :errors="form.errors[`phone.${key}`]"
                 :icon="mdiPhone"
+                :is-disabled="isDisabled"
                 autocomplete="phone"
                 name="phone[]"
                 @action="(action )=>handleField(form,'phone',action ,key)"
             />
         </FormField>
         <FormField
-            :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
+            :actions="isDisabled ? {} : {append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`address`]"
             :label="__('address')"
             @action="(action , key)=>handleField(form,'address',action ) ">
@@ -66,9 +71,10 @@
                 v-for="(address,key) in form.address"
                 :key="key"
                 v-model="form.address[key]"
-                :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
+                :actions="isDisabled ? {} :{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
                 :errors="form.errors[`address.${key}`]"
                 :icon="mdiMapMarker"
+                :is-disabled="isDisabled"
                 autocomplete="address"
                 name="address[]"
                 @action="(action )=>handleField(form,'address',action ,key)"
@@ -94,6 +100,8 @@ let props = defineProps({
         type: Object,
         default: {},
     },
+    title: String ,
+    isDisabled: Boolean,
     isModal: {
         type: Boolean,
         default: true

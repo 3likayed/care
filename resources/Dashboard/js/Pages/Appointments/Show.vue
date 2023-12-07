@@ -8,21 +8,14 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <AppointmentEdit
-                :appointment-types="appointmentTypes"
-                :data="computedData"
-                :is-modal="false"
-            />
+            <AppointmentShow
+                :data="computedData"/>
         </section>
         <section v-if="step===1">
-            <PatientShow
-
-                :data="computedData.patient"
-
-            />
+            <PatientShow :data="computedData.patient"/>
         </section>
         <section v-show="step === 2">
-            <AppointmentProducts/>
+            <AppointmentProducts :products="computedProducts"/>
         </section>
     </SectionMain>
 </template>
@@ -36,15 +29,19 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import AppointmentEdit from "../../Components/Appointments/AppointmentEdit.vue";
 import AppointmentProducts from "../../Components/Appointments/AppointmentProducts.vue";
 import PatientShow from "../../Components/Patients/PatientShow.vue";
+import AppointmentShow from "../../Components/Appointments/AppointmentShow.vue";
+import {useStepStore} from "../../Stores/step.js";
 
 
-let steps = ref(['data',{name:'patient',permission: 'patients.show'}, {name: 'products', permission: 'appointment-product.show'}]);
-let step = ref(0);
+let steps = ref(['data', {name: 'patient', permission: 'patients.show'}, {
+    name: 'products',
+    permission: 'appointment-product.show'
+}]);
+let step = ref(useStepStore().getStep());
 let computedData = computed(() => usePage().props.data);
-let appointmentTypes = usePage().props.appointment_types
+let computedProducts = computed(() => usePage().props.products);
 let breadcrumbItems = [
     {
         name: __('appointments'),

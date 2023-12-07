@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('transactions')" main model="transactions">
+    <SectionTitleLineWithButton :has-create="hasCreate" :icon="mdiLockAlertOutline" :title="__('transactions')" main model="transactions">
         <template #create>
             <TransactionCreate :data="data" :model="model"/>
         </template>
@@ -64,6 +64,10 @@ let props = defineProps({
     model: String,
     data: Object,
     pagination: Object,
+    hasCreate: {
+        type : Boolean,
+        default:true
+    },
     sortable: {
         type: Boolean,
         default: false,

@@ -8,6 +8,8 @@ use App\Http\Resources\ModelCollection;
 use App\Models\Appointment;
 use App\Models\AppointmentType;
 use App\Models\Doctor;
+use App\Models\Product;
+use App\Models\Stock;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -57,11 +59,12 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
-        if (! Carbon::parse($data['date'])->isToday()) {
+        if (!Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
         $data['price'] = AppointmentType::find($data['appointment_type_id'])->price;
+        $data['employee_id'] = auth()->user()->userable_id;
         Appointment::create($data);
 
         return success();
@@ -73,7 +76,7 @@ class AppointmentController extends Controller
 
         $data = $request->validated();
 
-        if (! Carbon::parse($data['date'])->isToday()) {
+        if (!Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
@@ -88,12 +91,12 @@ class AppointmentController extends Controller
 
         $appointment->load('patient', 'appointmentType');
         $appointmentTypes = AppointmentType::all();
-
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,
             'appointment_types' => $appointmentTypes,
             'doctors' => Doctor::all(),
-            'meta' => meta()->metaValues(['title' => "$appointment->name | ".__('dashboard.appointments')]),
+            'products' => Product::all(),
+            'meta' => meta()->metaValues(['title' => "$appointment->name | " . __('dashboard.appointments')]),
         ]);
     }
 

@@ -117,6 +117,7 @@ return [
     'service_details' => 'تفاصيل الخدمة',
     'edit_field' => 'تعديل :field',
     'create_field' => 'إنشاء :field',
+    'field_data' => 'بيانات :field',
     'options' => 'الخيارات ',
     'message' => 'الرسالة ',
     'contacts' => 'التواصلات ',

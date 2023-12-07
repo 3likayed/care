@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\supplierStoreRequest;
 use App\Http\Requests\supplierUpdateRequest;
 use App\Http\Resources\ModelCollection;
+use App\Models\Product;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -37,13 +38,6 @@ class SupplierController extends Controller
         ]);
     }
 
-    public function fetch(Request $request)
-    {
-
-        return QueryBuilder::for(Supplier::class)
-            ->allowedFilters(['name'])
-            ->get();
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -70,11 +64,11 @@ class SupplierController extends Controller
 
     public function show(supplier $supplier)
     {
-        $supplier->load('purchase_bills');
-
-        return Inertia::render('suppliers/Show', [
+        $supplier->load('purchases.supplier','transactions');
+        return Inertia::render('Suppliers/Show', [
             'data' => $supplier,
-            'meta' => meta()->metaValues(['title' => "$supplier->name | ".__('dashboard.suppliers')]),
+            'meta' => meta()->metaValues(['title' => "$supplier->name | " . __('dashboard.suppliers')]),
+            'products' =>Product::all(),
         ]);
     }
 

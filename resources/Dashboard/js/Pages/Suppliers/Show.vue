@@ -15,19 +15,23 @@
             />
         </section>
         <section v-show="step === 1">
-            <ReservationsList
+            <PurchasesList
+                :data="{supplier_id:data.id}"
+                :suppliers="[data]"
+                :products="products"
+                :items="data.purchases"
                 :searchable="false"
-                :items="data.reservations"
                 :sortable="false"
-            >
-                <template #create>
-                    <ReservationCreate :data="{supplier_id:data.id}" :suppliers="[data]"
-                                       :reservationTypes="reservationTypes"/>
-                </template>
-            </ReservationsList>
+            />
         </section>
         <section v-show="step === 2">
-            sdadasdas
+            <TransactionsList
+                :items="data.transactions"
+                :searchable="false"
+                :sortable="false"
+                :has-create="false"
+                model="suppliers"
+            />
         </section>
         <!--
             <section v-show="step === 1">
@@ -50,14 +54,15 @@ import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import supplierEdit from "../../Components/Suppliers/SupplierEdit.vue";
-import ReservationsList from "../../Components/Reservations/ReservationsList.vue";
-import ReservationCreate from "../../Components/Reservations/ReservationCreate.vue";
+import PurchasesList from "../../Components/Purchases/PurchasesList.vue";
+import {useStepStore} from "../../Stores/step.js";
+import TransactionsList from "../../Components/Transactions/TransactionsList.vue";
 
-
-let steps = ref([__('data'), __('reservations'), __('home')]);
-let step = ref(0);
+let steps = ref([__('data'), __('purchases'), __('transactions')]);
+let step = ref(useStepStore().getStep());
 
 let data = computed(() => usePage().props.data);
+let products = computed(() => usePage().props.products);
 let reservationTypes = usePage().props.reservation_types;
 
 </script>

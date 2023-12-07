@@ -4,11 +4,12 @@
         v-if="can(`appointments.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"
+        :has-confirm="!isDisabled"
         :has-errors="form.hasErrors"
-        :is-form="true"
+        :is-form="!isDisabled"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('edit_field',{field:'appointment'})"
+        :title="title ?? __('edit_field',{field:'appointment'})"
         @cancel="showEdit=false"
         @confirm="submit();"
     >
@@ -16,6 +17,7 @@
             <FormControl
                 v-model="computedData.patient_id"
                 :icon="mdiAccount"
+                :is-disabled="isDisabled"
                 :options="[computedData.patient]"
                 autocomplete="patient"
                 is-disabled
@@ -28,6 +30,7 @@
             <FormControl
                 v-model="form.appointment_type_id"
                 :icon="mdiAccount"
+                :is-disabled="isDisabled"
                 :options="appointmentTypes"
                 autocomplete="appointment_type_id"
                 name="appointment_type_id"
@@ -38,9 +41,10 @@
         <FormField :errors="form.errors.date" :label="__('date')">
             <FormControl
                 v-model="form.date"
-                inline
                 :icon="mdiCalendar"
+                :is-disabled="isDisabled"
                 autocomplete="date"
+                inline
                 name="date"
                 required
                 type="datetime"
@@ -50,7 +54,7 @@
             <FormControl
                 v-model="form.doctor_id"
                 :icon="mdiAccount"
-                :is-disabled="!moment(form.date).isSame(moment(),'day')"
+                :is-disabled="isDisabled || !moment(form.date).isSame(moment(),'day')"
                 :model-value="!moment(form.date).isSame(moment(),'day') ? null : form.doctor_id"
                 :options="doctors"
                 autocomplete="doctor_id"
@@ -63,6 +67,7 @@
             <FormControl
                 v-model="price"
                 :icon="mdiCash"
+                :is-disabled="isDisabled"
                 autocomplete="price"
                 is-disabled
                 name="price"
@@ -93,6 +98,8 @@ let props = defineProps({
         default: []
 
     },
+    isDisabled: Boolean,
+    title: String,
     doctors: {
         type: Array,
         default: []

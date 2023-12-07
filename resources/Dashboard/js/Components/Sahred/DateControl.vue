@@ -114,10 +114,11 @@ const format = () => {
 </script>
 
 <template>
-    <Calendar v-model="computedValue" :inline="inline" :pt="pt"
-              :placeholder="placeholder"
+    <Calendar v-model="computedValue" :inline="inline" :placeholder="placeholder"
+              :pt="pt"
               :selectionMode="type==='date-range' ? 'range' : 'single'"
               :show-time="type==='datetime'"
+              date-format="dd-mm-yy"
               hour-format="12" showButtonBar/>
 </template>
 
