@@ -26,7 +26,7 @@ class RoleController extends Controller
     {
         $roles = QueryBuilder::for(Role::class)
             ->allowedFilters(['name'])
-            ->allowedSorts(['name','created_at'])
+            ->allowedSorts(['name', 'created_at'])
             ->with('permissions')
             ->get();
         $permissions = Permission::orderBy('name')->get();
@@ -45,7 +45,7 @@ class RoleController extends Controller
     public function store(RoleStoreRequest $request)
     {
         $data = $request->validated();
-        $role = Role::create(['name' => $data['name'],]);
+        $role = Role::create(['name' => $data['name']]);
         foreach (collect($data['permissions'])->where('checked', '=', true) as $permission) {
             $role->givePermissionTo($permission['name']);
         }

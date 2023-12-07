@@ -20,6 +20,7 @@ class Appointment extends Model
     protected $casts = ['date' => 'datetime:Y-m-d g:i A', 'created_at' => 'datetime:Y-m-d g:i A'];
 
     protected $dateFormat = 'Y-m-d g:i A';
+
     protected $with = ['patient', 'appointmentType', 'doctor'];
 
     public function patient(): BelongsTo
@@ -31,7 +32,6 @@ class Appointment extends Model
     {
         return $this->belongsTo(Doctor::class);
     }
-
 
     public function appointmentType(): BelongsTo
     {
@@ -51,6 +51,7 @@ class Appointment extends Model
             foreach ($products as $product) {
                 $sum += $product->pivot->quantity * $product->price;
             }
+
             return ($this->price + $sum) - $this->discount;
         });
     }
@@ -67,8 +68,6 @@ class Appointment extends Model
             ->orWhereRelation('patient', 'phone', 'like', "%$value%");
     }
 
-
-
     public function scopeDateInterval($query, $value)
     {
         $value = explode('|', $value);
@@ -76,6 +75,7 @@ class Appointment extends Model
         if (isset($value[1])) {
             $query->whereDate('date', '<=', $value[1] ?? null);
         }
+
         return $query;
     }
 

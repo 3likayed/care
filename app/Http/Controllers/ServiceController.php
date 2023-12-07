@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\product;
+use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -26,10 +26,11 @@ class ServiceController extends Controller
 
     public function index(Request $request)
     {
-        $products = QueryBuilder::for(Product::class)->where('type','service')
+        $products = QueryBuilder::for(Product::class)->where('type', 'service')
             ->allowedFilters([AllowedFilter::scope('search'), 'name'])
-            ->allowedSorts(['name','quantity'])
+            ->allowedSorts(['name', 'quantity'])
             ->paginate($request->per_page);
+
         return Inertia::render('Services/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.services')]),
             'data' => ModelCollection::make($products),
@@ -51,7 +52,7 @@ class ServiceController extends Controller
     {
 
         $data = $request->validated();
-        
+
         product::create($data);
 
         return success();
@@ -70,9 +71,10 @@ class ServiceController extends Controller
     public function show(product $product)
     {
         $product->load('reservations', 'reservations.product', 'reservations.reservationType');
+
         return Inertia::render('products/Show', [
             'data' => $product,
-            'meta' => meta()->metaValues(['title' => "$product->name | " . __('dashboard.products')]),
+            'meta' => meta()->metaValues(['title' => "$product->name | ".__('dashboard.products')]),
         ]);
     }
 

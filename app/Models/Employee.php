@@ -25,6 +25,7 @@ class Employee extends Authenticatable
     ];
 
     protected $with = ['user'];
+
     /**
      * The attributes that should be cast.
      *

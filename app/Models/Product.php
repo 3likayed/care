@@ -23,8 +23,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
- * @package App\Models
  */
 class Product extends Model
 {
@@ -34,15 +32,16 @@ class Product extends Model
 
     protected $casts = [
         'quantity' => 'int',
-        'price' => 'float'
+        'price' => 'float',
     ];
 
     protected $fillable = [
         'name',
         'quantity',
         'price',
-        'type'
+        'type',
     ];
+
     protected $appends = ['available'];
 
     public function stock(): HasMany

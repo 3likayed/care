@@ -33,7 +33,7 @@ class DoctorController extends Controller
 
         return Inertia::render('Doctors/Show', [
             'data' => $doctor,
-            'meta' => meta()->metaValues(['title' => "$doctor->name | " . __('dashboard.patients')]),
+            'meta' => meta()->metaValues(['title' => "$doctor->name | ".__('dashboard.patients')]),
         ]);
     }
 
@@ -85,7 +85,7 @@ class DoctorController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        $employee = $doctor->employee ;
+        $employee = $doctor->employee;
         $employee->update($data);
         UserService::updateOrCreateUser($employee, $data['user']);
         $doctor->specializations()->sync($data['specializations']);

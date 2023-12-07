@@ -59,6 +59,7 @@ class AppointmentTypeController extends Controller
     {
         $appointmentType->load('appointments', 'appointments.patient', 'appointments.appointmentType');
         dd($appointmentType);
+
         return Inertia::render('AppointmentTypes/Show', [
             'data' => $appointmentType,
             'meta' => meta()->metaValues(['title' => "$appointmentType->name | ".__('dashboard.appointment-type')]),

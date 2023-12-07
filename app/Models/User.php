@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -24,7 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'userable_type',
-        'userable_id'
+        'userable_id',
 
     ];
 
@@ -37,6 +36,7 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
     /**
      * The attributes that should be cast.
      *
@@ -63,7 +63,7 @@ class User extends Authenticatable
     protected function role(): Attribute
     {
         return Attribute::get(
-            fn() => $this->roles()->first(),
+            fn () => $this->roles()->first(),
         );
     }
 
@@ -72,7 +72,7 @@ class User extends Authenticatable
         return Attribute::get(
             function () {
                 return $this->getAllPermissions()->map(
-                    fn($permission) => $permission = $permission->name
+                    fn ($permission) => $permission = $permission->name
                 );
             }
         );

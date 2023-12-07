@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         ])->user()->create(
             [
                 'email' => 'admin@app.com',
-                'password' => bcrypt(12345678)
+                'password' => bcrypt(12345678),
             ]
         );
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
@@ -49,8 +49,8 @@ class DatabaseSeeder extends Seeder
                 'settings.edit',
             ],
         ];
-        $insertPermissions = fn($role) => collect($permissionsByRole[$role])
-            ->map(fn($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'web']))
+        $insertPermissions = fn ($role) => collect($permissionsByRole[$role])
+            ->map(fn ($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'web']))
             ->toArray();
         $permissionIdsByRole = [
             'super-admin' => $insertPermissions('super-admin'),
@@ -60,7 +60,7 @@ class DatabaseSeeder extends Seeder
 
             DB::table('role_has_permissions')
                 ->insert(
-                    collect($permissionIds)->map(fn($id) => [
+                    collect($permissionIds)->map(fn ($id) => [
                         'role_id' => $role->id,
                         'permission_id' => $id,
                     ])->toArray()

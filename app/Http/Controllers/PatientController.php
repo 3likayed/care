@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PatientStoreRequest;
 use App\Http\Requests\PatientUpdateRequest;
 use App\Http\Resources\ModelCollection;
-use App\Models\Patient;
 use App\Models\AppointmentType;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -71,6 +71,7 @@ class PatientController extends Controller
     public function show(Patient $patient)
     {
         $patient->load('appointments', 'appointments.patient', 'appointments.appointmentType');
+
         return Inertia::render('Patients/Show', [
             'data' => $patient,
             'appointment_types' => AppointmentType::all(),

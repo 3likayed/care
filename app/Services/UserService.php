@@ -1,5 +1,7 @@
 <?php
+
 // app/Services/UserService.php
+
 namespace App\Services;
 
 class UserService
@@ -8,6 +10,7 @@ class UserService
     {
 
         $user = $userable->user;
+
         return $user ?
             self::updateExistingUser($userable, $data) :
             self::createNewUser($userable, $data);
@@ -18,12 +21,13 @@ class UserService
     {
         $user = $userable->user;
 
-        if (!isset($data['password']) || !$data['password']) {
+        if (! isset($data['password']) || ! $data['password']) {
             unset($data['password']);
         }
         $userable->user->update($data);
 
         self::syncUserRole($user, $data['role'] ?? null);
+
         return $user;
     }
 
@@ -41,6 +45,7 @@ class UserService
     {
         $user = $userable->user()->create($data);
         self::syncUserRole($user, $data['role']);
+
         return $user;
     }
 }

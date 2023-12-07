@@ -9,7 +9,7 @@ class MediaService
 {
     private string $type = 'image';
 
-    public function updateMediaFromRequest($model, $index = 'image', $collection = 'image', array $size = null): void
+    public function updateMediaFromRequest($model, $index = 'image', $collection = 'image', ?array $size = null): void
     {
 
         if (request()->file($index)) {
@@ -55,7 +55,7 @@ class MediaService
         return $this;
     }
 
-    public function updateMultipleMediaFromRequest($model, $index = 'images', $collection = 'image', array $size = null): void
+    public function updateMultipleMediaFromRequest($model, $index = 'images', $collection = 'image', ?array $size = null): void
     {
 
         if (request()->file($index)) {
@@ -65,7 +65,7 @@ class MediaService
 
     }
 
-    public function storeMultipleMediaFromRequest($model, $index = 'images', $collection = 'images', array $size = null): void
+    public function storeMultipleMediaFromRequest($model, $index = 'images', $collection = 'images', ?array $size = null): void
     {
         if (request()->file($index)) {
             foreach (request()->file($index) as $key => $file) {

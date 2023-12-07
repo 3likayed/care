@@ -24,10 +24,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @property Supplier|null $supplier
- *
- * @package App\Models
  */
 class Purchase extends Model
 {
@@ -44,7 +41,7 @@ class Purchase extends Model
         'total_price',
         'employee_id',
         'total_price',
-        'notes'
+        'notes',
     ];
 
     protected $appends = ['total_paid', 'total_remaining'];
@@ -54,12 +51,10 @@ class Purchase extends Model
         return $this->belongsTo(Supplier::class);
     }
 
-
     public function stocks(): HasMany
     {
         return $this->hasMany(Stock::class);
     }
-
 
     public function totalRemaining(): Attribute
     {
@@ -84,5 +79,4 @@ class Purchase extends Model
     {
         return $this->belongsTo(Employee::class);
     }
-
 }

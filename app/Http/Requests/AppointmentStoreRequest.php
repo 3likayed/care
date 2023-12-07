@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AppointmentStoreRequest extends FormRequest
@@ -23,12 +22,11 @@ class AppointmentStoreRequest extends FormRequest
     public function rules(): array
     {
 
-
         return [
             'patient_id' => ['required', 'exists:patients,id'],
             'appointment_type_id' => ['required', 'exists:appointment_types,id'],
             'doctor_id' => ['nullable', 'numeric', 'exists:doctors,id'],
-            'date' => ['required', 'date', 'after:' . now()],
+            'date' => ['required', 'date', 'after:'.now()],
         ];
     }
 }

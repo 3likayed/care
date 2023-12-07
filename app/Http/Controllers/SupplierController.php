@@ -1,18 +1,18 @@
 <?php
 
 namespace App\Http\Controllers;
-use Spatie\QueryBuilder\AllowedFilter;
-use Spatie\QueryBuilder\QueryBuilder;
-use Inertia\Inertia;
-use App\Http\Resources\ModelCollection;
-use Illuminate\Http\Request;
-use App\Models\Supplier;
+
 use App\Http\Requests\supplierStoreRequest;
 use App\Http\Requests\supplierUpdateRequest;
+use App\Http\Resources\ModelCollection;
+use App\Models\Supplier;
+use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class SupplierController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      */
@@ -28,8 +28,9 @@ class SupplierController extends Controller
     {
         $suppliers = QueryBuilder::for(Supplier::class)
             ->allowedFilters([AllowedFilter::scope('search'), 'name', 'phone'])
-            ->allowedSorts(['name','credit'])
+            ->allowedSorts(['name', 'credit'])
             ->paginate($request->per_page);
+
         return Inertia::render('Suppliers/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.suppliers')]),
             'data' => ModelCollection::make($suppliers),
@@ -70,9 +71,10 @@ class SupplierController extends Controller
     public function show(supplier $supplier)
     {
         $supplier->load('purchase_bills');
+
         return Inertia::render('suppliers/Show', [
             'data' => $supplier,
-            'meta' => meta()->metaValues(['title' => "$supplier->name | " . __('dashboard.suppliers')]),
+            'meta' => meta()->metaValues(['title' => "$supplier->name | ".__('dashboard.suppliers')]),
         ]);
     }
 
@@ -84,5 +86,4 @@ class SupplierController extends Controller
         /*$supplier->delete();*/
         return success();
     }
-
 }

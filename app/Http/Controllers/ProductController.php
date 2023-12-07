@@ -30,6 +30,7 @@ class ProductController extends Controller
             ->allowedFilters([AllowedFilter::scope('search'), 'name'])
             ->allowedSorts(['name', 'quantity'])
             ->paginate($request->per_page);
+
         return Inertia::render('Products/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.products')]),
             'data' => ModelCollection::make($products),
@@ -70,9 +71,10 @@ class ProductController extends Controller
     public function show(product $product)
     {
         $product->load('reservations', 'reservations.product', 'reservations.reservationType');
+
         return Inertia::render('products/Show', [
             'data' => $product,
-            'meta' => meta()->metaValues(['title' => "$product->name | " . __('dashboard.products')]),
+            'meta' => meta()->metaValues(['title' => "$product->name | ".__('dashboard.products')]),
         ]);
     }
 

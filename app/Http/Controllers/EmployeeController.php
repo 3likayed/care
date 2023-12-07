@@ -30,13 +30,14 @@ class EmployeeController extends Controller
 
     public function show(Employee $employee)
     {
-        if ($employee->employable)
+        if ($employee->employable) {
             abort(404);
+        }
         $roles = Role::all();
 
         return Inertia::render('Employees/Show', [
             'data' => $employee,
-            'meta' => meta()->metaValues(['title' => "$employee->name | " . __('dashboard.employees')]),
+            'meta' => meta()->metaValues(['title' => "$employee->name | ".__('dashboard.employees')]),
             'roles' => $roles,
         ]);
     }
@@ -72,7 +73,7 @@ class EmployeeController extends Controller
 
         DB::beginTransaction();
         $data = $request->validated();
-        $employee = Employee::create($data) ;
+        $employee = Employee::create($data);
         if (isset($data['user']['email'])) {
             UserService::updateOrCreateUser($employee, $data['user']);
         }
@@ -82,11 +83,11 @@ class EmployeeController extends Controller
         return success();
     }
 
-
     public function update(EmployeeUpdateRequest $request, Employee $employee)
     {
-        if ($employee->employable)
+        if ($employee->employable) {
             abort(404);
+        }
         DB::beginTransaction();
         $data = $request->validated();
         $employee->update($data['user']);
@@ -104,9 +105,11 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
-        if ($employee->employable)
+        if ($employee->employable) {
             abort(404);
+        }
         $employee->delete();
+
         return success();
     }
 }

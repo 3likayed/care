@@ -20,32 +20,30 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $supplier_credit
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- *
  * @property Collection|PurchaseBill[] $purchase_bills
- *
- * @package App\Models
  */
 class Supplier extends Model
 {
-	protected $table = 'suppliers';
-	protected $casts = ['phone' => 'array', 'address' => 'array'];
+    protected $table = 'suppliers';
 
-	protected $fillable = [
-		'name',
-		'phone',
-		'address',
-		'credit'
-	];
+    protected $casts = ['phone' => 'array', 'address' => 'array'];
 
-	public function purchase_bills()
-	{
-		return $this->hasMany(PurchaseBill::class);
-	}
+    protected $fillable = [
+        'name',
+        'phone',
+        'address',
+        'credit',
+    ];
 
-	public function scopeSearch( $query, $date)
+    public function purchase_bills()
+    {
+        return $this->hasMany(PurchaseBill::class);
+    }
+
+    public function scopeSearch($query, $date)
     {
         return $query->where('name', 'like', "%$date%")
-            ->orWhere('phone','like',"%$date%");
+            ->orWhere('phone', 'like', "%$date%");
     }
 
     protected function asJson($value): bool|string

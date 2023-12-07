@@ -14,7 +14,7 @@ class MetaResource extends JsonResource
      *
      * @return array<string, mixed
      */
-    public function toArray(Request $request = null): array
+    public function toArray(?Request $request = null): array
     {
         $title = $this['title'] ?? '';
         $title .= $this['with_site_title'] ? ' | ' : '';

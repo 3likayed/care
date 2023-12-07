@@ -23,11 +23,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @property Purchase|null $purchase
  * @property Product|null $product
- *
- * @package App\Models
  */
 class Stock extends Model
 {
@@ -37,7 +34,7 @@ class Stock extends Model
         'purchase_id' => 'int',
         'product_id' => 'int',
         'unit_price' => 'double',
-        'quantity' => 'float'
+        'quantity' => 'float',
     ];
 
     protected $fillable = [
@@ -45,7 +42,7 @@ class Stock extends Model
         'product_id',
         'unit_price',
         'quantity',
-        'available'
+        'available',
     ];
 
     public function purchase(): BelongsTo

@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Carbon\Carbon;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AppointmentUpdateRequest extends FormRequest
@@ -22,13 +21,11 @@ class AppointmentUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $validation = [
+        return [
             'appointment_type_id' => ['required', 'exists:appointment_types,id'],
-            'date' => ['required', 'date', 'after:' . now()],
-            'doctor_id' => ['nullable', 'numeric', 'exists:doctors,id']
+            'date' => ['required', 'date', 'after:'.now()],
+            'doctor_id' => ['nullable', 'numeric', 'exists:doctors,id'],
 
         ];
-
-        return $validation;
     }
 }

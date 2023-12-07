@@ -12,10 +12,11 @@ class Transaction extends Model
 {
     use SoftDeletes;
 
-    protected $fillable = ['amount', 'status', 'type','employee_id'];
-    protected $appends = ['model'];
-    protected $with = ['employee'];
+    protected $fillable = ['amount', 'status', 'type', 'employee_id'];
 
+    protected $appends = ['model'];
+
+    protected $with = ['employee'];
 
     public function transactionable(): MorphTo
     {
@@ -32,7 +33,7 @@ class Transaction extends Model
         return Attribute::get(function () {
             return [
                 'name' => strtolower(class_basename($this->transactionable_type)),
-                'id' => $this->transactionable_id
+                'id' => $this->transactionable_id,
             ];
         });
     }

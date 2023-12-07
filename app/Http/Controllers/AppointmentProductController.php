@@ -39,6 +39,7 @@ class AppointmentProductController extends Controller
             ->allowedFilters('id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('start'), AllowedFilter::scope('end'))
             ->paginate($request->get('per_page'));
         $appointmentTypes = AppointmentType::all();
+
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
@@ -74,10 +75,11 @@ class AppointmentProductController extends Controller
     {
         $appointment->load('patient', 'appointmentType');
         $appointmentTypes = AppointmentType::all();
+
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,
             'appointment_types' => $appointmentTypes,
-            'meta' => meta()->metaValues(['title' => "$appointment->name | " . __('dashboard.appointments')]),
+            'meta' => meta()->metaValues(['title' => "$appointment->name | ".__('dashboard.appointments')]),
         ]);
     }
 

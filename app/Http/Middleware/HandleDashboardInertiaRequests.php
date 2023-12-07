@@ -45,7 +45,7 @@ class HandleDashboardInertiaRequests extends Middleware
         return [
             'auth' => [
                 'user' => $user,
-                'permissions' => Inertia::lazy(fn() => $user?->permission_names),
+                'permissions' => Inertia::lazy(fn () => $user?->permission_names),
             ],
             'ziggy' => function () {
                 return array_merge((new Ziggy('dashboard'))->toArray(), [

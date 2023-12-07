@@ -41,11 +41,12 @@ class AppointmentController extends Controller
             ->allowedFilters('id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date_interval'))
             ->paginate($request->get('per_page'));
         $appointmentTypes = AppointmentType::all();
+
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
             'appointment_types' => $appointmentTypes,
-            'doctors' => Doctor::all()
+            'doctors' => Doctor::all(),
         ]);
     }
 
@@ -56,7 +57,7 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
-        if (!Carbon::parse($data['date'])->isToday()) {
+        if (! Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
@@ -72,12 +73,13 @@ class AppointmentController extends Controller
 
         $data = $request->validated();
 
-        if (!Carbon::parse($data['date'])->isToday()) {
+        if (! Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
         $data['price'] = AppointmentType::find($data['appointment_type_id'])->price;
         $appointment->update($data);
+
         return success();
     }
 
@@ -86,11 +88,12 @@ class AppointmentController extends Controller
 
         $appointment->load('patient', 'appointmentType');
         $appointmentTypes = AppointmentType::all();
+
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,
             'appointment_types' => $appointmentTypes,
             'doctors' => Doctor::all(),
-            'meta' => meta()->metaValues(['title' => "$appointment->name | " . __('dashboard.appointments')]),
+            'meta' => meta()->metaValues(['title' => "$appointment->name | ".__('dashboard.appointments')]),
         ]);
     }
 

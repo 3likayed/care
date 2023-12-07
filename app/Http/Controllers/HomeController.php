@@ -17,6 +17,7 @@ class HomeController extends Controller
         $visits = Appointment::today()->visit()->get();
         $doctors = Doctor::all();
         $appointmentTypes = AppointmentType::all();
+
         return Inertia::render('Home', [
             'data' => [
                 'employees_count' => Employee::count(),

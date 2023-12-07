@@ -12,7 +12,7 @@ class MediaResource extends JsonResource
      *
      * @return array<string, mixed>
      */
-    public function toArray(Request $request = null): array
+    public function toArray(?Request $request = null): array
     {
 
         if (! empty($this->resource)) {

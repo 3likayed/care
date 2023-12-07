@@ -21,7 +21,6 @@ class PurchaseController extends Controller
     /**
      * Display a listing of the resource.
      */
-
     public function __construct()
     {
         $this->middleware(['permission:purchases.show'])->only(['index', 'show', 'fetch']);
@@ -41,11 +40,12 @@ class PurchaseController extends Controller
             ->paginate($request->per_page);
         $suppliers = Supplier::all();
         $products = Product::Where('type', 'product')->get();
+
         return Inertia::render('Purchases/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.purchase')]),
             'data' => ModelCollection::make($purchases),
             'suppliers' => $suppliers,
-            'products' => $products
+            'products' => $products,
         ]);
     }
 
@@ -62,8 +62,7 @@ class PurchaseController extends Controller
         $purchase = Purchase::create($data);
         foreach ($data['products'] as $product) {
             $totalPrice += $product['quantity'] * $product['price'];
-            Stock::create
-            ([
+            Stock::create([
                 'purchase_id' => $purchase->id,
                 'product_id' => $product['id'],
                 'unit_price' => $product['price'],
@@ -75,22 +74,21 @@ class PurchaseController extends Controller
         }
         $purchase->update(['total_price' => $totalPrice]);
         if ($data['paid_price']) {
-            $purchase->transactions()->create(
-                [
-                    'amount' => $data['paid_price'],
-                    'status' => 'confirmed',
-                    'type' => 'withdraw',
-                    'employee_id' => $employeeId,
-                ]
+            $purchase->transactions()->create([
+                'amount' => $data['paid_price'],
+                'status' => 'confirmed',
+                'type' => 'withdraw',
+                'employee_id' => $employeeId,
+            ]
             );
 
         }
         $supplier = Supplier::where('id', $data['supplier_id'])->first();
         $supplier->update([
-            'credit' => $totalPrice - $data['paid_price'] + $supplier['credit']
+            'credit' => $totalPrice - $data['paid_price'] + $supplier['credit'],
         ]);
-
         DB::commit();
+
         return success();
 
     }
@@ -111,7 +109,7 @@ class PurchaseController extends Controller
         return Inertia::render('Purchases/Show', [
             'data' => $purchase,
             // 'appointment_types' => AppointmentType::all(),
-            'meta' => meta()->metaValues(['title' => "$purchase->name | " . __('dashboard.purchases')]),
+            'meta' => meta()->metaValues(['title' => "$purchase->name | ".__('dashboard.purchases')]),
         ]);
     }
 
@@ -123,6 +121,7 @@ class PurchaseController extends Controller
         $purchase->transactions()->delete();
         $purchase->stocks()->delete();
         $purchase->delete();
+
         return success();
     }
 
@@ -135,7 +134,7 @@ class PurchaseController extends Controller
             'status' => 'confirmed',
             'type' => 'withdraw',
         ]);
+
         return success();
     }
-
 }

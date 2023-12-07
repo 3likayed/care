@@ -26,6 +26,7 @@ class Doctor extends Authenticatable
     ];
 
     protected $with = ['employee'];
+
     protected $appends = ['name'];
 
     public function user()
@@ -42,11 +43,14 @@ class Doctor extends Authenticatable
     {
         return $this->belongsToMany(Specialization::class, 'doctor_specialization', 'doctor_id', 'specialization_id');
     }
-    public function  name(): Attribute{
-        return Attribute::get(function (){
-            return $this->employee->name ;
+
+    public function name(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->employee->name;
         });
     }
+
     public function scopeSearch($query, $date)
     {
         return $query->where('name', 'like', "%$date%")

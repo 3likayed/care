@@ -22,7 +22,8 @@ class RedirectIfAuthenticated
                 if ($guard === 'dashboard') {
                     return redirect(route('dashboard.index'));
                 }
-                return  redirect(route('dashboard.index'));
+
+                return redirect(route('dashboard.index'));
 
             }
         }

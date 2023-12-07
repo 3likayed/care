@@ -47,7 +47,7 @@ if (! function_exists('deepTranslationValidation')) {
     }
 }
 if (! function_exists('metaValidation')) {
-    function metaValidation(array $rules = null): array
+    function metaValidation(?array $rules = null): array
     {
         return [
             'meta.description' => ['required', 'min:3', 'max:255'],
@@ -78,7 +78,7 @@ if (! function_exists('error')) {
     }
 }
 if (! function_exists('sluggify')) {
-    function sluggify(string $str = null, $delimiter = '-')
+    function sluggify(?string $str = null, $delimiter = '-')
     {
         $str = trim($str);
         $str = str_replace(['(', ')'], '', $str);

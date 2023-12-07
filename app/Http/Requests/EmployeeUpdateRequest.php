@@ -27,7 +27,7 @@ class EmployeeUpdateRequest extends FormRequest
         $userValidation = [];
         if ($user) {
             $userValidation = [
-                'user.email' => ["required", 'nullable', 'email', 'max:255', 'unique:users,email,' . $user->id,],
+                'user.email' => ['required', 'nullable', 'email', 'max:255', 'unique:users,email,'.$user->id],
                 'user.role' => ['required', 'nullable', 'exists:roles,id'],
                 'user.password' => ['nullable', 'confirmed', Password::defaults()],
             ];
@@ -38,6 +38,7 @@ class EmployeeUpdateRequest extends FormRequest
                 'user.password' => ['required_with:user.email,user.role', 'nullable', 'confirmed', Password::defaults()],
             ];
         }
+
         return array_merge(
             [
                 'name' => 'required|string|max:255',
@@ -50,4 +51,3 @@ class EmployeeUpdateRequest extends FormRequest
         );
     }
 }
-
