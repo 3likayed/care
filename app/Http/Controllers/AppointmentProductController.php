@@ -9,7 +9,6 @@ use App\Models\Appointment;
 use App\Models\AppointmentType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class AppointmentProductController extends Controller
@@ -29,14 +28,9 @@ class AppointmentProductController extends Controller
     {
         $appointments = QueryBuilder::for(Appointment::class)
             ->with(['patient:name,id', 'appointmentType:name,id'])
-            //for sorting
-            ->join('patients', 'appointments.patient_id', '=', 'patients.id')
-            ->join('appointment_types', 'appointments.appointment_type_id', '=', 'appointment_types.id')
-            ->select('appointments.*')
-            ->allowedSorts('date', 'created_at', 'patients.name', 'appointment_types.name', 'price', 'id')
-
+            ->allowedSorts('name', 'price')
             //filtering
-            ->allowedFilters('id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('start'), AllowedFilter::scope('end'))
+            ->allowedFilters('id', 'name')
             ->paginate($request->get('per_page'));
         $appointmentTypes = AppointmentType::all();
 
@@ -79,7 +73,7 @@ class AppointmentProductController extends Controller
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,
             'appointment_types' => $appointmentTypes,
-            'meta' => meta()->metaValues(['title' => "$appointment->name | ".__('dashboard.appointments')]),
+            'meta' => meta()->metaValues(['title' => "$appointment->name | " . __('dashboard.appointments')]),
         ]);
     }
 

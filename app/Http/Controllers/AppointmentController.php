@@ -9,11 +9,12 @@ use App\Models\Appointment;
 use App\Models\AppointmentType;
 use App\Models\Doctor;
 use App\Models\Product;
-use App\Models\Stock;
+use App\Sorts\RelationSort;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class AppointmentController extends Controller
@@ -33,15 +34,14 @@ class AppointmentController extends Controller
     {
         $appointments = QueryBuilder::for(Appointment::class)
             ->with(['patient:name,id', 'appointmentType:name,id'])
-            //for sorting
-            ->join('patients', 'appointments.patient_id', '=', 'patients.id')
-            ->join('appointment_types', 'appointments.appointment_type_id', '=', 'appointment_types.id')
-            ->select('appointments.*')
-            ->allowedSorts('date', 'created_at', 'patients.name', 'appointment_types.name', 'price', 'id')
-
-            //filtering
+            ->allowedSorts('date', 'created_at', 'price', 'id',
+                AllowedSort::custom('patient.name', new RelationSort()),
+                AllowedSort::custom('appointment_type.name', new RelationSort()),
+                AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name')
+            )
             ->allowedFilters('id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date_interval'))
             ->paginate($request->get('per_page'));
+
         $appointmentTypes = AppointmentType::all();
 
         return Inertia::render('Appointments/Index', [

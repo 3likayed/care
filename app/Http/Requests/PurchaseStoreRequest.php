@@ -38,3 +38,4 @@ class PurchaseStoreRequest extends FormRequest
         ];
     }
 }
+    

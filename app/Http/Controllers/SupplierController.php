@@ -28,10 +28,11 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         $suppliers = QueryBuilder::for(Supplier::class)
+            ->withSum('transactions', 'amount')
+            ->withSum('purchases', 'total_remaining')
             ->allowedFilters([AllowedFilter::scope('search'), 'name', 'phone'])
-            ->allowedSorts(['name', 'credit'])
+            ->allowedSorts(['name','purchases_sum_total_remaining','transactions_sum_amount'])
             ->paginate($request->per_page);
-
         return Inertia::render('Suppliers/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.suppliers')]),
             'data' => ModelCollection::make($suppliers),
@@ -64,11 +65,11 @@ class SupplierController extends Controller
 
     public function show(supplier $supplier)
     {
-        $supplier->load('purchases.supplier','transactions');
+        $supplier->load('purchases.supplier', 'transactions');
         return Inertia::render('Suppliers/Show', [
             'data' => $supplier,
             'meta' => meta()->metaValues(['title' => "$supplier->name | " . __('dashboard.suppliers')]),
-            'products' =>Product::all(),
+            'products' => Product::all(),
         ]);
     }
 

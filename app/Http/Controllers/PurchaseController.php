@@ -10,10 +10,13 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Stock;
 use App\Models\Supplier;
+use App\Services\TransactionService;
+use App\Sorts\RelationSort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class PurchaseController extends Controller
@@ -33,10 +36,11 @@ class PurchaseController extends Controller
     {
         $purchases = QueryBuilder::for(Purchase::class)
             ->with('supplier')
-            ->join('suppliers', 'suppliers.id', '=', 'purchases.supplier_id')
-            ->select('purchases.*', 'suppliers.name')
+            ->withSum('transactions', 'amount')
             ->allowedFilters([AllowedFilter::scope('search'), 'name', 'supplier.name'])
-            ->allowedSorts(['name', 'suppliers.name', 'total_price', 'created_at'])
+            ->allowedSorts(['name', 'total_price', 'created_at', 'transactions_sum_amount', 'total_remaining',
+                AllowedSort::custom('supplier.name', new RelationSort()),
+            ])
             ->paginate($request->per_page);
         $suppliers = Supplier::all();
         $products = Product::Where('type', 'product')->get();
@@ -57,8 +61,7 @@ class PurchaseController extends Controller
         DB::beginTransaction();
         $data = $request->validated();
         $totalPrice = 0;
-        $employeeId = auth()->user()->userable_id;
-        $data['employee_id'] = $employeeId;
+        $data['employee_id'] = auth()->user()->userable_id;
         $purchase = Purchase::create($data);
         foreach ($data['products'] as $product) {
             $totalPrice += $product['quantity'] * $product['price'];
@@ -72,16 +75,14 @@ class PurchaseController extends Controller
 
             ]);
         }
-        $purchase->update(['total_price' => $totalPrice]);
+        $purchase->update(['total_price' => $totalPrice, 'total_remaining' => $totalPrice]);
+
         if ($data['paid_price']) {
-            $purchase->transactions()->create([
+            TransactionService::create($purchase, [
                 'amount' => $data['paid_price'],
                 'status' => 'confirmed',
                 'type' => 'withdraw',
-                'employee_id' => $employeeId,
-            ]
-            );
-
+            ]);
         }
         $supplier = Supplier::where('id', $data['supplier_id'])->first();
         $supplier->update([
@@ -102,6 +103,7 @@ class PurchaseController extends Controller
         return success();
     }
 
+
     public function show(Purchase $purchase)
     {
         $purchase->load('supplier', 'transactions.employee', 'stocks', 'employee');
@@ -109,7 +111,7 @@ class PurchaseController extends Controller
         return Inertia::render('Purchases/Show', [
             'data' => $purchase,
             // 'appointment_types' => AppointmentType::all(),
-            'meta' => meta()->metaValues(['title' => "$purchase->name | ".__('dashboard.purchases')]),
+            'meta' => meta()->metaValues(['title' => "$purchase->name | " . __('dashboard.purchases')]),
         ]);
     }
 
@@ -128,12 +130,13 @@ class PurchaseController extends Controller
     public function transaction(PurchaseTransactionRequest $request, Purchase $purchase)
     {
         $data = $request->validated();
-        $purchase->transactions()->create([
-            'employee_id' => auth()->user()->id,
-            'amount' => $data['amount'],
-            'status' => 'confirmed',
-            'type' => 'withdraw',
-        ]);
+        TransactionService::create(
+            transactionable: $purchase,
+            data: [
+                'amount' => $data['amount'],
+                'status' => 'confirmed',
+                'type' => 'withdraw',
+            ]);
 
         return success();
     }

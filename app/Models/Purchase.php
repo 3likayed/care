@@ -41,10 +41,11 @@ class Purchase extends Model
         'total_price',
         'employee_id',
         'total_price',
+        'total_remaining',
         'notes',
     ];
 
-    protected $appends = ['total_paid', 'total_remaining'];
+    protected $appends = ['total_paid'];
 
     public function supplier(): BelongsTo
     {
@@ -54,13 +55,6 @@ class Purchase extends Model
     public function stocks(): HasMany
     {
         return $this->hasMany(Stock::class);
-    }
-
-    public function totalRemaining(): Attribute
-    {
-        return Attribute::get(function () {
-            return $this->total_price - $this->total_paid;
-        });
     }
 
     public function totalPaid(): Attribute

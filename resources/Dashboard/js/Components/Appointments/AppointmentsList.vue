@@ -37,10 +37,10 @@ let props = defineProps({
 
 let headerFields = [
     {name: 'id', sortable: true, searchable: true},
-    {name: 'doctors.name', label: 'doctor', sortable: true},
-    {name: 'patients.name', label: 'patient', sortable: true, searchable: {name: 'patient'}},
+    {name: 'doctor.name', label: 'doctor', sortable: true},
+    {name: 'patient.name', label: 'patient', sortable: true, searchable: {name: 'patient'}},
     {
-        name: 'appointment_types.name',
+        name: 'appointment_type.name',
         label: 'appointment_type',
         sortable: true,
         searchable: {name: 'appointment_type_id', options: appointmentTypes.value}

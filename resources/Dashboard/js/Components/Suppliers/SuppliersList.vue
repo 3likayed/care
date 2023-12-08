@@ -11,7 +11,7 @@
     <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]" model="suppliers"/>
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'name',sortable:true},'phone','address',{name:'supplier_credit',sortable:true},'created_at']"
+            :headers="['#',{name:'name',sortable:true},'phone','address',{name:'transactions_sum_amount',label:'total_paid',sortable:true},{name:'purchases_sum_total_remaining',label:'total_remaining',sortable:true},'created_at']"
             :pagination="pagination"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
@@ -36,7 +36,10 @@
                     </ul>
                 </td>
                 <td :data-label="__('supplier_credit')">
-                    {{ item.supplier_credit }}
+                    {{ item.transactions_sum_amount }}
+                </td>
+                <td :data-label="__('total_remaining')">
+                    {{ item.purchases_sum_total_remaining }}
                 </td>
 
                 <td :data-label="__('created_at')">

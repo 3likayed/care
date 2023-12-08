@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -39,6 +40,19 @@ class Supplier extends Model
         'address',
         'credit',
     ];
+    protected $appends = ['total_remaining'];
+
+    public function totalRemaining(): Attribute
+    {
+        return Attribute::get(function () {
+            return $this->purchases()->sum('total_remaining');
+        });
+    }
+
+    public function purchases(): HasMany
+    {
+        return $this->hasMany(Purchase::class);
+    }
 
     public function transactions(): HasManyDeep
     {
@@ -47,11 +61,6 @@ class Supplier extends Model
             [Purchase::class],
             [null, ['transactionable_type', 'transactionable_id']]
         );
-    }
-
-    public function purchases(): HasMany
-    {
-        return $this->hasMany(Purchase::class);
     }
 
     public function scopeSearch($query, $date)

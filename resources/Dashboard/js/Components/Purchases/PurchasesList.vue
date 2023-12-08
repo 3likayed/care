@@ -11,7 +11,7 @@
                        model="purchases"/>-->
     <CardBox has-table>
         <BaseTable
-            :headers="['id',{label:'supplier_name',name:'suppliers.name',sortable:true},{name:'total_price'},{name:'total_paid'},{name:'total_remaining'},{name:'created_at',sortable:true},'notes']"
+            :headers="['id',{label:'supplier_name',name:'supplier.name',sortable:true},{name:'total_price',sortable: true},{name:'transactions_sum_amount',label:'total_paid',sortable: true},{name:'total_remaining',sortable:true},'notes',{name:'created_at',sortable:true}]"
             :pagination="pagination"
             :sortable="sortable"
         >
@@ -31,11 +31,11 @@
                 <td :data-label="__('total')">
                     {{ item.total_remaining }}
                 </td>
-                <td :data-label="__('created_at')">
-                    {{ moment(item.created_at).format('YYYY-MM-DD') }}
-                </td>
                 <td :data-label="__('notes')">
                     {{ item.notes }}
+                </td>
+                <td :data-label="__('created_at')">
+                    {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </td>
                 <td :data-label="__('options')">
                     <TableOptions :item="item" model="purchases" @edit="edited=item">

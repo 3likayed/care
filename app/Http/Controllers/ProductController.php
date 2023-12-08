@@ -27,8 +27,9 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = QueryBuilder::for(Product::class)->where('type', 'product')
+            ->withSum('stocks','available')
             ->allowedFilters([AllowedFilter::scope('search'), 'name'])
-            ->allowedSorts(['name', 'quantity'])
+            ->allowedSorts(['name', 'stocks_sum_available'])
             ->paginate($request->per_page);
 
         return Inertia::render('Products/Index', [
