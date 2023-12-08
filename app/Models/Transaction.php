@@ -39,6 +39,8 @@ class Transaction extends Model
             $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
 
+
+
         return $query;
     }
 

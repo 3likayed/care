@@ -11,6 +11,8 @@ use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SalaryActionsController;
+use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpecializationController;
@@ -39,6 +41,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         });
         Route::apiResource('roles', RoleController::class)->except(['show']);
         Route::apiResource('employees', EmployeeController::class);
+        Route::apiResource('salaries', SalaryController::class)->only(['store']);
+        Route::apiResource('salary-actions', SalaryActionsController::class);
         Route::apiResource('patients', PatientController::class);
         Route::get('fetch/patients', [PatientController::class, 'fetch'])->name('fetch.patients');
         Route::apiResource('appointment-types', AppointmentTypeController::class);
@@ -56,7 +60,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::get('fetch/services', [ServiceController::class, 'fetch'])->name('fetch.services');
 
 
-        Route::apiResource('transactions', TransactionController::class) ;
+        Route::apiResource('transactions', TransactionController::class);
     });
 
 });

@@ -4,17 +4,19 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('appointment_types', function (Blueprint $table) {
+        Schema::create('salaries', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->unsignedDouble('price');
+            $table->foreignId('employee_id')
+                ->constrained('employees')
+                ->references('id');
+            $table->unsignedDouble('salary_amount');
+            $table->unsignedDouble('insurance_amount');
             $table->softDeletes();
             $table->timestamps();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointment_types');
+        Schema::dropIfExists('salaries');
     }
 };

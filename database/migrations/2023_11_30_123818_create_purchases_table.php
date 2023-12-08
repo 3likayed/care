@@ -21,8 +21,8 @@ return new class extends Migration
                 ->constrained('employees')
                 ->references('id')
                 ->cascadeOnDelete();
-            $table->double('total_price')->default(0);
-            $table->double('total_remaining')->default(0);
+            $table->unsignedDouble('total_price')->default(0);
+            $table->unsignedDouble('total_remaining')->default(0);
             $table->string('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();

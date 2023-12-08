@@ -34,7 +34,7 @@ class EmployeeController extends Controller
             abort(404);
         }
         $roles = Role::all();
-
+        $employee->load('salary') ;
         return Inertia::render('Employees/Show', [
             'data' => $employee,
             'meta' => meta()->metaValues(['title' => "$employee->name | ".__('dashboard.employees')]),

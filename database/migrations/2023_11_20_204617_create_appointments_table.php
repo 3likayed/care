@@ -36,7 +36,7 @@ return new class extends Migration
 
             $table->string('price');
             $table->dateTime('date');
-            $table->double('discount')->nullable();
+            $table->unsignedDouble('discount')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->integer('quantity');
-            $table->double('price');
+            $table->unsignedDouble('price');
             $table->enum('type', ['product', 'service'])->default('product');
             $table->softDeletes();
             $table->timestamps();

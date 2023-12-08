@@ -188,5 +188,10 @@ return [
     'deposit' => 'إيداغ',
     'withdraw' => 'سحب',
     'type' => 'النوع',
+    'loan' => 'سلفة',
+    'withhold' => 'خصم',
+    'giving' => 'منحة',
+    'salary' => 'المرتب',
+    'salaries' => 'المرتبات',
 
 ];

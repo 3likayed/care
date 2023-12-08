@@ -2,7 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -57,6 +61,28 @@ class Employee extends Authenticatable
     public function employable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function salary(): HasOne
+    {
+        return $this->hasOne(Salary::class)->latestOfMany();
+    }
+
+    public function currentMonthSalaryActions()
+    {
+        $currentMonth = Carbon::now()->startOfMonth();
+        return $this->salaryActions()->where('date', '>=', $currentMonth)
+            ->where('date', '<=', $currentMonth->addMonth()->addDay());
+    }
+
+    public function salaryActions(): HasManyThrough
+    {
+        return $this->hasManyThrough(SalaryAction::class, Salary::class);
+    }
+
+    public function salaries(): HasMany
+    {
+        return $this->hasMany(Salary::class);
     }
 
     public function type(): Attribute

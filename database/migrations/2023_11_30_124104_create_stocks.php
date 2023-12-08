@@ -22,9 +22,9 @@ return new class extends Migration
                 ->constrained('products')
                 ->references('id')
                 ->cascadeOnDelete();
-            $table->double('unit_price');
-            $table->double('quantity');
-            $table->double('available');
+            $table->unsignedDouble('unit_price');
+            $table->unsignedDouble('quantity');
+            $table->unsignedDouble('available');
             $table->date('expires_at')->nullable();
             $table->softDeletes();
             $table->timestamps();

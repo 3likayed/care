@@ -46,6 +46,8 @@ class DatabaseSeeder extends Seeder
                 'suppliers.create', 'suppliers.edit', 'suppliers.delete', 'suppliers.show',
                 'transactions.create', 'transactions.edit', 'transactions.delete', 'transactions.show',
                 'appointment-product.create', 'appointment-product.edit', 'appointment-product.delete', 'appointment-product.show',
+                'salaries.create', 'salaries.edit', 'salaries.delete', 'salaries.show',
+                'salary-actions.create', 'salary-actions.edit', 'salary-actions.delete', 'salary-actions.show',
                 'settings.edit',
             ],
         ];
