@@ -15,6 +15,7 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
 Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
@@ -45,14 +46,17 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('doctors', DoctorController::class);
         Route::apiResource('appointments', AppointmentController::class);
         Route::apiResource('suppliers', SupplierController::class);
-        Route::get('fetch/suppliers', [SupplierController::class, 'fetch'])->name('fetch.suppliers');
-        Route::apiResource('products', ProductController::class);
-        Route::get('fetch/products', [ProductController::class, 'fetch'])->name('fetch.products');
         Route::apiResource('purchases', PurchaseController::class);
         Route::post('purchases/{purchase}/transaction', [PurchaseController::class, 'transaction'])->name('purchases.transaction');
 
+
+        Route::apiResource('products', ProductController::class);
+        Route::get('fetch/products', [ProductController::class, 'fetch'])->name('fetch.products');
         Route::apiResource('services', ServiceController::class);
         Route::get('fetch/services', [ServiceController::class, 'fetch'])->name('fetch.services');
+
+
+        Route::apiResource('transactions', TransactionController::class) ;
     });
 
 });

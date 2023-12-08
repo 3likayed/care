@@ -2,17 +2,42 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\ModelCollection;
 use App\Models\transaction;
+use App\Services\TransactionService;
+use App\Sorts\RelationSort;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TransactionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $transactionsQuery = QueryBuilder::for(Transaction::class)
+            ->allowedSorts('transactionable_type', 'created_at', 'amount', 'id',
+                AllowedSort::custom('employee.name', new RelationSort())
+            )
+            ->allowedFilters('id', AllowedFilter::scope('created_at'), 'employee.name');
+
+
+        $transactions = $transactionsQuery->paginate($request->get('per_page'));
+        $totalWithdraw = TransactionService::totalWithdraw($transactionsQuery->get());
+        $totalDeposit = TransactionService::totalDeposit($transactionsQuery->get());
+        $totalRemaining = TransactionService::totalRemaining($transactionsQuery->get());
+
+        return Inertia::render('Transactions/Index', [
+            'meta' => meta()->metaValues(['title' => __('dashboard.transactions')]),
+            'data' => ModelCollection::make($transactions),
+            'total_withdraw' => $totalWithdraw,
+            'total_deposit' => $totalDeposit,
+            'totalRemaining' => $totalRemaining
+        ]);
     }
 
     /**

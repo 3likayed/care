@@ -27,7 +27,16 @@ class Transaction extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+    public function scopeCreatedAt($query, $value)
+    {
+        $value = explode('|', $value);
+        $query->whereDate('created_at', '>=', $value[0]);
+        if (isset($value[1])) {
+            $query->whereDate('created_at', '<=', $value[1] ?? null);
+        }
 
+        return $query;
+    }
     public function model(): Attribute
     {
         return Attribute::get(function () {

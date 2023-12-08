@@ -1,6 +1,7 @@
 <template>
 
-    <SectionTitleLineWithButton :has-create="hasCreate" :icon="mdiLockAlertOutline" :title="__('transactions')" main model="transactions">
+    <SectionTitleLineWithButton :has-create="hasCreate" :icon="mdiLockAlertOutline" :title="__('transactions')" main
+                                model="transactions">
         <template #create>
             <TransactionCreate :data="data" :model="model"/>
         </template>
@@ -8,7 +9,7 @@
     <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="transactions"/>
     <CardBox has-table>
         <BaseTable
-            :headers="['id',{name:'amount',sortable:true},{name:'model',sortable:true},{name:'employee',sortable:true},{name:'created_at',sortable:true}]"
+            :headers="headers"
             :pagination="pagination"
             :sortable="sortable"
         >
@@ -65,19 +66,28 @@ let props = defineProps({
     data: Object,
     pagination: Object,
     hasCreate: {
-        type : Boolean,
-        default:true
+        type: Boolean,
+        default: true
     },
     sortable: {
         type: Boolean,
-        default: false,
+        default: true,
     },
     searchable: {
         type: Boolean,
         default: true,
     },
 })
-let computedItems = computed(()=>props.items)
+let computedItems = computed(() => props.items)
+
+let typeOptions = [{id:'deposit',name:'deposit'}, {id:'withdraw',name:'withdraw'}]
+let headers = [
+    {name: 'id', sortable: true, searchable: true},
+    {name: 'type', sortable: true, searchable: {options: typeOptions}},
+    {name: 'amount', sortable: true},
+    {name: 'transactionable_type', label: 'model', sortable: true},
+    {name: 'employee.name', label: 'employee', sortable: true, searchable: {name: 'employee.name'}},
+    {name: 'created_at', sortable: true, searchable: {name: 'created_at', type: 'date-range'}}]
 </script>
 <style>
 
