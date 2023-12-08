@@ -42,30 +42,30 @@ class TransactionService
 
     public static function totalDeposit($transactions)
     {
-        if (!$transactions) {
-            $transactions = Transaction::all();
-        }
-        $startDate = $transactions->first()->created_at->toDateString();
-        $endDate = $transactions->last()->created_at->toDateString();
-        $key = "transactions_total_deposit_" . $startDate . "_" . $endDate;
-        return Cache::tags(['transactions', 'deposit', $startDate, $endDate])->remember($key,100, function () use ($transactions) {
-            return $transactions->where('type', '=', 'deposit')->sum('amount');
-        });
+        return self::totalOperation($transactions,'deposit');
     }
 
     public static function totalWithdraw($transactions)
     {
-        if (!$transactions) {
-            $transactions = Transaction::all();
-        }
-        $startDate = $transactions->first()->created_at->toDateString();
-        $endDate = $transactions->last()->created_at->toDateString();
-        $key = "transactions_total_withdraw_" . $startDate . "_" . $endDate;
-        return Cache::tags(['transactions', 'withdraw', $startDate, $endDate])->remember($key, 100, function () use ($transactions) {
-            return $transactions->where('type', '=', 'withdraw')->sum('amount');
-        });
 
+        return self::totalOperation($transactions,'withdraw');
     }
 
+    private static function totalOperation($transactions, $operation)
+    {
+        if ($transactions && $transactions->count()) {
+            $startDate = $transactions->first()->created_at->toDateString();
+            $endDate = $transactions->last()->created_at->toDateString();
+            $key = "transactions_total{$operation}_" . $startDate . "_" . $endDate;
+            return Cache::tags(['transactions', $operation, $startDate, $endDate])->remember($key, 100, function () use ($transactions,$operation) {
+                if (!$transactions) {
+                    $transactions = Transaction::all();
+                }
+                return $transactions->where('type', '=', $operation)->sum('amount');
+            });
+        }
+
+        return 0;
+    }
 
 }

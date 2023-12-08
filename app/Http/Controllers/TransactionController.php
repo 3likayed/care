@@ -23,7 +23,7 @@ class TransactionController extends Controller
             ->allowedSorts('transactionable_type', 'created_at', 'amount', 'id',
                 AllowedSort::custom('employee.name', new RelationSort())
             )
-            ->allowedFilters('id', AllowedFilter::scope('created_at'), 'employee.name');
+            ->allowedFilters('id', AllowedFilter::scope('created_at'), 'employee.name','type');
 
 
         $transactions = $transactionsQuery->paginate($request->get('per_page'));
