@@ -28,6 +28,8 @@ class TransactionService
 
         Cache::tags([$transaction->created_at->toDateString()])->flush();
         DB::commit();
+        return $transaction;
+
     }
 
     public static function confirm(Transaction $transaction)
@@ -42,13 +44,7 @@ class TransactionService
 
     public static function totalDeposit($transactions)
     {
-        return self::totalOperation($transactions,'deposit');
-    }
-
-    public static function totalWithdraw($transactions)
-    {
-
-        return self::totalOperation($transactions,'withdraw');
+        return self::totalOperation($transactions, 'deposit');
     }
 
     private static function totalOperation($transactions, $operation)
@@ -57,7 +53,7 @@ class TransactionService
             $startDate = $transactions->first()->created_at->toDateString();
             $endDate = $transactions->last()->created_at->toDateString();
             $key = "transactions_total{$operation}_" . $startDate . "_" . $endDate;
-            return Cache::tags(['transactions', $operation, $startDate, $endDate])->remember($key, 100, function () use ($transactions,$operation) {
+            return Cache::tags(['transactions', $operation, $startDate, $endDate])->remember($key, 100, function () use ($transactions, $operation) {
                 if (!$transactions) {
                     $transactions = Transaction::all();
                 }
@@ -66,6 +62,12 @@ class TransactionService
         }
 
         return 0;
+    }
+
+    public static function totalWithdraw($transactions)
+    {
+
+        return self::totalOperation($transactions, 'withdraw');
     }
 
 }

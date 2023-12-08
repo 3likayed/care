@@ -185,5 +185,8 @@ return [
     'transaction' => 'معاملة نقدية',
     'model' => 'النموذج',
     'amount' => 'المبلغ',
+    'deposit' => 'إيداغ',
+    'withdraw' => 'سحب',
+    'type' => 'النوع',
 
 ];

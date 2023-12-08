@@ -12,10 +12,14 @@
             :headers="headers"
             :pagination="pagination"
             :sortable="sortable"
+            :searchable="searchable"
         >
             <tr v-for="(item,key) in computedItems" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ item.id }}</td>
-                <td :data-label="__('name')">
+                <td :data-label="__('type')">
+                    {{ __(item.type) }}
+                </td>
+                <td :data-label="__('amount')">
                     {{ item.amount }}
                 </td>
                 <td :data-label="__('model')">
@@ -55,7 +59,7 @@ import moment from "moment";
 import TransactionCreate from "./TransactionCreate.vue";
 import {computed, ref} from "vue";
 import {Link} from "@inertiajs/vue3";
-import {modelResolver} from "../../Globals.js";
+import {__, modelResolver} from "../../Globals.js"
 
 
 let edited = ref();
@@ -80,7 +84,7 @@ let props = defineProps({
 })
 let computedItems = computed(() => props.items)
 
-let typeOptions = [{id:'deposit',name:'deposit'}, {id:'withdraw',name:'withdraw'}]
+let typeOptions = [{id: 'deposit', name: __('deposit')}, {id: 'withdraw', name: __('withdraw')}]
 let headers = [
     {name: 'id', sortable: true, searchable: true},
     {name: 'type', sortable: true, searchable: {options: typeOptions}},

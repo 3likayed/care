@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use function PHPUnit\Framework\isEmpty;
 
 class Transaction extends Model
 {
@@ -27,16 +29,19 @@ class Transaction extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
     public function scopeCreatedAt($query, $value)
     {
         $value = explode('|', $value);
-        $query->whereDate('created_at', '>=', $value[0]);
-        if (isset($value[1])) {
-            $query->whereDate('created_at', '<=', $value[1] ?? null);
+        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
+         ;
+        if (isset($value[1]) && (bool)$value[1]) {
+            $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
 
         return $query;
     }
+
     public function model(): Attribute
     {
         return Attribute::get(function () {

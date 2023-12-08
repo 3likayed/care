@@ -63,9 +63,10 @@ class PurchaseController extends Controller
         $totalPrice = 0;
         $data['employee_id'] = auth()->user()->userable_id;
         $purchase = Purchase::create($data);
+        $products = [];
         foreach ($data['products'] as $product) {
             $totalPrice += $product['quantity'] * $product['price'];
-            Stock::create([
+            $products[] = [
                 'purchase_id' => $purchase->id,
                 'product_id' => $product['id'],
                 'unit_price' => $product['price'],
@@ -73,8 +74,11 @@ class PurchaseController extends Controller
                 'available' => $product['quantity'],
                 'expires_at' => $product['expires_at'] ?? null,
 
-            ]);
+            ];
+
         }
+        Stock::insert($products);
+
         $purchase->update(['total_price' => $totalPrice, 'total_remaining' => $totalPrice]);
 
         if ($data['paid_price']) {
@@ -84,10 +88,6 @@ class PurchaseController extends Controller
                 'type' => 'withdraw',
             ]);
         }
-        $supplier = Supplier::where('id', $data['supplier_id'])->first();
-        $supplier->update([
-            'credit' => $totalPrice - $data['paid_price'] + $supplier['credit'],
-        ]);
         DB::commit();
 
         return success();
