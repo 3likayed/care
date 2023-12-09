@@ -21,14 +21,6 @@
                 required
             />
         </FormField>
-        <FormField :errors="form.errors.name" :label="__('quantity')">
-            <FormControl
-                v-model="form.quantity"
-                :icon="mdiStocking"
-                name="quantity"
-                required
-            />
-        </FormField>
         <FormField :errors="form.errors.name" :label="__('price')">
             <FormControl
                 v-model="form.price"
@@ -37,21 +29,20 @@
                 required
             />
         </FormField>
-        
+
     </CardBoxModal>
 </template>
 
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiAt, mdiCalendar, mdiMapMarker, mdiPhone, mdiPlusCircle, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiCash} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
-import {__, handleField} from "../../Globals.js";
+import {__} from "../../Globals.js";
 import {inject} from "vue";
 import {Model} from "../../Utils/index.js";
-import moment from "moment";
 
 let props = defineProps({
     data: {
@@ -72,7 +63,6 @@ let form = useForm({
     quantity: props.data.quantity,
     price: props.data.price,
 
-    
 
 });
 

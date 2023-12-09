@@ -12,6 +12,7 @@ use App\Models\Stock;
 use App\Models\Supplier;
 use App\Services\TransactionService;
 use App\Sorts\RelationSort;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -37,8 +38,13 @@ class PurchaseController extends Controller
         $purchases = QueryBuilder::for(Purchase::class)
             ->with('supplier')
             ->withSum('transactions', 'amount')
-            ->allowedFilters([AllowedFilter::scope('search'), 'name', 'supplier.name'])
-            ->allowedSorts(['name', 'total_price', 'created_at', 'transactions_sum_amount', 'total_remaining',
+            ->allowedFilters([
+                AllowedFilter::exact('id'),
+                AllowedFilter::exact('supplier.id'),
+                AllowedFilter::scope('created_at'),
+                'notes',
+            ])
+            ->allowedSorts(['id', 'total_price', 'created_at', 'transactions_sum_amount', 'total_remaining',
                 AllowedSort::custom('supplier.name', new RelationSort()),
             ])
             ->paginate($request->per_page);
@@ -46,7 +52,7 @@ class PurchaseController extends Controller
         $products = Product::Where('type', 'product')->get();
 
         return Inertia::render('Purchases/Index', [
-            'meta' => meta()->metaValues(['title' => __('dashboard.purchase')]),
+            'meta' => meta()->metaValues(['title' => __('dashboard.purchases')]),
             'data' => ModelCollection::make($purchases),
             'suppliers' => $suppliers,
             'products' => $products,
@@ -73,6 +79,8 @@ class PurchaseController extends Controller
                 'quantity' => $product['quantity'],
                 'available' => $product['quantity'],
                 'expires_at' => $product['expires_at'] ?? null,
+                'created_at ' => Carbon::now(),
+                'updated_at ' => Carbon::now(),
 
             ];
 
@@ -106,12 +114,10 @@ class PurchaseController extends Controller
 
     public function show(Purchase $purchase)
     {
-        $purchase->load('supplier', 'transactions.employee', 'stocks', 'employee');
-
+        $purchase->load('supplier', 'transactions.employee', 'stocks.purchase', 'employee');
         return Inertia::render('Purchases/Show', [
             'data' => $purchase,
-            // 'appointment_types' => AppointmentType::all(),
-            'meta' => meta()->metaValues(['title' => "$purchase->name | " . __('dashboard.purchases')]),
+            'meta' => meta()->metaValues(['title' => __('dashboard.field_id', ["field" => __('dashboard.purchase'), "id" => $purchase->id])]),
         ]);
     }
 

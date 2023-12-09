@@ -47,9 +47,7 @@ let breadcrumbItems = [
         name: __('appointments'),
         href: route(`dashboard.appointments.index`)
     },
-    {
-        name: computedData.value.id,
-    }]
+    {}]
 
 
 </script>

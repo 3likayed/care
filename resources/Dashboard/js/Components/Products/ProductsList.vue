@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton model="products"  :icon="mdiStoreCheck" :title="__('products')" main>
+    <SectionTitleLineWithButton :icon="mdiStoreCheck" :title="__('products')" main model="products">
         <slot name="create">
 
         </slot>
@@ -8,11 +8,12 @@
             <ProductCreate/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]" model="products"/>
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'name',sortable:true},{name:'stocks_sum_available',label:'available',sortable:true},{name:'price',sortable:true},{name:'created_at',sortable:true}]"
-            :pagination="pagination"
+            :headers="headers" :pagination="pagination"
+            :searchable="searchable
+"
+            :sortable="sortable"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ key + 1 }}</td>
@@ -48,9 +49,8 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiLockAlertOutline, mdiReproduction, mdiStoreCheck} from "@mdi/js";
+import {mdiStoreCheck} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
-import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import productEdit from "./ProductEdit.vue";
 import moment from "moment";
@@ -65,7 +65,18 @@ let props = defineProps({
         type: Boolean,
         default: true,
     },
+    sortable: {
+        type: Boolean,
+        default: true,
+    },
 })
+let headers = [
+    {name: 'id', sortable: true, searchable: true},
+    {name: 'name', sortable: true, searchable: true},
+    {name: 'stocks_sum_available', label: 'available', sortable: true},
+    {name: 'price', sortable: true},
+    {name: 'created_at', sortable: true}
+]
 </script>
 <style>
 

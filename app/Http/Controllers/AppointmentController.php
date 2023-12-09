@@ -39,7 +39,7 @@ class AppointmentController extends Controller
                 AllowedSort::custom('appointment_type.name', new RelationSort()),
                 AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name')
             )
-            ->allowedFilters('id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date_interval'))
+            ->allowedFilters(AllowedFilter::exact('id'), 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date_interval'))
             ->paginate($request->get('per_page'));
 
         $appointmentTypes = AppointmentType::all();
@@ -96,7 +96,7 @@ class AppointmentController extends Controller
             'appointment_types' => $appointmentTypes,
             'doctors' => Doctor::all(),
             'products' => Product::all(),
-            'meta' => meta()->metaValues(['title' => "$appointment->name | " . __('dashboard.appointments')]),
+            'meta' => meta()->metaValues(['title' => [__('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $appointment->id]), __('dashboard.appointments')]])
         ]);
     }
 

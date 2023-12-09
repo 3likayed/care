@@ -8,13 +8,21 @@ import Flash from "../Components/Sahred/Flash.vue";
 let user = usePage().props.auth.user
 let meta = computed(() => usePage().props.meta ?? {});
 ;
-
+let title = computed(() => {
+    let title = "";
+    if (!Array.isArray(meta.value.title)) {
+        title = meta.value.title;
+    } else {
+        title = meta.value.title.join(' | ')
+    }
+    return title += meta.value.site_name ? " | " + meta.value.site_name : ''
+})
 </script>
 
 <template>
     <component :is="user ? LayoutAuthenticated : LayoutGuest">
         <Head>
-            <title>{{ meta.title }}</title>
+            <title>{{ title }}</title>
             <meta
                 v-if="meta.description"
                 :content="meta.description"

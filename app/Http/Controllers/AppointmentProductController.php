@@ -9,6 +9,7 @@ use App\Models\Appointment;
 use App\Models\AppointmentType;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class AppointmentProductController extends Controller
@@ -30,7 +31,7 @@ class AppointmentProductController extends Controller
             ->with(['patient:name,id', 'appointmentType:name,id'])
             ->allowedSorts('name', 'price')
             //filtering
-            ->allowedFilters('id', 'name')
+            ->allowedFilters( AllowedFilter::exact('id'), 'name')
             ->paginate($request->get('per_page'));
         $appointmentTypes = AppointmentType::all();
 

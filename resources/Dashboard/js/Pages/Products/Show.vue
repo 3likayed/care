@@ -15,28 +15,13 @@
             />
         </section>
         <section v-show="step === 1">
-            <ProductsList
+            <StocksList
+                :items="data.stocks"
                 :searchable="false"
-                :items="data.products"
                 :sortable="false"
-            >
-                <template #create>
-                    <ProductCreate :data="{product_id:data.id}" :products="[data]"
-                                       :productTypes="productTypes"/>
-                </template>
-            </ProductsList>
+                :visit-data="{filter:{'product.id':data.id}}"
+            />
         </section>
-        <section v-show="step === 2">
-            sdadasdas
-        </section>
-        <!--
-            <section v-show="step === 1">
-              <PostDetailsList :data="data"/>
-            </section>
-        -->
-        <!--    <section v-show="step === 1">
-              <ProjectsList :projects="product.projects"/>
-            </section>-->
     </SectionMain>
 </template>
 
@@ -49,16 +34,13 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import productEdit from "../../Components/Products/ProductEdit.vue";
-import productsList from "../../Components/Products/ProductsList.vue";
-import productCreate from "../../Components/Products/ProductCreate.vue";
-import ProductsList from "../../Components/Products/ProductsList.vue";
-import ProductCreate from "../../Components/Products/ProductCreate.vue";
 import {useStepStore} from "../../Stores/step.js";
+import ProductEdit from "../../Components/Products/ProductEdit.vue";
+import StocksList from "../../Components/Stocks/StocksList.vue";
 
 
-let steps = ref([__('data'), __('products'), __('home')]);
-let step = ref( useStepStore().getStep())
+let steps = ref([__('data'), __('stocks')]);
+let step = ref(useStepStore().getStep())
 
 let data = computed(() => usePage().props.data);
 let productTypes = usePage().props.product_types;

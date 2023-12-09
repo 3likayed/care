@@ -1,25 +1,28 @@
 <template>
     <SectionMain>
         <BreadCrumb
-            :items="[{name: __('purchases'), href: route(`dashboard.purchases.index`)},{name:__('bill-no ')+data.id, href: route(`dashboard.purchases.show`, data.id)}]"/>
+            :items="[{name: __('purchases'), href: route(`dashboard.purchases.index`)},{}]"/>
         <CardBox class="mb-4">
             <StepsComponent
-                :steps="steps"
                 v-model="step"
+                :steps="steps"
             />
         </CardBox>
         <section v-if="step===0">
-            <PurchaseProducts
-                :data="data"
-                :is-modal="false"
-            />
+            <StocksList
+                :items="data.stocks"
+                :searchable="false"
+                :sortable="false"
+                :visit-data="{filter:{'purchase.id':data.id}}"/>
         </section>
         <section v-if="step===1" class="space-y-5">
             <TransactionsList
                 :data="{id:data.id}"
+                :has-create="data.total_remaining>0"
                 :items="data.transactions"
                 :searchable="false"
                 :sortable="false"
+                :visit-data="{filter:{transactionable_type:'Purchase',transactionable_id:data.id}}"
                 model="purchases"
             />
             <CardBox>
@@ -48,13 +51,13 @@ import {__} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import PurchaseProducts from "../../Components/Purchases/PurchaseProducts.vue";
 import TransactionsList from "../../Components/Transactions/TransactionsList.vue";
 import {useStepStore} from "../../Stores/step.js";
+import StocksList from "../../Components/Stocks/StocksList.vue";
 
 
-let steps = ref([__('data'), __('transactions')]);
-let step = ref( useStepStore().getStep());
+let steps = ref([__('stocks'), __('transactions')]);
+let step = ref(useStepStore().getStep());
 
 let data = computed(() => usePage().props.data);
 

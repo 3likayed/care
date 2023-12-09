@@ -49,6 +49,7 @@ class DatabaseSeeder extends Seeder
                 'salaries.create', 'salaries.edit', 'salaries.delete', 'salaries.show',
                 'salary-actions.create', 'salary-actions.edit', 'salary-actions.delete', 'salary-actions.show',
                 'settings.edit',
+                'stocks.show',
             ],
         ];
         $insertPermissions = fn ($role) => collect($permissionsByRole[$role])

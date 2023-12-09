@@ -28,7 +28,6 @@ class SupplierStoreRequest extends FormRequest
             'phone.*' => ['required', 'numeric', 'digits:11'],
             'address' => ['required', 'array', 'min:1'],
             'address.*' => ['required', 'string', 'between:5,100'],
-            'credit' => ['required', 'numeric', 'min:0'],
 
         ];
     }

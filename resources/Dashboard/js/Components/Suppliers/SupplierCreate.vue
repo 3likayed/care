@@ -56,21 +56,13 @@
                 @action="(action )=>handleField(form,'address',action ,key)"
             />
         </FormField>
-        <FormField :errors="form.errors.credit" :label="__('supplier_credit')">
-            <FormControl
-                v-model="form.credit"
-                :icon="mdiCreditCardChip"
-                name="credit"
-                required
-            />
-        </FormField>
     </CardBoxModal>
 </template>
 
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiAt, mdiCalendar, mdiCreditCardChip, mdiMapMarker, mdiPhone, mdiPlusCircle, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiMapMarker, mdiPhone, mdiPlusCircle, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -90,7 +82,6 @@ let form = useForm({
     name: null,
     phone: [null],
     address: [null],
-    credit: null
 
 });
 const submit = () => {

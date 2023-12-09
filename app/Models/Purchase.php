@@ -69,8 +69,18 @@ class Purchase extends Model
         return $this->morphMany(Transaction::class, 'transactionable');
     }
 
-    public function employee()
+    public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
+    }
+    public function scopeCreatedAt($query, $value)
+    {
+        $value = explode('|', $value);
+        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
+        ;
+        if (isset($value[1]) && (bool)$value[1]) {
+            $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
+        }
+        return $query;
     }
 }

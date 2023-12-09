@@ -13,15 +13,22 @@ export default class Model {
     }
 
     static show(model, id, modelResolve = true) {
+        router.visit(this.showLink(model, id, modelResolve))
+    }
+
+    static index(model, data, modelResolve = true) {
+        router.visit(this.indexLink(model, data, modelResolve))
+    }
+
+    static indexLink(model, data, modelResolve = true) {
         if (modelResolver)
             model = modelResolver(model);
-        router.visit(route(`dashboard.${model}.show`, id))
+        return route(`dashboard.${model}.index`, data)
     }
 
     static showLink(model, id, modelResolve = true) {
         if (modelResolver)
             model = modelResolver(model);
-
         return route(`dashboard.${model}.show`, id)
     }
 
@@ -55,6 +62,7 @@ export default class Model {
             preserveState: (page) => Object.keys(page.props.errors).length,
         })
     }
+
     static transaction(model, form, id) {
 
         form.post(route(`dashboard.${model}.transaction`, id), {
@@ -62,6 +70,7 @@ export default class Model {
             preserveState: (page) => Object.keys(page.props.errors).length,
         })
     }
+
     static submit(operation, model, form, id, modelResolve = true) {
 
         switch (operation) {

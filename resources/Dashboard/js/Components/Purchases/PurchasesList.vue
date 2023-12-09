@@ -1,7 +1,10 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('purchases')"
-                                main model="purchases">
+    <SectionTitleLineWithButton :icon="mdiLockAlertOutline"
+                                :title="__('purchases')"
+                                :visit-data="visitData"
+                                main
+                                model="purchases">
 
         <template #create>
             <PurchaseCreate :data="data" :products="products" :suppliers="suppliers"/>
@@ -11,15 +14,18 @@
                        model="purchases"/>-->
     <CardBox has-table>
         <BaseTable
-            :headers="['id',{label:'supplier_name',name:'supplier.name',sortable:true},{name:'total_price',sortable: true},{name:'transactions_sum_amount',label:'total_paid',sortable: true},{name:'total_remaining',sortable:true},'notes',{name:'created_at',sortable:true}]"
+            :headers="headers"
             :pagination="pagination"
+            :searchable="searchable"
             :sortable="sortable"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ item.id }}</td>
 
                 <td :data-label="__('supplier_name')">
-                    {{ item.supplier.name }}
+                    <Link :href="Model.showLink('suppliers',item.supplier.id)">
+                        {{ item.supplier.name }}
+                    </Link>
                 </td>
 
                 <td :data-label="__('total')">
@@ -60,6 +66,8 @@ import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import moment from "moment";
 import PurchaseCreate from "./PurchaseCreate.vue";
 import {ref} from "vue";
+import {Link} from "@inertiajs/vue3";
+import {Model} from "../../Utils/index.js";
 
 let edited = ref();
 let props = defineProps({
@@ -72,6 +80,7 @@ let props = defineProps({
         type: Array,
         default: []
     },
+    visitData: Object,
     items: Array,
     pagination: Object,
     searchable: {
@@ -83,6 +92,21 @@ let props = defineProps({
         default: true,
     },
 })
+
+let headers = [
+    {name: 'id', sortable: true, searchable: true},
+    {
+        label: 'supplier_name',
+        name: 'supplier.name',
+        sortable: true,
+        searchable: {name: 'supplier.id', options: props.suppliers}
+    },
+    {name: 'total_price', sortable: true},
+    {name: 'transactions_sum_amount', label: 'total_paid', sortable: true},
+    {name: 'total_remaining', sortable: true},
+    {name: 'notes', searchable: true},
+    {name: 'created_at', sortable: true, searchable: {name: 'created_at', type: 'date-range'}}
+];
 </script>
 <style>
 

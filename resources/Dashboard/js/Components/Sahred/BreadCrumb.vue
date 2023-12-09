@@ -19,7 +19,7 @@
                     :href="item.href??''"
                     class="inline-flex items-center hover:text-gray-600 dark:hover:text-slate-400"
                 >
-                    {{ item.name }}
+                    {{ item.name ?? lastName }}
                 </Link>
             </li>
         </ol>
@@ -27,11 +27,13 @@
     <slot/>
 </template>
 <script setup>
-import {Link} from "@inertiajs/vue3";
+import {Link, usePage} from "@inertiajs/vue3";
 import BaseIcon from "./BaseIcon.vue";
 import {mdiChevronDoubleRight} from "@mdi/js";
 
 let props = defineProps({
     items: Array
 })
+
+let lastName = Array.isArray(usePage().props.meta.title) ? usePage().props.meta.title[0] : usePage().props.meta.title
 </script>

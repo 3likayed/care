@@ -31,7 +31,7 @@ class SupplierController extends Controller
             ->withSum('transactions', 'amount')
             ->withSum('purchases', 'total_remaining')
             ->allowedFilters([AllowedFilter::scope('search'), 'name', 'phone'])
-            ->allowedSorts(['name','purchases_sum_total_remaining','transactions_sum_amount'])
+            ->allowedSorts(['name', 'purchases_sum_total_remaining', 'transactions_sum_amount'])
             ->paginate($request->per_page);
         return Inertia::render('Suppliers/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.suppliers')]),
@@ -47,7 +47,6 @@ class SupplierController extends Controller
     {
 
         $data = $request->validated();
-        // dd($data);
         Supplier::create($data);
 
         return success();
@@ -68,7 +67,7 @@ class SupplierController extends Controller
         $supplier->load('purchases.supplier', 'transactions');
         return Inertia::render('Suppliers/Show', [
             'data' => $supplier,
-            'meta' => meta()->metaValues(['title' => "$supplier->name | " . __('dashboard.suppliers')]),
+            'meta' => meta()->metaValues(['title' => [__('dashboard.suppliers'), $supplier->name]]),
             'products' => Product::all(),
         ]);
     }

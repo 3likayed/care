@@ -22,6 +22,7 @@
                 :searchable="false"
                 :sortable="false"
                 :suppliers="[data]"
+                :visit-data="{filter:{'supplier.id':data.id}}"
             />
         </section>
         <section v-show="step === 2">

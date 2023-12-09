@@ -16,6 +16,7 @@ use App\Http\Controllers\SalaryController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpecializationController;
+use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
@@ -52,8 +53,6 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('suppliers', SupplierController::class);
         Route::apiResource('purchases', PurchaseController::class);
         Route::post('purchases/{purchase}/transaction', [PurchaseController::class, 'transaction'])->name('purchases.transaction');
-
-
         Route::apiResource('products', ProductController::class);
         Route::get('fetch/products', [ProductController::class, 'fetch'])->name('fetch.products');
         Route::apiResource('services', ServiceController::class);
@@ -61,6 +60,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
 
         Route::apiResource('transactions', TransactionController::class);
+        Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
     });
 
 });

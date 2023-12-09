@@ -113,7 +113,7 @@ export default [
             },
             {
                 route: "dashboard.purchases.index",
-                label: "purchase-bills",
+                label: "purchases",
                 permission: "purchases.show",
                 components: ['Purchases/Index', 'Purchases/Show'],
                 icon: mdiCashCheck,

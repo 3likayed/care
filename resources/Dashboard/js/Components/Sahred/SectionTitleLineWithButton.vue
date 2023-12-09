@@ -5,12 +5,15 @@ import IconRounded from "./IconRounded.vue";
 import {mdiPlusCircle} from "@mdi/js";
 import BaseButton from "./BaseButton.vue";
 import pluralize from "pluralize"
+import {Link} from "@inertiajs/vue3";
+import {Model} from "../../Utils/index.js";
 
 let props = defineProps({
     icon: {
         type: String,
         default: null,
     },
+    visitData: Object,
     model: String,
     hasCreate: {
         type: Boolean,
@@ -64,13 +67,14 @@ if (props.model) {
                 class="me-2"
                 size="20"
             />
-            <h1
+            <Link
                 v-if="title"
                 :class="main ? 'text-2xl md:text-3xl' : 'text-lg mm:text-xl'"
+                :href="Model.indexLink(model,visitData)"
                 class="leading-tight"
             >
                 {{ title }}
-            </h1>
+            </Link>
         </div>
         <slot v-if="hasSlot">
         </slot>

@@ -27,8 +27,8 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = QueryBuilder::for(Product::class)->where('type', 'product')
-            ->withSum('stocks','available')
-            ->allowedFilters([AllowedFilter::scope('search'), 'name'])
+            ->withSum('stocks', 'available')
+            ->allowedFilters([AllowedFilter::exact('id'), 'name'])
             ->allowedSorts(['name', 'stocks_sum_available'])
             ->paginate($request->per_page);
 
@@ -71,11 +71,10 @@ class ProductController extends Controller
 
     public function show(product $product)
     {
-        $product->load('reservations', 'reservations.product', 'reservations.reservationType');
-
-        return Inertia::render('products/Show', [
+        $product->load('stocks.purchase');
+        return Inertia::render('Products/Show', [
             'data' => $product,
-            'meta' => meta()->metaValues(['title' => "$product->name | ".__('dashboard.products')]),
+            'meta' => meta()->metaValues(['title' => [__('dashboard.products'), $product->name]]),
         ]);
     }
 

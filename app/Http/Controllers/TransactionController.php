@@ -20,17 +20,20 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $transactionsQuery = QueryBuilder::for(Transaction::class)
-            ->allowedSorts('transactionable_type', 'created_at', 'amount', 'id',
+            ->allowedSorts('transactionable_type', 'transactionable_id', 'created_at', 'amount', 'id',
                 AllowedSort::custom('employee.name', new RelationSort())
             )
-            ->allowedFilters('id', AllowedFilter::scope('created_at'), 'employee.name','type');
-
+            ->allowedFilters(AllowedFilter::exact('id'),
+                AllowedFilter::scope('created_at'),
+                AllowedFilter::exact('transactionable_id'),
+                AllowedFilter::endsWithStrict('transactionable_type'),
+                'employee.name', 'type', 'transactionable_type');
 
         $transactions = $transactionsQuery->paginate($request->get('per_page'));
         $totalWithdraw = TransactionService::totalWithdraw($transactionsQuery->get());
         $totalDeposit = TransactionService::totalDeposit($transactionsQuery->get());
         $totalRemaining = TransactionService::totalRemaining($transactionsQuery->get());
-
+        $transactionables = Transaction::groupBy('transactionable_type')->pluck('transactionable_type');
         return Inertia::render('Transactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.transactions')]),
             'data' => ModelCollection::make($transactions),
