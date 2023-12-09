@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiLockAlertOutline"
+    <SectionTitleLineWithButton :icon="mdiCashCheck"
                                 :title="__('purchases')"
                                 :visit-data="visitData"
                                 main
@@ -60,7 +60,6 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiLockAlertOutline} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import moment from "moment";
@@ -68,6 +67,7 @@ import PurchaseCreate from "./PurchaseCreate.vue";
 import {ref} from "vue";
 import {Link} from "@inertiajs/vue3";
 import {Model} from "../../Utils/index.js";
+import {mdiCashCheck} from "@mdi/js";
 
 let edited = ref();
 let props = defineProps({

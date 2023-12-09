@@ -1,7 +1,7 @@
 <template>
 
     <SectionTitleLineWithButton :has-create="false"
-                                :icon="mdiStoreCheck" :title="__('stocks')"
+                                :icon="mdiCart" :title="__('stocks')"
                                 :visit-data="visitData"
                                 main model="stocks">
     </SectionTitleLineWithButton>
@@ -51,7 +51,7 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiStoreCheck} from "@mdi/js";
+import {mdiCart} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import moment from "moment";
 import {ref} from "vue";

@@ -1,7 +1,7 @@
 <script setup>
 
 import {__, handleField} from "../../Globals.js";
-import {mdiBoxCutter, mdiFormatLetterCase, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
+import {mdiBoxCutter, mdiFormatLetterCase, mdiCart, mdiTrashCanOutline} from "@mdi/js";
 import {useForm} from "@inertiajs/vue3";
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
 import FormField from "../Sahred/FormField.vue";
@@ -83,7 +83,7 @@ const submit = () => {
                 <FormControl
                     v-model="form.products[key].quantity"
                     :errors="form.errors[`products.${key}.quantity`]"
-                    :icon="mdiStocking"
+                    :icon="mdiCart"
                     :placeholder="__('quantity')"
                     name="quantity[]"
                     @update:model-value="(value)=>setProductTotal(value,key)"

@@ -30,8 +30,8 @@ class SupplierController extends Controller
         $suppliers = QueryBuilder::for(Supplier::class)
             ->withSum('transactions', 'amount')
             ->withSum('purchases', 'total_remaining')
-            ->allowedFilters([AllowedFilter::scope('search'), 'name', 'phone'])
-            ->allowedSorts(['name', 'purchases_sum_total_remaining', 'transactions_sum_amount'])
+            ->allowedFilters(AllowedFilter::exact('id'), 'name')
+            ->allowedSorts(['id', 'name', 'purchases_sum_total_remaining', 'transactions_sum_amount'])
             ->paginate($request->per_page);
         return Inertia::render('Suppliers/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.suppliers')]),

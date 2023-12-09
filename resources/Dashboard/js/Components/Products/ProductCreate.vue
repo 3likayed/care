@@ -25,7 +25,7 @@
         <FormField :errors="form.errors.quantity" :label="__('quantity')">
             <FormControl
                 v-model="form.quantity"
-                :icon="mdiStocking"
+                :icon="mdiCart"
                 name="quantity"
                 required
             />
@@ -47,7 +47,7 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiCash, mdiPhone, mdiPlusCircle, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiCash, mdiPhone, mdiPlusCircle, mdiCart, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";

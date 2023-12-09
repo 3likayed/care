@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiStoreCheck" :title="__('products')" main model="products">
+    <SectionTitleLineWithButton :icon="mdiClipboardPulse" :title="__('products')" main model="products">
         <slot name="create">
 
         </slot>
@@ -16,7 +16,7 @@
             :sortable="sortable"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
-                <td data-label="# ">{{ key + 1 }}</td>
+                <td data-label="# ">{{ item.id }}</td>
                 <td :data-label="__('name')">
                     {{ item.name }}
                 </td>
@@ -49,7 +49,7 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiStoreCheck} from "@mdi/js";
+import {mdiClipboardPulse} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import productEdit from "./ProductEdit.vue";

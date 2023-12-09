@@ -1,6 +1,10 @@
 <template>
 
-    <SectionTitleLineWithButton model="suppliers" :icon="mdiLockAlertOutline" :title="__('suppliers')" main>
+    <SectionTitleLineWithButton :icon="mdiTruckDelivery"
+                                :title="__('suppliers')"
+                                :visit-data="visitData"
+                                main
+                                model="suppliers">
         <slot name="create">
 
         </slot>
@@ -8,18 +12,24 @@
             <supplierCreate/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]" model="suppliers"/>
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'name',sortable:true},'phone','address',{name:'transactions_sum_amount',label:'total_paid',sortable:true},{name:'purchases_sum_total_remaining',label:'total_remaining',sortable:true},'created_at']"
+            :headers="headers"
             :pagination="pagination"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
-                <td data-label="# ">{{ key + 1 }}</td>
+                <td data-label="# ">{{ item.id }}</td>
                 <td :data-label="__('name')">
                     {{ item.name }}
                 </td>
 
+
+                <td :data-label="__('supplier_credit')">
+                    {{ item.transactions_sum_amount }}
+                </td>
+                <td :data-label="__('total_remaining')">
+                    {{ item.purchases_sum_total_remaining }}
+                </td>
                 <td :data-label="__('phone')">
 
                     <ul class="list-decimal">
@@ -34,12 +44,6 @@
                             {{ address }}
                         </li>
                     </ul>
-                </td>
-                <td :data-label="__('supplier_credit')">
-                    {{ item.transactions_sum_amount }}
-                </td>
-                <td :data-label="__('total_remaining')">
-                    {{ item.purchases_sum_total_remaining }}
                 </td>
 
                 <td :data-label="__('created_at')">
@@ -62,9 +66,8 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiLockAlertOutline} from "@mdi/js";
+import {mdiTruckDelivery} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
-import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import supplierEdit from "./SupplierEdit.vue";
 import moment from "moment";
@@ -75,11 +78,22 @@ let edited = ref();
 let props = defineProps({
     items: Array,
     pagination: Object,
+    visitData: Object,
     searchable: {
         type: Boolean,
         default: true,
     },
+    sortable: {
+        type: Boolean,
+        default: true,
+    },
 })
+let headers = [
+    {name: 'id', sortable: true, searchable: true},
+    {name: 'name', sortable: true, searchable: true},
+    {name: 'transactions_sum_amount', label: 'total_paid', sortable: true},
+    {name: 'purchases_sum_total_remaining', label: 'total_remaining', sortable: true},
+    'phone', 'address', 'created_at']
 </script>
 <style>
 

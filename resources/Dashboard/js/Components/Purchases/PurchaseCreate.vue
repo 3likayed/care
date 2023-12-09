@@ -52,7 +52,7 @@
         <FormControl
             v-model="form.products[key].quantity"
             :errors="form.errors[`products.${key}.quantity`]"
-            :icon="mdiStocking"
+            :icon="mdiCart"
             :placeholder="__('quantity')"
             name="quantity[]"
             @update:model-value="(value)=>setProductTotal(value,key)"
@@ -131,7 +131,7 @@ import {
   mdiCash,
   mdiFormatLetterCase,
   mdiInformation,
-  mdiStocking,
+  mdiCart,
   mdiTrashCanOutline
 } from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";

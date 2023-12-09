@@ -22,7 +22,7 @@
             />
         </FormField>
 
-        
+
         <FormField :errors="form.errors.price" :label="__('price')">
             <FormControl
                 v-model="form.price"
@@ -40,7 +40,7 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiCash, mdiPhone, mdiPlusCircle, mdiStocking, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiCash, mdiPhone, mdiPlusCircle, mdiCart, mdiTrashCanOutline} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
