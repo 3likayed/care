@@ -16,7 +16,7 @@
             />
         </section>
         <section v-if="step===1">
-            <div class="grid md:grid-cols-3 gap-5 m-5">
+            <div class="grid md:grid-cols-4 gap-5 m-5">
 
                 <BaseButton :label="__('create_field',{field:'giving'})"
                             color="success"
@@ -29,6 +29,9 @@
                 <BaseButton :label="__('create_field',{field:'withhold'})"
                             color="danger"
                             @click="createAction('withhold')"/>
+                            <BaseButton :label="__('create_field',{field:'salary'})"
+                            color="warning"
+                            @click="createAction('salary')"/>
             </div>
             <SalariesList
                 :data="{id:data.id}"
@@ -68,6 +71,9 @@ const createAction = (action) => {
     showCreateSalaryAction.value = true;
 
 }
+
+
+
 provide('showCreateSalaryAction', showCreateSalaryAction)
 
 </script>

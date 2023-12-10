@@ -20,6 +20,19 @@
            
         
         </div>
+
+        <div v-if="props.data.type == 'salary'" class="grid grid-flow-row-dense grid-cols-3">
+            <div>
+                <input type="radio" id="one" value="now" v-model="form.picked" />
+                <label class="mr-4" for="one">إعطاء المنحة فوري</label>
+            </div>
+            <div>
+                <input type="radio" id="two" value="later" v-model="form.picked" />
+                 <label class="mr-4" for="two">تأجيل لحين القبض</label>
+            </div>
+           
+        
+        </div>
         
 
 
@@ -59,6 +72,7 @@ let form = useForm({
     reason: props.data.type,
     picked: 'other'
 });
+
 
 
 const submit = () => {

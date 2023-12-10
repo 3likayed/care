@@ -68,6 +68,7 @@ class PurchaseController extends Controller
         $data = $request->validated();
         $totalPrice = 0;
         $data['employee_id'] = auth()->user()->userable_id;
+
         $purchase = Purchase::create($data);
         $products = [];
         foreach ($data['products'] as $product) {
@@ -87,8 +88,7 @@ class PurchaseController extends Controller
         }
         Stock::insert($products);
 
-        $purchase->update(['total_price' => $totalPrice, 'total_remaining' => $totalPrice]);
-        dd($purchase);
+        $purchase->update(['total_price' => $totalPrice, 'total_remaining' => $totalPrice-$data['paid_price']]);
         if ($data['paid_price']) {
             TransactionService::create($purchase, [
                 'amount' => $data['paid_price'],

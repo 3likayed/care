@@ -49,7 +49,7 @@ class SalaryAction extends Model
         'employee_id',
         'salary_id',
         'amount',
-        'type',
+        'reason',
         'notes',
         'date'
     ];
