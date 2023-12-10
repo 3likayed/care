@@ -72,7 +72,7 @@ const searchStart = debounce((key, value) => {
             <th
                 v-for="(header, key) in headers"
                 :key="key"
-                class="content-start"
+                class="content-start  "
                 valign="top"
 
             >

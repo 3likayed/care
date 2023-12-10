@@ -102,7 +102,7 @@ const inputElClass = computed(() => {
     const base = [
         "px-3  focus:ring focus:outline-none border-gray-700 rounded ",
         "dark:placeholder-gray-400 py-2 ",
-        props.maxWidth ?? 'max-w-full w-full  ',
+        props.maxWidth ?? 'w-full',
         computedType.value === "textarea" ? "h-24" : ((computedType.value === "select" && props.isMultiple) || isDate) ? "" : "h-12 ",
         props.borderless ? "border-0" : "border",
         props.transparent ? "bg-transparent" : (props.isDisabled ? 'bg-gray-100 dark:bg-slate-700' : "bg-white dark:bg-slate-800"),
