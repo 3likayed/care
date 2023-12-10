@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Requests\SalaryActionStoreRequest;
 use App\Models\Employee;
 use App\Models\Salary;
+use App\Models\SalaryAction;
+use App\Services\TransactionService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -33,14 +35,26 @@ class SalaryActionsController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(SalaryActionStoreRequest $request)
-    {
+    {   
+        
         $data = $request->validated();
+        // dd($data);
         DB::beginTransaction();
         $employee = Employee::find($data['employee_id']);
         $data['salary_id'] = $employee->salary->id;
         $data['date'] = Carbon::now();
-
-        $employee->salaryActions()->create($data);
+        // dd($data) ;
+        $employee=$employee->salaryActions()->create($data);
+        if($data['reason'] == 'giving' && $data['picked'] == 'now')
+        {
+          
+          $action = SalaryAction::where('employee_id',$data['employee_id'])->get()->last();
+          TransactionService::create($action, [
+            'amount' => $data['amount'],
+            'status' => 'confirmed',
+            'type' => 'withdraw',
+        ]);    
+        }
         DB::commit();
         return success();
     }
@@ -67,6 +81,6 @@ class SalaryActionsController extends Controller
      */
     public function destroy(Salary $salary)
     {
-        //
+        //  
     }
 }

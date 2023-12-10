@@ -79,8 +79,8 @@ class PurchaseController extends Controller
                 'quantity' => $product['quantity'],
                 'available' => $product['quantity'],
                 'expires_at' => $product['expires_at'] ?? null,
-                'created_at ' => Carbon::now(),
-                'updated_at ' => Carbon::now(),
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
 
             ];
 
@@ -88,7 +88,7 @@ class PurchaseController extends Controller
         Stock::insert($products);
 
         $purchase->update(['total_price' => $totalPrice, 'total_remaining' => $totalPrice]);
-
+        dd($purchase);
         if ($data['paid_price']) {
             TransactionService::create($purchase, [
                 'amount' => $data['paid_price'],

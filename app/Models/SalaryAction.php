@@ -64,7 +64,7 @@ class SalaryAction extends Model
         return $this->belongsTo(Salary::class);
     }
 
-    public function transaction(): MorphOne
+    public function transactions(): MorphOne
     {
         return $this->morphOne(Transaction::class, 'transactionable');
     }

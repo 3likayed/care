@@ -9,7 +9,7 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionService
 {
-    public static function create($transactionable, $data, $hasRemaining = true)
+    public static function create($transactionable, $data, $hasRemaining = false)
     {
         DB::beginTransaction();
         $transaction = $transactionable->transactions()->create([

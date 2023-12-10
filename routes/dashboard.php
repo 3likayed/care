@@ -42,7 +42,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         });
         Route::apiResource('roles', RoleController::class)->except(['show']);
         Route::apiResource('employees', EmployeeController::class);
-        Route::apiResource('salaries', SalaryController::class)->only(['store']);
+        Route::apiResource('salaries', SalaryController::class);
         Route::apiResource('salary-actions', SalaryActionsController::class);
         Route::apiResource('patients', PatientController::class);
         Route::get('fetch/patients', [PatientController::class, 'fetch'])->name('fetch.patients');

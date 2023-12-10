@@ -21,7 +21,7 @@ return new class extends Migration {
                 ->references('id');
 
             $table->unsignedDouble('amount');
-            $table->enum('type', ['salary', 'giving', 'loan', 'withhold'])->default('salary');
+            $table->enum('reason', ['salary', 'giving', 'loan', 'withhold'])->default('salary');
             $table->string('notes')->nullable();
             $table->date('date');
             $table->softDeletes();
