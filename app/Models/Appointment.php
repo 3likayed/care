@@ -68,7 +68,7 @@ class Appointment extends Model
             ->orWhereRelation('patient', 'phone', 'like', "%$value%");
     }
 
-    public function scopeDateInterval($query, $value)
+    public function scopeDate($query, $value)
     {
         $value = explode('|', $value);
         $query->whereDate('date', '>=', $value[0]);

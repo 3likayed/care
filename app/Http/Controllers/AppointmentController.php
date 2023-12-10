@@ -39,7 +39,7 @@ class AppointmentController extends Controller
                 AllowedSort::custom('appointment_type.name', new RelationSort()),
                 AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name')
             )
-            ->allowedFilters(AllowedFilter::exact('id'), 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date_interval'))
+            ->allowedFilters(AllowedFilter::exact('id'), 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date'))
             ->paginate($request->get('per_page'));
 
         $appointmentTypes = AppointmentType::all();

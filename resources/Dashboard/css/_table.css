@@ -1,7 +1,8 @@
 @layer base {
-    table{
+    table {
         @apply w-full
     }
+
     thead {
         @apply table-header-group;
     }
@@ -43,5 +44,9 @@
 
     tr[draggable] {
         @apply cursor-move;
+    }
+
+    table a {
+        @apply after:no-underline after:text-[12px] after:ps-1 after:content-['🔗']  ;
     }
 }

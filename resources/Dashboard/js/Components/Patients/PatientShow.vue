@@ -1,7 +1,7 @@
 <script setup>
 
 import {__} from "../../Globals.js";
-import PatientEdit from "../Transactions/PatientEdit.vue";
+import PatientEdit from "../Patients/PatientEdit.vue";
 
 let props = defineProps({
     data: Object,

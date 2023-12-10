@@ -181,7 +181,7 @@ function doAction(action, key) {
                 label
             }}</label>
         <div
-            :class="{'flex flex-row gap-2': actions}"
+            :class="{'flex flex-row gap-2': actions &&!isDisabled}"
             class="relative"
         >
 
@@ -266,7 +266,7 @@ function doAction(action, key) {
                 class="absolute my-auto translate-y-1/2 top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
                 w="w-10"
             />
-            <BaseButtons v-for="(action,key) in actions">
+            <BaseButtons v-for="(action,key) in actions" v-if="!isDisabled">
                 <BaseButton
                     :key="key"
                     :color="action.color"

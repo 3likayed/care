@@ -29,3 +29,4 @@
 .sortable:not(.sorted-desc):not(.sorted-asc) {
     @apply cursor-pointer after:content-['↑↓']  after:text-gray-400
 }
+

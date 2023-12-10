@@ -1,7 +1,6 @@
 <template>
 
     <SectionTitleLineWithButton :icon="mdiTruckDelivery"
-                                :title="__('suppliers')"
                                 :visit-data="visitData"
                                 main
                                 model="suppliers">
@@ -93,7 +92,9 @@ let headers = [
     {name: 'name', sortable: true, searchable: true},
     {name: 'transactions_sum_amount', label: 'total_paid', sortable: true},
     {name: 'purchases_sum_total_remaining', label: 'total_remaining', sortable: true},
-    'phone', 'address', 'created_at']
+    'phone', 'address',
+    {name: 'created_at', sortable: true}
+]
 </script>
 <style>
 

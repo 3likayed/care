@@ -95,14 +95,18 @@ let appointmentData = ref();
 
 
         <div class="space-y-14">
-            <AppointmentsList :searchable="false"
+            <AppointmentsList v-if="can('appointments.show')"
                               :items="$page.props.appointments"
+                              :searchable="false"
                               :sortable="false"
-                              :title="__('today_appointments')"/>
-            <AppointmentsList :searchable="false"
+                              :title="__('today_appointments')"
+                              :visit-data="{filter:{date:moment().format('YYYY-MM-DD')+'|'+moment().format('YYYY-MM-DD')}}"/>
+            <AppointmentsList v-if="can(' appointments.show|doctors.show')"
                               :items="$page.props.visits"
+                              :searchable="false"
                               :sortable="false"
-                              :title="__('today_visits')"/>
+                              :title="__('today_visits')"
+            />
         </div>
         <EmployeeCreate v-if="employeeCreate"/>
         <DoctorCreate v-if="doctorCreate"/>

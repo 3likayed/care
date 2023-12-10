@@ -7,6 +7,7 @@ import BaseButton from "./BaseButton.vue";
 import pluralize from "pluralize"
 import {Link} from "@inertiajs/vue3";
 import {Model} from "../../Utils/index.js";
+import {__} from "../../Globals.js";
 
 let props = defineProps({
     icon: {
@@ -46,11 +47,13 @@ if (props.model) {
     provide(`showCreate${convertToPascalCaseAndRemoveLast(props.model)}`, showCreate)
 }
 
+
+let computedTitle = computed(() => __(props.title || props.model))
 </script>
 
 <template>
     <section
-        :class="{ 'justify-between' : title ,'justify-end':!title}"
+        :class="{ 'justify-between' : computedTitle ,'justify-end':!computedTitle}"
         class="mb-6 flex items-center"
     >
         <div class="flex items-center justify-end">
@@ -67,14 +70,15 @@ if (props.model) {
                 class="me-2"
                 size="20"
             />
-            <Link
-                v-if="title"
+            <component
+                :is="model? Link : 'h1'"
+                v-if="computedTitle"
                 :class="main ? 'text-2xl md:text-3xl' : 'text-lg mm:text-xl'"
-                :href="Model.indexLink(model,visitData)"
+                :href="model ? Model.indexLink(model,visitData) : null"
                 class="leading-tight"
             >
-                {{ title }}
-            </Link>
+                {{ computedTitle }}
+            </component>
         </div>
         <slot v-if="hasSlot">
         </slot>

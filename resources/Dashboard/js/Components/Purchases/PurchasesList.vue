@@ -1,7 +1,6 @@
 <template>
 
     <SectionTitleLineWithButton :icon="mdiCashCheck"
-                                :title="__('purchases')"
                                 :visit-data="visitData"
                                 main
                                 model="purchases">

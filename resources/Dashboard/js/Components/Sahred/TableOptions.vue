@@ -4,12 +4,13 @@
         type="justify-end lg:justify-start"
     >
         <BaseButton
+            class="after:content-[]"
             v-if="hasShow"
             :disabled="model ? !can(`${model}.show`) : false"
+            :href="Model.showLink(model,item.id)"
             :icon="mdiEyeOutline"
             color="contrast"
             small
-            @click="Model.show(model,item.id)"
         />
         <BaseButton
             v-if="hasEdit"

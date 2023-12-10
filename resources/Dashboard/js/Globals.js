@@ -3,6 +3,7 @@ import {default as ziggyRoute} from "ziggy-js";
 import Pluralize from "pluralize"
 
 export function __(key, replace = {}) {
+    key = key ?? '';
     var translation = usePage().props.language[key] ? usePage().props.language[key] : key
     Object.keys(replace).forEach(function (key) {
         translation = translation.replace(':' + key, __(replace[key]))
@@ -33,8 +34,8 @@ export function route(name, params, absolute, config = usePage().props.ziggy) {
 }
 
 export function can(permission) {
-
-    return permission ? usePage().props.auth.permissions?.includes(permission) : true;
+    let permissions = permission?.split('|');
+    return permission ? usePage().props.auth.permissions?.some(ai => permissions?.includes(ai)) : true;
 }
 
 export const localesObject = () => {

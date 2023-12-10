@@ -195,6 +195,7 @@ return [
     'field_id' => ':field رقم ( :id )',
     'doctor_role' => 'صلاحية الطبيب',
     'stocks' => 'المخزون',
-    'stock' => 'مخزون'
+    'stock' => 'مخزون',
+    'purchase_id' => 'رقم المشتريات'
 
 ];

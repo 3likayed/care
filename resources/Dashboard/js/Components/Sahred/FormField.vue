@@ -28,6 +28,7 @@ let props = defineProps({
         type: String,
         default: null,
     },
+    isDisabled:Boolean,
     hasBorder: {
         type: Boolean,
         default: true
@@ -92,6 +93,7 @@ const wrapperClass = computed(() => {
                 {{ errors }}
             </div>
             <BaseButtons
+                v-if="!isDisabled"
                 v-for="(action,key) in actions"
                 class-addon="mt-3"
                 mb=""

@@ -31,7 +31,7 @@ class SupplierController extends Controller
             ->withSum('transactions', 'amount')
             ->withSum('purchases', 'total_remaining')
             ->allowedFilters(AllowedFilter::exact('id'), 'name')
-            ->allowedSorts(['id', 'name', 'purchases_sum_total_remaining', 'transactions_sum_amount'])
+            ->allowedSorts(['id', 'name', 'purchases_sum_total_remaining', 'transactions_sum_amount','created_at'])
             ->paginate($request->per_page);
         return Inertia::render('Suppliers/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.suppliers')]),

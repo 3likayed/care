@@ -11,8 +11,7 @@
     <CardBox has-table>
         <BaseTable
             :headers="headers" :pagination="pagination"
-            :searchable="searchable
-"
+            :searchable="searchable"
             :sortable="sortable"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">

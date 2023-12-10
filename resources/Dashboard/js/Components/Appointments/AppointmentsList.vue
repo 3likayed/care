@@ -10,10 +10,6 @@ import moment from "moment";
 import AppointmentCreate from "./AppointmentCreate.vue";
 import {computed, ref} from "vue";
 import {Link, usePage} from "@inertiajs/vue3";
-import BaseButton from "../Sahred/BaseButton.vue";
-import FormControl from "../Sahred/FormControl.vue";
-import FormField from "../Sahred/FormField.vue";
-import {Search} from "../../Utils/index.js";
 
 
 let daysInterval = ref();
@@ -25,6 +21,7 @@ let props = defineProps({
     title: String,
     items: Array,
     pagination: Object,
+    visitData: Object,
     sortable: {
         type: Boolean,
         default: true,
@@ -46,16 +43,18 @@ let headerFields = [
         searchable: {name: 'appointment_type_id', options: appointmentTypes.value}
     },
     {name: 'price', sortable: true},
-    {name: 'date', sortable: true, searchable: {name: 'date_interval', type: 'date-range'}},
+    {name: 'date', sortable: true, searchable: {type: 'date-range'}},
     'time',
     {name: 'created_at', sortable: true,}]
 </script>
 
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiFormatListBulleted" :title="title ??__('appointments')" main
+    <SectionTitleLineWithButton :icon="mdiCalendarToday"
+                                :title="title"
+                                :visit-data="visitData"
+                                main
                                 model="appointments">
-
         <template #create>
             <slot name="create">
                 <AppointmentCreate :appointmentTypes="appointmentTypes" :doctors="doctors"/>
@@ -63,24 +62,6 @@ let headerFields = [
 
         </template>
     </SectionTitleLineWithButton>
-    <div>
-        <div class="col-span-full">
-            <FormField :label="__('days')" class-addon="grid md:grid-cols-3 gap-5">
-                <FormControl
-                    v-model="daysInterval"
-                    autocomplete="search"
-                    name="search"
-                >
-                </FormControl>
-                <BaseButton :icon="mdiCalendarToday" :label="__('next')"
-                            color="success"
-                            @click="Search.start(Search.dateInterval({ interval:daysInterval }),'appointments',true)"/>
-                <BaseButton :icon="mdiCalendarToday" :label="__('previous')"
-                            color="danger"
-                            @click="Search.start(Search.dateInterval({ interval:daysInterval,mode:-1 }),'appointments',true)"/>
-            </FormField>
-        </div>
-    </div>
     <CardBox has-table>
         <BaseTable
             :headers="headerFields"
