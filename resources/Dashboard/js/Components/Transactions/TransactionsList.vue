@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :has-create="hasCreate" :icon="mdiLockAlertOutline" :title="__('transactions')"
+    <SectionTitleLineWithButton :has-create="hasCreate && data!=null" :icon="mdiLockAlertOutline" :title="__('transactions')"
                                 :visit-data="visitData" main
                                 model="transactions">
         <template #create>
@@ -60,7 +60,7 @@ import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLine
 import moment from "moment";
 import TransactionCreate from "./TransactionCreate.vue";
 import {computed, ref} from "vue";
-import {Link, usePage} from "@inertiajs/vue3";
+import {Link} from "@inertiajs/vue3";
 import {__, modelResolver} from "../../Globals.js"
 
 
