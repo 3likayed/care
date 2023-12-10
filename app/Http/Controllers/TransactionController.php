@@ -30,16 +30,20 @@ class TransactionController extends Controller
                 'employee.name', 'type', 'transactionable_type');
 
         $transactions = $transactionsQuery->paginate($request->get('per_page'));
-        $totalWithdraw = TransactionService::totalWithdraw($transactionsQuery->get());
-        $totalDeposit = TransactionService::totalDeposit($transactionsQuery->get());
-        $totalRemaining = TransactionService::totalRemaining($transactionsQuery->get());
-        $transactionables = Transaction::groupBy('transactionable_type')->pluck('transactionable_type');
+        $totalWithdraw = TransactionService::totalWithdraw($transactions);
+        $totalDeposit = TransactionService::totalDeposit($transactions);
+        $totalRemaining = TransactionService::totalRemaining($transactions);
+        $transactionleTypeOptions = Transaction::groupBy('transactionable_type')
+            ->pluck('transactionable_type')
+            ->map(fn($item) => class_basename($item));
+
         return Inertia::render('Transactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.transactions')]),
             'data' => ModelCollection::make($transactions),
             'total_withdraw' => $totalWithdraw,
             'total_deposit' => $totalDeposit,
-            'totalRemaining' => $totalRemaining
+            'totalRemaining' => $totalRemaining,
+            'transactionable_type_options' => $transactionleTypeOptions
         ]);
     }
 

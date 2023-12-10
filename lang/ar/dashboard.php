@@ -196,6 +196,7 @@ return [
     'doctor_role' => 'صلاحية الطبيب',
     'stocks' => 'المخزون',
     'stock' => 'مخزون',
-    'purchase_id' => 'رقم المشتريات'
+    'purchase_id' => 'رقم المشتريات',
+    'salary_action' => 'عملية على المرتب',
 
 ];

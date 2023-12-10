@@ -1,6 +1,8 @@
 import {usePage} from "@inertiajs/vue3";
 import {default as ziggyRoute} from "ziggy-js";
 import Pluralize from "pluralize"
+import {snakeCase} from "lodash/string.js";
+
 
 export function __(key, replace = {}) {
     key = key ?? '';
@@ -57,24 +59,7 @@ export function assignTranslatable(value) {
     return localesObjectOfObjects(null);
 }
 
-export const formParameters = (model, operation, id, modelResolver = true) => {
-    if (modelResolver)
-        model = model + 's';
 
-    switch (operation) {
-        case 'edit' :
-            return {
-                route: route(`dashboard.${model}.update`, id),
-                method: 'put'
-            }
-        case 'create' :
-
-            return {
-                route: route(`dashboard.${model}.store`),
-                method: 'post'
-            }
-    }
-}
 export const handleField = (form, field, action, key, value = null) => {
     switch (action) {
         case 'append' :
@@ -87,15 +72,13 @@ export const handleField = (form, field, action, key, value = null) => {
 }
 
 export const modelResolver = (word) => {
-    word = Pluralize(word);
-    return word.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/_/g, '-').toLowerCase();
+    return snakeCase(Pluralize(word)).replace('_', '-')
 }
 
 export default {
     methods: {
         __,
         tinyMcConfig,
-        formParameters,
         handleField,
         can,
         route,

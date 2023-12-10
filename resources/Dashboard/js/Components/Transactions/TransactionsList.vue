@@ -60,7 +60,7 @@ import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLine
 import moment from "moment";
 import TransactionCreate from "./TransactionCreate.vue";
 import {computed, ref} from "vue";
-import {Link} from "@inertiajs/vue3";
+import {Link, usePage} from "@inertiajs/vue3";
 import {__, modelResolver} from "../../Globals.js"
 
 
@@ -72,6 +72,7 @@ let props = defineProps({
     data: Object,
     pagination: Object,
     visitData: Object,
+    transactionableTypeOptions: Array,
     hasCreate: {
         type: Boolean,
         default: true
@@ -88,10 +89,7 @@ let props = defineProps({
 let computedItems = computed(() => props.items)
 
 let typeOptions = [{id: 'deposit', name: __('deposit')}, {id: 'withdraw', name: __('withdraw')}]
-let transactionableTypeOptions = [
-    {id: 'Purchase', name: __('purchase')},
-    {id: 'SalaryAction', name: __('salary_action')}
-]
+
 let headers = [
     {name: 'id', sortable: true, searchable: true},
     {name: 'type', sortable: true, searchable: {options: typeOptions}},
@@ -100,7 +98,7 @@ let headers = [
         name: 'transactionable_type',
         label: 'model_type',
         sortable: true,
-        searchable: {options: transactionableTypeOptions}
+        searchable: {options: props.transactionableTypeOptions}
     },
     {name: 'transactionable_id', label: 'model_id', sortable: true,searchable:true},
     {name: 'employee.name', label: 'employee', sortable: true, searchable: {name: 'employee.name'}},

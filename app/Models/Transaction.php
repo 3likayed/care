@@ -46,7 +46,7 @@ class Transaction extends Model
 
         return Attribute::get(function () {
             return [
-                'name' => \Str::snake(class_basename($this->transactionable_type),'-'),
+                'name' => \Str::snake(class_basename($this->transactionable_type)),
                 'id' => $this->transactionable_id,
             ];
         });
