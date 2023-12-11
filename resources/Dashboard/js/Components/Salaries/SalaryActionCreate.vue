@@ -3,11 +3,12 @@
         :has-errors="form.hasErrors" :is-form="true" :is-modal="isModal" :model-value="true"
         :title="__('create_field', { field: data.type })" @cancel="showCreateSalaryAction = false" @confirm="submit">
 
+        <div v-if="props.data.type != 'salary'" class="grid grid-flow-row-dense grid-cols-3">
 
         <FormField :errors="form.errors.amount" :label="__('amount')">
             <FormControl v-model="form.amount" :icon="mdiCash" :min="0" autocomplete="amount" name="amount" />
         </FormField>
-        
+        </div>
         <div v-if="props.data.type == 'giving'" class="grid grid-flow-row-dense grid-cols-3">
             <div>
                 <input type="radio" id="one" value="now" v-model="form.picked" />
@@ -22,16 +23,8 @@
         </div>
 
         <div v-if="props.data.type == 'salary'" class="grid grid-flow-row-dense grid-cols-3">
-            <div>
-                <input type="radio" id="one" value="now" v-model="form.picked" />
-                <label class="mr-4" for="one">إعطاء المنحة فوري</label>
-            </div>
-            <div>
-                <input type="radio" id="two" value="later" v-model="form.picked" />
-                 <label class="mr-4" for="two">تأجيل لحين القبض</label>
-            </div>
-           
-        
+            <FormControl v-model="salary" :icon="mdiCash" :min="0" autocomplete="amount" name="amount" aria-readonly="true" />
+
         </div>
         
 
@@ -52,6 +45,8 @@ import { __ } from "../../Globals.js";
 import { inject } from "vue";
 import { Model } from "../../Utils/index.js";
 import { ref } from 'vue';
+import { watch } from "vue";
+import { watchEffect } from "vue";
 
 let props = defineProps({
     operation: String,
@@ -65,13 +60,20 @@ let props = defineProps({
 const picked = ref();
 
 let showCreateSalaryAction = inject('showCreateSalaryAction');
+let salary= props.data.salary.net_amount;
 
 let form = useForm({
     employee_id: props.data.employee_id,
     amount: null,
     reason: props.data.type,
-    picked: 'other'
-});
+    picked: 'other',
+    salary: props.data.salary.net_amount
+}); 
+
+   
+    
+
+
 
 
 

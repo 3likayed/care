@@ -198,5 +198,6 @@ return [
     'stock' => 'مخزون',
     'purchase_id' => 'رقم المشتريات',
     'salary_action' => 'عملية على المرتب',
+    'pay_salary' => 'صرف المرتب'
 
 ];

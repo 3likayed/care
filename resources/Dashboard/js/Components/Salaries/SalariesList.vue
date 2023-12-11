@@ -1,3 +1,4 @@
+
 <template>
 
     <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('salaries')" main model="salaries">
@@ -26,6 +27,10 @@
 
         </BaseTable>
     </CardBox>
+    <SalaryActionsList  
+    :actions="actions"
+    />
+    
 </template>
 
 <script setup>
@@ -36,12 +41,15 @@ import {mdiLockAlertOutline} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import moment from "moment";
 import SalaryCreate from "./SalaryCreate.vue";
+import SalaryActionsList from "./SalaryActionsList.vue";
+
 import {ref} from "vue";
 
 let edited = ref();
 let props = defineProps({
     data: Object,
     items: Array,
+    actions: Array,
     pagination: Object,
     searchable: {
         type: Boolean,
@@ -50,6 +58,8 @@ let props = defineProps({
 })
 
 let headers = ['salary_amount','insurance_amount','net_amount']
+let action_headers = ['amount','reason','net_amount']
+
 </script>
 <style>
 

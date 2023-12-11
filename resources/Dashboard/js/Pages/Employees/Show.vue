@@ -29,18 +29,19 @@
                 <BaseButton :label="__('create_field',{field:'withhold'})"
                             color="danger"
                             @click="createAction('withhold')"/>
-                            <BaseButton :label="__('create_field',{field:'salary'})"
+                            <BaseButton :label="__('pay_salary',{field:'salary'})"
                             color="warning"
                             @click="createAction('salary')"/>
             </div>
             <SalariesList
                 :data="{id:data.id}"
                 :items="data.salary ? [data.salary] : null"
+                :actions="data.current_month_salary_actions"
             />
         </section>
         <SalaryActionCreate
             v-if="showCreateSalaryAction"
-            :data="{employee_id:data.id , type:actionType}"/>
+            :data="{employee_id:data.id , type:actionType , salary:data.salary , actions:current_month_salary_actions}"/>
 
     </SectionMain>
 </template>
@@ -63,6 +64,7 @@ import BaseButton from "../../Components/Sahred/BaseButton.vue";
 let steps = ref([__('data'), __('salary')]);
 let step = ref(useStepStore().getStep())
 let data = computed(() => usePage().props.data);
+console.log(usePage().props.data);
 let actionType = ref();
 let showCreateSalaryAction = ref(false);
 

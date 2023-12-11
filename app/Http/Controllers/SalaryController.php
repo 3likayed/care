@@ -63,4 +63,5 @@ class SalaryController extends Controller
     {
         //
     }
+
 }

@@ -70,9 +70,9 @@ class Employee extends Authenticatable
 
     public function currentMonthSalaryActions()
     {
-        $currentMonth = Carbon::now()->startOfMonth();
-        return $this->salaryActions()->where('date', '>=', $currentMonth)
-            ->where('date', '<=', $currentMonth->addMonth()->addDay());
+        $currentMonth = Carbon::now()->startOfMonth(); 
+        return $this->salaryActions()->whereDate('date', '>=', $currentMonth)
+            ->whereDate('date', '<=', $currentMonth->addMonth()->addDay());
     }
 
     public function salaryActions(): HasManyThrough
