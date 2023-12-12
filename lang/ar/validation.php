@@ -156,7 +156,18 @@ return $validation = [
     */
 
     'custom' => [
-
+        'products.*.id' => [
+            'required' => 'المنتج رقم #(:position) مطلوب.',
+            'exists' => 'المنتج رقم #(:position) لاغ.',
+            'distinct' => 'المنتج رقم #(:position) قيمته مكررة.',
+        ],
+        'products.*.quantity' => [
+            'required' => 'الكمية للمنتج رقم #(:position) مطلوبة.',
+            'between' => [
+                'numeric' => 'يجب أن تكون قيمة الكمية للمنتج رقم #(:position) بين :min و :max.',
+            ],
+            'numeric' => 'يجب على الكمية للمنتج رقم #(:position) أن يكون رقمًا',
+        ]
     ],
 
     /*

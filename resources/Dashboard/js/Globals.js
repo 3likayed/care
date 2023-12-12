@@ -36,8 +36,9 @@ export function route(name, params, absolute, config = usePage().props.ziggy) {
 }
 
 export function can(permission) {
-    let permissions = permission?.split('|');
-    return permission ? usePage().props.auth.permissions?.some(ai => permissions?.includes(ai)) : true;
+    let permissions = permission?.replace('_', '-');
+    permissions = permissions?.split('|');
+    return permission ? usePage().props.auth.permissions?.some(permission => permissions?.includes(permission)) : true;
 }
 
 export const localesObject = () => {

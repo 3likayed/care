@@ -16,7 +16,7 @@
             />
         </section>
         <section v-if="step===1">
-            <div class="grid md:grid-cols-4 gap-5 m-5">
+            <div class="grid md:grid-cols-4 gap-5 m-5" v-if="data.salary">
 
                 <BaseButton :label="__('create_field',{field:'giving'})"
                             color="success"
@@ -41,7 +41,7 @@
         </section>
         <SalaryActionCreate
             v-if="showCreateSalaryAction"
-            :data="{employee_id:data.id , type:actionType , salary:data.salary , actions:current_month_salary_actions}"/>
+            :data="{employee_id:data.id , type:actionType , salary:data.salary , actions:data.current_month_salary_actions}"/>
 
     </SectionMain>
 </template>

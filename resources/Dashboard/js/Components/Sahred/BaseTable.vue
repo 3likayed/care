@@ -55,9 +55,7 @@ const searchableValues = (header, key, defaultKey = null) => {
     }
 }
 const searchStart = debounce((key, value) => {
-
     let newValue = {[key]: value}
-
     Object.assign(search, newValue)
 
     Search.start(search)
@@ -92,6 +90,7 @@ const searchStart = debounce((key, value) => {
                         v-model="search[searchableValues(header,'name')]"
                         :options="searchableValues(header,'options')"
                         :type="searchableValues(header,'type')"
+                        :is-multiple="searchableValues(header,'isMultiple')"
                         required
                         @update:model-value="value=>searchStart(searchableValues(header,'name'),value)"
                     />

@@ -67,7 +67,7 @@ const wrapperClass = computed(() => {
                     :for="labelFor"
                     class="block font-medium mb-2"
                 >{{
-                        label
+                        __(label)
                     }}</label>
                 <BaseButton
                     v-if="button"

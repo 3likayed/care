@@ -24,7 +24,7 @@ let showCreateRole = ref(false);
 </script>
 
 <template>
-    <SectionTitleLineWithButton model="rolse"  :icon="mdiLockAlertOutline" :title="__('roles')" main>
+    <SectionTitleLineWithButton model="roles"  :icon="mdiLockAlertOutline" :title="__('roles')" main>
         <template #create>
             <RolesCreate/>
         </template>

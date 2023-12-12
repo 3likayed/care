@@ -11,7 +11,7 @@ export default class Search {
             if (key.startsWith('filter[')) {
                 // Extracting filter parameters
                 const filterName = key.match(/\[([^)]+)\]/)[1];
-                resultObject.filter[filterName] = /^-?\d+\.?\d*$/.test(value) ? Number(value) :  value
+                resultObject.filter[filterName] = /^-?\d+\.?\d*$/.test(value) ? Number(value) : value
 
             } else if (key === 'sort') {
                 // Extracting sort parameters
@@ -34,13 +34,11 @@ export default class Search {
         startDate.add(defaults.shift, 'd')
 
         let endDate = moment(startDate).add(defaults.mode * defaults.interval, 'd');
-
-
-        return {
-            [defaults.end]: endDate.format("YYYY-MM-DD"), [defaults.start]: startDate.format("YYYY-MM-DD"),
-
+        return defaults.mode === -1 ? {
+            date: `${endDate.format("YYYY-MM-DD")}|${startDate.format("YYYY-MM-DD")}`,
+        } : {
+            date: `${startDate.format("YYYY-MM-DD")}|${endDate.format("YYYY-MM-DD")}`,
         }
-
 
     };
 

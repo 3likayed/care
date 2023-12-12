@@ -39,11 +39,10 @@ class AppointmentController extends Controller
                 AllowedSort::custom('appointment_type.name', new RelationSort()),
                 AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name')
             )
-            ->allowedFilters(AllowedFilter::exact('id'), 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date'))
+            ->allowedFilters(AllowedFilter::exact('id'), 'doctor_id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date'))
             ->paginate($request->get('per_page'));
 
         $appointmentTypes = AppointmentType::all();
-
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
@@ -88,8 +87,8 @@ class AppointmentController extends Controller
 
     public function show(Appointment $appointment)
     {
+        $appointment->load('patient', 'appointmentProducts.product', 'appointmentProducts.appointment');
 
-        $appointment->load('patient', 'appointmentType');
         $appointmentTypes = AppointmentType::all();
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,

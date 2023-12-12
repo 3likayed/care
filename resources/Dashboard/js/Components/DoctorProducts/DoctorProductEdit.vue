@@ -1,23 +1,23 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`patients.create`)"
-        :button-label="__('create')"
+        v-if="can(`purchases.edit`)"
+        :button-label="__('edit')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"
         :is-form="true"
         :is-modal="isModal"
         :model-value="true"
-        :title="__('create_field',{field:'patient'})"
-        @cancel="showCreatePatient=false"
+        :title="__('edit_field',{field:'purchasetransaction'})"
+        @cancel="showEdit=false"
         @confirm="submit"
     >
-        <FormField :errors="form.errors.name" label="name">
+        <FormField :errors="form.errors.name" :label="__('name')">
             <FormControl
                 v-model="form.name"
                 :icon="mdiAccount"
                 autocomplete="name"
-                name="name"
+                name="phone"
                 required
             />
         </FormField>
@@ -28,14 +28,12 @@
                 autocomplete="email"
                 name="email"
                 required
-                type="email"
             />
         </FormField>
         <FormField :errors="form.errors.birthday" :label="__('birthday')">
             <FormControl
                 v-model="form.birthday"
                 :icon="mdiCalendar"
-                :inline="true"
                 autocomplete="birthday"
                 name="birthday"
                 required
@@ -46,12 +44,12 @@
             :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`phone`]"
             :label="__('phone')"
-            @action="(action )=>handleField(form,'phone',action, ) ">
+            @action="(action , key)=>handleField(form,'phone',action ) ">
             <FormControl
                 v-for="(phone,key) in form.phone"
                 :key="key"
                 v-model="form.phone[key]"
-                :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key}  }"
+                :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
                 :errors="form.errors[`phone.${key}`]"
                 :icon="mdiPhone"
                 autocomplete="phone"
@@ -89,26 +87,34 @@ import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
 import {inject} from "vue";
 import {Model} from "../../Utils/index.js";
+import moment from "moment";
 
 let props = defineProps({
+    data: {
+        type: Object,
+        default: {},
+    },
     isModal: {
         type: Boolean,
         default: true
     }
 })
 
-let showCreatePatient = inject('showCreatePatient');
-let form = useForm({
-    name: null,
-    email: null,
-    phone: [null],
-    address: [null],
-    birthday: null,
+let showEdit = props.isModal ? inject('showEdit') : true;
 
+
+let form = useForm({
+    name: props.data.name,
+    email: props.data.email,
+    phone: props.data.phone,
+    address: props.data.address,
+    birthday: moment(props.data.birthday).format('YYYY-MM-DD'),
 
 });
+
+
 const submit = () => {
-    Model.submit('create', 'patients', form)
+    Model.submit('edit', 'purchasetransaction', form, props.data.id)
 }
 
 </script>

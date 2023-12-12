@@ -10,20 +10,20 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('appointment_product', function (Blueprint $table) {
+        Schema::create('doctor_product', function (Blueprint $table) {
             $table->id();
-            $table->unsignedDouble('quantity');
-            $table->unsignedDouble('unit_price');
-            $table->foreignId('appointment_id')
-                ->constrained('appointments')
+            $table->foreignId('doctor_id')
+                ->constrained('doctors')
                 ->references('id')
                 ->cascadeOnDelete();
             $table->foreignId('product_id')
                 ->constrained('products')
                 ->references('id')
                 ->cascadeOnDelete();
-            $table->unique(['appointment_id', 'product_id',]);
+            $table->unsignedDouble('quantity');
+            $table->unique(['product_id', 'doctor_id']);
             $table->softDeletes();
+            $table->timestamps();
         });
     }
 
@@ -32,6 +32,6 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointment_product');
+        Schema::dropIfExists('doctor_product');
     }
 };

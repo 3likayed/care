@@ -35,8 +35,8 @@ class SalaryActionsController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(SalaryActionStoreRequest $request)
-    {   
-        
+    {
+
         $data = $request->validated();
         // dd($data);
         DB::beginTransaction();
@@ -45,15 +45,15 @@ class SalaryActionsController extends Controller
         $data['date'] = Carbon::now();
         // dd($data) ;
         $employee=$employee->salaryActions()->create($data);
-        if($data['reason'] == 'giving' && $data['picked'] == 'now')
+        if(($data['reason'] == 'giving' && $data['picked'] == 'now') || $data['reason'] ==='loan')
         {
-          
+
           $action = SalaryAction::where('employee_id',$data['employee_id'])->get()->last();
           TransactionService::create($action, [
             'amount' => $data['amount'],
             'status' => 'confirmed',
             'type' => 'withdraw',
-        ]);    
+        ]);    ;
         }
         DB::commit();
         return success();
@@ -81,6 +81,6 @@ class SalaryActionsController extends Controller
      */
     public function destroy(Salary $salary)
     {
-        //  
+        //
     }
 }

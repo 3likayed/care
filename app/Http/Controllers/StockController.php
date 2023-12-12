@@ -20,7 +20,13 @@ class StockController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:stocks.show'])->only(['index']);
+        $this->middleware(['permission:stocks.show'])->only(['index','fetch']);
+    }
+
+    public function fetch(Request $request)
+    {
+        return QueryBuilder::for(Stock::isAvailable()->without(['product','supplier']))
+            ->allowedFilters(['product_id', AllowedFilter::exact('id')])->get();
     }
 
     public function index(Request $request)

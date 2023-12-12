@@ -54,6 +54,8 @@ class SalaryAction extends Model
         'date'
     ];
 
+    protected $appends = ['is_confirmed'];
+
     public function employee(): BelongsTo
     {
         return $this->belongsTo(Employee::class);
@@ -62,6 +64,11 @@ class SalaryAction extends Model
     public function salary(): BelongsTo
     {
         return $this->belongsTo(Salary::class);
+    }
+
+    public function isConfirmed(): Attribute
+    {
+        return Attribute::get(fn() => (bool)$this->transactions());
     }
 
     public function transactions(): MorphOne
@@ -74,6 +81,6 @@ class SalaryAction extends Model
         return Attribute::make(
             get: fn($value) => $value,
             set: fn($value) => $value ?? Carbon::now()
-    );
+        );
     }
 }

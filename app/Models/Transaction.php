@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use function PHPUnit\Framework\isEmpty;
 
 class Transaction extends Model
 {
@@ -16,7 +15,7 @@ class Transaction extends Model
 
     protected $fillable = ['amount', 'status', 'type', 'employee_id'];
 
-    protected $appends = ['model'];
+    protected $appends = ['model', 'name'];
 
     protected $with = ['employee'];
 
@@ -33,8 +32,7 @@ class Transaction extends Model
     public function scopeCreatedAt($query, $value)
     {
         $value = explode('|', $value);
-        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
-         ;
+        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));;
         if (isset($value[1]) && (bool)$value[1]) {
             $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
@@ -50,5 +48,11 @@ class Transaction extends Model
                 'id' => $this->transactionable_id,
             ];
         });
+    }
+
+    public function name(): Attribute
+    {
+
+        return Attribute::get(fn() => __('dashboard.field_id', ['field' => __('dashboard.' . $this->model['name']), 'id' => $this->id]));
     }
 }

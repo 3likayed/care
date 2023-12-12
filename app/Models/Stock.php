@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -48,6 +49,12 @@ class Stock extends Model
         'available',
     ];
     protected $with = ['product', 'supplier'];
+    protected $appends = ['name'];
+
+    public function name(): Attribute
+    {
+        return Attribute::get(fn() => __('dashboard.field_id', ["field" => __('dashboard.stock'), "id" => $this->id]));
+    }
 
     public function purchase(): BelongsTo
     {
@@ -63,6 +70,11 @@ class Stock extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function scopeIsAvailable($query)
+    {
+        return $query->where('available', '>', 0);
     }
 
     public function scopeCreatedAt($query, $value)

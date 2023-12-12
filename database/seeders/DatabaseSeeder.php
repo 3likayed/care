@@ -45,15 +45,16 @@ class DatabaseSeeder extends Seeder
                 'purchases.create', 'purchases.edit', 'purchases.delete', 'purchases.show',
                 'suppliers.create', 'suppliers.edit', 'suppliers.delete', 'suppliers.show',
                 'transactions.create', 'transactions.edit', 'transactions.delete', 'transactions.show',
-                'appointment-product.create', 'appointment-product.edit', 'appointment-product.delete', 'appointment-product.show',
+                'appointment-products.create', 'appointment-products.edit', 'appointment-products.delete', 'appointment-products.show',
                 'salaries.create', 'salaries.edit', 'salaries.delete', 'salaries.show',
                 'salary-actions.create', 'salary-actions.edit', 'salary-actions.delete', 'salary-actions.show',
                 'settings.edit',
                 'stocks.show',
+                'doctor-products.create', 'doctor-products.show',
             ],
         ];
-        $insertPermissions = fn ($role) => collect($permissionsByRole[$role])
-            ->map(fn ($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'web']))
+        $insertPermissions = fn($role) => collect($permissionsByRole[$role])
+            ->map(fn($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'web']))
             ->toArray();
         $permissionIdsByRole = [
             'super-admin' => $insertPermissions('super-admin'),
@@ -63,7 +64,7 @@ class DatabaseSeeder extends Seeder
 
             DB::table('role_has_permissions')
                 ->insert(
-                    collect($permissionIds)->map(fn ($id) => [
+                    collect($permissionIds)->map(fn($id) => [
                         'role_id' => $role->id,
                         'permission_id' => $id,
                     ])->toArray()

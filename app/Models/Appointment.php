@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -22,6 +23,7 @@ class Appointment extends Model
     protected $dateFormat = 'Y-m-d g:i A';
 
     protected $with = ['patient', 'appointmentType', 'doctor'];
+    protected $appends = ['name'];
 
     public function patient(): BelongsTo
     {
@@ -43,7 +45,7 @@ class Appointment extends Model
         return $this->morphMany(Transaction::class, 'transactionable');
     }
 
-    public function total(): Attribute
+    public function total_price(): Attribute
     {
         return Attribute::get(function () {
             $sum = 0;
@@ -58,8 +60,14 @@ class Appointment extends Model
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, 'appointment_products', 'appointment_id', 'product_id');
+        return $this->belongsToMany(Product::class)->withPivot('unit_price', 'quantity');
     }
+
+    public function appointmentProducts(): HasMany
+    {
+        return $this->hasMany(AppointmentProduct::class);
+    }
+
 
     public function scopePatientSearch($query, $value)
     {
@@ -87,5 +95,10 @@ class Appointment extends Model
     public function scopeVisit(Builder $query)
     {
         return $query->whereNotNull('doctor_id')->orderBy('data');
+    }
+
+    public function name(): Attribute
+    {
+        return Attribute::get(fn() => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
     }
 }

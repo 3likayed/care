@@ -1,5 +1,5 @@
 import {router} from "@inertiajs/vue3";
-import {modelResolver, route} from "../../Globals.js";
+import {can, modelResolver, route} from "../../Globals.js";
 
 
 export default class Model {
@@ -23,13 +23,13 @@ export default class Model {
     static indexLink(model, data, modelResolve = true) {
         if (modelResolver)
             model = modelResolver(model);
-        return route(`dashboard.${model}.index`, data)
+        return can(`${model}.show`) ? route(`dashboard.${model}.index`, data) : "#";
     }
 
     static showLink(model, id, modelResolve = true) {
         if (modelResolver)
             model = modelResolver(model);
-        return route(`dashboard.${model}.show`, id)
+        return can(`${model}.show`) ? route(`dashboard.${model}.show`, id) : '#';
     }
 
     static async fetch(model, filter) {
@@ -73,6 +73,8 @@ export default class Model {
 
     static submit(operation, model, form, id, modelResolve = true) {
 
+        if (modelResolver)
+            model = modelResolver(model);
         switch (operation) {
             case 'edit' :
                 this.edit(model, form, id);

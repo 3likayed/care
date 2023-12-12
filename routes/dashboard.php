@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\AppointmentController;
+use App\Http\Controllers\AppointmentProductController;
 use App\Http\Controllers\AppointmentTypeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\DoctorProductController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PatientController;
@@ -50,10 +52,12 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('specializations', SpecializationController::class);
         Route::apiResource('doctors', DoctorController::class);
         Route::apiResource('appointments', AppointmentController::class);
+        Route::apiResource('appointment-products', AppointmentProductController::class);
         Route::apiResource('suppliers', SupplierController::class);
         Route::apiResource('purchases', PurchaseController::class);
         Route::post('purchases/{purchase}/transaction', [PurchaseController::class, 'transaction'])->name('purchases.transaction');
         Route::apiResource('products', ProductController::class);
+        Route::apiResource('doctor-products', DoctorProductController::class)->only(['index', 'store']);
         Route::get('fetch/products', [ProductController::class, 'fetch'])->name('fetch.products');
         Route::apiResource('services', ServiceController::class);
         Route::get('fetch/services', [ServiceController::class, 'fetch'])->name('fetch.services');
@@ -61,6 +65,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
 
         Route::apiResource('transactions', TransactionController::class);
         Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
+        Route::get('fetch/stocks', [StockController::class, 'fetch'])->name('fetch.stocks');
     });
 
 });
