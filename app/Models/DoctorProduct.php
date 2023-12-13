@@ -17,7 +17,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $id
  * @property int|null $doctor_id
  * @property int|null $product_id
- * @property float|null $quantity
+ * @property float|null $available
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -29,28 +29,30 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class DoctorProduct extends Model
 {
-	use SoftDeletes;
-	protected $table = 'doctor_product';
+    use SoftDeletes;
 
-	protected $casts = [
-		'doctor_id' => 'int',
-		'product_id' => 'int',
-		'quantity' => 'float'
-	];
+    protected $table = 'doctor_product';
 
-	protected $fillable = [
-		'doctor_id',
-		'product_id',
-		'quantity'
-	];
+    protected $casts = [
+        'doctor_id' => 'int',
+        'product_id' => 'int',
+        'available' => 'float'
+    ];
 
-	public function doctor(): BelongsTo
+    protected $fillable = [
+        'doctor_id',
+        'product_id',
+        'available'
+    ];
+    protected $with = ['product:id,name', 'doctor:id,name'];
+
+    public function doctor(): BelongsTo
     {
-		return $this->belongsTo(Doctor::class);
-	}
+        return $this->belongsTo(Doctor::class);
+    }
 
-	public function product(): BelongsTo
+    public function product(): BelongsTo
     {
-		return $this->belongsTo(Product::class);
-	}
+        return $this->belongsTo(Product::class);
+    }
 }

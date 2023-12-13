@@ -20,7 +20,7 @@ return new class extends Migration {
                 ->constrained('products')
                 ->references('id')
                 ->cascadeOnDelete();
-            $table->unsignedDouble('quantity');
+            $table->unsignedDouble('available');
             $table->unique(['product_id', 'doctor_id']);
             $table->softDeletes();
             $table->timestamps();

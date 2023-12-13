@@ -36,7 +36,7 @@ export default class Model {
         try {
             const url = route(`dashboard.fetch.${model}`)
             let result = Object.entries(filter)
-                .map(([key, value]) => `filter[${key}]=${value}`)
+                .map(([key, value]) => value ? `filter[${key}]=${value}` : '')
                 .join('&');
             const fullUrl = result ? `${url}?${result}` : url;
             return (await fetch(fullUrl)).json();

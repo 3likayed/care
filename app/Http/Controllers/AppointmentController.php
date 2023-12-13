@@ -33,7 +33,6 @@ class AppointmentController extends Controller
     public function index(Request $request)
     {
         $appointments = QueryBuilder::for(Appointment::class)
-            ->with(['patient:name,id', 'appointmentType:name,id'])
             ->allowedSorts('date', 'created_at', 'price', 'id',
                 AllowedSort::custom('patient.name', new RelationSort()),
                 AllowedSort::custom('appointment_type.name', new RelationSort()),
@@ -41,7 +40,6 @@ class AppointmentController extends Controller
             )
             ->allowedFilters(AllowedFilter::exact('id'), 'doctor_id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date'))
             ->paginate($request->get('per_page'));
-
         $appointmentTypes = AppointmentType::all();
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),

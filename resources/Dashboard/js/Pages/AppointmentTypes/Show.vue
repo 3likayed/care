@@ -8,20 +8,10 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <DynamicData
-                :is-modal="false"
-                :item="data"
-                :model="model"
-                :resolver="resolver"
-                operation="edit"
 
-            />
         </section>
         <section v-show="step === 1">
-            <DynamicList
-                :resolver="appointmentResolver"
-                model="appointment"
-            />
+
         </section>
         <!--
             <section v-show="step === 1">
@@ -43,8 +33,6 @@ import {__, modelResolver} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import DynamicData from "../../Components/DynamicData.vue";
-import DynamicList from "../../Components/DynamicList.vue";
 import {useStepStore} from "../../Stores/step.js";
 
 let steps = ref([__('data'), __('appointments')]);

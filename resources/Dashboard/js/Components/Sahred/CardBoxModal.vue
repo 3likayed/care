@@ -1,5 +1,5 @@
 <script setup>
-import {computed} from "vue";
+import {computed, inject} from "vue";
 import {mdiClose} from "@mdi/js";
 import BaseButton from "./BaseButton.vue";
 import BaseButtons from "./BaseButtons.vue";
@@ -31,7 +31,7 @@ const props = defineProps({
     hasCancel: Boolean,
     hasConfirm: {
         type: Boolean,
-        default:true
+        default: true
     },
     modelValue: {
         type: [String, Number, Boolean],
@@ -40,6 +40,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue", "cancel", "confirm"]);
+let disabled = computed(() => inject('isDisabled', false).value || props.isDisabled)
 
 const value = computed({
     get: () => props.modelValue,
@@ -74,13 +75,13 @@ if (props.isModal) {
         <CardBox
             v-show="value"
             :is-form="isForm"
-            class="shadow-lg max-h-screen-menu w-11/12 md:w-4/5 lg:w-4/6 xl:w-8/12 z-50 overflow-y-auto  "
             :is-modal="isModal"
+            class="shadow-lg max-h-screen-menu w-11/12 md:w-4/5 lg:w-4/6 xl:w-8/12 z-50 overflow-y-auto  "
         >
             <FormValidationErrors/>
             <CardBoxComponentTitle :title="title">
                 <BaseButton
-                    v-if="hasCancel"
+                    v-if="hasCancel && !disabled"
                     :icon="mdiClose"
                     color="whiteDark"
                     rounded-full
@@ -99,7 +100,7 @@ if (props.isModal) {
                         @click="confirm"
                     />
                     <BaseButton
-                        v-if="hasCancel"
+                        v-if="hasCancel || !disabled"
                         :color="button"
                         :label="__('cancel')"
                         outline
@@ -121,13 +122,13 @@ if (props.isModal) {
         <template #footer>
             <BaseButtons>
                 <BaseButton
-                    v-if="hasConfirm"
+                    v-if="hasConfirm && !disabled "
                     :color="button"
                     :label="buttonLabel"
                     @click="confirm"
                 />
                 <BaseButton
-                    v-if="hasCancel"
+                    v-if="hasCancel && !disabled"
                     :color="button"
                     :label="__('cancel')"
                     outline

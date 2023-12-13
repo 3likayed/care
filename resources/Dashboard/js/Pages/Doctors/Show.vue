@@ -8,22 +8,26 @@
             />
         </CardBox>
         <section v-if="step===0">
-            <DynamicData
-                :is-modal="false"
-                :item="data"
-                :model="model"
-                v-on="resolver.on??{}"
-                :resolver="resolver"
-                operation="edit"
+            <DoctorEdit
+                :data="data"
 
-            />
+                :is-modal="false"/>
         </section>
-<!--        <section v-show="step === 1">
-            <DynamicList
-                :resolver="appointmentResolver"
-                model="appointment"
-            />
-        </section>-->
+        <section v-if="step===1">
+          <DoctorProductsList
+              :data="{doctor_id:data.id}"
+              :doctors="doctors"
+              :visitData="{filter:{doctor_id:data.id}}"
+              :items="data.doctor_products"
+              :searchable="false"
+              :sortable="false"/>
+        </section>
+        <!--        <section v-show="step === 1">
+                    <DynamicList
+                        :resolver="appointmentResolver"
+                        model="appointment"
+                    />
+                </section>-->
         <!--
             <section v-show="step === 1">
               <PostDetailsList :data="data"/>
@@ -44,19 +48,17 @@ import {__, modelResolver} from "../../Globals.js";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
 import StepsComponent from "../../Components/Sahred/StepsComponent.vue";
 import CardBox from "../../Components/Sahred/CardBox.vue";
-import DynamicData from "../../Components/DynamicData.vue";
 import {useStepStore} from "../../Stores/step.js";
+import DoctorEdit from "../../Components/Doctors/DoctorEdit.vue";
+import DoctorProductsList from "../../Components/DoctorProducts/DoctorProductsList.vue";
 
-let steps = ref([__('data'), __('appointments')]);
-let step = ref( useStepStore().getStep())
+let steps = ref([__('data'), 'products']);
+let step = ref(useStepStore().getStep())
 let data = usePage().props.data;
+let doctors = [usePage().props.data];
 let model = "employee";
 let breadcrumbItems = [{name: __(modelResolver(model)), href: route(`dashboard.${modelResolver(model)}.index`)}]
 breadcrumbItems.push({name: data.name, href: route(`dashboard.${modelResolver(model)}.show`, data.id)})
-
-
-let resolver = employee.edit()
-
 
 </script>
 <style scoped>

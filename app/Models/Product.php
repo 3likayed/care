@@ -37,7 +37,6 @@ class Product extends Model
 
     protected $fillable = [
         'name',
-        'quantity',
         'price',
         'type',
     ];
@@ -52,10 +51,14 @@ class Product extends Model
     public function available(): Attribute
     {
         return Attribute::get(function () {
-            return $this->stocks()->sum('available') + $this->quantity;
+            return $this->stocks()->sum('available');
         });
     }
 
+    public function doctorProducts(): HasMany
+    {
+        return $this->hasMany(DoctorProduct::class) ;
+    }
     public function stocks(): HasMany
     {
         return $this->hasMany(Stock::class);

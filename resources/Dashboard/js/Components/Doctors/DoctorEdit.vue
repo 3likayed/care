@@ -1,11 +1,9 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`doctors.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"
         :has-errors="form.hasErrors"
-        :is-form="true"
         :is-modal="isModal"
         :model-value="true"
         :title="__('edit_field',{field:'doctor'})"
@@ -94,7 +92,8 @@
                     type="password"
                 />
             </FormField>
-            <FormField :errors="form.errors['user.password_confirmation']" :label="__('password_confirmation')">
+            <FormField :errors="form.errors['user.password_confirmation']"
+                       :label="__('password_confirmation')">
                 <FormControl
                     v-model="form.user.password_confirmation"
                     :icon="mdiFormTextboxPassword"
@@ -125,8 +124,8 @@ import {
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm, usePage} from "@inertiajs/vue3";
-import {__, handleField} from "../../Globals.js";
-import {inject, ref} from "vue";
+import {__, can, handleField} from "../../Globals.js";
+import {computed, inject, ref,provide} from "vue";
 import {Model} from "../../Utils/index.js";
 import StepsComponent from "../Sahred/StepsComponent.vue";
 import {collect} from "collect.js";
@@ -134,11 +133,16 @@ import {collect} from "collect.js";
 let props = defineProps({
     data: Object,
     operation: String,
+    isDisabled: Boolean,
     isModal: {
         type: Boolean,
         default: true
     }
 })
+
+let disabled = computed(() => props.isDisabled || !can(`doctors.edit`));
+provide('isDisabled', disabled);
+
 let showEdit = props.isModal ? inject('showEdit') : true;
 let specializations = usePage().props.specializations;
 let form = useForm({

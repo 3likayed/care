@@ -12,50 +12,69 @@
         @cancel="showCreateDoctorProduct=false"
         @confirm="submit"
     >
+        <FormField :errors="form.errors.stock_id" label="stock_id">
+            <FormControl
+                v-model="form.stock_id"
+                :icon="mdiCart"
+                :is-disabled="data.stock_id"
+                required
+            />
+        </FormField>
         <FormField :label="__('doctor_name')">
             <FormControl
                 v-model="form.doctor_id"
-                :icon="mdiClipboardPulse"
+                :icon="mdiDoctor"
                 :is-disabled="data.doctor_id"
                 :options="doctors"
                 required
                 type="select"
             />
         </FormField>
-        <FormField :label="__('product_name')">
+        <FormField :errors="form.errors.quantity" label="quantity">
             <FormControl
-                v-model="product_id"
-                :icon="mdiClipboardPulse"
-                :is-disabled="data.product_id"
-                :options="products"
+                v-model="form.quantity"
+                :icon="mdiStocking"
+                :is-disabled="data.quantity"
+                :max="maxQuantity"
+                :min="0"
                 required
-                type="select"
-                @update:model-value="fetchStocks"
             />
         </FormField>
 
-        <FormField :label="__('stock')">
+        <FormField :label="__('product_name')">
             <FormControl
-                v-model="form.stock_id"
-                :icon="mdiStocking"
-                :options="stockOptions"
+                v-model="product.name"
+                :icon="mdiClipboardPulse"
+                is-disabled
                 required
-                type="select"
+                type="text"
             />
         </FormField>
+        <FormField :label="__('available')">
+            <FormControl
+                v-model="product.available"
+                :icon="mdiClipboardPulse"
+                is-disabled
+                required
+                type="text"
+            />
+        </FormField>
+
+
     </CardBoxModal>
 </template>
 
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiClipboardPulse, mdiStocking} from "@mdi/js";
+import {mdiCart, mdiClipboardPulse, mdiDoctor, mdiStocking} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__} from "../../Globals.js";
-import {inject, ref, watchEffect} from "vue";
+import {inject, onMounted, reactive, ref, watchEffect} from "vue";
 import {Model} from "../../Utils/index.js";
+import {debounce} from "lodash";
 
 
 let props = defineProps({
@@ -75,11 +94,6 @@ let props = defineProps({
         type: Boolean,
         default: true
     },
-    notes:
-        {
-            type: String,
-            default: " "
-        }
 })
 
 let showCreateDoctorProduct = inject('showCreateDoctorProduct');
@@ -90,23 +104,26 @@ let form = useForm({
 
 });
 
-let product_id = ref(props.data.product_id);
-let stockOptions = ref();
-
-watchEffect(() => {
-    if (product_id.value) {
-        Model.fetch('stocks', {product_id: product_id.value}).then(
+let product = reactive({});
+let maxQuantity = ref();
+const fetchPatients = debounce(async (stock_id) => {
+    if (stock_id) {
+        await Model.fetch('stocks', {id: stock_id}).then(
             result => {
-                stockOptions.value = result
-                console.log(result);
-                form.stock_id = null;
+                product.name = result[0]?.product?.name
+                product.available = result[0]?.available ?? 0;
             }
         )
+    } else {
+        product.name = null
+        product.available = 0
     }
-})
-const fetchStocks = (value) => {
+    maxQuantity.value = product.available
+}, 500);
 
-}
+onMounted(() => watchEffect(() => fetchPatients(form.stock_id)))
+
+
 const submit = () => {
     Model.submit('create', 'doctor_products', form)
 }

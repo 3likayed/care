@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Staudenmeir\EloquentHasManyDeep\HasOneDeep;
 use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use Znck\Eloquent\Traits\BelongsToThrough;
 
@@ -48,7 +49,7 @@ class Stock extends Model
         'quantity',
         'available',
     ];
-    protected $with = ['product', 'supplier'];
+    protected $with = ['product', 'purchase.supplier'];
     protected $appends = ['name'];
 
     public function name(): Attribute
@@ -61,10 +62,10 @@ class Stock extends Model
         return $this->belongsTo(Purchase::class);
     }
 
-    public function supplier(): \Znck\Eloquent\Relations\BelongsToThrough
+    public function supplier(): HasOneDeep
     {
+        return $this->hasOneDeepFromRelations($this->purchase(), (new Purchase())->supplier());
 
-        return $this->belongsToThrough(Supplier::class, Purchase::class);
     }
 
     public function product(): BelongsTo

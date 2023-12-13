@@ -1,5 +1,5 @@
 <script setup>
-import {computed, useSlots} from "vue";
+import {computed, inject, useSlots} from "vue";
 import BaseDivider from "./BaseDivider.vue";
 import BaseButton from "./BaseButton.vue";
 import BaseButtons from "./BaseButtons.vue";
@@ -28,7 +28,7 @@ let props = defineProps({
         type: String,
         default: null,
     },
-    isDisabled:Boolean,
+    isDisabled: Boolean,
     hasBorder: {
         type: Boolean,
         default: true
@@ -37,6 +37,8 @@ let props = defineProps({
 
 const slots = useSlots();
 const emit = defineEmits(["action", "buttonClick"]);
+let disabled = computed(() => inject('isDisabled', false).value || props.isDisabled)
+
 
 function doAction(action, key) {
     emit("action", action, key)
@@ -93,8 +95,8 @@ const wrapperClass = computed(() => {
                 {{ errors }}
             </div>
             <BaseButtons
-                v-if="!isDisabled"
                 v-for="(action,key) in actions"
+                v-if="!disabled"
                 class-addon="mt-3"
                 mb=""
             >

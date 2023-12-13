@@ -47,7 +47,7 @@
                         {{ moment(item.created_at).format('YYYY-MM-DD') }}
                     </td>
                     <td :data-label="__('options')">
-                        <TableOptions :has-show="false" :item="item" model="doctors" @edit="edited=item">
+                        <TableOptions  :item="item" model="doctors" @edit="edited=item">
                             <template #edit>
                                 <EditDoctor :data="edited"/>
                             </template>

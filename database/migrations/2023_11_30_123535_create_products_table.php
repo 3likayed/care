@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->integer('quantity');
             $table->unsignedDouble('unit_price');
             $table->enum('type', ['product', 'service'])->default('product');
             $table->softDeletes();

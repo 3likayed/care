@@ -22,6 +22,14 @@
                 :visit-data="{filter:{'product.id':data.id}}"
             />
         </section>
+        <section v-show="step === 2">
+            <DoctorProductsList
+                :items="data.doctor_products"
+                :searchable="false"
+                :sortable="false"
+                :visit-data="{filter:{'doctor_id':data.id}}"
+            />
+        </section>
     </SectionMain>
 </template>
 
@@ -37,9 +45,10 @@ import CardBox from "../../Components/Sahred/CardBox.vue";
 import {useStepStore} from "../../Stores/step.js";
 import ProductEdit from "../../Components/Products/ProductEdit.vue";
 import StocksList from "../../Components/Stocks/StocksList.vue";
+import DoctorProductsList from "../../Components/DoctorProducts/DoctorProductsList.vue";
 
 
-let steps = ref([__('data'), __('stocks')]);
+let steps = ref(['data', 'stocks','doctor_products']);
 let step = ref(useStepStore().getStep())
 
 let data = computed(() => usePage().props.data);

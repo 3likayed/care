@@ -17,7 +17,7 @@ class Transaction extends Model
 
     protected $appends = ['model', 'name'];
 
-    protected $with = ['employee'];
+    protected $with = ['employee:id,name'];
 
     public function transactionable(): MorphTo
     {

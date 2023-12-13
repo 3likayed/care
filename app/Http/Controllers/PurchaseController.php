@@ -36,7 +36,6 @@ class PurchaseController extends Controller
     public function index(Request $request)
     {
         $purchases = QueryBuilder::for(Purchase::class)
-            ->with('supplier')
             ->withSum('transactions', 'amount')
             ->allowedFilters([
                 AllowedFilter::exact('id'),

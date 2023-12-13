@@ -21,8 +21,8 @@
                 </td>
 
                 <td :data-label="__('supplier_name')">
-                    <Link :href="Model.showLink('supplier',item.supplier.id)">
-                        {{ item.supplier.name }}
+                    <Link :href="Model.showLink('supplier',item.purchase.supplier.id)">
+                        {{ item.purchase.supplier.name }}
                     </Link>
                 </td>
                 <td :data-label="__('product_name')">

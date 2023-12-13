@@ -7,9 +7,10 @@ use App\Http\Resources\ModelCollection;
 use App\Models\Doctor;
 use App\Models\DoctorProduct;
 use App\Models\Product;
+use App\Models\Stock;
 use App\Sorts\RelationSort;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
@@ -29,13 +30,12 @@ class DoctorProductController extends Controller
     public function index(Request $request)
     {
         $doctorProducts = QueryBuilder::for(DoctorProduct::class)
-            ->with(['patient:name,id', 'appointmentType:name,id'])
-            ->allowedSorts('date', 'created_at', 'price', 'id',
+            ->allowedSorts( 'available',
                 AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name'),
                 AllowedSort::custom('product.name', new RelationSort()),
 
             )
-            ->allowedFilters(AllowedFilter::exact('id'), 'doctor_id', 'product_id')
+            ->allowedFilters(AllowedFilter::exact('id'), 'doctor_id','product_id')
             ->paginate($request->get('per_page'));
 
         return Inertia::render('DoctorProducts/Index', [
@@ -51,16 +51,24 @@ class DoctorProductController extends Controller
      */
     public function store(DoctorProductStoreRequest $request)
     {
-
+        DB::beginTransaction();
         $data = $request->validated();
-        if (!Carbon::parse($data['date'])->isToday()) {
-            $data['doctor_id'] = null;
+        $stock = Stock::find($data['stock_id']);
+        $stock->decrement('available', $data['quantity']);
+
+
+        $doctor = Doctor::find($data['doctor_id']);
+        $doctorProduct = $doctor->doctorProducts()->where('product_id', '=', $stock->product_id)->first();
+        if ($doctorProduct) {
+            $doctorProduct->increment('available', $data['quantity']);
+        } else {
+            DoctorProduct::create([
+                'product_id' => $stock->product_id,
+                'doctor_id' => $data['doctor_id'],
+                'available' => $data['quantity']
+            ]);
         }
-
-        $data['price'] = DoctorProductType::find($data['doctorProduct_type_id'])->price;
-        $data['employee_id'] = auth()->user()->userable_id;
-        DoctorProduct::create($data);
-
+        DB::commit();
         return success();
 
     }

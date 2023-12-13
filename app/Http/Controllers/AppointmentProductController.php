@@ -29,7 +29,6 @@ class AppointmentProductController extends Controller
     public function index(Request $request)
     {
         $appointmentProducts = QueryBuilder::for(AppointmentProduct::class)
-            ->with(['patient:name,id', 'appointment_productType:name,id'])
             ->allowedSorts('name', 'price')
             //filtering
             ->allowedFilters(AllowedFilter::exact('id'), 'name')

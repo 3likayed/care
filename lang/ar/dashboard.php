@@ -198,7 +198,11 @@ return [
     'stocks' => 'المخزون',
     'stock' => 'مخزون',
     'purchase_id' => 'رقم المشتريات',
+    'stock_id' => 'رقم المخزون  ',
     'salary_action' => 'عملية على المرتب',
-    'pay_salary' => 'صرف المرتب'
+    'pay_salary' => 'صرف المرتب',
+    'doctor_products' => 'أصناف الطبيب',
+    'doctors_products' => 'أصناف الأطباء',
+    'doctor_name' => 'إسم الطبيب'
 
 ];

@@ -29,7 +29,7 @@ defineProps({
                 v-if="label"
                 class="font-extrabold rounded px-5 me-3 mb-2 inline-flex justify-center p-1.5 items-center border text-black bg-gray-50 dark:bg-slate-800 dark:text-white dark:border-gray-700 "
             >
-                {{ label }}</label>
+                {{ __(label) }}</label>
             <BaseButton
                 v-if="button"
                 :color="button.color"

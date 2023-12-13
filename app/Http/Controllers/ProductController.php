@@ -71,7 +71,7 @@ class ProductController extends Controller
 
     public function show(product $product)
     {
-        $product->load('stocks.purchase');
+        $product->load('stocks.purchase','doctorProducts.product','doctorProducts.doctor');
         return Inertia::render('Products/Show', [
             'data' => $product,
             'meta' => meta()->metaValues(['title' => [__('dashboard.products'), $product->name]]),
@@ -83,7 +83,7 @@ class ProductController extends Controller
      */
     public function destroy(product $product)
     {
-        /*$product->delete();*/
+        $product->delete();
         return success();
     }
 }

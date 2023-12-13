@@ -30,10 +30,11 @@ class DoctorController extends Controller
 
     public function show(Doctor $doctor)
     {
+        $doctor->load('doctorProducts.product:id,name','doctorProducts.doctor','employee.user');
 
         return Inertia::render('Doctors/Show', [
             'data' => $doctor,
-            'meta' => meta()->metaValues(['title' => "$doctor->name | ".__('dashboard.patients')]),
+            'meta' => meta()->metaValues(['title' => "$doctor->name | ".__('dashboard.doctors')]),
         ]);
     }
 
@@ -41,7 +42,7 @@ class DoctorController extends Controller
     {
 
         $doctors = QueryBuilder::for(Doctor::class)
-            ->with('specializations', 'employee.user')
+            ->with('employee.user')
             ->allowedFilters(
                 AllowedFilter::scope('search'),
                 'name',

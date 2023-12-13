@@ -1,6 +1,6 @@
 <script setup>
 import Dropdown from 'primevue/dropdown';
-import {computed} from "vue";
+import {computed, getCurrentInstance} from "vue";
 
 import MultiSelect from 'primevue/multiselect';
 
@@ -47,10 +47,13 @@ const props = defineProps({
     },
 });
 let emit = defineEmits(['update:modelValue', 'filter'])
+const instance = getCurrentInstance();
 const computedValue = computed({
     get: () => props.modelValue,
     set: (value) => {
         emit("update:modelValue", value);
+        instance?.proxy?.$forceUpdate();
+
     },
 });
 const pt = computed(() => ({

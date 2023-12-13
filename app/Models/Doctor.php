@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,13 +26,21 @@ class Doctor extends Authenticatable
         'remember_token',
     ];
 
-    protected $with = ['employee'];
-
-    protected $appends = ['name'];
-
+    protected $with = ['employee','specializations:id,name'];
+    protected $appends=['name'];
     public function user()
     {
         return $this->employee->user();
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, DoctorProduct::class);
+    }
+
+    public function doctorProducts(): HasMany
+    {
+        return $this->hasMany(DoctorProduct::class);
     }
 
     public function employee(): MorphOne

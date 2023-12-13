@@ -5,7 +5,7 @@ import {snakeCase} from "lodash/string.js";
 
 
 export function __(key, replace = {}) {
-    key = key ?? '';
+    key = String(key).replace('-', '_') ?? '';
     var translation = usePage().props.language[key] ? usePage().props.language[key] : key
     Object.keys(replace).forEach(function (key) {
         translation = translation.replace(':' + key, __(replace[key]))
@@ -72,8 +72,11 @@ export const handleField = (form, field, action, key, value = null) => {
     }
 }
 
-export const modelResolver = (word) => {
-    return snakeCase(Pluralize(word)).replace('_', '-')
+export const modelResolver = (word, replace = ['_', '-']) => {
+
+
+    return word ? snakeCase(Pluralize(String(word)))
+        .replace(replace[0], replace[1]) : ''
 }
 
 export default {

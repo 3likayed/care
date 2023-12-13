@@ -1,10 +1,8 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`patients.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"
-        :has-confirm="!isDisabled"
         :has-errors="form.hasErrors"
         :is-form="!isDisabled"
         :is-modal="isModal"
@@ -17,7 +15,6 @@
             <FormControl
                 v-model="form.name"
                 :icon="mdiAccount"
-                :is-disabled="isDisabled"
                 autocomplete="name"
                 name="phone"
                 required
@@ -27,7 +24,6 @@
             <FormControl
                 v-model="form.email"
                 :icon="mdiAt"
-                :is-disabled="isDisabled"
                 autocomplete="email"
                 name="email"
                 required
@@ -37,7 +33,6 @@
             <FormControl
                 v-model="form.birthday"
                 :icon="mdiCalendar"
-                :is-disabled="isDisabled"
                 autocomplete="birthday"
                 name="birthday"
                 required
@@ -47,7 +42,6 @@
         <FormField
             :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`phone`]"
-            :is-disabled="isDisabled"
             :label="__('phone')"
             @action="(action , key)=>handleField(form,'phone',action ) ">
             <FormControl
@@ -57,7 +51,6 @@
                 :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
                 :errors="form.errors[`phone.${key}`]"
                 :icon="mdiPhone"
-                :is-disabled="isDisabled"
                 autocomplete="phone"
                 name="phone[]"
                 @action="(action )=>handleField(form,'phone',action ,key)"
@@ -66,7 +59,6 @@
         <FormField
             :actions="{append:{color:'success' , icon:mdiPlusCircle } }"
             :errors="form.errors[`address`]"
-            :is-disabled="isDisabled"
             :label="__('address')"
             @action="(action , key)=>handleField(form,'address',action ) ">
             <FormControl
@@ -76,7 +68,6 @@
                 :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
                 :errors="form.errors[`address.${key}`]"
                 :icon="mdiMapMarker"
-                :is-disabled="isDisabled"
                 autocomplete="address"
                 name="address[]"
                 @action="(action )=>handleField(form,'address',action ,key)"
@@ -92,8 +83,8 @@ import {mdiAccount, mdiAt, mdiCalendar, mdiMapMarker, mdiPhone, mdiPlusCircle, m
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
-import {__, handleField} from "../../Globals.js";
-import {inject} from "vue";
+import {__, can, handleField} from "../../Globals.js";
+import {computed, inject, provide} from "vue";
 import {Model} from "../../Utils/index.js";
 import moment from "moment";
 
@@ -108,6 +99,8 @@ let props = defineProps({
         default: true
     }
 })
+let disabled = computed(() => props.isDisabled || !can(`patients.edit`));
+provide('isDisabled', disabled);
 
 let showEdit = props.isModal ? inject('showEdit') : true;
 
