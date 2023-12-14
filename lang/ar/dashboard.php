@@ -3,9 +3,9 @@
 return [
 
     /*
-    |--------------------------------------------------------------------------
+    |__________________________________________________________________________
     | Validation Language Lines
-    |--------------------------------------------------------------------------
+    |__________________________________________________________________________
     |
     | The following language lines contain the default error messages used by
     | the validator class. Some of these rules have multiple versions such
@@ -145,22 +145,20 @@ return [
     'appointments' => 'المواعيد',
     'today_appointments' => 'مواعيد اليوم',
     'today_visits' => 'زيارات اليوم',
-    'appointment-type' => 'نوع الموعد',
     'appointment_type' => 'نوع الموعد',
-    'appointment-types' => 'أنواع المواعيد',
+    'appointment_types' => 'أنواع المواعيد',
     'specializations' => 'التخصصات',
     'specialization' => 'تخصص',
     'doctor' => 'طبيب',
     'doctors' => 'الأطباء',
     'user_data' => 'بيانات المستخدم',
     'has_user' => 'لديه مستخدم',
-    'reservation' => 'حجز',
-    'reservations' => 'الحجوزات',
-    'reservation-type' => 'نوع الحجز',
-    'reservation-types' => 'أنواع الحجز',
     'inventory' => 'المخزن',
     'products' => 'الأصناف',
     'product' => 'الصنف',
+    'appointment_products' => 'أصناف الموعد',
+    'appointments_products' => 'أصناف المواعيد',
+    'appointment_product' => 'صنف الموعد',
     'product_name' => 'إسم الصنف ',
     'quantity' => 'الكمية',
     'suppliers' => 'الموردين',
@@ -203,6 +201,6 @@ return [
     'pay_salary' => 'صرف المرتب',
     'doctor_products' => 'أصناف الطبيب',
     'doctors_products' => 'أصناف الأطباء',
-    'doctor_name' => 'إسم الطبيب'
+    'doctor_name' => 'إسم الطبيب',
 
 ];

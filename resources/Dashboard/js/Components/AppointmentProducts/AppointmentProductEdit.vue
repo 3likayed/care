@@ -18,7 +18,6 @@
     >
       <FormControl
           v-model="form.quantity"
-          :errors="form.errors.quantity"
           :icon="mdiCart"
           :placeholder="__('quantity')"
           name="quantity"
@@ -58,7 +57,7 @@ let form = useForm({
 
 const submit = () => {
 
-  Model.submit('edit', 'appointment_products', form, data.id)
+  Model.submit('edit', 'appointment_products', form, props.data.id)
 }
 
 

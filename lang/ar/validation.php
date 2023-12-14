@@ -167,7 +167,7 @@ return $validation = [
                 'numeric' => 'يجب أن تكون قيمة الكمية للمنتج رقم #(:position) بين :min و :max.',
             ],
             'numeric' => 'يجب على الكمية للمنتج رقم #(:position) أن يكون رقمًا',
-        ]
+        ],
     ],
 
     /*

@@ -87,7 +87,7 @@ class PurchaseController extends Controller
         }
         Stock::insert($products);
 
-        $purchase->update(['total_price' => $totalPrice, 'total_remaining' => $totalPrice-$data['paid_price']]);
+        $purchase->update(['total_price' => $totalPrice, 'total_remaining' => $totalPrice - $data['paid_price']]);
         if ($data['paid_price']) {
             TransactionService::create($purchase, [
                 'amount' => $data['paid_price'],
@@ -110,13 +110,13 @@ class PurchaseController extends Controller
         return success();
     }
 
-
     public function show(Purchase $purchase)
     {
         $purchase->load('supplier', 'transactions.employee', 'stocks.purchase', 'employee');
+
         return Inertia::render('Purchases/Show', [
             'data' => $purchase,
-            'meta' => meta()->metaValues(['title' => __('dashboard.field_id', ["field" => __('dashboard.purchase'), "id" => $purchase->id])]),
+            'meta' => meta()->metaValues(['title' => __('dashboard.field_id', ['field' => __('dashboard.purchase'), 'id' => $purchase->id])]),
         ]);
     }
 

@@ -3,21 +3,31 @@
 namespace App\Http\Requests;
 
 use App\Models\Appointment;
+use App\Models\AppointmentProduct;
 use App\Models\Doctor;
-use App\Models\Employee;
+use App\Models\Product;
+use App\Services\UserService;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AppointmentProductUpdateRequest extends FormRequest
 {
+    public ?Doctor $doctor;
+
+    public ?Product $doctorProduct;
+
+    public ?Appointment $appointment;
+
+    public ?AppointmentProduct $appointmentProduct;
+
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): ?bool
     {
-
-        if (auth()->user()->userable_type === Employee::class && auth()->user()->userable?->employable_type == Doctor::class) {
-            return Appointment::find($this->appointment_id)->doctor?->is(auth()->user()->userable?->employable);
+        if ($this->doctor) {
+            return $this->appointment->doctor?->is($this->doctor);
         }
+
         return false;
     }
 
@@ -28,10 +38,16 @@ class AppointmentProductUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-
         return [
-
-            'quantity' => ['required', 'numeric', 'min:1'],
+            'quantity' => ['required', 'numeric', 'between:1,'.$this->doctorProduct->pivot->available + $this->appointmentProduct->quantity],
         ];
+    }
+
+    protected function prepareForValidation(): void
+    {
+        $this->appointmentProduct = $this->route('appointment_product');
+        $this->doctor = UserService::authDoctor();
+        $this->appointment = Appointment::find($this->appointmentProduct->appointment_id);
+        $this->doctorProduct = $this->doctor->products()->where('product_id', '=', $this->appointmentProduct->product_id)->first();
     }
 }

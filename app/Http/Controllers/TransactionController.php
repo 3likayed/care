@@ -35,7 +35,7 @@ class TransactionController extends Controller
         $totalRemaining = TransactionService::totalRemaining($transactions);
         $transactionleTypeOptions = Transaction::groupBy('transactionable_type')
             ->pluck('transactionable_type')
-            ->map(fn($item) => class_basename($item));
+            ->map(fn ($item) => class_basename($item));
 
         return Inertia::render('Transactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.transactions')]),
@@ -43,7 +43,7 @@ class TransactionController extends Controller
             'total_withdraw' => $totalWithdraw,
             'total_deposit' => $totalDeposit,
             'totalRemaining' => $totalRemaining,
-            'transactionable_type_options' => $transactionleTypeOptions
+            'transactionable_type_options' => $transactionleTypeOptions,
         ]);
     }
 

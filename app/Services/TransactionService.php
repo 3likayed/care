@@ -28,6 +28,7 @@ class TransactionService
 
         Cache::tags([$transaction->created_at->toDateString()])->flush();
         DB::commit();
+
         return $transaction;
 
     }
@@ -52,11 +53,13 @@ class TransactionService
         if ($transactions && $transactions->count()) {
             $startDate = $transactions->first()->created_at->toDateString();
             $endDate = $transactions->last()->created_at->toDateString();
-            $key = "transactions_total{$operation}_" . $startDate . "_" . $endDate;
+            $key = "transactions_total{$operation}_".$startDate.'_'.$endDate;
+
             return Cache::tags(['transactions', $operation, $startDate, $endDate])->remember($key, 100, function () use ($transactions, $operation) {
-                if (!$transactions) {
+                if (! $transactions) {
                     $transactions = Transaction::all();
                 }
+
                 return $transactions->where('type', '=', $operation)->sum('amount');
             });
         }
@@ -69,5 +72,4 @@ class TransactionService
 
         return self::totalOperation($transactions, 'withdraw');
     }
-
 }

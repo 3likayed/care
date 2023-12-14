@@ -26,7 +26,7 @@ class DoctorProductStoreRequest extends FormRequest
         return [
             'doctor_id' => ['required', 'numeric', 'exists:doctors,id'],
             'stock_id' => ['required', 'numeric', 'exists:stocks,id'],
-            'quantity' => ['required', 'numeric', 'between:0,' . Stock::find($this->stock_id)->available],
+            'quantity' => ['required', 'numeric', 'between:0,'.Stock::find($this->stock_id)->available],
         ];
     }
 }

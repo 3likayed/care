@@ -23,11 +23,12 @@ class SalaryActionStoreRequest extends FormRequest
     public function rules(): array
     {
         $salaryNetAmount = Employee::find($this->employee_id)->salary?->netAmount;
+
         return [
             'employee_id' => ['required', 'numeric', 'exists:employees,id'],
-            'amount' => ['required', 'numeric', 'between:0,' . $salaryNetAmount],
+            'amount' => ['required', 'numeric', 'between:0,'.$salaryNetAmount],
             'reason' => ['required', 'in:giving,withhold,loan'],
-            'picked' => ['required','in:now,later,other']
+            'picked' => ['required', 'in:now,later,other'],
         ];
     }
 }

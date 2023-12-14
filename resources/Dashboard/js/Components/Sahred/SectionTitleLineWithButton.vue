@@ -49,6 +49,7 @@ if (props.model) {
 
 
 let computedTitle = computed(() => __(props.title || props.model))
+
 </script>
 
 <template>

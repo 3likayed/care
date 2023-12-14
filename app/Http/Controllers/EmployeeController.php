@@ -34,7 +34,8 @@ class EmployeeController extends Controller
             abort(404);
         }
         $roles = Role::all();
-        $employee->load('salary','currentMonthSalaryActions','user') ;
+        $employee->load('salary', 'currentMonthSalaryActions', 'user');
+
         // dd($employee);
         return Inertia::render('Employees/Show', [
             'data' => $employee,

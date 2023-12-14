@@ -30,7 +30,7 @@ class DoctorController extends Controller
 
     public function show(Doctor $doctor)
     {
-        $doctor->load('doctorProducts.product:id,name','doctorProducts.doctor','employee.user');
+        $doctor->load('doctorProducts.product:id,name', 'doctorProducts.doctor', 'employee.user');
 
         return Inertia::render('Doctors/Show', [
             'data' => $doctor,

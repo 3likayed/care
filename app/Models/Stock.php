@@ -32,7 +32,7 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  */
 class Stock extends Model
 {
-    use SoftDeletes, HasRelationships, BelongsToThrough;
+    use BelongsToThrough, HasRelationships, SoftDeletes;
 
     protected $casts = [
         'purchase_id' => 'int',
@@ -49,12 +49,14 @@ class Stock extends Model
         'quantity',
         'available',
     ];
+
     protected $with = ['product', 'purchase.supplier'];
+
     protected $appends = ['name'];
 
     public function name(): Attribute
     {
-        return Attribute::get(fn() => __('dashboard.field_id', ["field" => __('dashboard.stock'), "id" => $this->id]));
+        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.stock'), 'id' => $this->id]));
     }
 
     public function purchase(): BelongsTo
@@ -81,20 +83,22 @@ class Stock extends Model
     public function scopeCreatedAt($query, $value)
     {
         $value = explode('|', $value);
-        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));;
-        if (isset($value[1]) && (bool)$value[1]) {
+        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
+        if (isset($value[1]) && (bool) $value[1]) {
             $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
+
         return $query;
     }
 
     public function scopeExpiresAt($query, $value)
     {
         $value = explode('|', $value);
-        $query->whereDate('expires_at', '>=', Carbon::parse($value[0])->toDate());;
-        if (isset($value[1]) && (bool)$value[1]) {
+        $query->whereDate('expires_at', '>=', Carbon::parse($value[0])->toDate());
+        if (isset($value[1]) && (bool) $value[1]) {
             $query->whereDate('expires_at', '<=', Carbon::parse($value[1]) ?? null);
         }
+
         return $query;
     }
 }

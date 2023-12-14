@@ -46,7 +46,8 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
-    protected $appends=['role'];
+
+    protected $appends = ['role'];
 
     public function scopeSearch($query, $date)
     {

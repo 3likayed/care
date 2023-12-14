@@ -28,7 +28,6 @@ class Employee extends Authenticatable
         'phone',
     ];
 
-
     /**
      * The attributes that should be cast.
      *
@@ -70,6 +69,7 @@ class Employee extends Authenticatable
     public function currentMonthSalaryActions()
     {
         $currentMonth = Carbon::now()->startOfMonth();
+
         return $this->salaryActions()->whereDate('date', '>=', $currentMonth)
             ->whereDate('date', '<=', $currentMonth->addMonth()->addDay());
     }

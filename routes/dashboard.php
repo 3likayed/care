@@ -62,7 +62,6 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('services', ServiceController::class);
         Route::get('fetch/services', [ServiceController::class, 'fetch'])->name('fetch.services');
 
-
         Route::apiResource('transactions', TransactionController::class);
         Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
         Route::get('fetch/stocks', [StockController::class, 'fetch'])->name('fetch.stocks');

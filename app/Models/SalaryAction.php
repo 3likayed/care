@@ -26,11 +26,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @property Employee|null $employee
  * @property Salary|null $salary
- *
- * @package App\Models
  */
 class SalaryAction extends Model
 {
@@ -42,7 +39,7 @@ class SalaryAction extends Model
         'employee_id' => 'int',
         'salary_id' => 'int',
         'amount' => 'float',
-        'date' => 'date:YYYY-MM'
+        'date' => 'date:YYYY-MM',
     ];
 
     protected $fillable = [
@@ -51,7 +48,7 @@ class SalaryAction extends Model
         'amount',
         'reason',
         'notes',
-        'date'
+        'date',
     ];
 
     protected $appends = ['is_confirmed'];
@@ -68,7 +65,7 @@ class SalaryAction extends Model
 
     public function isConfirmed(): Attribute
     {
-        return Attribute::get(fn() => (bool)$this->transactions());
+        return Attribute::get(fn () => (bool) $this->transactions());
     }
 
     public function transactions(): MorphOne
@@ -79,8 +76,8 @@ class SalaryAction extends Model
     public function date()
     {
         return Attribute::make(
-            get: fn($value) => $value,
-            set: fn($value) => $value ?? Carbon::now()
+            get: fn ($value) => $value,
+            set: fn ($value) => $value ?? Carbon::now()
         );
     }
 }

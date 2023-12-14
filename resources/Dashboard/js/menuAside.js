@@ -1,6 +1,6 @@
 import {
     mdiAccountStarOutline,
-    mdiCalendar, mdiCart,
+    mdiCalendar, mdiCart, mdiCartVariant,
     mdiCashCheck, mdiClipboardPulse,
     mdiCogOutline,
     mdiDoctor,
@@ -96,7 +96,14 @@ export default [
                 permission: "specializations.show",
                 components: ['Specializations/Index', 'Specializations/Show'],
                 icon: mdiTab,
-            }
+            },
+            {
+                route: "dashboard.doctor-products.index",
+                label: "doctor-products",
+                permission: "doctor-products.show",
+                components: ['DoctorProducts/Index'],
+                icon: mdiCartVariant,
+            },
         ]
     },
 

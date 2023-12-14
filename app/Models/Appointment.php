@@ -23,6 +23,7 @@ class Appointment extends Model
     protected $dateFormat = 'Y-m-d g:i A';
 
     protected $with = ['patient:id,name', 'appointmentType:id,name', 'doctor'];
+
     protected $appends = ['name'];
 
     public function patient(): BelongsTo
@@ -68,7 +69,6 @@ class Appointment extends Model
         return $this->hasMany(AppointmentProduct::class);
     }
 
-
     public function scopePatientSearch($query, $value)
     {
         return $query->whereRelation('patient', 'name', 'like', "%$value%")
@@ -99,6 +99,6 @@ class Appointment extends Model
 
     public function name(): Attribute
     {
-        return Attribute::get(fn() => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
+        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
     }
 }

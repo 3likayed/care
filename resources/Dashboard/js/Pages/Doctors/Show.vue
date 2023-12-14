@@ -14,13 +14,14 @@
                 :is-modal="false"/>
         </section>
         <section v-if="step===1">
-          <DoctorProductsList
-              :data="{doctor_id:data.id}"
-              :doctors="doctors"
-              :visitData="{filter:{doctor_id:data.id}}"
-              :items="data.doctor_products"
-              :searchable="false"
-              :sortable="false"/>
+            <DoctorProductsList
+                :data="{doctor_id:data.id}"
+                :doctors="doctors"
+                :items="data.doctor_products"
+                :searchable="false"
+                :sortable="false"
+                :visitData="{filter:{doctor_id:data.id}}"
+                title="doctor_products"/>
         </section>
         <!--        <section v-show="step === 1">
                     <DynamicList

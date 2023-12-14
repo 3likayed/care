@@ -46,7 +46,9 @@ class Purchase extends Model
     ];
 
     protected $appends = ['total_paid'];
-    protected $with = ['supplier:id,name'] ;
+
+    protected $with = ['supplier:id,name'];
+
     public function supplier(): BelongsTo
     {
         return $this->belongsTo(Supplier::class);
@@ -73,13 +75,15 @@ class Purchase extends Model
     {
         return $this->belongsTo(Employee::class);
     }
+
     public function scopeCreatedAt($query, $value)
     {
         $value = explode('|', $value);
-        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));;
-        if (isset($value[1]) && (bool)$value[1]) {
+        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
+        if (isset($value[1]) && (bool) $value[1]) {
             $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
+
         return $query;
     }
 }

@@ -8,7 +8,7 @@ use App\Http\Resources\ModelCollection;
 use App\Models\Appointment;
 use App\Models\AppointmentType;
 use App\Models\Doctor;
-use App\Models\Product;
+use App\Services\UserService;
 use App\Sorts\RelationSort;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -41,6 +41,7 @@ class AppointmentController extends Controller
             ->allowedFilters(AllowedFilter::exact('id'), 'doctor_id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date'))
             ->paginate($request->get('per_page'));
         $appointmentTypes = AppointmentType::all();
+
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
@@ -56,7 +57,7 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
-        if (!Carbon::parse($data['date'])->isToday()) {
+        if (! Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
@@ -73,7 +74,7 @@ class AppointmentController extends Controller
 
         $data = $request->validated();
 
-        if (!Carbon::parse($data['date'])->isToday()) {
+        if (! Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
@@ -86,14 +87,15 @@ class AppointmentController extends Controller
     public function show(Appointment $appointment)
     {
         $appointment->load('patient', 'appointmentProducts.product', 'appointmentProducts.appointment');
-
         $appointmentTypes = AppointmentType::all();
+        $doctor = UserService::authDoctor();
+
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,
             'appointment_types' => $appointmentTypes,
             'doctors' => Doctor::all(),
-            'products' => Product::all(),
-            'meta' => meta()->metaValues(['title' => [__('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $appointment->id]), __('dashboard.appointments')]])
+            'products' => $doctor?->products,
+            'meta' => meta()->metaValues(['title' => [__('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $appointment->id]), __('dashboard.appointments')]]),
         ]);
     }
 

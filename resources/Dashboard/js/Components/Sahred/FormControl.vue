@@ -66,7 +66,10 @@ const props = defineProps({
         type: [String, Number, Boolean, Array, Object],
         default: "",
     },
-    actions: Array | Object,
+    actions: {
+        type : Array,
+        default : [],
+    },
     required: Boolean,
     borderless: Boolean,
     transparent: Boolean,
@@ -258,7 +261,7 @@ function doAction(action, key) {
                 class="absolute my-auto translate-y-1/2 top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
                 w="w-10"
             />
-            <BaseButtons v-for="(action,key) in actions" v-if="!disabled">
+            <BaseButtons v-for="(action,key) in actions"  :key="key">
                 <BaseButton
                     :key="key"
                     :color="action.color"

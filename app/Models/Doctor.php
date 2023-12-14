@@ -26,8 +26,10 @@ class Doctor extends Authenticatable
         'remember_token',
     ];
 
-    protected $with = ['employee','specializations:id,name'];
-    protected $appends=['name'];
+    protected $with = ['employee', 'specializations:id,name'];
+
+    protected $appends = ['name'];
+
     public function user()
     {
         return $this->employee->user();
@@ -35,7 +37,7 @@ class Doctor extends Authenticatable
 
     public function products(): BelongsToMany
     {
-        return $this->belongsToMany(Product::class, DoctorProduct::class);
+        return $this->belongsToMany(Product::class, DoctorProduct::class)->withPivot('available');
     }
 
     public function doctorProducts(): HasMany

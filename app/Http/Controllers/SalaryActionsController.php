@@ -21,15 +21,13 @@ class SalaryActionsController extends Controller
         $this->middleware(['permission:salary-actions.delete'])->only(['destroy']);
     }
 
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return;
-    }
 
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -44,18 +42,18 @@ class SalaryActionsController extends Controller
         $data['salary_id'] = $employee->salary->id;
         $data['date'] = Carbon::now();
         // dd($data) ;
-        $employee=$employee->salaryActions()->create($data);
-        if(($data['reason'] == 'giving' && $data['picked'] == 'now') || $data['reason'] ==='loan')
-        {
+        $employee = $employee->salaryActions()->create($data);
+        if (($data['reason'] == 'giving' && $data['picked'] == 'now') || $data['reason'] === 'loan') {
 
-          $action = SalaryAction::where('employee_id',$data['employee_id'])->get()->last();
-          TransactionService::create($action, [
-            'amount' => $data['amount'],
-            'status' => 'confirmed',
-            'type' => 'withdraw',
-        ]);    ;
+            $action = SalaryAction::where('employee_id', $data['employee_id'])->get()->last();
+            TransactionService::create($action, [
+                'amount' => $data['amount'],
+                'status' => 'confirmed',
+                'type' => 'withdraw',
+            ]);
         }
         DB::commit();
+
         return success();
     }
 
@@ -66,7 +64,6 @@ class SalaryActionsController extends Controller
     {
         //
     }
-
 
     /**
      * Update the specified resource in storage.

@@ -22,10 +22,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @property Employee|null $employee
- *
- * @package App\Models
  */
 class Salary extends Model
 {
@@ -36,13 +33,13 @@ class Salary extends Model
     protected $casts = [
         'employee_id' => 'int',
         'salary_amount' => 'float',
-        'insurance_amount' => 'float'
+        'insurance_amount' => 'float',
     ];
 
     protected $fillable = [
         'employee_id',
         'salary_amount',
-        'insurance_amount'
+        'insurance_amount',
     ];
 
     protected $appends = ['net_amount'];

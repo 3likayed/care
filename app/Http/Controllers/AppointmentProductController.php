@@ -6,7 +6,6 @@ use App\Http\Requests\AppointmentProductStoreRequest;
 use App\Http\Requests\AppointmentProductUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\AppointmentProduct;
-use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -33,12 +32,10 @@ class AppointmentProductController extends Controller
             //filtering
             ->allowedFilters(AllowedFilter::exact('id'), 'name')
             ->paginate($request->get('per_page'));
-        $appointmentProductTypes = AppointmentProductType::all();
 
         return Inertia::render('AppointmentProducts/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointment_products')]),
             'data' => ModelCollection::make($appointmentProducts),
-            'appointment_product_types' => $appointmentProductTypes,
         ]);
     }
 
@@ -49,92 +46,76 @@ class AppointmentProductController extends Controller
     {
         DB::beginTransaction();
         $data = $request->validated();
+        $doctorProducts = $request->doctorProducts;
+        $appointment = $request->appointment;
         $appointmentProductsData = [];
-        $products = Product::whereIn('id', collect($this->products)->pluck('id'))->get();
+        foreach ($data['products'] as $key => $product) {
+            //get the current doctor product
+            $currentDoctorProduct = $doctorProducts->find($product['id']);
 
-        foreach ($data['products'] as $key => $appointmentProduct) {
-            $quantity = $appointmentProduct['quantity'];
-            $product = $products->find($appointmentProduct['id']);
-            $stocks = $product
-                ->stocks()
-                ->where('available', '>=', 0)
-                ->latest('expires_at')
-                ->lazy();
-            foreach ($stocks as $stock) {
-                $available = $stock->available;
-                if ($quantity > $available) {
-                    $quantity -= $available;
-                    $stock->available = 0;
-                } else {
-                    $stock->available -= $quantity;
-                    return false;
-                }
-                $stock->save();
-            }
-            if ($quantity > 0) {
-                return error();
-            }
+            //decrease the available amount to the product  of the doctor
+            $currentDoctorProduct
+                ->pivot //DoctorProduct Model
+                ->decrement('available', $product['quantity']);
+
+            //push the data to the AppointmentProductData array
             $appointmentProductsData[] = [
+                'product_id' => $product['id'],
                 'appointment_id' => $data['appointment_id'],
-                'product_id' => $appointmentProduct['id'],
-                'unit_price' => Product::find($appointmentProduct['id'])->price,
-                'quantity' => $appointmentProduct['quantity'],
+                'quantity' => $product['quantity'],
+                'unit_price' => $currentDoctorProduct->price,
             ];
         }
 
-
-        AppointmentProduct::insert($appointmentProductsData);
+        //attach products to the appointments
+        $appointment->products()->attach($appointmentProductsData);
         DB::commit();
+
         return success();
 
     }
 
-    public
-    function update(AppointmentProductUpdateRequest $request, AppointmentProduct $appointmentProduct)
+    public function update(AppointmentProductUpdateRequest $request, AppointmentProduct $appointmentProduct)
     {
-
+        DB::beginTransaction();
         $data = $request->validated();
-        $data['price'] = AppointmentType::find($data['appointment_product_type_id'])->price;
-        $appointmentProduct->update($data);
+        // available amount for the doctor
+        $doctorProductAvailable = $request
+            ->doctorProduct // predefined in the AppointmentProductUpdateRequest->prepareForValidation
+            ->pivot         //DoctorProduct model
+            ->available;
+
+        $request->doctorProduct
+            ->pivot //DoctorProduct model
+            ->update([
+                // calculate the new doctor available quantity to update it
+                'available' => $doctorProductAvailable - ($data['quantity'] - $appointmentProduct->quantity),
+            ]);
+        $appointmentProduct->update([
+            'quantity' => $data['quantity'],
+        ]);
+        DB::commit();
 
         return success();
-    }
-
-    public
-    function show(AppointmentProduct $appointmentProduct)
-    {
-        $appointmentProduct->load('patient', 'appointment_productType');
-        $appointmentProductTypes = AppointmentType::all();
-        $products = Product::all();
-        return Inertia::render('Appointments/Show', [
-            'data' => $appointmentProduct,
-            'appointment_product_types' => $appointmentProductTypes,
-            'products' => $products,
-            'meta' => meta()->metaValues(['title' => "$appointmentProduct->name | " . __('dashboard.appointment_products')]),
-        ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public
-    function destroy(AppointmentProduct $appointmentProduct)
+    public function destroy(AppointmentProduct $appointmentProduct)
     {
+        DB::beginTransaction();
+        //return the quantity to available quantity of the doctor
+        $appointmentProduct
+            ->doctor
+            ->products
+            ->find($appointmentProduct->product_id)
+            ->pivot //DoctorProduct Model
+            ->increment('available', $appointmentProduct->quantity);
         $appointmentProduct->delete();
+
+        DB::commit();
 
         return success();
     }
-
-    private
-    function recursiveStock($stock, $quantity)
-    {
-        if ($stock->available >= $quantity) {
-            $stock->available = $stock->available - $quantity;
-            $stock->save();
-        } else {
-            $this->recursiveStock($stock->next(), $quantity - $stock->available);
-        }
-    }
-
-
 }

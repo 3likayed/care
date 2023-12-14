@@ -27,7 +27,8 @@
                 :items="data.doctor_products"
                 :searchable="false"
                 :sortable="false"
-                :visit-data="{filter:{'doctor_id':data.id}}"
+                title="doctor_products"
+                :visit-data="{filter:{'product_id':data.id}}"
             />
         </section>
     </SectionMain>

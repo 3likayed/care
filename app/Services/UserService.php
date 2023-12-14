@@ -4,6 +4,9 @@
 
 namespace App\Services;
 
+use App\Models\Doctor;
+use App\Models\Employee;
+
 class UserService
 {
     public static function updateOrCreateUser($userable, array $data)
@@ -47,5 +50,14 @@ class UserService
         self::syncUserRole($user, $data['role']);
 
         return $user;
+    }
+
+    public static function authDoctor(): ?Doctor
+    {
+        if (auth()->user()->userable_type === Employee::class && auth()->user()->userable?->employable_type == Doctor::class) {
+            return auth()->user()->userable?->employable;
+        }
+
+        return null;
     }
 }

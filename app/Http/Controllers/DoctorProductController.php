@@ -30,12 +30,12 @@ class DoctorProductController extends Controller
     public function index(Request $request)
     {
         $doctorProducts = QueryBuilder::for(DoctorProduct::class)
-            ->allowedSorts( 'available',
+            ->allowedSorts('available',
                 AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name'),
                 AllowedSort::custom('product.name', new RelationSort()),
 
             )
-            ->allowedFilters(AllowedFilter::exact('id'), 'doctor_id','product_id')
+            ->allowedFilters(AllowedFilter::exact('id'), 'doctor_id', 'product_id')
             ->paginate($request->get('per_page'));
 
         return Inertia::render('DoctorProducts/Index', [
@@ -56,7 +56,6 @@ class DoctorProductController extends Controller
         $stock = Stock::find($data['stock_id']);
         $stock->decrement('available', $data['quantity']);
 
-
         $doctor = Doctor::find($data['doctor_id']);
         $doctorProduct = $doctor->doctorProducts()->where('product_id', '=', $stock->product_id)->first();
         if ($doctorProduct) {
@@ -65,12 +64,12 @@ class DoctorProductController extends Controller
             DoctorProduct::create([
                 'product_id' => $stock->product_id,
                 'doctor_id' => $data['doctor_id'],
-                'available' => $data['quantity']
+                'available' => $data['quantity'],
             ]);
         }
         DB::commit();
+
         return success();
 
     }
-
 }

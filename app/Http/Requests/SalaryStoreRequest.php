@@ -25,7 +25,7 @@ class SalaryStoreRequest extends FormRequest
         return [
             'employee_id' => ['required', 'numeric', 'exists:employees,id'],
             'salary_amount' => ['required', 'numeric', 'min:0'],
-            'insurance_amount' => ['required', 'numeric', 'min:0', 'lt:salary_amount']
+            'insurance_amount' => ['required', 'numeric', 'min:0', 'lt:salary_amount'],
         ];
     }
 }

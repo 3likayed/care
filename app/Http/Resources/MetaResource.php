@@ -17,8 +17,9 @@ class MetaResource extends JsonResource
     public function toArray(?Request $request = null): array
     {
         $title = $this['title'] ?? '';
+
         return [
-            'title' => is_array($title) ? collect($title)->map(fn($item) => $this->trim($item)) : $this->trim($title),
+            'title' => is_array($title) ? collect($title)->map(fn ($item) => $this->trim($item)) : $this->trim($title),
             'description' => $this->trim($this['description'] ?? ''),
             'keywords' => $this->trim($this['keywords'] ?? ''),
             'image' => $this->trim($this['image'] ?? asset('assets/logo.png')),

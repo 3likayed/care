@@ -1,8 +1,9 @@
 <template>
 
-    <SectionTitleLineWithButton :icon="mdiCashCheck"
+    <SectionTitleLineWithButton :icon="mdiCartVariant"
                                 :visit-data="visitData"
                                 main
+                                :title="title ?? 'doctors_products'"
                                 model="doctor-products">
 
         <template #create>
@@ -16,7 +17,7 @@
             :searchable="searchable"
             :sortable="sortable"
         >
-            <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
+            <tr v-for="(item) in items" class="rtl:flex-row-reverse">
                 <td :data-label="__('doctor_name')">
                     <Link :href="Model.showLink('doctors',item.doctor.id)">
                         {{ item.doctor.name }}
@@ -46,10 +47,11 @@ import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLine
 import DoctorProductCreate from "./DoctorProductCreate.vue";
 import {Link} from "@inertiajs/vue3";
 import {Model} from "../../Utils/index.js";
-import {mdiCashCheck} from "@mdi/js";
+import {mdiCartVariant} from "@mdi/js";
 
 let props = defineProps({
     data: Object,
+    title: String,
     products: {
         type: Array,
         default: []

@@ -17,15 +17,13 @@ class SalaryController extends Controller
         $this->middleware(['permission:salaries.delete'])->only(['destroy']);
     }
 
-
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return;
-    }
 
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -36,6 +34,7 @@ class SalaryController extends Controller
         DB::beginTransaction();
         Salary::create($data);
         DB::commit();
+
         return success();
     }
 
@@ -46,7 +45,6 @@ class SalaryController extends Controller
     {
         //
     }
-
 
     /**
      * Update the specified resource in storage.
@@ -63,5 +61,4 @@ class SalaryController extends Controller
     {
         //
     }
-
 }

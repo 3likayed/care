@@ -7,6 +7,7 @@
 namespace App\Models;
 
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -21,11 +22,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- *
  * @property Doctor|null $doctor
  * @property Product|null $product
- *
- * @package App\Models
  */
 class DoctorProduct extends Model
 {
@@ -36,14 +34,17 @@ class DoctorProduct extends Model
     protected $casts = [
         'doctor_id' => 'int',
         'product_id' => 'int',
-        'available' => 'float'
+        'available' => 'float',
     ];
 
     protected $fillable = [
         'doctor_id',
         'product_id',
-        'available'
+        'available',
     ];
+
+    protected $appends = ['name'];
+
     protected $with = ['product:id,name', 'doctor:id,name'];
 
     public function doctor(): BelongsTo
@@ -54,5 +55,10 @@ class DoctorProduct extends Model
     public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
+    }
+
+    public function name(): Attribute
+    {
+        return Attribute::get(fn () => $this->product->name);
     }
 }

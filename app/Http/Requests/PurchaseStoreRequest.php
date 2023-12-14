@@ -25,17 +25,17 @@ class PurchaseStoreRequest extends FormRequest
         foreach ($this->products as $product) {
             $sum += ($product['quantity'] ?? 0) * ($product['price'] ?? 0);
         }
+
         return [
             'supplier_id' => ['required'],
             'products' => ['required', 'array', 'min:1'],
             'products.*.id' => ['required', 'min:1'],
             'products.*.quantity' => ['numeric', 'min:0', 'required'],
             'products.*.price' => ['numeric', 'min:1', 'required'],
-            'products.*.expires_at' => ['nullable', 'date', 'after:' . now()],
+            'products.*.expires_at' => ['nullable', 'date', 'after:'.now()],
             'notes' => ['nullable', 'string', 'max:150'],
             'paid_price' => ['nullable', 'numeric', "between:1,$sum"],
 
         ];
     }
 }
-    

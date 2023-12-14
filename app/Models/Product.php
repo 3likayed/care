@@ -57,8 +57,9 @@ class Product extends Model
 
     public function doctorProducts(): HasMany
     {
-        return $this->hasMany(DoctorProduct::class) ;
+        return $this->hasMany(DoctorProduct::class);
     }
+
     public function stocks(): HasMany
     {
         return $this->hasMany(Stock::class);

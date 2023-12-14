@@ -11,7 +11,6 @@ use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
 
 class RelationSort implements Sort
 {
-
     public function __invoke(Builder $query, bool $descending, string $property)
     {
 
@@ -21,7 +20,6 @@ class RelationSort implements Sort
 
         $modelTable = $query->getModel()->getTable();
         $iterationModelTable = $modelTable;
-
 
         foreach ($relations as $key => $relation) {
             // Use the actual table name associated with the model

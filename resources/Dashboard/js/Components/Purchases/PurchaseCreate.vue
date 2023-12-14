@@ -77,7 +77,7 @@
         />
         <FormControl
             v-model="form.products[key].total"
-            :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key} }"
+            :actions="{delete:{color:'danger' , icon:mdiTrashCanOutline  ,key:key ,isDisabled:false} }"
             :icon="mdiCash"
             :placeholder="__('total')"
             is-disabled
@@ -138,7 +138,7 @@ import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__, handleField} from "../../Globals.js";
-import {inject, ref, watch, watchEffect} from "vue";
+import {inject, ref, watchEffect} from "vue";
 import {Model} from "../../Utils/index.js";
 import {collect} from "collect.js";
 
