@@ -17,7 +17,6 @@
             <FormControl
                 v-model="computedData.patient_id"
                 :icon="mdiAccount"
-                :is-disabled="isDisabled"
                 :options="[computedData.patient]"
                 autocomplete="patient"
                 is-disabled
@@ -30,7 +29,6 @@
             <FormControl
                 v-model="form.appointment_type_id"
                 :icon="mdiAccount"
-                :is-disabled="isDisabled"
                 :options="appointmentTypes"
                 autocomplete="appointment_type_id"
                 name="appointment_type_id"
@@ -42,7 +40,6 @@
             <FormControl
                 v-model="form.date"
                 :icon="mdiCalendar"
-                :is-disabled="isDisabled"
                 autocomplete="date"
                 inline
                 name="date"
@@ -54,8 +51,7 @@
             <FormControl
                 v-model="form.doctor_id"
                 :icon="mdiAccount"
-                :is-disabled="isDisabled || !moment(form.date).isSame(moment(),'day')"
-                :model-value="!moment(form.date).isSame(moment(),'day') ? null : form.doctor_id"
+                :is-disabled="!moment(form.date).isSame(moment(),'day')"
                 :options="doctors"
                 autocomplete="doctor_id"
                 name="doctor_id"
@@ -67,7 +63,6 @@
             <FormControl
                 v-model="price"
                 :icon="mdiCash"
-                :is-disabled="isDisabled"
                 autocomplete="price"
                 is-disabled
                 name="price"
@@ -85,7 +80,7 @@ import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__} from "../../Globals.js";
-import {computed, inject, ref} from "vue";
+import {computed, inject, provide, ref} from "vue";
 import {Model} from "../../Utils/index.js";
 import moment from "moment";
 import {collect} from "collect.js";
@@ -113,6 +108,8 @@ let props = defineProps({
 
 let computedData = computed(() => props.data)
 let showEdit = props.isModal ? inject('showEdit') : true;
+provide('isDisabled', props.isDisabled);
+
 let form = useForm({
     appointment_type_id: computedData.value.appointment_type_id,
     patient_id: computedData.value?.patient_id,
@@ -120,6 +117,7 @@ let form = useForm({
     date: moment(computedData.value.date).format('YYYY-MM-DDTHH:mm'),
 
 });
+
 let price = ref(props.data.price);
 
 const setPrice = (appointmentTypeId) => {

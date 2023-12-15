@@ -100,7 +100,7 @@ let props = defineProps({
     }
 })
 let disabled = computed(() => props.isDisabled || !can(`patients.edit`));
-provide('isDisabled', disabled);
+provide('isDisabled', disabled.value);
 
 let showEdit = props.isModal ? inject('showEdit') : true;
 

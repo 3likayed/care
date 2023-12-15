@@ -10,7 +10,6 @@
         <section v-if="step===0">
             <DoctorEdit
                 :data="data"
-
                 :is-modal="false"/>
         </section>
         <section v-if="step===1">

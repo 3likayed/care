@@ -37,9 +37,7 @@ let props = defineProps({
 
 const slots = useSlots();
 const emit = defineEmits(["action", "buttonClick"]);
-let disabled = computed(() => inject('isDisabled', false).value || props.isDisabled)
-
-
+let disabled = computed(() => inject('isDisabled', false) || props.isDisabled)
 function doAction(action, key) {
     emit("action", action, key)
 }

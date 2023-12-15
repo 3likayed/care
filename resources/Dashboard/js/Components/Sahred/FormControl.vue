@@ -67,8 +67,8 @@ const props = defineProps({
         default: "",
     },
     actions: {
-        type : Array,
-        default : [],
+        type: Object,
+        default: {},
     },
     required: Boolean,
     borderless: Boolean,
@@ -83,8 +83,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue", "setRef", "action", 'filter', 'render']);
-let disabled = computed(() => inject('isDisabled', false).value || Boolean(props.isDisabled))
-
+let disabled = computed(() =>( inject('isDisabled', false) || Boolean(props.isDisabled)))
 const computedValue = computed({
     get: () => props.modelValue,
     set: (value) => {
@@ -194,6 +193,7 @@ function doAction(action, key) {
                 :disabled="disabled"
                 :is-multiple="isMultiple"
                 :name="name"
+                :is-disabled="disabled"
                 :options="computedOptions"
                 :placeholder="placeholder"
                 @filter="(value)=>emit('filter',value.value)">
@@ -206,7 +206,7 @@ function doAction(action, key) {
                 v-model="computedValue"
                 :autocomplete="autocomplete??name"
                 :class="inputElClass"
-                :disabled="disabled"
+                :is-disabled="disabled"
                 :inline="inline"
                 :inputmode="inputmode"
                 :max="max"
@@ -261,7 +261,7 @@ function doAction(action, key) {
                 class="absolute my-auto translate-y-1/2 top-0 start-0 z-10 pointer-events-none text-gray-500 dark:text-slate-400"
                 w="w-10"
             />
-            <BaseButtons v-for="(action,key) in actions"  :key="key">
+            <BaseButtons v-for="(action,key) in actions" v-if="!disabled" :key="key">
                 <BaseButton
                     :key="key"
                     :color="action.color"

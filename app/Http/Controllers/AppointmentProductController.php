@@ -88,8 +88,8 @@ class AppointmentProductController extends Controller
         $request->doctorProduct
             ->pivot //DoctorProduct model
             ->update([
-                // calculate the new doctor available quantity to update it
-                'available' => $doctorProductAvailable - ($data['quantity'] - $appointmentProduct->quantity),
+                                // calculate the new doctor available quantity to update it
+                'available' => $doctorProductAvailable + $appointmentProduct->quantity - $data['quantity'],
             ]);
         $appointmentProduct->update([
             'quantity' => $data['quantity'],
