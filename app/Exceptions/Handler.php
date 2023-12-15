@@ -32,8 +32,8 @@ class Handler extends ExceptionHandler
     {
         $response = parent::render($request, $e);
 
-        if (! app()->environment(['local', 'testing']) && in_array($response->status(), [500, 503, 404, 403]) && $request->header('X-inertia')) {
-            return error();
+        if (!app()->environment(['local', 'testing']) && in_array($response->status(), [500, 503, 404, 403]) && $request->header('X-inertia')) {
+            return error(__($e->getMessage()));
         } elseif ($response->status() === 419) {
             return error();
         }

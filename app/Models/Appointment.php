@@ -24,7 +24,7 @@ class Appointment extends Model
 
     protected $with = ['patient:id,name', 'appointmentType:id,name', 'doctor'];
 
-    protected $appends = ['name'];
+    protected $appends = ['name','total_price'];
 
     public function patient(): BelongsTo
     {
@@ -46,7 +46,7 @@ class Appointment extends Model
         return $this->morphMany(Transaction::class, 'transactionable');
     }
 
-    public function total_price(): Attribute
+    public function totalPrice(): Attribute
     {
         return Attribute::get(function () {
             $sum = 0;

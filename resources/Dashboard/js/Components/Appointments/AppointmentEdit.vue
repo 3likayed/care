@@ -1,7 +1,6 @@
 <template>
 
     <CardBoxModal
-        v-if="can(`appointments.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"
         :has-confirm="!isDisabled"
@@ -29,6 +28,7 @@
             <FormControl
                 v-model="form.appointment_type_id"
                 :icon="mdiAccount"
+                @update:model-value="(value)=>setPrice(value)"
                 :options="appointmentTypes"
                 autocomplete="appointment_type_id"
                 name="appointment_type_id"
@@ -79,7 +79,7 @@ import {mdiAccount, mdiCalendar, mdiCash} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
-import {__} from "../../Globals.js";
+import {__, can} from "../../Globals.js";
 import {computed, inject, provide, ref} from "vue";
 import {Model} from "../../Utils/index.js";
 import moment from "moment";
@@ -108,7 +108,7 @@ let props = defineProps({
 
 let computedData = computed(() => props.data)
 let showEdit = props.isModal ? inject('showEdit') : true;
-provide('isDisabled', props.isDisabled);
+provide('isDisabled', props.isDisabled || !can(`appointments.edit`));
 
 let form = useForm({
     appointment_type_id: computedData.value.appointment_type_id,

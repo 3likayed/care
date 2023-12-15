@@ -33,7 +33,7 @@ class AppointmentController extends Controller
     public function index(Request $request)
     {
         $appointments = QueryBuilder::for(Appointment::class)
-            ->allowedSorts('date', 'created_at', 'price', 'id',
+            ->allowedSorts('date', 'created_at', 'id',
                 AllowedSort::custom('patient.name', new RelationSort()),
                 AllowedSort::custom('appointment_type.name', new RelationSort()),
                 AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name')
@@ -57,7 +57,7 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
-        if (! Carbon::parse($data['date'])->isToday()) {
+        if (!Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
@@ -74,7 +74,7 @@ class AppointmentController extends Controller
 
         $data = $request->validated();
 
-        if (! Carbon::parse($data['date'])->isToday()) {
+        if (!Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
@@ -89,7 +89,6 @@ class AppointmentController extends Controller
         $appointment->load('patient', 'appointmentProducts.product', 'appointmentProducts.appointment');
         $appointmentTypes = AppointmentType::all();
         $doctor = UserService::authDoctor();
-
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,
             'appointment_types' => $appointmentTypes,
@@ -104,8 +103,9 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        $appointment->delete();
+        $appointment->delete() ;
 
-        return success();
+        return redirect()
+            ->route('dashboard.appointments.index');
     }
 }

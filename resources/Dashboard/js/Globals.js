@@ -78,6 +78,9 @@ export const modelResolver = (word, replace = ['_', '-']) => {
     return word ? snakeCase(Pluralize(String(word)))
         .replace(replace[0], replace[1]) : ''
 }
+export const parsePrice = (price) => {
+   return  parseFloat(price).toFixed(2).replace(/\.00$/, '');
+}
 
 export default {
     methods: {
@@ -89,6 +92,7 @@ export default {
         Pluralize,
         localesObject,
         modelResolver,
+        parsePrice,
     },
 
 

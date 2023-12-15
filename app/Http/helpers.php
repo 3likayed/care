@@ -68,13 +68,13 @@ if (! function_exists('success')) {
 
 }
 if (! function_exists('error')) {
-    function error($message = null): RedirectResponse
+    function error($message = null,$status=500): RedirectResponse
     {
         if (! $message) {
             $message = __('dashboard.error');
         }
 
-        return back()->with('error', $message);
+        return back()->with('error', $message)->withErrors($message);
     }
 }
 if (! function_exists('sluggify')) {

@@ -2,7 +2,7 @@
 import {computed, ref} from "vue";
 import {Link, usePage} from "@inertiajs/vue3";
 import {useStyleStore} from "../../Stores/style.js";
-import {mdiMinus, mdiPlus} from "@mdi/js";
+import {mdiChevronDown} from "@mdi/js";
 import {getButtonColor} from "../../colors.js";
 import BaseIcon from "./BaseIcon.vue";
 import AsideMenuList from "./AsideMenuList.vue";
@@ -29,7 +29,7 @@ const hasDropdown = computed(() => !!props.item.menu);
 const dropDownActive = () => {
     if (hasDropdown.value) {
         for (let i in props.item.menu) {
-            if (props.item.menu[i].components.includes(usePage().component))
+            if (props.item.menu[i].components?.includes(usePage().component))
                 return true;
         }
     }
@@ -45,8 +45,10 @@ const componentClass = computed(() => [
         : styleStore.asideMenuItemStyle,
 ]);
 // Add itemHref
-const itemHref = computed(() =>
-    props.item.route ? route(props.item.route) : props.item.href
+const itemHref = computed(() => {
+        let itemRoute = typeof props.item.route === 'string' ? [props.item.route] : props.item.route
+        return props.item.route ? route(itemRoute[0], itemRoute[1]) : props.item.href ?? null;
+    }
 );
 
 // Add activeInactiveStyle
@@ -78,34 +80,35 @@ const menuClick = (event) => {
 
 <template>
     <li v-if="canSee">
-        <component
-            :is="item.route ? Link : 'a'"
-            v-slot="vSlot"
-            :class="[componentClass , activeInactiveStyle ]"
-            :href="itemHref"
-            :preserve-state="true"
-            :target="item.target ?? null"
-            :to="item.to ?? null"
-            class="flex cursor-pointer px-2  "
-            @click="menuClick"
-        >
-            <BaseIcon
-                v-if="item.icon"
-                :path="item.icon"
-                :size="18"
-                class="flex-none pe-2"
-            />
-            <span
-                class="grow text-ellipsis line-clamp-1"
-            >{{ __(item.label) }}</span>
+        <div class="flex justify-between items-center cursor-pointer" @click="menuClick ">
+            <component
+                :is="item.route ? Link : 'a'"
+                :class="[componentClass , activeInactiveStyle ]"
+                :href="itemHref"
+                :preserve-state="true"
+                :target="item.target ?? null"
+                :to="item.to ?? null"
+                class="flex px-2  "
+            >
+                <BaseIcon
+                    v-if="item.icon"
+                    :path="item.icon"
+                    :size="18"
+                    class="flex-none pe-2"
+                />
+                <span
+                    class="grow text-ellipsis line-clamp-1"
+                >{{ __(item.label) }}</span>
+
+            </component>
             <BaseIcon
                 v-if="hasDropdown"
-                :class="[vSlot && vSlot.isExactActive ? asideMenuItemActiveStyle : '']"
-                :path="activeInactiveStyle ? mdiMinus : mdiPlus"
+                :class="activeInactiveStyle"
+                :path="mdiChevronDown"
                 class="flex-none"
                 w="w-12"
             />
-        </component>
+        </div>
 
         <AsideMenuList
             v-if="hasDropdown"

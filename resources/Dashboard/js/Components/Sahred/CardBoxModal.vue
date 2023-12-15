@@ -40,7 +40,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue", "cancel", "confirm"]);
-let disabled = computed(() => inject('isDisabled', false).value || props.isDisabled)
+let disabled = computed(() => inject('isDisabled', false) || props.isDisabled)
 
 const value = computed({
     get: () => props.modelValue,

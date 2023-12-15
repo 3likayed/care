@@ -1,21 +1,24 @@
 import {
     mdiAccountStarOutline,
-    mdiCalendar, mdiCart, mdiCartVariant,
-    mdiCashCheck, mdiClipboardPulse,
+    mdiCalendar,
+    mdiCart,
+    mdiCartVariant,
+    mdiCashCheck,
+    mdiClipboardPulse,
     mdiCogOutline,
     mdiDoctor,
     mdiFormatListBulletedType,
     mdiListBoxOutline,
     mdiLockAlertOutline,
-    mdiMagicStaff,
     mdiMonitor,
-    mdiNaturePeople, mdiStocking,
+    mdiNaturePeople,
     mdiTab,
-    mdiTable, mdiToyBrickSearch,
+    mdiTable,
     mdiTruckDelivery,
     mdiViewList,
     mdiWarehouse,
 } from "@mdi/js";
+import {Search} from "./Utils/index.js";
 
 export default [
     {
@@ -64,11 +67,31 @@ export default [
                 icon: mdiListBoxOutline,
             },
             {
-                route: "dashboard.appointments.index",
                 label: "appointments",
                 permission: "appointments.show",
                 components: ['Appointments/Index', 'Appointments/Show'],
+                route: "dashboard.appointments.index",
                 icon: mdiFormatListBulletedType,
+                menu: [
+                    {
+                        route: "dashboard.appointments.index",
+                        label: "appointments",
+                        permission: "appointments.show",
+                        icon: mdiFormatListBulletedType,
+                    },
+                    {
+                        route: ["dashboard.appointments.index", {filter: Search.dateInterval({interval: 0})}],
+                        label: "today_appointments",
+                        permission: "appointments.show",
+                        icon: mdiFormatListBulletedType,
+                    },
+                    {
+                        route: ["dashboard.appointments.index", {filter: Search.dateInterval({interval: 30})}],
+                        label: "month_appointments",
+                        permission: "appointments.show",
+                        icon: mdiFormatListBulletedType,
+                    },
+                ]
             },
         ],
     },
@@ -136,7 +159,7 @@ export default [
                 route: "dashboard.suppliers.index",
                 permission: "suppliers.show",
                 label: "suppliers",
-                components: ['Suppliers/Index','Suppliers/Show'],
+                components: ['Suppliers/Index', 'Suppliers/Show'],
                 icon: mdiTruckDelivery,
             },
         ],

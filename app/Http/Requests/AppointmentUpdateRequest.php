@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AppointmentUpdateRequest extends FormRequest
@@ -11,7 +12,11 @@ class AppointmentUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return false;
+    }
+    protected function failedAuthorization()
+    {
+        throw  new AuthorizationException(__('cant_Update'));
     }
 
     /**

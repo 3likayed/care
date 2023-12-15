@@ -144,6 +144,7 @@ return [
     'appointment' => 'موعد',
     'appointments' => 'المواعيد',
     'today_appointments' => 'مواعيد اليوم',
+    'month_appointments' => 'مواعيد 30 يوم',
     'today_visits' => 'زيارات اليوم',
     'appointment_type' => 'نوع الموعد',
     'appointment_types' => 'أنواع المواعيد',
@@ -202,5 +203,6 @@ return [
     'doctor_products' => 'أصناف الطبيب',
     'doctors_products' => 'أصناف الأطباء',
     'doctor_name' => 'إسم الطبيب',
+    'details' => 'التفاصيل',
 
 ];
