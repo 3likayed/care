@@ -20,7 +20,6 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Blade::anonymousComponentNamespace('theme.arsha.components', 'arsha');
-        Blade::anonymousComponentNamespace('theme.default.components', 'default');
+
     }
 }

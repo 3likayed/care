@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AppointmentStoreRequest;
+use App\Http\Requests\AppointmentTransactionRequest;
 use App\Http\Requests\AppointmentUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Appointment;
 use App\Models\AppointmentType;
 use App\Models\Doctor;
+use App\Services\TransactionService;
 use App\Services\UserService;
 use App\Sorts\RelationSort;
 use Carbon\Carbon;
@@ -25,9 +27,9 @@ class AppointmentController extends Controller
     public function __construct()
     {
         $this->middleware(['permission:appointments.show'])->only(['index', 'show']);
-        $this->middleware(['permission:appointments.edit'])->only(['update']);
+        $this->middleware(['permission:appointments.edit', 'can:update,appointment'])->only(['update']);
         $this->middleware(['permission:appointments.create'])->only(['store']);
-        $this->middleware(['permission:appointments.delete'])->only(['destroy']);
+        $this->middleware(['permission:appointments.delete', 'can:delete,appointment'])->only(['destroy']);
     }
 
     public function index(Request $request)
@@ -38,10 +40,31 @@ class AppointmentController extends Controller
                 AllowedSort::custom('appointment_type.name', new RelationSort()),
                 AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name')
             )
-            ->allowedFilters(AllowedFilter::exact('id'), 'doctor_id', 'appointment_type_id', AllowedFilter::scope('patient', 'patientSearch'), AllowedFilter::scope('date'))
-            ->paginate($request->get('per_page'));
-        $appointmentTypes = AppointmentType::all();
+            ->allowedFilters(AllowedFilter::exact('id'),
+                'doctor_id',
+                'appointment_type_id',
+                AllowedFilter::scope('patient', 'patientSearch'),
+                AllowedFilter::scope('date'),
+                AllowedFilter::scope('created_at')
+            );
 
+        if (isset($request->filter['status'])) {
+            $statusAppointments = $appointments->get()->where('status', $request->filter['status']);
+            if ($statusAppointments->count()) {
+                $appointments = $statusAppointments
+                    ->toQuery()
+                    ->with('doctor', 'patient', 'appointmentType')
+                    ->paginate($request->get('per_page'));
+
+            } else {
+                $appointments = [];
+            }
+        } else {
+            $appointments = $appointments->paginate($request->get('per_page'));
+        }
+
+
+        $appointmentTypes = AppointmentType::all();
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
@@ -63,9 +86,9 @@ class AppointmentController extends Controller
 
         $data['price'] = AppointmentType::find($data['appointment_type_id'])->price;
         $data['employee_id'] = auth()->user()->userable_id;
-        Appointment::create($data);
+        $appointment = Appointment::create($data);
 
-        return success();
+        return success(to: route('dashboard.appointments.show', $appointment->id));
 
     }
 
@@ -81,14 +104,15 @@ class AppointmentController extends Controller
         $data['price'] = AppointmentType::find($data['appointment_type_id'])->price;
         $appointment->update($data);
 
-        return success();
+        return success(to: route('dashboard.appointments.show', $appointment->id));
     }
 
     public function show(Appointment $appointment)
     {
-        $appointment->load('patient', 'appointmentProducts.product', 'appointmentProducts.appointment');
+        $appointment->load('patient', 'appointmentProducts.product', 'appointmentProducts.appointment', 'transactions');
         $appointmentTypes = AppointmentType::all();
         $doctor = UserService::authDoctor();
+
         return Inertia::render('Appointments/Show', [
             'data' => $appointment,
             'appointment_types' => $appointmentTypes,
@@ -103,9 +127,23 @@ class AppointmentController extends Controller
      */
     public function destroy(Appointment $appointment)
     {
-        $appointment->delete() ;
+        $appointment->delete();
 
         return redirect()
             ->route('dashboard.appointments.index');
+    }
+
+    public function transaction(AppointmentTransactionRequest $request, Appointment $appointment)
+    {
+        $data = $request->validated();
+
+        TransactionService::deposit(
+            transactionable: $appointment,
+            data: [
+                'amount' => $data['amount'],
+                'status' => 'pending',
+            ]);
+
+        return success();
     }
 }

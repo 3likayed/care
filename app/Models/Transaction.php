@@ -56,4 +56,14 @@ class Transaction extends Model
 
         return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.'.$this->model['name']), 'id' => $this->id]));
     }
+
+    public function scopeWithdraws()
+    {
+        return $this->where('type', '=', 'withdraw');
+    }
+
+    public function scopeDeposits()
+    {
+        return $this->where('type', '=', 'deposit');
+    }
 }

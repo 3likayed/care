@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal
+    <CardBoxModal :is-dirty="form.isDirty"
         v-if="can(`patients.create`)"
         :button-label="__('create')"
         :has-cancel="isModal"

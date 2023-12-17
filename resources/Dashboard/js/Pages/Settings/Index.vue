@@ -2,7 +2,7 @@
     <SectionMain>
         <BreadCrumb
             :items="[{name: __('settings'), href: route(`dashboard.settings.edit`)}]"/>
-        <CardBoxModal
+        <CardBoxModal :is-dirty="form.isDirty"
             v-if="can(`settings.edit`)"
             :button-label="__('edit')"
             :has-cancel="isModal"

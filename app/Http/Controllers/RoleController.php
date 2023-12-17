@@ -70,6 +70,9 @@ class RoleController extends Controller
      */
     public function destroy(Role $role)
     {
+        if ($role->name === 'super-admin') {
+            return error(__('cant_delete'));
+        }
         $role->delete();
 
         return success();

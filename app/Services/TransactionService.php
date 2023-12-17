@@ -9,6 +9,16 @@ use Illuminate\Validation\ValidationException;
 
 class TransactionService
 {
+    public static function deposit($transactionable, $data, $hasRemaining = false)
+    {
+        $data['type'] = 'deposit';
+        return self::create($transactionable, $data, $hasRemaining);
+    }
+    public static function withdraw($transactionable, $data, $hasRemaining = false)
+    {
+        $data['type'] = 'withdraw';
+        return self::create($transactionable, $data, $hasRemaining);
+    }
     public static function create($transactionable, $data, $hasRemaining = false)
     {
         DB::beginTransaction();
@@ -53,10 +63,10 @@ class TransactionService
         if ($transactions && $transactions->count()) {
             $startDate = $transactions->first()->created_at->toDateString();
             $endDate = $transactions->last()->created_at->toDateString();
-            $key = "transactions_total{$operation}_".$startDate.'_'.$endDate;
+            $key = "transactions_total{$operation}_" . $startDate . '_' . $endDate;
 
             return Cache::tags(['transactions', $operation, $startDate, $endDate])->remember($key, 100, function () use ($transactions, $operation) {
-                if (! $transactions) {
+                if (!$transactions) {
                     $transactions = Transaction::all();
                 }
 

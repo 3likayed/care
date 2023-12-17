@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal
+    <CardBoxModal :is-dirty="form.isDirty"
         v-if="can(`appointments.create`)"
         :button-label="__('create')"
         :has-cancel="isModal"
@@ -51,7 +51,7 @@
             <FormControl
                 v-model="form.doctor_id"
                 :icon="mdiAccount"
-                :is-disabled="!moment(form.date).isSame(moment(),'day')"
+                :is-disabled="form.date ? !moment(form.date).isSame(moment(),'day') : true"
                 :model-value="!moment(form.date).isSame(moment(),'day') ? null : form.doctor_id"
                 :options="doctors"
                 autocomplete="doctor_id"

@@ -7,7 +7,7 @@ import BaseButton from "./BaseButton.vue";
 import pluralize from "pluralize"
 import {Link} from "@inertiajs/vue3";
 import {Model} from "../../Utils/index.js";
-import {__} from "../../Globals.js";
+import {__, can} from "../../Globals.js";
 
 let props = defineProps({
     icon: {
@@ -83,7 +83,7 @@ let computedTitle = computed(() => __(props.title || props.model))
         </div>
         <slot v-if="hasSlot">
         </slot>
-        <BaseButton v-if="hasCreate && can(`${model}.create`)" :icon="mdiPlusCircle" color="success"
+        <BaseButton v-if="(hasCreate && can(`${model}.create`))" :icon="mdiPlusCircle" color="success"
                     @click="showCreate=true"/>
     </section>
 

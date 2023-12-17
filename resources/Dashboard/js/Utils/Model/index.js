@@ -79,6 +79,9 @@ export default class Model {
             case 'edit' :
                 this.edit(model, form, id);
                 break;
+            case 'transaction' :
+                this.transaction(model, form, id);
+                break;
             case 'create' :
                 this.create(model, form)
         }

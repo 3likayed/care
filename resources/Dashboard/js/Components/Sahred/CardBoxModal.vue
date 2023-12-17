@@ -14,6 +14,10 @@ const props = defineProps({
         type: String,
         required: true,
     },
+    isDirty: {
+        type: Boolean,
+        default: true,
+    },
     isModal: {
         type: Boolean,
         default: true
@@ -95,6 +99,7 @@ if (props.isModal) {
             <template #footer>
                 <BaseButtons>
                     <BaseButton
+                        v-if="isDirty"
                         :color="button"
                         :label="buttonLabel"
                         @click="confirm"
@@ -122,7 +127,7 @@ if (props.isModal) {
         <template #footer>
             <BaseButtons>
                 <BaseButton
-                    v-if="hasConfirm && !disabled "
+                    v-if="hasConfirm && !disabled &&isDirty "
                     :color="button"
                     :label="buttonLabel"
                     @click="confirm"

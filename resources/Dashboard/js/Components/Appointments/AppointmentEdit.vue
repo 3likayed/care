@@ -5,6 +5,7 @@
         :has-cancel="isModal"
         :has-confirm="!isDisabled"
         :has-errors="form.hasErrors"
+        :is-dirty="form.isDirty"
         :is-form="!isDisabled"
         :is-modal="isModal"
         :model-value="true"
@@ -28,12 +29,12 @@
             <FormControl
                 v-model="form.appointment_type_id"
                 :icon="mdiAccount"
-                @update:model-value="(value)=>setPrice(value)"
                 :options="appointmentTypes"
                 autocomplete="appointment_type_id"
                 name="appointment_type_id"
                 required
                 type="select"
+                @update:model-value="(value)=>setPrice(value)"
             />
         </FormField>
         <FormField :errors="form.errors.date" :label="__('date')">
@@ -45,6 +46,7 @@
                 name="date"
                 required
                 type="datetime"
+                @update:model-value="(value) => !moment(value).isSame(moment(),'day') ? form.doctor_id=null :'' "
             />
         </FormField>
         <FormField :errors="form.errors.doctor_id" :label="__('doctor')">
@@ -108,7 +110,7 @@ let props = defineProps({
 
 let computedData = computed(() => props.data)
 let showEdit = props.isModal ? inject('showEdit') : true;
-provide('isDisabled', props.isDisabled || !can(`appointments.edit`));
+provide('isDisabled', props.isDisabled || !can(`appointments.edit`) || props.data.doctor_id);
 
 let form = useForm({
     appointment_type_id: computedData.value.appointment_type_id,

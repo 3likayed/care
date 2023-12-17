@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal
+    <CardBoxModal :is-dirty="form.isDirty"
         v-if="can(`appointment-types.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"

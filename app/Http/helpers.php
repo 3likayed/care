@@ -6,19 +6,19 @@ use App\Services\MediaLibrary\MediaService;
 use App\Services\MetaService;
 use Illuminate\Http\RedirectResponse;
 
-if (! function_exists('translations')) {
+if (!function_exists('translations')) {
     function translations($file, $locale = null)
     {
         $desiredLocale = $locale ?? app()->currentLocale();
-        $json = base_path('lang/'.$desiredLocale."/$file.php");
-        if (! file_exists($json)) {
+        $json = base_path('lang/' . $desiredLocale . "/$file.php");
+        if (!file_exists($json)) {
             return [];
         }
 
         return include $json;
     }
 }
-if (! function_exists('translationValidation')) {
+if (!function_exists('translationValidation')) {
     function translationValidation(array $rules): array
     {
         $calculatedRules = [];
@@ -31,7 +31,7 @@ if (! function_exists('translationValidation')) {
         return $calculatedRules;
     }
 }
-if (! function_exists('deepTranslationValidation')) {
+if (!function_exists('deepTranslationValidation')) {
     function deepTranslationValidation(array $rules): array
     {
         $calculatedRules = [];
@@ -46,7 +46,7 @@ if (! function_exists('deepTranslationValidation')) {
         return $calculatedRules;
     }
 }
-if (! function_exists('metaValidation')) {
+if (!function_exists('metaValidation')) {
     function metaValidation(?array $rules = null): array
     {
         return [
@@ -56,28 +56,30 @@ if (! function_exists('metaValidation')) {
         ];
     }
 }
-if (! function_exists('success')) {
-    function success($message = null): RedirectResponse
+if (!function_exists('success')) {
+    function success($message = null, $to = null): RedirectResponse
     {
-        if (! $message) {
+        if (!$message) {
             $message = __('dashboard.done');
         }
-
+        if ($to) {
+            return redirect($to)->with('success', $message);
+        }
         return back()->with('success', $message);
     }
 
 }
-if (! function_exists('error')) {
-    function error($message = null,$status=500): RedirectResponse
+if (!function_exists('error')) {
+    function error($message = null, $status = 500): RedirectResponse
     {
-        if (! $message) {
+        if (!$message) {
             $message = __('dashboard.error');
         }
 
         return back()->with('error', $message)->withErrors($message);
     }
 }
-if (! function_exists('sluggify')) {
+if (!function_exists('sluggify')) {
     function sluggify(?string $str = null, $delimiter = '-')
     {
         $str = trim($str);
@@ -92,7 +94,7 @@ if (! function_exists('sluggify')) {
 
 }
 
-if (! function_exists('settings')) {
+if (!function_exists('settings')) {
     function settings($param = null)
     {
         $data = Setting::staticsData();
@@ -103,19 +105,19 @@ if (! function_exists('settings')) {
         return $data;
     }
 }
-if (! function_exists('meta')) {
+if (!function_exists('meta')) {
     function meta(): MetaService
     {
         return new MetaService();
     }
 }
-if (! function_exists('files')) {
+if (!function_exists('files')) {
     function files(): FilesService
     {
         return new FilesService();
     }
 }
-if (! function_exists('media')) {
+if (!function_exists('media')) {
     function media(): MediaService
     {
         return new MediaService();

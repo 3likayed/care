@@ -2,6 +2,7 @@
 
   <SectionTitleLineWithButton :icon="mdiCashCheck"
                               :visit-data="visitData"
+                              :has-create="hasCreate"
                               main
                               model="appointment-products">
 
@@ -78,6 +79,10 @@ let props = defineProps({
     default: []
   },
   visitData: Object,
+  hasCreate: {
+      type : Boolean,
+      default:true
+  },
   items: Array,
   pagination: Object,
   searchable: {

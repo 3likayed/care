@@ -12,12 +12,9 @@ class AppointmentUpdateRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
-    protected function failedAuthorization()
-    {
-        throw  new AuthorizationException(__('cant_Update'));
-    }
+
 
     /**
      * Get the validation rules that apply to the request.

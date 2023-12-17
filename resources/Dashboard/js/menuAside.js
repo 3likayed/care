@@ -77,7 +77,7 @@ export default [
                         route: "dashboard.appointments.index",
                         label: "appointments",
                         permission: "appointments.show",
-                        icon: mdiFormatListBulletedType,
+                        icon: mdiListBoxOutline,
                     },
                     {
                         route: ["dashboard.appointments.index", {filter: Search.dateInterval({interval: 0})}],
@@ -89,7 +89,31 @@ export default [
                         route: ["dashboard.appointments.index", {filter: Search.dateInterval({interval: 30})}],
                         label: "month_appointments",
                         permission: "appointments.show",
-                        icon: mdiFormatListBulletedType,
+                        icon: mdiListBoxOutline,
+                    },
+                    {
+                        route: ["dashboard.appointments.index", {filter: {status:'completed'}}],
+                        label: "completed",
+                        permission: "appointments.show",
+                        icon: mdiListBoxOutline,
+                    },
+                    {
+                        route: ["dashboard.appointments.index", {filter: {status:'not_completed'}}],
+                        label: "not_completed",
+                        permission: "appointments.show",
+                        icon: mdiListBoxOutline,
+                    },
+                    {
+                        route: ["dashboard.appointments.index", {filter: {status:'pending'}}],
+                        label: "pending",
+                        permission: "appointments.show",
+                        icon: mdiListBoxOutline,
+                    },
+                    {
+                        route: ["dashboard.appointments.index", {filter: {status:'canceled'}}],
+                        label: "canceled",
+                        permission: "appointments.show",
+                        icon: mdiListBoxOutline,
                     },
                 ]
             },

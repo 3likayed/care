@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\UserService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Inertia\Middleware;
@@ -40,12 +41,10 @@ class HandleDashboardInertiaRequests extends Middleware
 
     public function getSharedDate()
     {
-        $user = \request()->user();
-
         return [
             'auth' => [
-                'user' => $user,
-                'permissions' => Inertia::lazy(fn () => $user?->permission_names),
+                'user' => \request()->user(),
+                'doctor' => Inertia::lazy(fn() => UserService::authDoctor()),
             ],
             'ziggy' => function () {
                 return array_merge((new Ziggy('dashboard'))->toArray(), [

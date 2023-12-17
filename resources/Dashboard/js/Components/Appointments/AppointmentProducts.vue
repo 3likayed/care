@@ -47,7 +47,7 @@ const submit = () => {
 </script>
 
 <template>
-    <CardBoxModal
+    <CardBoxModal :is-dirty="form.isDirty"
         v-if="can(`appointment-product.show`)"
         :button-label="__('add')"
         :has-errors="form.hasErrors"

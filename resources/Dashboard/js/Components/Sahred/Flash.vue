@@ -24,7 +24,12 @@ function handleFlash(flashValue) {
             color: color,
             confirmButtonText: __('continue'),
             confirmButtonColor: 'rgb(59, 130, 246)'
-        });
+        }).then(
+            e => {
+                usePage().props.errors = {};
+                usePage().props.success = {}
+            }
+        );
     }
 }
 

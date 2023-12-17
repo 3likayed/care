@@ -52,6 +52,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('specializations', SpecializationController::class);
         Route::apiResource('doctors', DoctorController::class);
         Route::apiResource('appointments', AppointmentController::class);
+        Route::post('appointments/{appointment}/transaction', [AppointmentController::class, 'transaction'])->name('appointments.transaction');
         Route::apiResource('appointment-products', AppointmentProductController::class);
         Route::apiResource('suppliers', SupplierController::class);
         Route::apiResource('purchases', PurchaseController::class);

@@ -2,13 +2,13 @@
 
     <SectionMain>
         <BreadCrumb :items="[{name: __('employees'), href: route('dashboard.employees.index')}]"/>
-        <SectionTitleLineWithButton model="employees" :icon="mdiLockAlertOutline" :title="__('employees')" main>
+        <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('employees')" main model="employees">
             <template #create>
                 <CreateEmployee/>
             </template>
 
         </SectionTitleLineWithButton>
-        <DynamicSearch  :fields="searchFields" model="employees"/>
+        <DynamicSearch :fields="searchFields" model="employees"/>
 
         <CardBox has-table>
             <BaseTable
@@ -35,7 +35,7 @@
                         </ul>
                     </td>
                     <td :data-label="__('has_user')">
-                        <TrueFalseIcon :is-true="item.user"/>
+                        <StatusIcon  :status="item.user ? 'completed' : 'canceled'"/>
                     </td>
                     <td :data-label="__('created_at')">
                         {{ moment(item.created_at).format('YYYY-MM-DD') }}
@@ -71,13 +71,16 @@ import moment from "moment";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import EditEmployee from "../../Components/Employees/EmployeeEdit.vue";
 import CreateEmployee from "../../Components/Employees/EmployeeCreate.vue";
-import TrueFalseIcon from "../../Components/Sahred/TrueFalseIcon.vue";
+import StatusIcon from "../../Components/Sahred/StatusIcon.vue";
 
 
 let items = computed(() => usePage().props.data.data);
 let edited = ref({})
-let searchFields = [{name:'search'},{name:'name'},{name:'phone'},{name:'user.email',label:'email'}]
-let headerFields = ['#',{name:'name',sortable:true},'phone','address',{name:'has_user',sortable: true},{name:'created_at',sortable:true}]
+let searchFields = [{name: 'search'}, {name: 'name'}, {name: 'phone'}, {name: 'user.email', label: 'email'}]
+let headerFields = ['#', {name: 'name', sortable: true}, 'phone', 'address', {
+    name: 'has_user',
+    sortable: true
+}, {name: 'created_at', sortable: true}]
 </script>
 <style>
 

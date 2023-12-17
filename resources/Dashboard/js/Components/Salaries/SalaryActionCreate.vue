@@ -1,5 +1,5 @@
 <template>
-    <CardBoxModal v-if="can(`salary-actions.create`)" :button-label="__('create')" :has-cancel="isModal"
+    <CardBoxModal :is-dirty="form.isDirty" v-if="can(`salary-actions.create`)" :button-label="__('create')" :has-cancel="isModal"
                   :has-errors="form.hasErrors" :is-form="true" :is-modal="isModal" :model-value="true"
                   :title="__('create_field', { field: data.type })" @cancel="showCreateSalaryAction = false"
                   @confirm="submit">
