@@ -24,7 +24,7 @@ class AppointmentTransactionRequest extends FormRequest
         $appointment = $this->route('appointment');
 
         return [
-            'amount' => ['required', 'numeric', 'between:1,' . $appointment->total_remaining],
+            'amount' => ['required', 'numeric', 'between:1,'.$appointment->total_remaining],
         ];
     }
 }

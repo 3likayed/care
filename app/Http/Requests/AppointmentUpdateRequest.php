@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AppointmentUpdateRequest extends FormRequest
@@ -14,7 +13,6 @@ class AppointmentUpdateRequest extends FormRequest
     {
         return true;
     }
-
 
     /**
      * Get the validation rules that apply to the request.

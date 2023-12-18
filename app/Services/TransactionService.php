@@ -12,6 +12,7 @@ class TransactionService
     public static function deposit($transactionable, $data, $hasRemaining = false)
     {
         $data['type'] = 'deposit';
+
         return self::create($transactionable, $data, $hasRemaining);
     }
 
@@ -42,6 +43,7 @@ class TransactionService
     public static function withdraw($transactionable, $data, $hasRemaining = false)
     {
         $data['type'] = 'withdraw';
+
         return self::create($transactionable, $data, $hasRemaining);
     }
 
@@ -55,6 +57,7 @@ class TransactionService
             'type' => $data['type'],
         ]);
         Cache::tags([$transaction->created_at->toDateString()])->flush();
+
         return $transaction;
     }
 
@@ -78,16 +81,17 @@ class TransactionService
         if ($transactions && $transactions->count()) {
             $startDate = $transactions->first()->created_at->toDateString();
             $endDate = $transactions->last()->created_at->toDateString();
-            $key = "transactions_total{$operation}_" . $startDate . '_' . $endDate;
+            $key = "transactions_total{$operation}_".$startDate.'_'.$endDate;
 
             return Cache::tags(['transactions', $operation, $startDate, $endDate])
                 ->remember(
                     key: $key,
                     ttl: 100,
                     callback: function () use ($transactions, $operation) {
-                        if (!$transactions) {
+                        if (! $transactions) {
                             $transactions = Transaction::all();
                         }
+
                         return $transactions->where('type', '=', $operation)->sum('amount');
                     });
         }

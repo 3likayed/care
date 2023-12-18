@@ -24,14 +24,13 @@ class HandleDashboardInertiaRequests extends Middleware
      *
      * @return array<string, mixed>
      */
-
     public function share(Request $request): array
     {
 
         return array_merge(parent::share($request), [
             'auth' => [
                 'user' => \request()->user(),
-                'doctor' => fn() => UserService::authDoctor(),
+                'doctor' => fn () => UserService::authDoctor(),
             ],
             'ziggy' => function () {
                 return array_merge((new Ziggy('dashboard'))->toArray(), [
@@ -45,5 +44,4 @@ class HandleDashboardInertiaRequests extends Middleware
             ],
         ]);
     }
-
 }

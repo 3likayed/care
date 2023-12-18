@@ -56,7 +56,7 @@ class Appointment extends Model
 
     public function totalPaid(): Attribute
     {
-        return Attribute::get(fn() => $this->transactions()->where('type', '=', 'deposit')->sum('amount'));
+        return Attribute::get(fn () => $this->transactions()->where('type', '=', 'deposit')->sum('amount'));
     }
 
     public function transactions(): MorphMany
@@ -67,7 +67,7 @@ class Appointment extends Model
     public function totalRemaining(): Attribute
     {
         return Attribute::get(
-            fn() => $this->total_price - $this->total_paid
+            fn () => $this->total_price - $this->total_paid
         );
     }
 
@@ -120,10 +120,9 @@ class Appointment extends Model
         return $query->whereNotNull('doctor_id')->orderBy('data');
     }
 
-
     public function name(): Attribute
     {
-        return Attribute::get(fn() => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
+        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
     }
 
     public function status(): Attribute
@@ -131,11 +130,12 @@ class Appointment extends Model
         return Attribute::get(function () {
 
             $isFullPaid = $this->total_price == $this->total_paid;
-            if (!$this->doctor_id) {
+            if (! $this->doctor_id) {
 
                 if (Carbon::parse($this->date)->isBefore(Carbon::today())) {
                     return 'canceled';
                 }
+
                 return 'pending';
             }
 

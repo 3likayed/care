@@ -30,7 +30,7 @@ class ProductController extends Controller
             ->where('type', 'product')
             ->withSum('stocks', 'available')
             ->allowedFilters([AllowedFilter::exact('id'), 'name'])
-            ->allowedSorts(['name', 'stocks_sum_available','id'])
+            ->allowedSorts(['name', 'stocks_sum_available', 'id'])
             ->paginate($request->per_page);
 
         return Inertia::render('Products/Index', [

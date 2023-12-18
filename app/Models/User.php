@@ -62,13 +62,13 @@ class User extends Authenticatable
 
     public function isSuperAdmin(): Attribute
     {
-        return Attribute::get(fn() => $this->role->name === 'super-admin');
+        return Attribute::get(fn () => $this->role->name === 'super-admin');
     }
 
     protected function role(): Attribute
     {
         return Attribute::get(
-            fn() => $this->roles()->first(),
+            fn () => $this->roles()->first(),
         );
     }
 

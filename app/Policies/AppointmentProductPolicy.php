@@ -12,7 +12,6 @@ class AppointmentProductPolicy
 {
     use HandlesAuthorization;
 
-
     /**
      * Determine whether the user can update the model.
      */
@@ -21,6 +20,7 @@ class AppointmentProductPolicy
         if (UserService::authDoctor()->id === $appointmentProduct->doctor->id && $appointmentProduct->appointment->status != 'completed') {
             return true;
         }
+
         return $this->deny(__('dashboard.cant_update'));
     }
 
@@ -46,5 +46,4 @@ class AppointmentProductPolicy
 
         return $this->deny(__('dashboard.cant_delete'));
     }
-
 }

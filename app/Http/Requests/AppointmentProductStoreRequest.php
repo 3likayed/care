@@ -28,7 +28,7 @@ class AppointmentProductStoreRequest extends FormRequest
 
         foreach ($this->products as $key => $appointmentProduct) {
             $max = $this->doctorProducts->find($appointmentProduct['id'])->pivot->available;
-            $productQuantity["products.$key.quantity"] = ['required', 'numeric', 'between:0,' . $max];
+            $productQuantity["products.$key.quantity"] = ['required', 'numeric', 'between:0,'.$max];
             $productQuantity["products.$key.id"] = ['required', 'distinct', 'numeric', 'exists:products,id'];
         }
 

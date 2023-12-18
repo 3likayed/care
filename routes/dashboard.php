@@ -69,7 +69,6 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
             Route::post('purchases/{purchase}', [PurchaseController::class, 'transaction'])->name('purchases');
         });
 
-
     });
 
 });

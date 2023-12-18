@@ -6,7 +6,6 @@ use App\Http\Requests\AppointmentProductStoreRequest;
 use App\Http\Requests\AppointmentProductUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\AppointmentProduct;
-use App\Services\UserService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -23,9 +22,9 @@ class AppointmentProductController extends Controller
     {
         $model = AppointmentProduct::class;
         $this->middleware(['permission:appointment-products.show'])->only(['index', 'show']);
-        $this->middleware(['permission:appointment-products.edit', "can:update,appointment_product"])->only(['update']);
+        $this->middleware(['permission:appointment-products.edit', 'can:update,appointment_product'])->only(['update']);
         $this->middleware(['permission:appointment-products.create', "can:create,$model"])->only(['store']);
-        $this->middleware(['permission:appointment-products.delete',"can:delete,appointment_product"])->only(['destroy']);
+        $this->middleware(['permission:appointment-products.delete', 'can:delete,appointment_product'])->only(['destroy']);
 
     }
 
@@ -106,6 +105,7 @@ class AppointmentProductController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
      * @throws Exception
      */
     public function destroy(AppointmentProduct $appointmentProduct)

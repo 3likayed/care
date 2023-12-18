@@ -63,8 +63,8 @@ class AppointmentController extends Controller
             $appointments = $appointments->paginate($request->get('per_page'));
         }
 
-
         $appointmentTypes = AppointmentType::all();
+
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
@@ -80,7 +80,7 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
-        if (!Carbon::parse($data['date'])->isToday()) {
+        if (! Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
@@ -97,7 +97,7 @@ class AppointmentController extends Controller
 
         $data = $request->validated();
 
-        if (!Carbon::parse($data['date'])->isToday()) {
+        if (! Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 

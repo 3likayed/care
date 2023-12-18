@@ -9,8 +9,6 @@ use App\Models\Employee;
 
 class UserService
 {
-
-
     public static function updateOrCreateUser($userable, array $data)
     {
 
@@ -26,7 +24,7 @@ class UserService
     {
         $user = $userable->user;
 
-        if (!isset($data['password']) || !$data['password']) {
+        if (! isset($data['password']) || ! $data['password']) {
             unset($data['password']);
         }
         $userable->user->update($data);
@@ -76,5 +74,4 @@ class UserService
 
         return null;
     }
-
 }

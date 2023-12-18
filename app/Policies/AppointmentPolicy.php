@@ -15,9 +15,10 @@ class AppointmentPolicy
      */
     public function update(User $user, Appointment $appointment)
     {
-        if (!$appointment->doctor_id) {
+        if (! $appointment->doctor_id) {
             return true;
         }
+
         return $this->deny(__('dashboard.cant_update'));
     }
 
@@ -26,11 +27,10 @@ class AppointmentPolicy
      */
     public function delete(User $user, Appointment $appointment)
     {
-        if (!$appointment->doctor_id) {
+        if (! $appointment->doctor_id) {
             return true;
         }
+
         return $this->deny(__('dashboard.cant_delete'));
     }
-
-
 }

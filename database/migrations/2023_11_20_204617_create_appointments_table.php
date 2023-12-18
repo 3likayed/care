@@ -35,7 +35,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
 
             $table->string('price');
-            $table->enum('status',['completed','not_completed','pending','canceled'])->default('pending');
+            $table->enum('status', ['completed', 'not_completed', 'pending', 'canceled'])->default('pending');
             $table->dateTime('date');
             $table->unsignedDouble('discount')->nullable();
             $table->softDeletes();
