@@ -65,7 +65,7 @@ export default class Model {
 
     static transaction(model, form, id) {
 
-        form.post(route(`dashboard.${model}.transaction`, id), {
+        form.post(route(`dashboard.transactions.${model}`, id), {
             preserveScroll: true,
             preserveState: (page) => Object.keys(page.props.errors).length,
         })

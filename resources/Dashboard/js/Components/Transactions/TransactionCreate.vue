@@ -8,7 +8,7 @@
                   :is-form="true"
                   :is-modal="isModal"
                   :model-value="true"
-                  :title="__('create_field',{field:'transaction'}) +' ( '+ __(model) +' - ' +data.id +' ) ' "
+                  :title="title()"
                   @cancel="showCreateTransaction=false"
                   @confirm="submit"
     >
@@ -16,10 +16,20 @@
             <FormControl
                 v-model="form.amount"
                 :icon="mdiCash"
-                :max="data.max"
-                :min="0"
+                :max="data?.max??null"
+                :min="data?.min??0"
                 autocomplete="amount"
                 name="amount"
+                required
+            />
+        </FormField>
+        <FormField v-if="!props.data" :errors="form.errors.type" :label="__('type')">
+            <FormControl
+                v-model="form.type"
+                :icon="mdiCashSync"
+                :options="typeOptions"
+                autocomplete="type"
+                name="type"
                 required
             />
         </FormField>
@@ -29,7 +39,7 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiCash} from "@mdi/js";
+import {mdiCash, mdiCashSync} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -45,13 +55,28 @@ let props = defineProps({
         default: true
     }
 })
-
+const title = () => {
+    let title = __('create_field', {field: 'transaction'})
+    if (props.data && props.model) {
+        title += ' ( ' + __(props.model) + ' - ' + props.data.id + ' ) '
+    }
+    return title;
+}
 let showCreateTransaction = inject('showCreateTransaction');
 let form = useForm({
     amount: props.data?.amount,
+    type: props.data?.type,
 });
+let typeOptions = [
+    {id: 'deposit', name: __('deposit')},
+    {id: 'withdraw', name: __('withdraw')}
+]
 const submit = () => {
-    Model.submit('transaction', props.model, form, props.data.id)
+    if (props.model) {
+        Model.submit('transaction', props.model, form, props.data.id)
+    } else {
+        Model.submit('create', 'transactions', form)
+    }
 }
 
 

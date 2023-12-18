@@ -6,7 +6,7 @@ import {mdiChevronDown} from "@mdi/js";
 import {getButtonColor} from "../../colors.js";
 import BaseIcon from "./BaseIcon.vue";
 import AsideMenuList from "./AsideMenuList.vue";
-import {can} from "../../Globals.js";
+import {__, can} from "../../Globals.js";
 
 const props = defineProps({
     item: {
@@ -76,6 +76,9 @@ const menuClick = (event) => {
         isDropdownActive.value = !isDropdownActive.value;
     }
 };
+const label = (label) => {
+    return Array.isArray(label) ? __(label[0], label[1]) : __(label);
+}
 </script>
 
 <template>
@@ -98,14 +101,14 @@ const menuClick = (event) => {
                 />
                 <span
                     class="grow text-ellipsis line-clamp-1"
-                >{{ __(item.label) }}</span>
+                >{{ label(item.label) }}</span>
 
             </component>
             <BaseIcon
                 v-if="hasDropdown"
                 :class="activeInactiveStyle"
                 :path="mdiChevronDown"
-                class="flex-none"
+                class="flex-none text-white"
                 w="w-12"
             />
         </div>

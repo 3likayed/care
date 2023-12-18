@@ -68,4 +68,13 @@ class UserService
         return null;
     }
 
+    public static function authEmployee(): ?Employee
+    {
+        if (auth()->user()?->userable_type === Employee::class) {
+            return auth()->user()->userable;
+        }
+
+        return null;
+    }
+
 }

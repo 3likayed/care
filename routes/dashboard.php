@@ -52,20 +52,24 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('specializations', SpecializationController::class);
         Route::apiResource('doctors', DoctorController::class);
         Route::apiResource('appointments', AppointmentController::class);
-        Route::post('appointments/{appointment}/transaction', [AppointmentController::class, 'transaction'])->name('appointments.transaction');
         Route::apiResource('appointment-products', AppointmentProductController::class);
         Route::apiResource('suppliers', SupplierController::class);
         Route::apiResource('purchases', PurchaseController::class);
-        Route::post('purchases/{purchase}/transaction', [PurchaseController::class, 'transaction'])->name('purchases.transaction');
         Route::apiResource('products', ProductController::class);
         Route::apiResource('doctor-products', DoctorProductController::class)->only(['index', 'store']);
         Route::get('fetch/products', [ProductController::class, 'fetch'])->name('fetch.products');
         Route::apiResource('services', ServiceController::class);
         Route::get('fetch/services', [ServiceController::class, 'fetch'])->name('fetch.services');
-
-        Route::apiResource('transactions', TransactionController::class);
         Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
         Route::get('fetch/stocks', [StockController::class, 'fetch'])->name('fetch.stocks');
+
+        Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function () {
+            Route::get('', [TransactionController::class, 'index'])->name('index');
+            Route::post('appointments/{appointment}', [AppointmentController::class, 'transaction'])->name('appointments');
+            Route::post('purchases/{purchase}', [PurchaseController::class, 'transaction'])->name('purchases');
+        });
+
+
     });
 
 });

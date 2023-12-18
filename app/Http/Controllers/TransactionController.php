@@ -14,6 +14,11 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:transactions.show'])->only(['show']);
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -35,7 +40,7 @@ class TransactionController extends Controller
         $totalRemaining = TransactionService::totalRemaining($transactions);
         $transactionleTypeOptions = Transaction::groupBy('transactionable_type')
             ->pluck('transactionable_type')
-            ->map(fn ($item) => class_basename($item));
+            ->map(fn($item) => class_basename($item ?? 'transaction'));
 
         return Inertia::render('Transactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.transactions')]),
@@ -47,51 +52,4 @@ class TransactionController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(transaction $transaction)
-    {
-        //
-    }
 }

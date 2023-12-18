@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :has-create="hasCreate && data!=null && can('transactions.create')"
+    <SectionTitleLineWithButton :has-create="hasCreate && can('transactions.create')"
                                 :icon="mdiLockAlertOutline"
                                 :title="__('transactions')"
                                 :visit-data="visitData" main
@@ -24,7 +24,7 @@
                 <td :data-label="__('amount')">
                     {{ item.amount }}
                 </td>
-                <td :data-label="__('model_id')">
+                <td :data-label="__('model_name')">
                     {{ __(item.model.name) }}
                 </td>
                 <td :data-label="__('model_id')">

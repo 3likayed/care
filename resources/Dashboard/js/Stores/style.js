@@ -53,7 +53,7 @@ export const useStyleStore = defineStore("style", {
                 );
                 document.documentElement.classList[this.darkMode ? "add" : "remove"](
                     ["dark"]
-                );
+                );''
             }
         },
     },

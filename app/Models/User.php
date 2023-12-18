@@ -76,9 +76,7 @@ class User extends Authenticatable
     {
         return Attribute::get(
             function () {
-                return $this->getAllPermissions()->map(
-                    fn($permission) => $permission = $permission->name
-                );
+                return $this->getAllPermissions()->pluck('name');
             }
         );
     }

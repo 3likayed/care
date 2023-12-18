@@ -37,7 +37,7 @@ const asideLgCloseClick = (event) => {
 <template>
     <aside
         id="aside"
-        class="lg:pb-2 lg:pt-16 lg:pe-2 w-60 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
+        class="lg:pb-2 lg:pt-16 lg:pe-2 w-64 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
     >
         <div
             :class="styleStore.asideStyle"

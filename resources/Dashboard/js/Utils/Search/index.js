@@ -18,14 +18,22 @@ export default class Search {
                 resultObject.sort = value;
             }
         });
-
         return resultObject;
 
 
     }
 
     static dateInterval(options = {}) {
-        let defaults = {interval: 1, shift: 0, modeRelative: true, mode: 1, start: 'start', end: 'end'}
+        let defaults = {
+            interval: 1,
+            shift: 0,
+            modeRelative: true,
+            mode: 1,
+            start: 'start',
+            end: 'end',
+            unit: 'd',
+            key: 'date'
+        }
         for (const [key, value] of Object.entries(options)) {
             defaults[key] = options[key] ?? options[key];
         }
@@ -33,11 +41,11 @@ export default class Search {
         let startDate = moment();
         startDate.add(defaults.shift, 'd')
 
-        let endDate = moment(startDate).add(defaults.mode * defaults.interval, 'd');
+        let endDate = moment(startDate).add(defaults.mode * defaults.interval, defaults.unit);
         return defaults.mode === -1 ? {
-            date: `${endDate.format("YYYY-MM-DD")}|${startDate.format("YYYY-MM-DD")}`,
+            [defaults.key]: `${endDate.format("YYYY-MM-DD")}|${startDate.format("YYYY-MM-DD")}`,
         } : {
-            date: `${startDate.format("YYYY-MM-DD")}|${endDate.format("YYYY-MM-DD")}`,
+            [defaults.key]: `${startDate.format("YYYY-MM-DD")}|${endDate.format("YYYY-MM-DD")}`,
         }
 
     };
@@ -65,7 +73,7 @@ export default class Search {
 
         let sortType = this.sortTypeToggle(sortParam)
         let param = this.getParameters();
-        param.sort = this.sortTypeToggle(sortParam) + sortParam;
+        param.sort = sortType + sortParam;
         param.page = '';
 
         let url = model ? route(`dashboard.${model}.index`) : ''

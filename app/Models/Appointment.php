@@ -131,9 +131,9 @@ class Appointment extends Model
         return Attribute::get(function () {
 
             $isFullPaid = $this->total_price == $this->total_paid;
-
             if (!$this->doctor_id) {
-                if (Carbon::parse($this->date)->isBefore(Carbon::tomorrow())) {
+
+                if (Carbon::parse($this->date)->isBefore(Carbon::today())) {
                     return 'canceled';
                 }
                 return 'pending';
