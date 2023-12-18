@@ -76,14 +76,6 @@ const menuClick = (event, item) => {
                         size="24"
                     />
                 </NavBarItemPlain>
-                <NavBarItemPlain use-margin>
-                    <FormControl
-                        borderless
-                        ctrl-k-focus
-                        placeholder="Index (ctrl+k)"
-                        transparent
-                    />
-                </NavBarItemPlain>
             </NavBar>
             <AsideMenu
                 :is-aside-lg-active="isAsideLgActive"

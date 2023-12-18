@@ -37,18 +37,18 @@ const asideLgCloseClick = (event) => {
 <template>
     <aside
         id="aside"
-        class="lg:pb-2 lg:pt-16 lg:pe-2 w-64 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
+        class="lg:pe-2 w-64 fixed flex z-40 top-0 h-screen transition-position overflow-hidden"
     >
         <div
             :class="styleStore.asideStyle"
-            class="lg:rounded-2xl flex-1 flex flex-col overflow-hidden dark:bg-slate-900"
+            class=" flex-1 flex flex-col overflow-hidden dark:bg-slate-900"
         >
             <div
                 :class="styleStore.asideBrandStyle"
                 class="flex flex-row h-14 items-center justify-between dark:bg-slate-900"
             >
                 <div
-                    class="text-center flex-1 lg:text-start lg:pe-6 xl:text-center xl:pe-0"
+                    class="text-center flex-1"
                 >
                     <b class="font-black">{{ __('dashboard') }}</b>
                 </div>
