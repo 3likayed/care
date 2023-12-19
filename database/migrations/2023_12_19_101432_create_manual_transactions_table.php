@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('transactions', function (Blueprint $table) {
+        Schema::create('manual_transactions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedDouble('amount');
-            $table->enum('type', ['deposit', 'withdraw']);
-            $table->enum('status', ['pending', 'confirmed']);
-            $table->nullableMorphs('transactionable');
-            $table->foreignId('employee_id')
-                ->constrained('employees')
-                ->references('id');
+            $table->text('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });
@@ -30,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('transactions');
+        Schema::dropIfExists('manual_transactions');
     }
 };

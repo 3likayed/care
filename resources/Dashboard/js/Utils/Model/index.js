@@ -71,7 +71,7 @@ export default class Model {
         })
     }
 
-    static submit(operation, model, form, id, modelResolve = true) {
+    static submit(operation, model, form, id=null, modelResolve = true) {
 
         if (modelResolver)
             model = modelResolver(model);

@@ -21,7 +21,7 @@ class Transaction extends Model
 
     public function transactionable(): MorphTo
     {
-        return $this->morphTo()->withTrashed();
+        return $this->morphTo()->withTrashed()->without(['transactions','transaction']);
     }
 
     public function employee(): BelongsTo
@@ -54,7 +54,7 @@ class Transaction extends Model
     public function name(): Attribute
     {
 
-        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.'.$this->model['name']), 'id' => $this->id]));
+        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.'.$this->model['name']), 'id' => $this->transactionable->id]));
     }
 
     public function scopeWithdraws()

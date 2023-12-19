@@ -32,9 +32,7 @@ const convertToPascalCaseAndRemoveLast = (inputString) => {
 
 
     const capitalizedInput = pluralize(inputString, 1);
-
-
-    const words = capitalizedInput.split('-');
+    const words = capitalizedInput.replace('_','-').split('-');
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
     return capitalizedWords.join('')
 

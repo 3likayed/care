@@ -22,7 +22,7 @@ class TransactionService
         $transaction = $transactionable->transactions()->create([
             'employee_id' => UserService::authEmployee()->id,
             'amount' => $data['amount'],
-            'status' => $data['status'],
+            'status' => $data['status'] ?? 'confirmed',
             'type' => $data['type'],
         ]);
         if ($hasRemaining) {

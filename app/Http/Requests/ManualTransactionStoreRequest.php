@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TransactionStoreRequest extends FormRequest
+class ManualTransactionStoreRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,9 @@ class TransactionStoreRequest extends FormRequest
         $purchase = $this->route('purchase');
 
         return [
-            'amount' => ['required', 'numeric', 'min:0'],
+            'amount' => ['required', 'numeric', 'min:1'],
             'type' => ['required', 'in:,deposit,withdraw'],
+            'notes' => ['nullable', 'string','max:512'],
         ];
     }
 }

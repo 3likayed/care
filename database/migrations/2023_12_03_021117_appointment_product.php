@@ -21,8 +21,8 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->foreignId('product_id')
                 ->constrained('products')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id');
+
             $table->unique(['appointment_id', 'product_id']);
             $table->softDeletes();
         });

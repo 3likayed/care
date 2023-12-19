@@ -21,7 +21,7 @@ let props = defineProps({
         <IconRounded v-else-if="status==='canceled'" :icon='mdiClose' bg color="danger" h="h-7" w="w-7"/>
     </div>
     <p class="text-center">
-        {{ __(label) }}
+        {{ __(label ??'') }}
     </p>
 
 

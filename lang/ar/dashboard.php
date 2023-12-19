@@ -213,5 +213,8 @@ return [
     'field_and_field' => ':field1 و :field2',
     'by_field' => 'ب:field',
     'all' => 'الكل',
+    'exists' => 'موجود',
+    'manual_transaction' => 'معاملة نقدية يدوية',
+    'manual_transactions' => 'المعاملات النقدية اليدوية',
 
 ];

@@ -221,12 +221,12 @@ export default [
     {
         label: "transactions",
         icon: mdiSafe,
+        components: ['Transactions/Index'],
         menu: [
             {
                 route: "dashboard.transactions.index",
                 label: "all",
                 permission: "transactions.show",
-                components: ['Transaction/Index'],
                 icon: mdiCash,
             },
             {
@@ -237,7 +237,6 @@ export default [
                 }],
                 label: "deposit",
                 permission: "transactions.show",
-                components: ['Transaction/Index'],
                 icon: mdiCashPlus,
             },
             {
@@ -248,12 +247,10 @@ export default [
                 }],
                 label: "withdraw",
                 permission: "transactions.show",
-                components: ['Transaction/Index'],
                 icon: mdiCashMinus,
             },
             {
                 label: ['this_field', {field: 'day'}],
-                components: ['Transaction/Index'],
                 icon: mdiCalendarToday,
                 menu: [
                     {
@@ -265,33 +262,36 @@ export default [
                         }],
                         label: "all",
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCash,
                     },
                     {
                         route: ["dashboard.transactions.index", {
-                            filter: Search.dateInterval({
-                                interval: 0,
-                                key: 'created_at'
-                            }),
-                            type: 'deposit'
+                            filter: {
+                                ...Search.dateInterval({
+                                    interval: 0,
+                                    key: 'created_at'
+                                }),
+                                ...{type: 'deposit'}
+                            },
+
                         }],
                         label: 'deposit',
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCashPlus,
                     },
                     {
                         route: ["dashboard.transactions.index", {
-                            filter: Search.dateInterval({
-                                interval: 0,
-                                key: 'created_at'
-                            }),
-                            type: 'withdraw'
+                            filter: {
+                                ...Search.dateInterval({
+                                    interval: 0,
+                                    key: 'created_at'
+                                }),
+                                ...{type: 'withdraw'}
+                            },
+
                         }],
                         label: 'withdraw',
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCashMinus,
                     },
 
@@ -299,7 +299,6 @@ export default [
             },
             {
                 label: ['this_field', {field: 'month'}],
-                components: ['Transaction/Index'],
                 icon: mdiCalendarMonth,
                 menu: [
                     {
@@ -311,7 +310,6 @@ export default [
                         }],
                         label: "all",
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCash,
                     },
                     {
@@ -323,7 +321,6 @@ export default [
                         }],
                         label: 'deposit',
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCashPlus,
                     },
                     {
@@ -336,7 +333,6 @@ export default [
                         }],
                         label: 'withdraw',
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCashMinus,
                     },
 
@@ -344,7 +340,6 @@ export default [
             },
             {
                 label: ['this_field', {field: 'year'}],
-                components: ['Transaction/Index'],
                 icon: mdiCalendarMonth,
                 menu: [
                     {
@@ -356,7 +351,6 @@ export default [
                         }],
                         label: "all",
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCash,
                     },
                     {
@@ -368,7 +362,6 @@ export default [
                         }],
                         label: 'deposit',
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCashPlus,
                     },
                     {
@@ -381,11 +374,17 @@ export default [
                         }],
                         label: 'withdraw',
                         permission: "transactions.show",
-                        components: ['Transaction/Index'],
                         icon: mdiCashMinus,
                     },
 
                 ]
+            },
+            {
+                route: "dashboard.transactions.manual-transactions.index",
+                label: "manual_transactions",
+                permission: "manual-transactions.show",
+                components: ['ManualTransactions/Index'],
+                icon: mdiCash,
             },
         ],
 

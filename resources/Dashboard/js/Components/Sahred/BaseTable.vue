@@ -60,7 +60,7 @@ const searchableValues = (header, key, defaultKey = null) => {
 const searchStart = debounce((key, value) => {
   let newValue = {[key]: value}
   Object.assign(search, newValue)
-    console.log('s',search)
+
   Search.start(search)
 }, 500)
 

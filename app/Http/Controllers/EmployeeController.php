@@ -39,7 +39,7 @@ class EmployeeController extends Controller
         // dd($employee);
         return Inertia::render('Employees/Show', [
             'data' => $employee,
-            'meta' => meta()->metaValues(['title' => "$employee->name | ".__('dashboard.employees')]),
+            'meta' => meta()->metaValues(['title' => "$employee->name | " . __('dashboard.employees')]),
             'roles' => $roles,
         ]);
     }
@@ -51,14 +51,13 @@ class EmployeeController extends Controller
             ->with('user')
             ->whereNull('employable_id')
             ->allowedFilters(
+                AllowedFilter::scope('created_at'),
                 AllowedFilter::scope('search'),
                 'name',
                 'phone',
-                'user.email',
-
             )
-            ->allowedSorts('name', 'email', AllowedSort::field('has_user', 'user_id'), 'created_at')
-            ->get();
+            ->allowedSorts('id', 'name', 'phone', 'address', AllowedSort::field('has_user', 'user_id'), 'created_at')
+            ->paginate($request->get('per_page'));
         $roles = Role::all();
 
         return Inertia::render('Employees/Index', [

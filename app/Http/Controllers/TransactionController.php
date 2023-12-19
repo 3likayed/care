@@ -47,7 +47,7 @@ class TransactionController extends Controller
             'data' => ModelCollection::make($transactions),
             'total_withdraw' => $totalWithdraw,
             'total_deposit' => $totalDeposit,
-            'totalRemaining' => $totalRemaining,
+            'total_remaining' => $totalRemaining,
             'transactionable_type_options' => $transactionleTypeOptions,
         ]);
     }

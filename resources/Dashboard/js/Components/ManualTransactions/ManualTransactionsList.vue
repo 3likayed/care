@@ -1,12 +1,13 @@
 <template>
 
-    <SectionTitleLineWithButton :has-create="hasCreate && can('transactions.create')"
-                                :icon="mdiSafe"
-                                :title="__('transactions')"
-                                :visit-data="visitData" main
-                                model="transactions">
+    <SectionTitleLineWithButton :has-create="hasCreate && can('manual-transactions.create')"
+                                :icon="mdiAccountCash"
+                                :title="__('manual_transactions')"
+                                :visit-data="visitData"
+                                main
+                                model="manual_transactions">
         <template #create>
-            <TransactionCreate :data="data" :model="model"/>
+            <ManualTransactionCreate :data="data"/>
         </template>
     </SectionTitleLineWithButton>
     <CardBox has-table>
@@ -19,23 +20,19 @@
             <tr v-for="(item,key) in computedItems" class="rtl:flex-row-reverse">
                 <td data-label="# ">{{ item.id }}</td>
                 <td :data-label="__('type')">
-                    {{ __(item.type) }}
+                    {{ __(item.transaction.type) }}
                 </td>
                 <td :data-label="__('amount')">
-                    {{ item.amount }}
+                    {{ item.transaction.amount }}
                 </td>
-                <td :data-label="__('model_name')">
-                    {{ __(item.model.name) }}
-                </td>
-                <td :data-label="__('model_id')">
-
-                    <Link :href="route(`dashboard.${modelResolver(item.model.name)}.show`,item.model.id)">
-                        {{ item.name }}
-                    </Link>
+                <td :data-label="__('notes')">
+                    {{ item.notes }}
                 </td>
 
                 <td :data-label="__('employee')">
-                    {{ item.employee.name }}
+                    <Link :href="Model.showLink('employees',item.transaction.employee.id)">
+                        {{ item.transaction.employee.name }}
+                    </Link>
                 </td>
                 <td :data-label="__('created_at')">
                     {{ moment(item.created_at).format('YYYY-MM-DD   |   HH:mm | A') }}
@@ -57,13 +54,14 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiSafe} from "@mdi/js";
+import {mdiAccountCash} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import moment from "moment";
-import TransactionCreate from "./TransactionCreate.vue";
+import ManualTransactionCreate from "./ManualTransactionCreate.vue";
 import {computed, ref} from "vue";
 import {Link} from "@inertiajs/vue3";
-import {__, modelResolver} from "../../Globals.js"
+import {__} from "../../Globals.js"
+import {Model} from "../../Utils/index.js";
 
 
 let edited = ref();
@@ -94,16 +92,10 @@ let typeOptions = [{id: 'deposit', name: __('deposit')}, {id: 'withdraw', name: 
 
 let headers = [
     {name: 'id', sortable: true, searchable: true},
-    {name: 'type', sortable: true, searchable: {options: typeOptions}},
-    {name: 'amount', sortable: true},
-    {
-        name: 'transactionable_type',
-        label: 'model_type',
-        sortable: true,
-        searchable: {options: props.transactionableTypeOptions}
-    },
-    {name: 'transactionable_id', label: 'model_id', sortable: true, searchable: true},
-    {name: 'employee.name', label: 'employee', sortable: true, searchable: {name: 'employee.name'}},
+    {name: 'transaction.type', label: 'type', sortable: true, searchable: {options: typeOptions}},
+    {name: 'transaction.amount', label: 'amount', sortable: true},
+    {name: 'notes', searchable: true, sortable: true},
+    {name: 'transaction.employee.name', label: 'employee', sortable: true, searchable: true},
     {name: 'created_at', sortable: true, searchable: {name: 'created_at', type: 'date-range'}}]
 </script>
 <style>

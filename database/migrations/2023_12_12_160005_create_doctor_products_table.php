@@ -19,8 +19,7 @@ return new class extends Migration
                 ->cascadeOnDelete();
             $table->foreignId('product_id')
                 ->constrained('products')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id');
             $table->unsignedDouble('available');
             $table->unique(['product_id', 'doctor_id']);
             $table->softDeletes();

@@ -2,7 +2,7 @@
 
     <SectionMain>
         <BreadCrumb :items="[{name: __('doctors'), href: route('dashboard.doctors.index')}]"/>
-        <SectionTitleLineWithButton model="doctors" :icon="mdiLockAlertOutline" :title="__('doctors')" main>
+        <SectionTitleLineWithButton :icon="mdiDoctor" :title="__('doctors')" main model="doctors">
             <template #create>
                 <CreateDoctor/>
             </template>
@@ -11,7 +11,8 @@
         <DynamicSearch :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="doctors"/>
 
         <CardBox has-table>
-            <BaseTable :headers="['#',__('name'),__('email'),__('specialization'),__('phone'),__('address'),__('created_at')]">
+            <BaseTable
+                :headers="['#',__('name'),__('email'),__('specialization'),__('phone'),__('address'),__('created_at')]">
                 <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
                     <td data-label="# ">{{ key + 1 }}</td>
                     <td :data-label="__('name')">
@@ -47,7 +48,7 @@
                         {{ moment(item.created_at).format('YYYY-MM-DD') }}
                     </td>
                     <td :data-label="__('options')">
-                        <TableOptions  :item="item" model="doctors" @edit="edited=item">
+                        <TableOptions :item="item" model="doctors" @edit="edited=item">
                             <template #edit>
                                 <EditDoctor :data="edited"/>
                             </template>
@@ -68,7 +69,7 @@ import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
 import SectionMain from "../../Components/Sahred/SectionMain.vue";
 import {usePage} from "@inertiajs/vue3";
-import {mdiLockAlertOutline} from "@mdi/js";
+import {mdiDoctor} from "@mdi/js";
 import {computed, ref} from "vue";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";

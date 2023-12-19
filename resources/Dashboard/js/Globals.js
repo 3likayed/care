@@ -32,7 +32,13 @@ export function tinyMcConfig(dir) {
 }
 
 export function route(name, params, absolute, config = usePage().props.ziggy) {
-    return ziggyRoute(name, params, absolute, config)
+
+    try{
+        return ziggyRoute(name, params, absolute, config)
+    }
+    catch (e){
+        return ''
+    }
 }
 
 export function can(permission, passSuperAdmin = false) {
