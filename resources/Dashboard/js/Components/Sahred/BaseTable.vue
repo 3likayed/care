@@ -51,7 +51,7 @@ const headerValue = (header, key, defaultKey = null) => typeof header === 'strin
 const isSortable = (header) => typeof header === 'string' ? false : (header.sortable && props.sortable)
 
 const searchableValues = (header, key, defaultKey = null) => {
-  if (typeof header === 'string' || !header.sortable) {
+  if (typeof header === 'string' || !header.searchable) {
     return null;
   } else {
     return (header.searchable[key] ?? (defaultKey ? header.searchable[defaultKey] : headerValue(header, key, defaultKey)))

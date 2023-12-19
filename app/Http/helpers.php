@@ -57,10 +57,13 @@ if (! function_exists('metaValidation')) {
     }
 }
 if (! function_exists('success')) {
-    function success($message = null): RedirectResponse
+    function success($message = null, $to = null): RedirectResponse
     {
         if (! $message) {
             $message = __('dashboard.done');
+        }
+        if ($to) {
+            return redirect($to)->with('success', $message);
         }
 
         return back()->with('success', $message);
@@ -68,7 +71,7 @@ if (! function_exists('success')) {
 
 }
 if (! function_exists('error')) {
-    function error($message = null,$status=500): RedirectResponse
+    function error($message = null, $status = 500): RedirectResponse
     {
         if (! $message) {
             $message = __('dashboard.error');

@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal
+    <CardBoxModal :is-dirty="form.isDirty"
         v-if="can(`services.edit`)"
         :button-label="__('edit')"
         :has-cancel="isModal"
@@ -21,7 +21,7 @@
                 required
             />
         </FormField>
-       
+
         <FormField :errors="form.errors.name" :label="__('price')">
             <FormControl
                 v-model="form.price"
@@ -30,7 +30,7 @@
                 required
             />
         </FormField>
-        
+
     </CardBoxModal>
 </template>
 
@@ -64,7 +64,7 @@ let form = useForm({
     name: props.data.name,
     price: props.data.price,
 
-    
+
 
 });
 

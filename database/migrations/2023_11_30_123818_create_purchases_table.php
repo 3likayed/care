@@ -15,14 +15,14 @@ return new class extends Migration
             $table->id();
             $table->foreignId('supplier_id')
                 ->constrained('suppliers')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id') ;
+
             $table->foreignId('employee_id')
                 ->constrained('employees')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id') ;
+
             $table->unsignedDouble('total_price')->default(0);
-            $table->unsignedDouble('total_remaining')->default(0);
+            $table->unsignedDouble('total_paid')->default(0);
             $table->string('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();

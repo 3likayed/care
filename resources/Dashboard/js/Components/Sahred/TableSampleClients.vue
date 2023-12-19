@@ -73,14 +73,14 @@ const checked = (isChecked, client) => {
 </script>
 
 <template>
-    <CardBoxModal
+    <CardBoxModal :is-dirty="form.isDirty"
         v-model="isModalActive"
         title="Sample modal"
     >
         <p>Lorem ipsum dolor sit amet <b>adipiscing elit</b></p>
         <p>This is sample modal</p>
     </CardBoxModal>
-    <CardBoxModal
+    <CardBoxModal :is-dirty="form.isDirty"
         v-model="isModalDangerActive"
         button="danger"
         has-cancel

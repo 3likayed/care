@@ -1,23 +1,25 @@
 <template>
 
-    <CardBoxModal
-        v-if="can(`transactions.create`)"
-        :button-label="__('create')"
-        :has-cancel="isModal"
-        :has-errors="form.hasErrors"
-        :is-form="true"
-        :is-modal="isModal"
-        :model-value="true"
-        :title="__('create_field',{field:'transaction'}) +' ( '+ __(model) +' - ' +data.id +' ) ' "
-        @cancel="showCreateTransaction=false"
-        @confirm="submit"
+    <CardBoxModal v-if="can(`transactions.create`)"
+                  :button-label="__('create')"
+                  :has-cancel="isModal"
+                  :has-errors="form.hasErrors"
+                  :is-dirty="form.isDirty"
+                  :is-form="true"
+                  :is-modal="isModal"
+                  :model-value="true"
+                  :title="  __('create_field', {field: 'transaction'}) + ' ( ' + __(props.model) + ' - ' + props.data.id + ' ) '"
+                  @cancel="showCreateTransaction=false"
+                  @confirm="submit"
     >
         <FormField :errors="form.errors.amount" :label="__('amount')">
             <FormControl
                 v-model="form.amount"
                 :icon="mdiCash"
-                autocomplete="name"
-                name="name"
+                :max="data?.max??null"
+                :min="data?.min??0"
+                autocomplete="amount"
+                name="amount"
                 required
             />
         </FormField>
@@ -44,12 +46,17 @@ let props = defineProps({
     }
 })
 
+
 let showCreateTransaction = inject('showCreateTransaction');
 let form = useForm({
     amount: props.data?.amount,
+    type: props.data?.type,
 });
+
 const submit = () => {
-    Model.transaction(props.model, form, props.data.id)
+
+    Model.submit('transaction', props.model, form, props.data.id)
+
 }
 
 

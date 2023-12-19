@@ -19,7 +19,7 @@
                     :href="item.href??''"
                     class="inline-flex items-center hover:text-gray-600 dark:hover:text-slate-400"
                 >
-                    {{ item.name ?? lastName }}
+                    {{ item.name ? __(item.name) : lastName }}
                 </Link>
             </li>
         </ol>

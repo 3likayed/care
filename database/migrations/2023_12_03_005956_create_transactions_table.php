@@ -16,11 +16,10 @@ return new class extends Migration
             $table->unsignedDouble('amount');
             $table->enum('type', ['deposit', 'withdraw']);
             $table->enum('status', ['pending', 'confirmed']);
-            $table->morphs('transactionable');
+            $table->nullableMorphs('transactionable');
             $table->foreignId('employee_id')
                 ->constrained('employees')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id');
             $table->softDeletes();
             $table->timestamps();
         });

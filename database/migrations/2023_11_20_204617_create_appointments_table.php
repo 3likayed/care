@@ -15,26 +15,25 @@ return new class extends Migration
             $table->id();
             $table->foreignId('patient_id')
                 ->constrained('patients')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id') ;
 
             $table->foreignId('appointment_type_id')
                 ->constrained('appointment_types')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id') ;
 
             $table->foreignId('doctor_id')
                 ->nullable()
                 ->constrained('doctors')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id');
 
             $table->foreignId('employee_id')
                 ->constrained('employees')
-                ->references('id')
-                ->cascadeOnDelete();
+                ->references('id');
 
-            $table->string('price');
+
+            $table->double('total_price');
+            $table->double('total_paid');
+            $table->enum('status', ['completed', 'not_completed', 'pending', 'canceled'])->default('pending');
             $table->dateTime('date');
             $table->unsignedDouble('discount')->nullable();
             $table->softDeletes();

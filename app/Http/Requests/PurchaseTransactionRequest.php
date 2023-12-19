@@ -24,7 +24,7 @@ class PurchaseTransactionRequest extends FormRequest
         $purchase = $this->route('purchase');
 
         return [
-            'amount' => ['required', 'numeric', 'between:0,'.$purchase->total_remaining],
+            'amount' => ['required', 'numeric', 'between:1,'.$purchase->total_remaining],
         ];
     }
 }

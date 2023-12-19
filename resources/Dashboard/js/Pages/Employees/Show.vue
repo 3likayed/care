@@ -65,6 +65,10 @@ import BaseButton from "../../Components/Sahred/BaseButton.vue";
 let steps = ref([__('data'), __('salary')]);
 let step = ref(useStepStore().getStep())
 let data = computed(() => usePage().props.data);
+<<<<<<< HEAD
+=======
+
+>>>>>>> ab169616848a7aceb05c855146e4d130b33da099
 let actionType = ref();
 let showCreateSalaryAction = ref(false);
 const createAction = (action) => {

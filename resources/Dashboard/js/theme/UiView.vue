@@ -77,7 +77,7 @@ const styleStore = useStyleStore();
 
 <template>
     <LayoutAuthenticated>
-        <CardBoxModal
+        <CardBoxModal :is-dirty="form.isDirty"
             v-model="modalOneActive"
             button-label="Confirm"
             has-cancel
@@ -87,7 +87,7 @@ const styleStore = useStyleStore();
             <p>Lorem ipsum dolor</p>
         </CardBoxModal>
 
-        <CardBoxModal
+        <CardBoxModal :is-dirty="form.isDirty"
             v-model="modalTwoActive"
             button="danger"
             title="Unhandled exception"
@@ -96,7 +96,7 @@ const styleStore = useStyleStore();
             <p>Lorem ipsum dolor</p>
         </CardBoxModal>
 
-        <CardBoxModal
+        <CardBoxModal :is-dirty="form.isDirty"
             v-model="modalThreeActive"
             button="success"
             title="Success"

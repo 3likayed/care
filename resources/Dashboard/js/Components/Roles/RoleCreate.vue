@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal
+    <CardBoxModal :is-dirty="form.isDirty"
         :button-label="__('create')"
         :has-cancel="true"
         :hasErrors="form.hasErrors"

@@ -6,6 +6,7 @@ use App\Http\Requests\AppointmentProductStoreRequest;
 use App\Http\Requests\AppointmentProductUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\AppointmentProduct;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -19,10 +20,12 @@ class AppointmentProductController extends Controller
      */
     public function __construct()
     {
+        $model = AppointmentProduct::class;
         $this->middleware(['permission:appointment-products.show'])->only(['index', 'show']);
-        $this->middleware(['permission:appointment-products.edit'])->only(['update']);
-        $this->middleware(['permission:appointment-products.create'])->only(['store']);
-        $this->middleware(['permission:appointment-products.delete'])->only(['destroy']);
+        $this->middleware(['permission:appointment-products.edit', 'can:update,appointment_product'])->only(['update']);
+        $this->middleware(['permission:appointment-products.create', "can:create,$model"])->only(['store']);
+        $this->middleware(['permission:appointment-products.delete', 'can:delete,appointment_product'])->only(['destroy']);
+
     }
 
     public function index(Request $request)
@@ -45,6 +48,7 @@ class AppointmentProductController extends Controller
     public function store(AppointmentProductStoreRequest $request)
     {
         DB::beginTransaction();
+
         $data = $request->validated();
         $doctorProducts = $request->doctorProducts;
         $appointment = $request->appointment;
@@ -88,7 +92,7 @@ class AppointmentProductController extends Controller
         $request->doctorProduct
             ->pivot //DoctorProduct model
             ->update([
-                                // calculate the new doctor available quantity to update it
+                // calculate the new doctor available quantity to update it
                 'available' => $doctorProductAvailable + $appointmentProduct->quantity - $data['quantity'],
             ]);
         $appointmentProduct->update([
@@ -101,6 +105,8 @@ class AppointmentProductController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     *
+     * @throws Exception
      */
     public function destroy(AppointmentProduct $appointmentProduct)
     {

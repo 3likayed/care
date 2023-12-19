@@ -6,8 +6,10 @@ import BaseIcon from "./BaseIcon.vue";
 import BaseLevel from "./BaseLevel.vue";
 import PillTagTrend from "./PillTagTrend.vue";
 import BaseButton from "./BaseButton.vue";
+import {colorsText, getButtonColor} from "../../colors.js";
+import {computed} from "vue";
 
-defineProps({
+let props = defineProps({
     number: {
         type: Number,
         default: 0,
@@ -16,6 +18,7 @@ defineProps({
         type: String,
         default: null,
     },
+    numberColor: String,
     prefix: {
         type: String,
         default: null,
@@ -42,6 +45,8 @@ defineProps({
         default: null,
     },
 });
+let computedNumberClass= computed(()=> colorsText[props.numberColor] )
+
 </script>
 
 <template>
@@ -81,6 +86,7 @@ defineProps({
 
                 <h1 class="text-3xl leading-tight font-semibold">
                     <NumberDynamic
+                        :class="computedNumberClass"
                         :prefix="prefix"
                         :suffix="suffix"
                         :value="number"
@@ -89,7 +95,7 @@ defineProps({
             </div>
             <BaseIcon
                 v-if="icon"
-                :class="color"
+                :class="colorsText[color]"
                 :path="icon"
                 h="h-16"
                 size="48"

@@ -58,7 +58,6 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiLockAlertOutline} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
@@ -66,6 +65,7 @@ import PatientEdit from "./PatientEdit.vue";
 import moment from "moment";
 import PatientCreate from "./PatientCreate.vue";
 import {ref} from "vue";
+import {mdiLockAlertOutline} from "@mdi/js";
 
 let edited = ref();
 let props = defineProps({

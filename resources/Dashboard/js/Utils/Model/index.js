@@ -65,19 +65,22 @@ export default class Model {
 
     static transaction(model, form, id) {
 
-        form.post(route(`dashboard.${model}.transaction`, id), {
+        form.post(route(`dashboard.transactions.${model}`, id), {
             preserveScroll: true,
             preserveState: (page) => Object.keys(page.props.errors).length,
         })
     }
 
-    static submit(operation, model, form, id, modelResolve = true) {
+    static submit(operation, model, form, id=null, modelResolve = true) {
 
         if (modelResolver)
             model = modelResolver(model);
         switch (operation) {
             case 'edit' :
                 this.edit(model, form, id);
+                break;
+            case 'transaction' :
+                this.transaction(model, form, id);
                 break;
             case 'create' :
                 this.create(model, form)

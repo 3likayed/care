@@ -14,13 +14,18 @@ use Spatie\QueryBuilder\QueryBuilder;
 
 class TransactionController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware(['permission:transactions.show'])->only(['show']);
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
         $transactionsQuery = QueryBuilder::for(Transaction::class)
-            ->allowedSorts('transactionable_type', 'transactionable_id', 'created_at', 'amount', 'id',
+            ->allowedSorts('transactionable_type', 'transactionable_id', 'created_at', 'amount', 'id','type',
                 AllowedSort::custom('employee.name', new RelationSort())
             )
             ->allowedFilters(AllowedFilter::exact('id'),
@@ -29,69 +34,17 @@ class TransactionController extends Controller
                 AllowedFilter::endsWithStrict('transactionable_type'),
                 'employee.name', 'type', 'transactionable_type');
 
+        $total = TransactionService::total(clone $transactionsQuery);
         $transactions = $transactionsQuery->paginate($request->get('per_page'));
-        $totalWithdraw = TransactionService::totalWithdraw($transactions);
-        $totalDeposit = TransactionService::totalDeposit($transactions);
-        $totalRemaining = TransactionService::totalRemaining($transactions);
-        $transactionleTypeOptions = Transaction::groupBy('transactionable_type')
+        $transactionableTypeOptions = Transaction::groupBy('transactionable_type')
             ->pluck('transactionable_type')
-            ->map(fn ($item) => class_basename($item));
+            ->map(fn($item) => class_basename($item ?? 'transaction'));
 
         return Inertia::render('Transactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.transactions')]),
             'data' => ModelCollection::make($transactions),
-            'total_withdraw' => $totalWithdraw,
-            'total_deposit' => $totalDeposit,
-            'totalRemaining' => $totalRemaining,
-            'transactionable_type_options' => $transactionleTypeOptions,
+            'total' => $total,
+            'transactionable_type_options' => $transactionableTypeOptions,
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, transaction $transaction)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(transaction $transaction)
-    {
-        //
     }
 }

@@ -36,14 +36,13 @@ class PurchaseController extends Controller
     public function index(Request $request)
     {
         $purchases = QueryBuilder::for(Purchase::class)
-            ->withSum('transactions', 'amount')
             ->allowedFilters([
                 AllowedFilter::exact('id'),
                 AllowedFilter::exact('supplier.id'),
                 AllowedFilter::scope('created_at'),
                 'notes',
             ])
-            ->allowedSorts(['id', 'total_price', 'created_at', 'transactions_sum_amount', 'total_remaining',
+            ->allowedSorts(['id', 'total_price', 'created_at', 'total_paid',
                 AllowedSort::custom('supplier.name', new RelationSort()),
             ])
             ->paginate($request->per_page);
@@ -87,7 +86,7 @@ class PurchaseController extends Controller
         }
         Stock::insert($products);
 
-        $purchase->update(['total_price' => $totalPrice, 'total_remaining' => $totalPrice - $data['paid_price']]);
+        $purchase->update(['total_price' => $totalPrice, 'total_paid' => $data['paid_price']]);
         if ($data['paid_price']) {
             TransactionService::create($purchase, [
                 'amount' => $data['paid_price'],
@@ -141,7 +140,7 @@ class PurchaseController extends Controller
                 'amount' => $data['amount'],
                 'status' => 'confirmed',
                 'type' => 'withdraw',
-            ]);
+            ], hasTotalPaid: true);
 
         return success();
     }

@@ -52,10 +52,24 @@ class UserService
         return $user;
     }
 
+    public static function isSuperAdmin()
+    {
+        return auth()->user()->isSuperAdmin();
+    }
+
     public static function authDoctor(): ?Doctor
     {
-        if (auth()->user()->userable_type === Employee::class && auth()->user()->userable?->employable_type == Doctor::class) {
+        if (auth()->user()?->userable_type === Employee::class && auth()->user()?->userable?->employable_type == Doctor::class) {
             return auth()->user()->userable?->employable;
+        }
+
+        return null;
+    }
+
+    public static function authEmployee(): ?Employee
+    {
+        if (auth()->user()?->userable_type === Employee::class) {
+            return auth()->user()->userable;
         }
 
         return null;

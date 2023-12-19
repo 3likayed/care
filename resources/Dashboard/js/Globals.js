@@ -32,13 +32,24 @@ export function tinyMcConfig(dir) {
 }
 
 export function route(name, params, absolute, config = usePage().props.ziggy) {
-    return ziggyRoute(name, params, absolute, config)
+
+    try{
+        return ziggyRoute(name, params, absolute, config)
+    }
+    catch (e){
+        return ''
+    }
 }
 
-export function can(permission) {
+export function can(permission, passSuperAdmin = false) {
     let permissions = permission?.replace('_', '-');
     permissions = permissions?.split('|');
-    return permission ? usePage().props.auth.permissions?.some(permission => permissions?.includes(permission)) : true;
+    return passSuperAdmin && isSuperAdmin() ? true :
+        (permission ? usePage().props.auth.user?.permission_names?.some(permission => permissions?.includes(permission)) : true);
+}
+
+export function isSuperAdmin() {
+    return usePage().props.auth.user?.role.name === 'super-admin';
 }
 
 export const localesObject = () => {
@@ -79,7 +90,7 @@ export const modelResolver = (word, replace = ['_', '-']) => {
         .replace(replace[0], replace[1]) : ''
 }
 export const parsePrice = (price) => {
-   return  parseFloat(price).toFixed(2).replace(/\.00$/, '');
+    return parseFloat(price).toFixed(2).replace(/\.00$/, '');
 }
 
 export default {
@@ -90,6 +101,7 @@ export default {
         can,
         route,
         Pluralize,
+        isSuperAdmin,
         localesObject,
         modelResolver,
         parsePrice,

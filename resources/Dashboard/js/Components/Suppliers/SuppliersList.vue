@@ -22,13 +22,17 @@
                     {{ item.name }}
                 </td>
 
-
-                <td :data-label="__('supplier_credit')">
-                    {{ item.transactions_sum_amount }}
+                <td :data-label="__('total_remaining')">
+                    {{ item.total_price }}
+                </td>
+                <td :data-label="__('total_paid')">
+                    {{ item.total_paid }}
                 </td>
                 <td :data-label="__('total_remaining')">
-                    {{ item.purchases_sum_total_remaining }}
+                    {{ item.total_price - item.total_paid }}
                 </td>
+
+
                 <td :data-label="__('phone')">
 
                     <ul class="list-decimal">
@@ -90,8 +94,9 @@ let props = defineProps({
 let headers = [
     {name: 'id', sortable: true, searchable: true},
     {name: 'name', sortable: true, searchable: true},
-    {name: 'transactions_sum_amount', label: 'total_paid', sortable: true},
-    {name: 'purchases_sum_total_remaining', label: 'total_remaining', sortable: true},
+    {name: 'total_price', sortable: true},
+    {name: 'total_paid', sortable: true},
+    {name: 'total_remaining'},
     'phone', 'address',
     {name: 'created_at', sortable: true}
 ]

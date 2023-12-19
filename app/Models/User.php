@@ -47,7 +47,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    protected $appends = ['role'];
+    protected $appends = ['role', 'permission_names'];
 
     public function scopeSearch($query, $date)
     {
@@ -58,6 +58,11 @@ class User extends Authenticatable
     public function userable(): MorphTo
     {
         return $this->morphTo();
+    }
+
+    public function isSuperAdmin(): Attribute
+    {
+        return Attribute::get(fn () => $this->role->name === 'super-admin');
     }
 
     protected function role(): Attribute
@@ -71,9 +76,7 @@ class User extends Authenticatable
     {
         return Attribute::get(
             function () {
-                return $this->getAllPermissions()->map(
-                    fn ($permission) => $permission = $permission->name
-                );
+                return $this->getAllPermissions()->pluck('name');
             }
         );
     }

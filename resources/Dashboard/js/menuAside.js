@@ -1,17 +1,28 @@
 import {
     mdiAccountStarOutline,
     mdiCalendar,
+    mdiCalendarMonth,
+    mdiCalendarToday,
     mdiCart,
     mdiCartVariant,
+    mdiCash,
     mdiCashCheck,
+    mdiCashMinus,
+    mdiCashPlus,
+    mdiCheck,
     mdiClipboardPulse,
+    mdiClock,
+    mdiClose,
     mdiCogOutline,
     mdiDoctor,
     mdiFormatListBulletedType,
     mdiListBoxOutline,
+    mdiListStatus,
     mdiLockAlertOutline,
+    mdiMinus,
     mdiMonitor,
     mdiNaturePeople,
+    mdiSafe,
     mdiTab,
     mdiTable,
     mdiTruckDelivery,
@@ -19,6 +30,7 @@ import {
     mdiWarehouse,
 } from "@mdi/js";
 import {Search} from "./Utils/index.js";
+import moment from "moment";
 
 export default [
     {
@@ -75,22 +87,63 @@ export default [
                 menu: [
                     {
                         route: "dashboard.appointments.index",
-                        label: "appointments",
+                        label: ["all_field", {field: 'appointments'}],
                         permission: "appointments.show",
-                        icon: mdiFormatListBulletedType,
+                        icon: mdiListBoxOutline,
                     },
                     {
-                        route: ["dashboard.appointments.index", {filter: Search.dateInterval({interval: 0})}],
-                        label: "today_appointments",
-                        permission: "appointments.show",
-                        icon: mdiFormatListBulletedType,
+                        label: ['by_field', {field: 'date'}],
+                        icon: mdiCalendar,
+                        menu: [
+                            {
+                                route: ["dashboard.appointments.index", {
+                                    filter: Search.dateInterval({interval: 0})
+                                }],
+                                label: ["this_field", {field: 'day'}],
+                                permission: "appointments.show",
+                                icon: mdiCalendarToday,
+                            },
+                            {
+                                route: ["dashboard.appointments.index", {
+                                    filter: Search.dateInterval({interval: 30})
+                                }],
+                                label: ["this_field", {field: 'month'}],
+                                permission: "appointments.show",
+                                icon: mdiCalendarMonth,
+                            },
+                        ]
                     },
                     {
-                        route: ["dashboard.appointments.index", {filter: Search.dateInterval({interval: 30})}],
-                        label: "month_appointments",
-                        permission: "appointments.show",
-                        icon: mdiFormatListBulletedType,
+                        label: ['by_field', {field: 'status'}],
+                        icon: mdiListStatus,
+                        menu: [
+                            {
+                                route: ["dashboard.appointments.index", {filter: {status: 'completed'}}],
+                                label: "completed",
+                                permission: "appointments.show",
+                                icon: mdiCheck,
+                            },
+                            {
+                                route: ["dashboard.appointments.index", {filter: {status: 'not_completed'}}],
+                                label: "not_completed",
+                                permission: "appointments.show",
+                                icon: mdiMinus,
+                            },
+                            {
+                                route: ["dashboard.appointments.index", {filter: {status: 'pending'}}],
+                                label: "pending",
+                                permission: "appointments.show",
+                                icon: mdiClock,
+                            },
+                            {
+                                route: ["dashboard.appointments.index", {filter: {status: 'canceled'}}],
+                                label: "canceled",
+                                permission: "appointments.show",
+                                icon: mdiClose,
+                            },
+                        ]
                     },
+
                 ]
             },
         ],
@@ -165,6 +218,178 @@ export default [
         ],
 
     },
+    {
+        label: "transactions",
+        icon: mdiSafe,
+        components: ['Transactions/Index'],
+        menu: [
+            {
+                route: "dashboard.transactions.index",
+                label: "all",
+                permission: "transactions.show",
+                icon: mdiCash,
+            },
+            {
+                route: ["dashboard.transactions.index", {
+                    filter: {
+                        type: 'deposit'
+                    }
+                }],
+                label: "deposit",
+                permission: "transactions.show",
+                icon: mdiCashPlus,
+            },
+            {
+                route: ["dashboard.transactions.index", {
+                    filter: {
+                        type: 'withdraw'
+                    }
+                }],
+                label: "withdraw",
+                permission: "transactions.show",
+                icon: mdiCashMinus,
+            },
+            {
+                label: ['this_field', {field: 'day'}],
+                icon: mdiCalendarToday,
+                menu: [
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: Search.dateInterval({
+                                interval: 0,
+                                key: 'created_at'
+                            }),
+                        }],
+                        label: "all",
+                        permission: "transactions.show",
+                        icon: mdiCash,
+                    },
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: {
+                                ...Search.dateInterval({
+                                    interval: 0,
+                                    key: 'created_at'
+                                }),
+                                ...{type: 'deposit'}
+                            },
+
+                        }],
+                        label: 'deposit',
+                        permission: "transactions.show",
+                        icon: mdiCashPlus,
+                    },
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: {
+                                ...Search.dateInterval({
+                                    interval: 0,
+                                    key: 'created_at'
+                                }),
+                                ...{type: 'withdraw'}
+                            },
+
+                        }],
+                        label: 'withdraw',
+                        permission: "transactions.show",
+                        icon: mdiCashMinus,
+                    },
+
+                ]
+            },
+            {
+                label: ['this_field', {field: 'month'}],
+                icon: mdiCalendarMonth,
+                menu: [
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: {
+                                created_at: `${moment().startOf('M').format('YYYY-MM-DD')}|${moment().format('YYYY-MM-DD')}`,
+
+                            },
+                        }],
+                        label: "all",
+                        permission: "transactions.show",
+                        icon: mdiCash,
+                    },
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: {
+                                created_at: `${moment().startOf('M').format('YYYY-MM-DD')}|${moment().format('YYYY-MM-DD')}`,
+                                type: 'deposit',
+                            },
+                        }],
+                        label: 'deposit',
+                        permission: "transactions.show",
+                        icon: mdiCashPlus,
+                    },
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: {
+                                created_at: `${moment().startOf('M').format('YYYY-MM-DD')}|${moment().format('YYYY-MM-DD')}`,
+                                type: 'withdraw',
+
+                            }
+                        }],
+                        label: 'withdraw',
+                        permission: "transactions.show",
+                        icon: mdiCashMinus,
+                    },
+
+                ]
+            },
+            {
+                label: ['this_field', {field: 'year'}],
+                icon: mdiCalendarMonth,
+                menu: [
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: {
+                                created_at: `${moment().startOf('Y').format('YYYY-MM-DD')}|${moment().format('YYYY-MM-DD')}`,
+
+                            },
+                        }],
+                        label: "all",
+                        permission: "transactions.show",
+                        icon: mdiCash,
+                    },
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: {
+                                created_at: `${moment().startOf('Y').format('YYYY-MM-DD')}|${moment().format('YYYY-MM-DD')}`,
+                                type: 'deposit',
+                            },
+                        }],
+                        label: 'deposit',
+                        permission: "transactions.show",
+                        icon: mdiCashPlus,
+                    },
+                    {
+                        route: ["dashboard.transactions.index", {
+                            filter: {
+                                created_at: `${moment().startOf('Y').format('YYYY-MM-DD')}|${moment().format('YYYY-MM-DD')}`,
+                                type: 'withdraw',
+
+                            }
+                        }],
+                        label: 'withdraw',
+                        permission: "transactions.show",
+                        icon: mdiCashMinus,
+                    },
+
+                ]
+            },
+            {
+                route: "dashboard.transactions.manual-transactions.index",
+                label: "manual_transactions",
+                permission: "manual-transactions.show",
+                components: ['ManualTransactions/Index'],
+                icon: mdiCash,
+            },
+        ],
+
+    },
+
 
     {
         route: "dashboard.services.index",

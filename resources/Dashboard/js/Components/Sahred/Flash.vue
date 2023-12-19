@@ -15,16 +15,30 @@ function handleFlash(flashValue) {
         let backColor = isDark ? "rgb(15 23 42 )" : ''
         let color = isDark ? "rgb(241, 245, 249)" : ''
         let icon = flashValue.error ? 'error' : 'success';
-        let title = flashValue.error ?? flashValue.success;
+        let value = flashValue.error ?? flashValue.success;
+        let title = '';
+        let text = '';
+        if (Array.isArray(value)) {
+            title = value[0];
+            text = value[1];
+        } else {
+            title = value;
+        }
         Swal.fire({
             title: title,
+            text: text,
             icon: icon,
             target: '#app',
             background: backColor,
             color: color,
             confirmButtonText: __('continue'),
             confirmButtonColor: 'rgb(59, 130, 246)'
-        });
+        }).then(
+            e => {
+                usePage().props.errors = {};
+                usePage().props.success = {}
+            }
+        );
     }
 }
 

@@ -18,18 +18,6 @@ class AppointmentProductStoreRequest extends FormRequest
     public ?Appointment $appointment;
 
     /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): ?bool
-    {
-        if ($this->doctor) {
-            return $this->appointment->doctor?->is($this->doctor);
-        }
-
-        return false;
-    }
-
-    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, ValidationRule|array<mixed>|string>

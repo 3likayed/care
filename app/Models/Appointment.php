@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\OrderByIdDesc;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -14,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes,OrderByIdDesc;
 
     protected $guarded = [];
 
@@ -24,7 +25,7 @@ class Appointment extends Model
 
     protected $with = ['patient:id,name', 'appointmentType:id,name', 'doctor'];
 
-    protected $appends = ['name','total_price'];
+    protected $appends = ['name', 'total_remaining',];
 
     public function patient(): BelongsTo
     {
@@ -41,22 +42,30 @@ class Appointment extends Model
         return $this->belongsTo(AppointmentType::class);
     }
 
-    public function transactions(): MorphMany
-    {
-        return $this->morphMany(Transaction::class, 'transactionable');
-    }
-
     public function totalPrice(): Attribute
     {
-        return Attribute::get(function () {
-            $sum = 0;
+        return Attribute::get(function ($value) {
+            $sum = $value;
             $products = $this->products;
             foreach ($products as $product) {
                 $sum += $product->pivot->quantity * $product->price;
             }
 
-            return ($this->price + $sum) - $this->discount;
+            return $sum - $this->discount;
         });
+    }
+
+
+    public function transactions(): MorphMany
+    {
+        return $this->morphMany(Transaction::class, 'transactionable');
+    }
+
+    public function totalRemaining(): Attribute
+    {
+        return Attribute::get(
+            fn() => $this->total_price - $this->total_paid
+        );
     }
 
     public function products(): BelongsToMany
@@ -79,9 +88,20 @@ class Appointment extends Model
     public function scopeDate($query, $value)
     {
         $value = explode('|', $value);
-        $query->whereDate('date', '>=', $value[0]);
+        $query->whereDate('date', '>=', Carbon::parse($value[0]));
         if (isset($value[1])) {
-            $query->whereDate('date', '<=', $value[1] ?? null);
+            $query->whereDate('date', '<=', Carbon::parse($value[1]) ?? null);
+        }
+
+        return $query;
+    }
+
+    public function scopeCreatedAt($query, $value)
+    {
+        $value = explode('|', $value);
+        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
+        if (isset($value[1])) {
+            $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
 
         return $query;
@@ -89,7 +109,7 @@ class Appointment extends Model
 
     public function scopeToday(Builder $query)
     {
-        return $query->whereDate('date', Carbon::today())->orderBy('date');
+        return $query->whereDate('date', Carbon::today())->orderBy('date')->dd();
     }
 
     public function scopeVisit(Builder $query)
@@ -99,6 +119,27 @@ class Appointment extends Model
 
     public function name(): Attribute
     {
-        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
+        return Attribute::get(fn() => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
+    }
+
+    public function updateStatus()
+    {
+        $isFullPaid = $this->total_price == $this->total_paid && $this->products->count();
+        if (!$this->doctor_id) {
+            if (Carbon::parse($this->date)->isBefore(Carbon::today())) {
+                $status = 'canceled';
+            } else {
+
+                $status = 'pending';
+            }
+
+        } else {
+
+            $status = $isFullPaid ? 'completed' : 'not_completed';
+        }
+        $this->status = $status;
+        $this->update();
+        return $status . $this->products->count() . $this->id;
+
     }
 }
