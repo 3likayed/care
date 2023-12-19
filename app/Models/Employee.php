@@ -66,12 +66,30 @@ class Employee extends Authenticatable
         return $this->hasOne(Salary::class)->latestOfMany();
     }
 
-    public function currentMonthSalaryActions()
+    public function CurrentMonthSalaryActions() :Attribute
     {
-        $currentMonth = Carbon::now()->startOfMonth();
+        
+        return  Attribute::get(fn()=>$this->salaryActions->whereIn('reason',['giving','withhold'])->where('is_confirmed',false)->sum('amount'));
 
-        return $this->salaryActions()->whereDate('date', '>=', $currentMonth)
-            ->whereDate('date', '<=', $currentMonth->addMonth()->addDay());
+        
+    }
+
+    public function CurrentMonthGivingActions() :Attribute
+    {
+        return Attribute::get(fn()=>$this->salaryActions->where('reason','giving')->where('is_confirmed',false)->sum('amount'));   
+         
+    }
+    public function CurrentMonthLoanActions()  :Attribute
+    {
+        return Attribute::get(fn()=>$this->salaryActions->where('reason','loan')->where('is_confirmed',true)->sum('amount'));   
+         
+
+    }
+    public function CurrentMonthWithholdActions() :Attribute
+    {
+        
+        return Attribute::get(fn()=> $this->salaryActions->where('reason','withhold')->where('is_confirmed',false)->sum('amount'));   
+      
     }
 
     public function salaryActions(): HasManyThrough

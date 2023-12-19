@@ -34,14 +34,15 @@
                             @click="createAction('salary')"/>
             </div>
             <SalariesList
-                :data="{id:data.id}"
-                :items="data.salary ? [data.salary] : null"
-                :actions="data.current_month_salary_actions"
+                :data="data"
+            
             />
         </section>
         <SalaryActionCreate
             v-if="showCreateSalaryAction"
-            :data="{employee_id:data.id , type:actionType , salary:data.salary , actions:data.current_month_salary_actions}"/>
+            :data="data"
+            :type="actionType"
+            />
 
     </SectionMain>
 </template>
@@ -64,16 +65,13 @@ import BaseButton from "../../Components/Sahred/BaseButton.vue";
 let steps = ref([__('data'), __('salary')]);
 let step = ref(useStepStore().getStep())
 let data = computed(() => usePage().props.data);
-console.log(usePage().props.data);
 let actionType = ref();
 let showCreateSalaryAction = ref(false);
-
 const createAction = (action) => {
     actionType.value = action;
     showCreateSalaryAction.value = true;
 
 }
-
 
 
 provide('showCreateSalaryAction', showCreateSalaryAction)

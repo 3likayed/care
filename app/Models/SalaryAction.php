@@ -65,9 +65,24 @@ class SalaryAction extends Model
 
     public function isConfirmed(): Attribute
     {
-        return Attribute::get(fn () => (bool) $this->transactions());
-    }
+        return Attribute::get(function () {
 
+            if ($this->reason == 'giving' && $this->transactions()->count()  > 0)
+                return  true;
+
+            elseif ($this->reason == 'loan' && $this->transactions()->sum('amount') == $this->amount)
+                return true;
+            return  false;
+        });
+    }
+    public function amount() : Attribute {
+        return Attribute::get( function ($value) {
+                return $value;
+                // ->reason != 'loan' ?  $value :
+                // $value -  $this->transactions()->sum('amount' );
+        });
+     }
+    
     public function transactions(): MorphOne
     {
         return $this->morphOne(Transaction::class, 'transactionable');

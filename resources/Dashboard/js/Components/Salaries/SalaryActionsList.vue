@@ -23,10 +23,9 @@
 
 
     <div class=" mt-6 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-        <h1>total actions for this month </h1>
-        <p>total withold = </p>
-        <p>total giving = </p>
-        <p>total loan = </p>
+        <p>total withold = {{data.current_month_withhold_actions}} </p>
+        <p>total giving = {{data.current_month_giving_actions}}</p>
+        <p>total loan = {{ data.current_month_loan_actions }} </p>
     </div>
 </template>
 
@@ -38,7 +37,9 @@ import { mdiLockAlertOutline } from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import moment from "moment";
 import SalaryCreate from "./SalaryCreate.vue";
-import { ref } from "vue";
+import { ref,computed } from "vue";
+import { watchEffect } from "vue";
+import collect from "collect.js";
 
 let edited = ref();
 let props = defineProps({
@@ -51,7 +52,8 @@ let props = defineProps({
     },
 })
 
-let headers = ['amount', 'reason', 'notes', 'created_at']
+let headers = ['amount', 'reason', 'notes', 'created_at'];
+let actions = props.data.salary_actions;
 
 
 </script>
