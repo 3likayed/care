@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Traits\OrderByIdDesc;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -32,7 +33,7 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  */
 class Stock extends Model
 {
-    use BelongsToThrough, HasRelationships, SoftDeletes;
+    use BelongsToThrough, HasRelationships, SoftDeletes,OrderByIdDesc;
 
     protected $casts = [
         'purchase_id' => 'int',

@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Znck\Eloquent\Traits\BelongsToThrough;
 
 /**
@@ -23,7 +24,7 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  */
 class AppointmentProduct extends Model
 {
-    use BelongsToThrough;
+    use BelongsToThrough , SoftDeletes;
 
     public $timestamps = false;
 

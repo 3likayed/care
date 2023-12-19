@@ -6,22 +6,22 @@
             <CardBoxWidget
                 :icon="mdiCashPlus"
                 :label="__('deposit')"
-                :number="totalDeposit"
+                :number="total.deposit"
                 color="success"
 
             />
             <CardBoxWidget
                 :icon="mdiCashMinus"
                 :label="__('withdraw')"
-                :number="totalWithdraw"
+                :number="total.withdraw"
                 color="danger"
 
             />
             <CardBoxWidget
                 :icon="mdiCashSync"
                 :label="__('exists')"
-                :number="Math.abs(totalRemaining)"
-                :number-color="totalRemaining >=0  ? 'success' : 'danger' "
+                :number="Math.abs(total.remaining)"
+                :number-color="total.remaining >=0  ? 'success' : 'danger' "
                 color="info"
 
             />
@@ -49,9 +49,7 @@ import CardBoxWidget from "../../Components/Sahred/CardBoxWidget.vue";
 
 let page = usePage()
 let data = computed(() => page.props.data)
-let totalDeposit = computed(() => page.props.total_deposit)
-let totalWithdraw = computed(() => page.props.total_withdraw)
-let totalRemaining = computed(() => page.props.total_remaining)
+let total = computed(() => page.props.total)
 let transactionableTypeOptions = computed(() => page.props.transactionable_type_options.map(
     (value) => ({
         id: value,

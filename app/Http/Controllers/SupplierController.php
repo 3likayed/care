@@ -28,10 +28,10 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         $suppliers = QueryBuilder::for(Supplier::class)
-            ->withSum('transactions', 'amount')
-            ->withSum('purchases', 'total_remaining')
+            ->withSum('transactions as total_paid', 'amount',)
+            ->withSum('purchases as total_price', 'total_price')
             ->allowedFilters(AllowedFilter::exact('id'), 'name')
-            ->allowedSorts(['id', 'name', 'purchases_sum_total_remaining', 'transactions_sum_amount', 'created_at'])
+            ->allowedSorts(['id', 'name', 'total_price', 'total_paid', 'created_at'])
             ->paginate($request->per_page);
 
         return Inertia::render('Suppliers/Index', [

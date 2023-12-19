@@ -39,15 +39,14 @@ class Supplier extends Model
         'credit',
     ];
 
-    protected $appends = ['total_remaining'];
+    protected $appends = ['total_paid'];
 
-    public function totalRemaining(): Attribute
+    public function totalPaid(): Attribute
     {
         return Attribute::get(function () {
-            return $this->purchases()->sum('total_remaining');
+            return $this->purchases()->sum('total_paid');
         });
     }
-
     public function purchases(): HasMany
     {
         return $this->hasMany(Purchase::class);

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Traits\OrderByIdDesc;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -11,13 +12,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes , OrderByIdDesc;
 
     protected $fillable = ['amount', 'status', 'type', 'employee_id'];
 
     protected $appends = ['model', 'name'];
 
     protected $with = ['employee:id,name'];
+
 
     public function transactionable(): MorphTo
     {
@@ -54,7 +56,7 @@ class Transaction extends Model
     public function name(): Attribute
     {
 
-        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.'.$this->model['name']), 'id' => $this->transactionable->id]));
+        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.'.$this->model['name']), 'id' => $this->transactionable_id]));
     }
 
     public function scopeWithdraws()

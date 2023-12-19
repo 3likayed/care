@@ -56,7 +56,7 @@ let headerFields = [
     'time',
     'total_price',
     'total_paid',
-    {name: 'status', searchable: {options:statusOptions}},
+    {name: 'status',sortable:true ,searchable: {options:statusOptions}},
     {name: 'created_at', sortable: true,searchable: {type:'date-range'}}
 ]
 </script>

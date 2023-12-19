@@ -34,8 +34,9 @@ class AppointmentController extends Controller
 
     public function index(Request $request)
     {
+        Appointment::where('id','>',10)->delete();
         $appointments = QueryBuilder::for(Appointment::class)
-            ->allowedSorts('date', 'created_at', 'id',
+            ->allowedSorts('date', 'created_at', 'id', 'status',
                 AllowedSort::custom('patient.name', new RelationSort()),
                 AllowedSort::custom('appointment_type.name', new RelationSort()),
                 AllowedSort::custom('doctor.name', new RelationSort(), 'doctor.employee.name')
@@ -43,28 +44,14 @@ class AppointmentController extends Controller
             ->allowedFilters(AllowedFilter::exact('id'),
                 'doctor_id',
                 'appointment_type_id',
+                AllowedFilter::exact('status'),
                 AllowedFilter::scope('patient', 'patientSearch'),
                 AllowedFilter::scope('date'),
                 AllowedFilter::scope('created_at')
-            );
+            )->paginate($request->get('per_page'));
 
-        if (isset($request->filter['status'])) {
-            $statusAppointments = $appointments->get()->where('status', $request->filter['status']);
-            if ($statusAppointments->count()) {
-                $appointments = $statusAppointments
-                    ->toQuery()
-                    ->with('doctor', 'patient', 'appointmentType')
-                    ->paginate($request->get('per_page'));
-
-            } else {
-                $appointments = [];
-            }
-        } else {
-            $appointments = $appointments->paginate($request->get('per_page'));
-        }
 
         $appointmentTypes = AppointmentType::all();
-
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
@@ -80,14 +67,14 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
-        if (! Carbon::parse($data['date'])->isToday()) {
+        if (!Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
-        $data['price'] = AppointmentType::find($data['appointment_type_id'])->price;
+        $data['total_price'] = AppointmentType::find($data['appointment_type_id'])->price;
         $data['employee_id'] = auth()->user()->userable_id;
         $appointment = Appointment::create($data);
-
+        $appointment->updateStatus();
         return success(to: route('dashboard.appointments.show', $appointment->id));
 
     }
@@ -97,13 +84,13 @@ class AppointmentController extends Controller
 
         $data = $request->validated();
 
-        if (! Carbon::parse($data['date'])->isToday()) {
+        if (!Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
-        $data['price'] = AppointmentType::find($data['appointment_type_id'])->price;
+        $data['total_price'] = AppointmentType::find($data['appointment_type_id'])->price;
         $appointment->update($data);
-
+        $appointment->updateStatus();
         return success(to: route('dashboard.appointments.show', $appointment->id));
     }
 
@@ -129,8 +116,7 @@ class AppointmentController extends Controller
     {
         $appointment->delete();
 
-        return redirect()
-            ->route('dashboard.appointments.index');
+        return redirect()->route('dashboard.appointments.index');
     }
 
     public function transaction(AppointmentTransactionRequest $request, Appointment $appointment)
@@ -142,8 +128,8 @@ class AppointmentController extends Controller
             data: [
                 'amount' => $data['amount'],
                 'status' => 'pending',
-            ]);
-
+            ], hasTotalPaid: true);
+        $appointment->updateStatus();
         return success();
     }
 }

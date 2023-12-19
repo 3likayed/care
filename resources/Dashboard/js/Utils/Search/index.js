@@ -65,7 +65,7 @@ export default class Search {
     }
 
     static sortTypeToggle(sortParam) {
-        return this.isAsc(sortParam) ? '-' : ''
+        return !this.isAsc(sortParam) ? '' : '-'
     }
 
     static sort(sortParam, model) {

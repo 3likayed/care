@@ -61,13 +61,13 @@
                 type="select"
             />
         </FormField>
-        <FormField :label="__('price')">
+        <FormField :label="__('total_price')">
             <FormControl
-                v-model="price"
+                v-model="total_price"
                 :icon="mdiCash"
-                autocomplete="price"
+                autocomplete="total_price"
                 is-disabled
-                name="price"
+                name="total_price"
                 required
             />
         </FormField>
@@ -120,10 +120,10 @@ let form = useForm({
 
 });
 
-let price = ref(props.data.price);
+let total_price = ref(props.data.total_price);
 
 const setPrice = (appointmentTypeId) => {
-    price.value = collect(props.appointmentTypes).firstWhere('id', appointmentTypeId).price
+    total_price.value = collect(props.appointmentTypes).firstWhere('id', appointmentTypeId).price
 }
 
 const submit = () => {

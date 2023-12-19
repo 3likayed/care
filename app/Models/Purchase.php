@@ -6,6 +6,7 @@
 
 namespace App\Models;
 
+use App\Traits\OrderByIdDesc;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
@@ -28,26 +29,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Purchase extends Model
 {
-    use SoftDeletes;
+    use SoftDeletes, OrderByIdDesc;
 
     protected $casts = [
         'supplier_id' => 'int',
         'expires_at' => 'date',
 
     ];
-
     protected $fillable = [
         'supplier_id',
         'total_price',
         'employee_id',
-        'total_price',
-        'total_remaining',
+        'total_paid',
         'notes',
     ];
 
-    protected $appends = ['total_paid'];
 
     protected $with = ['supplier:id,name'];
+    protected $appends = ['total_remaining'];
 
     public function supplier(): BelongsTo
     {
@@ -59,10 +58,10 @@ class Purchase extends Model
         return $this->hasMany(Stock::class);
     }
 
-    public function totalPaid(): Attribute
+    public function totalRemaining(): Attribute
     {
         return Attribute::get(function () {
-            return $this->transactions()->sum('amount');
+            return $this->total_price - $this->total_paid;
         });
     }
 
@@ -80,7 +79,7 @@ class Purchase extends Model
     {
         $value = explode('|', $value);
         $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
-        if (isset($value[1]) && (bool) $value[1]) {
+        if (isset($value[1]) && (bool)$value[1]) {
             $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
 

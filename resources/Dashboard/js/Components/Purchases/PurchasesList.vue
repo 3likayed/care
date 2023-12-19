@@ -30,10 +30,10 @@
                 <td :data-label="__('total')">
                     {{ item.total_price }}
                 </td>
-                <td :data-label="__('total')">
+                <td :data-label="__('total_paid')">
                     {{ item.total_paid }}
                 </td>
-                <td :data-label="__('total')">
+                <td :data-label="__('total_remaining')">
                     {{ item.total_remaining }}
                 </td>
                 <td :data-label="__('notes')">
@@ -101,8 +101,8 @@ let headers = [
         searchable: {name: 'supplier.id', options: props.suppliers}
     },
     {name: 'total_price', sortable: true},
-    {name: 'transactions_sum_amount', label: 'total_paid', sortable: true},
-    {name: 'total_remaining', sortable: true},
+    {name: 'total_paid', label: 'total_paid', sortable: true},
+    {name: 'total_remaining'},
     {name: 'notes', searchable: true},
     {name: 'created_at', sortable: true, searchable: {name: 'created_at', type: 'date-range'}}
 ];

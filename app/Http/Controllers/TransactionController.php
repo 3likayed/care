@@ -25,7 +25,7 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $transactionsQuery = QueryBuilder::for(Transaction::class)
-            ->allowedSorts('transactionable_type', 'transactionable_id', 'created_at', 'amount', 'id',
+            ->allowedSorts('transactionable_type', 'transactionable_id', 'created_at', 'amount', 'id','type',
                 AllowedSort::custom('employee.name', new RelationSort())
             )
             ->allowedFilters(AllowedFilter::exact('id'),
@@ -34,21 +34,17 @@ class TransactionController extends Controller
                 AllowedFilter::endsWithStrict('transactionable_type'),
                 'employee.name', 'type', 'transactionable_type');
 
+        $total = TransactionService::total(clone $transactionsQuery);
         $transactions = $transactionsQuery->paginate($request->get('per_page'));
-        $totalWithdraw = TransactionService::totalWithdraw($transactions);
-        $totalDeposit = TransactionService::totalDeposit($transactions);
-        $totalRemaining = TransactionService::totalRemaining($transactions);
-        $transactionleTypeOptions = Transaction::groupBy('transactionable_type')
+        $transactionableTypeOptions = Transaction::groupBy('transactionable_type')
             ->pluck('transactionable_type')
-            ->map(fn ($item) => class_basename($item ?? 'transaction'));
+            ->map(fn($item) => class_basename($item ?? 'transaction'));
 
         return Inertia::render('Transactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.transactions')]),
             'data' => ModelCollection::make($transactions),
-            'total_withdraw' => $totalWithdraw,
-            'total_deposit' => $totalDeposit,
-            'total_remaining' => $totalRemaining,
-            'transactionable_type_options' => $transactionleTypeOptions,
+            'total' => $total,
+            'transactionable_type_options' => $transactionableTypeOptions,
         ]);
     }
 }

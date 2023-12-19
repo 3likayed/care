@@ -38,7 +38,7 @@
         <section v-show="step === 3">
             <TransactionsList
                 :data="{id:computedData.id , max:computedData.total_remaining}"
-                :has-create="computedData.total_remaining>0"
+                :has-create="computedData.status !== 'completed' "
                 :items="computedData.transactions"
                 :searchable="false"
                 :sortable="false"

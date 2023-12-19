@@ -1,4 +1,4 @@
-<template>
+    <template>
 
   <CardBoxModal :is-dirty="form.isDirty"
       v-if="can(`purchases.create`)"
