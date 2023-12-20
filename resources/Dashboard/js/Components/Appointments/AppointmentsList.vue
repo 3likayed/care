@@ -16,6 +16,7 @@ import {__} from "../../Globals.js";
 import FormField from "../Sahred/FormField.vue";
 import {Model, Search} from "../../Utils/index.js";
 import StatusIcon from "../Sahred/StatusIcon.vue";
+import AppointmentsCharts from "./AppointmentsCharts.vue";
 
 let props = defineProps({
     title: String,
@@ -76,7 +77,6 @@ let headerFields = [
 
         </template>
     </SectionTitleLineWithButton>
-
     <section v-if="searchable">
         <FormField class-addon="grid md:grid-cols-2 gap-5">
             <BaseButton :icon="mdiCalendarToday" :label="__('today_appointments')"

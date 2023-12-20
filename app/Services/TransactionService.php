@@ -63,25 +63,6 @@ class TransactionService
         $transaction->update(['status' => 'confirmed']);
     }
 
-    public static function totalDeposit($transactions)
-    {
-
-        return static::totalOperation($transactions, 'deposit');
-    }
-
-    private static function totalOperation($transactions, $operation)
-    {
-        return $transactions->where('type', '=', $operation)->sum('amount');
-
-    }
-
-    public
-    static function totalWithdraw($transactions)
-    {
-
-        return static::totalOperation($transactions, 'withdraw');
-    }
-
     public
     static function total($transactions)
     {
@@ -94,5 +75,23 @@ class TransactionService
             'withdraw' => $withdraw,
             'remaining' => $remaining,
         ];
+    }
+
+    public static function totalDeposit($transactions)
+    {
+
+        return static::totalOperation($transactions, 'deposit');
+    }
+
+    private static function totalOperation($transactions, $operation)
+    {
+        return $transactions->where('type', '=', $operation)->sum('amount');
+
+    }
+
+    public static function totalWithdraw($transactions)
+    {
+
+        return static::totalOperation($transactions, 'withdraw');
     }
 }

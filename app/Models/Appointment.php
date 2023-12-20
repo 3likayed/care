@@ -109,7 +109,7 @@ class Appointment extends Model
 
     public function scopeToday(Builder $query)
     {
-        return $query->whereDate('date', Carbon::today())->orderBy('date')->dd();
+        return $query->whereDate('date', Carbon::today())->orderBy('date');
     }
 
     public function scopeVisit(Builder $query)

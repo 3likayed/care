@@ -48,6 +48,7 @@ class ManualTransactionController extends Controller
             AllowedSort::custom('transaction.employee.name', new RelationSort()),
             )
             ->paginate($request->get('per_page'));
+      
 
         return Inertia::render('ManualTransactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.manual_transactions')]),
