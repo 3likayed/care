@@ -58,7 +58,7 @@ class AppointmentTypeController extends Controller
     public function show(AppointmentType $appointmentType)
     {
         $appointmentType->load('appointments', 'appointments.patient', 'appointments.appointmentType');
-        dd($appointmentType);
+        
 
         return Inertia::render('AppointmentTypes/Show', [
             'data' => $appointmentType,
