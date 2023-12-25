@@ -68,7 +68,7 @@ class SalaryAction extends Model
     {
         return Attribute::get(function () {
 
-            if ($this->reason == 'giving' && $this->transactions()->count()  > 0)
+            if ($this->reason == 'giving' && $this->transactions()->count() > 0)
                 return  true;
 
             elseif ($this->reason == 'loan' && $this->transactions()->sum('amount') == $this->amount)

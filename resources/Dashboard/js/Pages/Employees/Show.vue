@@ -29,19 +29,22 @@
                 <BaseButton :label="__('create_field',{field:'withhold'})"
                             color="danger"
                             @click="createAction('withhold')"/>
-                            <BaseButton :label="__('pay_salary',{field:'salary'})"
+                <BaseButton :label="__('pay_salary',{field:'salary'})"
                             color="warning"
                             @click="createAction('salary')"/>
             </div>
             <SalariesList
                 :data="data"
-            
             />
         </section>
         <SalaryActionCreate
             v-if="showCreateSalaryAction"
             :data="data"
             :type="actionType"
+            />
+            <SalaryPayCreate
+            v-if="showCreateSalaryPay"
+            :data="data"
             />
 
     </SectionMain>
@@ -61,20 +64,31 @@ import {useStepStore} from "../../Stores/step.js";
 import SalariesList from "../../Components/Salaries/SalariesList.vue";
 import SalaryActionCreate from "../../Components/Salaries/SalaryActionCreate.vue";
 import BaseButton from "../../Components/Sahred/BaseButton.vue";
+import SalaryPayCreate from "../../Components/Salaries/SalaryPayCreate.vue";
 
 let steps = ref([__('data'), __('salary')]);
 let step = ref(useStepStore().getStep())
 let data = computed(() => usePage().props.data);
 let actionType = ref();
 let showCreateSalaryAction = ref(false);
+let showCreateSalaryPay = ref(false);
+
 const createAction = (action) => {
-    actionType.value = action;
+    if(action !== 'salary')
+    {
+        actionType.value = action;
     showCreateSalaryAction.value = true;
+    }
+    else{
+        showCreateSalaryPay.value = true ;
+    }
+    
 
 }
 
-
 provide('showCreateSalaryAction', showCreateSalaryAction)
+provide('showCreateSalaryPay', showCreateSalaryPay)
+
 
 </script>
 <style scoped>

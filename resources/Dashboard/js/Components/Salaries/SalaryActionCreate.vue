@@ -4,7 +4,7 @@
                   :title="__('create_field', { field: type })" @cancel="showCreateSalaryAction = false"
                   @confirm="submit">
 
-
+ 
         <FormField v-if="type != 'salary'" :errors="form.errors.amount" :label="__('amount')">
             <FormControl v-model="form.amount" :icon="mdiCash" :min="0" autocomplete="amount" name="amount"/>
         </FormField>
@@ -21,28 +21,6 @@
 
         </div>
 
-        <FormControl v-if="type == 'salary'"
-                     v-model="salary "
-                     :icon="mdiCash"
-                     :min="0"
-                     is-disabled
-                     autocomplete="amount"
-                     name="amount"/>
-                    
-
-                     <div v-if="type == 'salary'" class="grid grid-flow-row-dense grid-cols-3">
-                        <div>
-                            <input id="one" v-model="form.picked" type="radio" value="total_loan"/>
-                            <label class="mr-4" for="one">سداد السلف بالكامل</label>
-                        </div>
-                        <div>
-                            <input id="two" v-model="form.picked" type="radio" value="partial_loan"/>
-                            <label class="mr-4" for="two">سداد جزئي  </label>
-                        </div>
-            
-
-                    </div>
-                    <FormControl v-if="form.picked == 'partial_loan'" v-model="form.amount" :icon="mdiCash" :min="0" autocomplete="amount" name="amount"/>
 
 
 
@@ -83,18 +61,6 @@ let form = useForm({
     reason: props.type,
     picked: 'other',
 });
-
-let data = props.data ;
-let salary = ref();
-let net_amount = ref();
-let withhold = ref();
-let loan = ref();
-
-net_amount.value = data.salary.net_amount;
-withhold.value = data.current_month_withhold_actions;
-salary.value= net_amount.value- withhold.value 
-loan.value = data.current_month_loan_actions;
-
 
 
 const submit = () => {

@@ -47,6 +47,8 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('employees', EmployeeController::class);
         Route::apiResource('salaries', SalaryController::class);
         Route::apiResource('salary-actions', SalaryActionsController::class);
+        Route::post('pay', [SalaryActionsController::class, 'pay'])->name('pay');
+
         Route::apiResource('patients', PatientController::class);
         Route::apiResource('appointment-types', AppointmentTypeController::class);
         Route::apiResource('specializations', SpecializationController::class);

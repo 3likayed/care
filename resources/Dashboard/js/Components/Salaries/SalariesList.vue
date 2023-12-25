@@ -43,6 +43,7 @@ let edited = ref();
 let props = defineProps({
     data: Object,
     items: Array,
+    actions: Array,
     pagination: Object,
     searchable: {
         type: Boolean,

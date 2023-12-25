@@ -45,7 +45,7 @@ class SalaryActionsController extends Controller
         $employee = $employee->salaryActions()->create($data);
         if (($data['reason'] == 'giving' && $data['picked'] == 'now') || $data['reason'] === 'loan') {
 
-            $action = SalaryAction::where('employee_id', $data['employee_id'])->get()->last();
+            $action = SalaryAction::where('employee_id', $data['employee_id'])->get()->first();
             TransactionService::create($action, [
                 'amount' => $data['amount'],
                 'status' => 'confirmed',
@@ -79,5 +79,12 @@ class SalaryActionsController extends Controller
     public function destroy(Salary $salary)
     {
         //
+    }
+
+
+    public function pay(Request $request)  {
+
+        return $request ;
+        
     }
 }
