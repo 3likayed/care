@@ -1,30 +1,30 @@
 <template>
 
-    <SectionTitleLineWithButton model="services"  :icon="mdiStoreCheck" :title="__('services')" main>
+    <SectionTitleLineWithButton :icon="mdiClipboardPulse" :title="__('services')" main model="services">
         <slot name="create">
 
         </slot>
         <template #create>
-            <serviceCreate/>
+            <ProductCreate/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="hasSearch" :fields="[{name:'search'},{name:'name'}]" model="services"/>
-=======
-    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="Service"/>
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'name',sortable:true},{name:'price',sortable:true},{name:'created_at',sortable:true}]"
-            :pagination="pagination"
+            :headers="headers" :pagination="pagination"
+            :searchable="searchable"
+            :sortable="sortable"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
-                <td data-label="# ">{{ key + 1 }}</td>
+                <td data-label="# ">{{ item.id }}</td>
                 <td :data-label="__('name')">
                     {{ item.name }}
                 </td>
 
-                
-                <td :data-label="__('price')">
-                    {{ item.price }}
+                <td :data-label="__('consumed')">
+                    {{ item.consumed }}
+                </td>
+                <td :data-label="__('unit_price')">
+                    {{ item.unit_price }}
                 </td>
 
 
@@ -34,7 +34,7 @@
                 <td :data-label="__('options')">
                     <TableOptions :item="item" model="services" @edit="edited=item">
                         <template #edit>
-                            <serviceEdit :data="edited"/>
+                            <ServiceEdit :data="edited"/>
                         </template>
                     </TableOptions>
                 </td>
@@ -48,13 +48,12 @@
 
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
-import {mdiLockAlertOutline, mdiStoreCheck} from "@mdi/js";
+import {mdiClipboardPulse} from "@mdi/js";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
-import DynamicSearch from "../../Components/DynamicSearch.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
-import serviceEdit from "./ServiceEdit.vue";
+import ServiceEdit from "./ServiceEdit.vue";
 import moment from "moment";
-import serviceCreate from "./ServiceCreate.vue";
+import ProductCreate from "./ServiceCreate.vue";
 import {ref} from "vue";
 
 let edited = ref();
@@ -65,7 +64,18 @@ let props = defineProps({
         type: Boolean,
         default: true,
     },
+    sortable: {
+        type: Boolean,
+        default: true,
+    },
 })
+let headers = [
+    {name: 'id', sortable: true, searchable: true},
+    {name: 'name', sortable: true, searchable: true},
+    {name: 'consumed', sortable: true},
+    {name: 'unit_price', sortable: true},
+    {name: 'created_at', sortable: true}
+]
 </script>
 <style>
 

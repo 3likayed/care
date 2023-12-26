@@ -21,15 +21,24 @@
                 required
             />
         </FormField>
-
-        <FormField :errors="form.errors.name" :label="__('price')">
+        <FormField :errors="form.errors.unit_price" :label="__('unit_price')">
             <FormControl
-                v-model="form.price"
+                v-model="form.unit_price"
                 :icon="mdiCash"
-                name="price"
+                name="unit_price"
                 required
             />
         </FormField>
+
+        <FormField :errors="form.errors.consumed" :label="__('consumed')">
+            <FormControl
+                v-model="form.consumed"
+                :icon="mdiArrowAll"
+                name="consumed"
+                required
+            />
+        </FormField>
+
 
     </CardBoxModal>
 </template>
@@ -37,14 +46,13 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiAt, mdiCalendar, mdiMapMarker, mdiPhone, mdiPlusCircle, mdiTrashCanOutline} from "@mdi/js";
+import {mdiAccount, mdiArrowAll, mdiCash} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
-import {__, handleField} from "../../Globals.js";
+import {__} from "../../Globals.js";
 import {inject} from "vue";
 import {Model} from "../../Utils/index.js";
-import moment from "moment";
 
 let props = defineProps({
     data: {
@@ -62,8 +70,8 @@ let showEdit = props.isModal ? inject('showEdit') : true;
 
 let form = useForm({
     name: props.data.name,
-    price: props.data.price,
-
+    consumed: props.data.consumed,
+    unit_price: props.data.unit_price,
 
 
 });

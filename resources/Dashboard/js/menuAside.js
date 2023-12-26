@@ -21,7 +21,7 @@ import {
     mdiLockAlertOutline,
     mdiMinus,
     mdiMonitor,
-    mdiNaturePeople,
+    mdiNaturePeople, mdiPackage,
     mdiSafe,
     mdiTab,
     mdiTable,
@@ -219,6 +219,26 @@ export default [
 
     },
     {
+        label: "services",
+        icon: mdiTruckDelivery,
+        menu: [
+            {
+                route: "dashboard.services.index",
+                permission: "services.show",
+                label: "services",
+                components: ['Service/Index'],
+                icon: mdiTruckDelivery,
+            },
+            {
+                route: "dashboard.packages.index",
+                permission: "packages.show",
+                label: "packages",
+                components: ['Packages/Index'],
+                icon: mdiPackage,
+            }
+        ]
+    },
+    {
         label: "transactions",
         icon: mdiSafe,
         components: ['Transactions/Index'],
@@ -391,13 +411,7 @@ export default [
     },
 
 
-    {
-        route: "dashboard.services.index",
-        permission: "services.show",
-        label: "services",
-        components: ['Service/Index'],
-        icon: mdiTruckDelivery,
-    },
+
     {
         route: "dashboard.profile.edit",
         label: "profile",

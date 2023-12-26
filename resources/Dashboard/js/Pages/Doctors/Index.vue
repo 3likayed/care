@@ -8,13 +8,11 @@
             </template>
 
         </SectionTitleLineWithButton>
-        <DynamicSearch :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="doctors"/>
-
         <CardBox has-table>
             <BaseTable
-                :headers="['#',__('name'),__('email'),__('specialization'),__('phone'),__('address'),__('created_at')]">
+                :headers="headers">
                 <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
-                    <td data-label="# ">{{ key + 1 }}</td>
+                    <td data-label="# ">{{ item.id }}</td>
                     <td :data-label="__('name')">
                         {{ item.employee.name }}
                     </td>
@@ -73,7 +71,6 @@ import {mdiDoctor} from "@mdi/js";
 import {computed, ref} from "vue";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
-import DynamicSearch from "../../Components/DynamicSearch.vue";
 import moment from "moment";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import EditDoctor from "../../Components/Doctors/DoctorEdit.vue";
@@ -82,6 +79,15 @@ import CreateDoctor from "../../Components/Doctors/DoctorCreate.vue";
 
 let items = computed(() => usePage().props.data.data);
 let edited = ref({})
+let headers = [
+    {name: 'id', searchable: true, sortable: true},
+    {name: 'employee.name',label:'name', searchable: true, sortable: true},
+    {name: 'employee.user.email',label:'email', searchable: true, sortable: true},
+    'specialization',
+    {name: 'employee.phone',label:'phone', searchable: true, sortable: true},
+    {name: 'employee.address',label:'address', searchable: true, sortable: true},
+    {name: 'created_at', sortable: true}
+]
 </script>
 <style>
 

@@ -17,6 +17,7 @@ class TransactionController extends Controller
     public function __construct()
     {
         $this->middleware(['permission:transactions.show'])->only(['show']);
+        $this->middleware(['permission:transactions.confirm'])->only(['confirm']);
     }
 
     /**
@@ -25,7 +26,7 @@ class TransactionController extends Controller
     public function index(Request $request)
     {
         $transactionsQuery = QueryBuilder::for(Transaction::class)
-            ->allowedSorts('transactionable_type', 'transactionable_id', 'created_at', 'amount', 'id','type',
+            ->allowedSorts('transactionable_type', 'transactionable_id', 'created_at', 'amount', 'id', 'type',
                 AllowedSort::custom('employee.name', new RelationSort())
             )
             ->allowedFilters(AllowedFilter::exact('id'),
@@ -38,7 +39,7 @@ class TransactionController extends Controller
         $transactions = $transactionsQuery->paginate($request->get('per_page'));
         $transactionableTypeOptions = Transaction::groupBy('transactionable_type')
             ->pluck('transactionable_type')
-            ->map(fn($item) => class_basename($item ?? 'transaction'));
+            ->map(fn ($item) => class_basename($item ?? 'transaction'));
 
         return Inertia::render('Transactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.transactions')]),
@@ -46,5 +47,10 @@ class TransactionController extends Controller
             'total' => $total,
             'transactionable_type_options' => $transactionableTypeOptions,
         ]);
+    }
+
+    public function confirm()
+    {
+
     }
 }

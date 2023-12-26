@@ -10,6 +10,7 @@ use App\Http\Controllers\DoctorProductController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManualTransactionController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PatientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
@@ -60,9 +61,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('suppliers', SupplierController::class);
         Route::apiResource('purchases', PurchaseController::class);
         Route::apiResource('services', ServiceController::class);
-        Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
-
-
+        Route::apiResource('packages', PackageController::class)->except('show');
         Route::group(['prefix' => 'transactions', 'as' => 'transactions.'], function () {
             Route::get('', [TransactionController::class, 'index'])->name('index');
             Route::get('manual-transactions', [ManualTransactionController::class, 'index'])->name('manual-transactions.index');
@@ -76,6 +75,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
             Route::get('fetch/services', [ServiceController::class, 'fetch'])->name('services');
             Route::get('fetch/stocks', [StockController::class, 'fetch'])->name('stocks');
         });
+        Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
 
     });
 

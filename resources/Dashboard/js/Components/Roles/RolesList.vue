@@ -20,7 +20,7 @@ let props = defineProps({
 })
 
 let showCreateRole = ref(false);
-
+let headers = [{name:'id',sortable:true , searchable:true },{name:'name',sortable:true,searchable:true},{name:'created_at',sortable:true}]
 </script>
 
 <template>
@@ -30,10 +30,9 @@ let showCreateRole = ref(false);
         </template>
 
     </SectionTitleLineWithButton>
-    <DynamicSearch :fields="[{name:'name'}]" model="roles"/>
     <CardBox has-table>
 
-        <BaseTable :headers="['#',{name:'name',sortable:true},{name:'created_at',sortable:true}]">
+        <BaseTable :headers="headers">
             <tr
                 v-for="(item,key) in items"
                 class="rtl:flex-row-reverse"

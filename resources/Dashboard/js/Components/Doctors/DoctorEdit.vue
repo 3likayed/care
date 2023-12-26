@@ -82,6 +82,17 @@
                     type="email"
                 />
             </FormField>
+            <FormField :errors="form.errors['user.role']" :label="__('role')">
+                <FormControl
+                    v-model="form.user.role"
+                    :icon="mdiLock"
+                    :options="roles"
+                    autocomplete="role"
+                    name="role"
+                    required
+                    type="select"
+                />
+            </FormField>
             <FormField :errors="form.errors['user.password']" :label="__('password')">
                 <FormControl
                     v-model="form.user.password"
@@ -114,7 +125,7 @@ import CardBoxModal from "../Sahred/CardBoxModal.vue";
 import {
     mdiAccount,
     mdiAt,
-    mdiFormTextboxPassword,
+    mdiFormTextboxPassword, mdiLock,
     mdiMapMarker,
     mdiPhone,
     mdiPlusCircle,
@@ -129,6 +140,7 @@ import {computed, inject, ref,provide} from "vue";
 import {Model} from "../../Utils/index.js";
 import StepsComponent from "../Sahred/StepsComponent.vue";
 import {collect} from "collect.js";
+import {useStepStore} from "../../Stores/step.js";
 
 let props = defineProps({
     data: Object,
@@ -141,10 +153,11 @@ let props = defineProps({
 })
 
 let disabled = computed(() => props.isDisabled || !can(`doctors.edit`));
-provide('isDisabled', disabled);
+provide('isDisabled', disabled.value);
 
 let showEdit = props.isModal ? inject('showEdit') : true;
 let specializations = usePage().props.specializations;
+let roles = usePage().props.roles;
 let form = useForm({
     name: props.data.employee.name,
     phone: props.data.employee.phone,
@@ -152,6 +165,7 @@ let form = useForm({
     specializations: collect(props.data.specializations).pluck('id'),
     user: {
         email: props.data.employee.user.email,
+        role: props.data.employee.user.role.id,
         password: null,
         password_confirmation: null,
     }
@@ -163,7 +177,7 @@ const submit = () => {
 
 }
 let steps = ref([__('data'), __('user_data')]);
-let step = ref(0);
+let step = ref(useStepStore().getStep());
 
 
 </script>

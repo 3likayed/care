@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductStoreRequest;
-use App\Http\Requests\ProductUpdateRequest;
+use App\Http\Requests\ServiceStoreRequest;
+use App\Http\Requests\ServiceUpdateRequest;
 use App\Http\Resources\ModelCollection;
-use App\Models\product;
+use App\Models\Service;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -26,21 +26,21 @@ class ServiceController extends Controller
 
     public function index(Request $request)
     {
-        $products = QueryBuilder::for(Product::class)->where('type', 'service')
-            ->allowedFilters([AllowedFilter::scope('search'), 'name'])
-            ->allowedSorts(['name', 'quantity'])
+        $services = QueryBuilder::for(Service::class)
+            ->allowedFilters([AllowedFilter::exact('id'), 'name'])
+            ->allowedSorts(['name', 'consumed', 'unit_price', 'id', 'created_at'])
             ->paginate($request->per_page);
 
         return Inertia::render('Services/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.services')]),
-            'data' => ModelCollection::make($products),
+            'data' => ModelCollection::make($services),
         ]);
     }
 
     public function fetch(Request $request)
     {
 
-        return QueryBuilder::for(product::class)
+        return QueryBuilder::for(Service::class)
             ->allowedFilters(['name'])
             ->get();
     }
@@ -48,42 +48,43 @@ class ServiceController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ProductStoreRequest $request)
+    public function store(ServiceStoreRequest $request)
     {
 
         $data = $request->validated();
 
-        product::create($data);
+        Service::create($data);
 
         return success();
 
     }
 
-    public function update(ProductUpdateRequest $request, product $product)
+    public function update(ServiceUpdateRequest $request, Service $service)
     {
 
         $data = $request->validated();
-        $product->update($data);
+        $service->update($data);
 
         return success();
     }
 
-    public function show(product $product)
+    public function show(Service $service)
     {
-        $product->load('reservations', 'reservations.product', 'reservations.reservationType');
+        $service->load('stocks.purchase', 'doctorServices.service', 'doctorServices.doctor');
 
-        return Inertia::render('products/Show', [
-            'data' => $product,
-            'meta' => meta()->metaValues(['title' => "$product->name | ".__('dashboard.products')]),
+        return Inertia::render('Services/Show', [
+            'data' => $service,
+            'meta' => meta()->metaValues(['title' => [__('dashboard.services'), $service->name]]),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(product $product)
+    public function destroy(Service $service)
     {
-        /*$product->delete();*/
+        $service->delete();
+
         return success();
     }
 }

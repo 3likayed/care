@@ -2,7 +2,7 @@
 
     <SectionMain>
         <BreadCrumb :items="[{name: __('services'), href: route('dashboard.services.index')}]"/>
-        <servicesList :items="items" :pagination="pagination"/>
+        <ServicesList :items="items" :pagination="pagination"/>
     </SectionMain>
 
 
@@ -14,7 +14,7 @@ import SectionMain from "../../Components/Sahred/SectionMain.vue";
 import {usePage} from "@inertiajs/vue3";
 import {computed} from "vue";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
-import servicesList from "../../Components/Services/ServicesList.vue";
+import ServicesList from "../../Components/Services/ServicesList.vue";
 
 
 let items = computed(() => usePage().props.data.data);

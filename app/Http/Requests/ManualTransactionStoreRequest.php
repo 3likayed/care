@@ -26,7 +26,7 @@ class ManualTransactionStoreRequest extends FormRequest
         return [
             'amount' => ['required', 'numeric', 'min:1'],
             'type' => ['required', 'in:,deposit,withdraw'],
-            'notes' => ['nullable', 'string','max:512'],
+            'notes' => ['nullable', 'string', 'max:512'],
         ];
     }
 }

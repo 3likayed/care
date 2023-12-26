@@ -29,13 +29,14 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Purchase extends Model
 {
-    use SoftDeletes, OrderByIdDesc;
+    use OrderByIdDesc, SoftDeletes;
 
     protected $casts = [
         'supplier_id' => 'int',
         'expires_at' => 'date',
 
     ];
+
     protected $fillable = [
         'supplier_id',
         'total_price',
@@ -44,13 +45,13 @@ class Purchase extends Model
         'notes',
     ];
 
-
     protected $with = ['supplier:id,name'];
+
     protected $appends = ['total_remaining'];
 
     public function supplier(): BelongsTo
     {
-        return $this->belongsTo(Supplier::class);
+        return $this->belongsTo(Supplier::class)->without('purchases');
     }
 
     public function stocks(): HasMany
@@ -79,7 +80,7 @@ class Purchase extends Model
     {
         $value = explode('|', $value);
         $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
-        if (isset($value[1]) && (bool)$value[1]) {
+        if (isset($value[1]) && (bool) $value[1]) {
             $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
 

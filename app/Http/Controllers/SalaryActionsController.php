@@ -81,10 +81,10 @@ class SalaryActionsController extends Controller
         //
     }
 
+    public function pay(Request $request)
+    {
 
-    public function pay(Request $request)  {
+        return $request;
 
-        return $request ;
-        
     }
 }

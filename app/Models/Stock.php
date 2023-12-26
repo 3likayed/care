@@ -33,7 +33,7 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  */
 class Stock extends Model
 {
-    use BelongsToThrough, HasRelationships, SoftDeletes,OrderByIdDesc;
+    use BelongsToThrough, HasRelationships, OrderByIdDesc,SoftDeletes;
 
     protected $casts = [
         'purchase_id' => 'int',

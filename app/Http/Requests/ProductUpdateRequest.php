@@ -23,8 +23,8 @@ class ProductUpdateRequest extends FormRequest
     {
 
         return [
-            'name' => ['required', 'string', 'between:5,50'],
-            'price' => ['required', 'numeric'],
+            'name' => ['required', 'string', 'between:3,50'],
+            'unit_price' => ['required', 'numeric', 'gt:0'],
 
         ];
     }

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
-    use SoftDeletes , OrderByIdDesc;
+    use OrderByIdDesc , SoftDeletes;
 
     protected $fillable = ['amount', 'status', 'type', 'employee_id'];
 
@@ -20,10 +20,9 @@ class Transaction extends Model
 
     protected $with = ['employee:id,name'];
 
-
     public function transactionable(): MorphTo
     {
-        return $this->morphTo()->withTrashed()->without(['transactions','transaction']);
+        return $this->morphTo()->withTrashed()->without(['transactions', 'transaction']);
     }
 
     public function employee(): BelongsTo

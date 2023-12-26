@@ -45,45 +45,46 @@ export default class Model {
         }
     }
 
-    static create(model, form) {
-        form.post(route(`dashboard.${model}.store`), {
+    static create(model, form,data=null) {
+        console.log(model);
+        form.post(route(`dashboard.${model}.store`,data), {
             preserveScroll: true,
             preserveState: (page) => Object.keys(page.props.errors).length,
         })
     }
 
-    static edit(model, form, id) {
+    static edit(model, form, data) {
 
         form.transform((data) => ({
             ...data,
             _method: 'put',
-        })).post(route(`dashboard.${model}.update`, id), {
+        })).post(route(`dashboard.${model}.update`, data), {
             preserveScroll: true,
             preserveState: (page) => Object.keys(page.props.errors).length,
         })
     }
 
-    static transaction(model, form, id) {
+    static transaction(model, form, data) {
 
-        form.post(route(`dashboard.transactions.${model}`, id), {
+        form.post(route(`dashboard.transactions.${model}`, data), {
             preserveScroll: true,
             preserveState: (page) => Object.keys(page.props.errors).length,
         })
     }
 
-    static submit(operation, model, form, id=null, modelResolve = true) {
+    static submit(operation, model, form, data=null, modelResolve = true,) {
 
         if (modelResolver)
             model = modelResolver(model);
         switch (operation) {
             case 'edit' :
-                this.edit(model, form, id);
+                this.edit(model, form, data);
                 break;
             case 'transaction' :
-                this.transaction(model, form, id);
+                this.transaction(model, form, data);
                 break;
             case 'create' :
-                this.create(model, form)
+                this.create(model, form,data)
         }
     }
 
