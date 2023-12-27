@@ -30,11 +30,12 @@ class AppointmentController extends Controller
         $this->middleware(['permission:appointments.edit', 'can:update,appointment'])->only(['update']);
         $this->middleware(['permission:appointments.create'])->only(['store']);
         $this->middleware(['permission:appointments.delete', 'can:delete,appointment'])->only(['destroy']);
+        $this->middleware(['permission:appointments.transaction'])->only(['transaction']);
     }
 
     public function index(Request $request)
     {
-        Appointment::where('id','>',10)->delete();
+        Appointment::where('id', '>', 10)->delete();
         $appointments = QueryBuilder::for(Appointment::class)
             ->allowedSorts('date', 'created_at', 'id', 'status',
                 AllowedSort::custom('patient.name', new RelationSort()),
@@ -50,8 +51,8 @@ class AppointmentController extends Controller
                 AllowedFilter::scope('created_at')
             )->paginate($request->get('per_page'));
 
-
         $appointmentTypes = AppointmentType::all();
+
         return Inertia::render('Appointments/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.appointments')]),
             'data' => ModelCollection::make($appointments),
@@ -67,7 +68,7 @@ class AppointmentController extends Controller
     {
 
         $data = $request->validated();
-        if (!Carbon::parse($data['date'])->isToday()) {
+        if (! Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
@@ -75,6 +76,7 @@ class AppointmentController extends Controller
         $data['employee_id'] = auth()->user()->userable_id;
         $appointment = Appointment::create($data);
         $appointment->updateStatus();
+
         return success(to: route('dashboard.appointments.show', $appointment->id));
 
     }
@@ -84,19 +86,20 @@ class AppointmentController extends Controller
 
         $data = $request->validated();
 
-        if (!Carbon::parse($data['date'])->isToday()) {
+        if (! Carbon::parse($data['date'])->isToday()) {
             $data['doctor_id'] = null;
         }
 
         $data['total_price'] = AppointmentType::find($data['appointment_type_id'])->price;
         $appointment->update($data);
         $appointment->updateStatus();
+
         return success(to: route('dashboard.appointments.show', $appointment->id));
     }
 
     public function show(Appointment $appointment)
     {
-        $appointment->load('patient', 'appointmentProducts.product', 'appointmentProducts.appointment', 'transactions');
+        $appointment->load('patient', 'appointmentProducts.appointment', 'appointmentProducts.product', 'transactions');
         $appointmentTypes = AppointmentType::all();
         $doctor = UserService::authDoctor();
 
@@ -128,8 +131,10 @@ class AppointmentController extends Controller
             data: [
                 'amount' => $data['amount'],
                 'status' => 'pending',
-            ], hasTotalPaid: true);
+            ],
+            hasTotalPaid: true);
         $appointment->updateStatus();
+
         return success();
     }
 }

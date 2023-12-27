@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('patient_id')
                 ->constrained('patients')
-                ->references('id') ;
+                ->references('id');
 
             $table->foreignId('appointment_type_id')
                 ->constrained('appointment_types')
-                ->references('id') ;
+                ->references('id');
 
             $table->foreignId('doctor_id')
                 ->nullable()
@@ -29,7 +29,6 @@ return new class extends Migration
             $table->foreignId('employee_id')
                 ->constrained('employees')
                 ->references('id');
-
 
             $table->double('total_price');
             $table->double('total_paid');

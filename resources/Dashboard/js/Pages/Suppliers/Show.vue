@@ -25,15 +25,6 @@
                 :visit-data="{filter:{'supplier.id':data.id}}"
             />
         </section>
-        <section v-show="step === 2">
-            <TransactionsList
-                :has-create="false"
-                :items="data.transactions"
-                :searchable="false"
-                :sortable="false"
-                model="suppliers"
-            />
-        </section>
     </SectionMain>
 </template>
 
@@ -51,7 +42,7 @@ import PurchasesList from "../../Components/Purchases/PurchasesList.vue";
 import {useStepStore} from "../../Stores/step.js";
 import TransactionsList from "../../Components/Transactions/TransactionsList.vue";
 
-let steps = ref([__('data'), __('purchases'), __('transactions')]);
+let steps = ref([__('data'), __('purchases')]);
 let step = ref(useStepStore().getStep());
 
 let data = computed(() => usePage().props.data);

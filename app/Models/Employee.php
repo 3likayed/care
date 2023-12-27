@@ -66,11 +66,10 @@ class Employee extends Authenticatable
         return $this->hasOne(Salary::class)->latestOfMany();
     }
 
-    public function CurrentMonthSalaryActions() :Attribute
+    public function CurrentMonthSalaryActions(): Attribute
     {
-        
-        return  Attribute::get(fn()=>$this->salaryActions->whereIn('reason',['giving','withhold'])->where('is_confirmed',false)->sum('amount'));
 
+<<<<<<< HEAD
         
     }
 
@@ -83,13 +82,29 @@ class Employee extends Authenticatable
     {
         return Attribute::get(fn()=>$this->salaryActions->where('reason','loan')->where('is_confirmed',false)->sum('amount'));   
          
+=======
+        return Attribute::get(fn () => $this->salaryActions->whereIn('reason', ['giving', 'withhold'])->where('is_confirmed', false)->sum('amount'));
+>>>>>>> 0205ab2a00f66f448385ca09b6b0025378c65922
 
     }
-    public function CurrentMonthWithholdActions() :Attribute
+
+    public function CurrentMonthGivingActions(): Attribute
     {
-        
-        return Attribute::get(fn()=> $this->salaryActions->where('reason','withhold')->where('is_confirmed',false)->sum('amount'));   
-      
+        return Attribute::get(fn () => $this->salaryActions->where('reason', 'giving')->where('is_confirmed', false)->sum('amount'));
+
+    }
+
+    public function CurrentMonthLoanActions(): Attribute
+    {
+        return Attribute::get(fn () => $this->salaryActions->where('reason', 'loan')->where('is_confirmed', true)->sum('amount'));
+
+    }
+
+    public function CurrentMonthWithholdActions(): Attribute
+    {
+
+        return Attribute::get(fn () => $this->salaryActions->where('reason', 'withhold')->where('is_confirmed', false)->sum('amount'));
+
     }
 
     public function salaryActions(): HasManyThrough
@@ -113,7 +128,7 @@ class Employee extends Authenticatable
     {
         $value = explode('|', $value);
         $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
-        if (isset($value[1]) && (bool)$value[1]) {
+        if (isset($value[1]) && (bool) $value[1]) {
             $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
 

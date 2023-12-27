@@ -116,10 +116,10 @@ export default {
         },
         buttonbar : 'p-2 lg:p-3' ,
         todayButton: {
-           label: {class: ['text-gray-600 dark:text-white/70 bg-gray-100 dark:bg-slate-400 p-1 ']}
+           label: {class: ['text-gray-600 dark:text-white bg-gray-100  dark:bg-slate-400 p-1 rounded-full']}
         },
         clearButton: {
-            label: {class: ['text-gray-600 dark:text-white/70 bg-gray-100 dark:bg-slate-400 p-1 ']}
+            label: {class: ['text-gray-600 dark:text-white bg-gray-100 dark:bg-slate-400 p-1 rounded-full ']}
         },
         separatorcontainer: 'flex items-center flex-col px-2',
         separator: 'text-xl',

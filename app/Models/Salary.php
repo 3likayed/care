@@ -28,7 +28,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Salary extends Model
 {
-    use SoftDeletes,OrderByIdDesc;
+    use OrderByIdDesc,SoftDeletes;
 
     protected $table = 'salaries';
 

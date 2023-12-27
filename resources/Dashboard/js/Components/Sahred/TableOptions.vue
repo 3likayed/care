@@ -4,11 +4,11 @@
         type="justify-end lg:justify-start"
     >
         <BaseButton
-            class="after:content-[]"
             v-if="hasShow"
             :disabled="model ? !can(`${model}.show`) : false"
             :href="Model.showLink(model,item.id)"
             :icon="mdiEyeOutline"
+            class="after:content-[]"
             color="contrast"
             small
         />
@@ -35,9 +35,15 @@
 
     </slot>
 
+
     <ActionConfirmComponent
         v-model="showDelete"
-        @confirm="Model.delete(model,item.id)"
+        @confirm="deleteRoute ?
+         router.delete(route(deleteRoute,item.id), {
+            preserveState: (page) => Object.keys(page.props.errors).length,
+            preserveScroll: true,
+        }):
+        Model.delete(model,item.id)"
     />
 </template>
 
@@ -50,6 +56,7 @@ import {can} from "../../Globals.js";
 import {Model} from "../../Utils";
 import {provide, ref} from "vue";
 import ActionConfirmComponent from "./ActionConfirmComponent.vue";
+import {router} from "@inertiajs/vue3";
 
 
 let showEdit = ref(false);
@@ -71,6 +78,7 @@ let props = defineProps({
     },
 
     model: String,
+    deleteRoute: String,
     item: Object
 })
 

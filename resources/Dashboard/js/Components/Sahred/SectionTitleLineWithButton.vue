@@ -16,6 +16,8 @@ let props = defineProps({
     },
     visitData: Object,
     model: String,
+    primaryModel: String,
+    createPermission: String,
     hasCreate: {
         type: Boolean,
         default: true
@@ -32,7 +34,7 @@ const convertToPascalCaseAndRemoveLast = (inputString) => {
 
 
     const capitalizedInput = pluralize(inputString, 1);
-    const words = capitalizedInput.replace('_','-').split('-');
+    const words = capitalizedInput.replace('_', '-').split('-');
     const capitalizedWords = words.map(word => word.charAt(0).toUpperCase() + word.slice(1));
     return capitalizedWords.join('')
 
@@ -42,7 +44,7 @@ const convertToPascalCaseAndRemoveLast = (inputString) => {
 const hasSlot = computed(() => useSlots().default);
 let showCreate = ref(false);
 if (props.model) {
-    provide(`showCreate${convertToPascalCaseAndRemoveLast(props.model)}`, showCreate)
+    provide(`showCreate${convertToPascalCaseAndRemoveLast(props.primaryModel ?? props.model)}`, showCreate)
 }
 
 
@@ -70,10 +72,10 @@ let computedTitle = computed(() => __(props.title || props.model))
                 size="20"
             />
             <component
-                :is="model? Link : 'h1'"
+                :is="model||primaryModel? Link : 'h1'"
                 v-if="computedTitle"
                 :class="main ? 'text-2xl md:text-3xl' : 'text-lg mm:text-xl'"
-                :href="model ? Model.indexLink(model,visitData) : null"
+                :href="model || primaryModel ? Model.indexLink(primaryModel ?? model,visitData) : null"
                 class="leading-tight"
             >
                 {{ computedTitle }}
@@ -81,7 +83,8 @@ let computedTitle = computed(() => __(props.title || props.model))
         </div>
         <slot v-if="hasSlot">
         </slot>
-        <BaseButton v-if="(hasCreate && can(`${model}.create`))" :icon="mdiPlusCircle" color="success"
+        <BaseButton v-if="(hasCreate && can(createPermission ?? `${model}.create`))" :icon="mdiPlusCircle"
+                    color="success"
                     @click="showCreate=true"/>
     </section>
 

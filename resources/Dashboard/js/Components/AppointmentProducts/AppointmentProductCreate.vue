@@ -120,7 +120,7 @@ const appendProduct = (product_id) => {
 }
 const setProductTotal = (value, key) => {
   let price = form.products[key].quantity *
-      collect(props.products).where('id', '=', form.products[key].id).first().price
+      collect(props.products).where('id', '=', form.products[key].id).first().unit_price
   let total = parsePrice(price)
   form.products[key].total = total > 0 ? total : 0;
 }

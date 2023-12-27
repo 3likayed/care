@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class SalaryAction extends Model
 {
-    use SoftDeletes,OrderByIdDesc;
+    use OrderByIdDesc,SoftDeletes;
 
     protected $table = 'salary_actions';
 
@@ -68,23 +68,41 @@ class SalaryAction extends Model
     {
         return Attribute::get(function () {
 
+<<<<<<< HEAD
             if ($this->reason == 'giving' && $this->transactions()->count() > 0)
                 return  true;
 
             elseif ($this->reason == 'loan' &&  $this->amount == 0)
+=======
+            if ($this->reason == 'giving' && $this->transactions()->count() > 0) {
+>>>>>>> 0205ab2a00f66f448385ca09b6b0025378c65922
                 return true;
-            return  false;
+            } elseif ($this->reason == 'loan' && $this->transactions()->sum('amount') == $this->amount) {
+                return true;
+            }
+
+            return false;
         });
     }
+<<<<<<< HEAD
     public function amount() : Attribute {
         return Attribute::get( function ($value) {
                 $this->reason != 'loan' ?   $value :
                 $value= $value -  $this->transactions()->where('type','deposit')->sum('amount');
                 return $value ;
 
+=======
+
+    public function amount(): Attribute
+    {
+        return Attribute::get(function ($value) {
+            return $value;
+            // ->reason != 'loan' ?  $value :
+            // $value -  $this->transactions()->sum('amount' );
+>>>>>>> 0205ab2a00f66f448385ca09b6b0025378c65922
         });
-     }
-    
+    }
+
     public function transactions(): MorphOne
     {
         return $this->morphOne(Transaction::class, 'transactionable');

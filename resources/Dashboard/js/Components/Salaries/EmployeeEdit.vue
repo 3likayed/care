@@ -132,6 +132,7 @@ import {__, handleField} from "../../Globals.js";
 import {inject, ref} from "vue";
 import {Model} from "../../Utils/index.js";
 import StepsComponent from "../Sahred/StepsComponent.vue";
+import {useStepStore} from "../../Stores/step.js";
 
 let props = defineProps({
     data: Object,
@@ -143,7 +144,7 @@ let props = defineProps({
 })
 
 let steps = ref([__('data'), __('user_data')]);
-let step = ref(0);
+let step = ref(useStepStore().getStep());
 
 let showEdit = props.isModal ? inject('showEdit') : true;
 let roles = usePage().props.roles;

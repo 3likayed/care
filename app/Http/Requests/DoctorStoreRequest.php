@@ -32,6 +32,7 @@ class DoctorStoreRequest extends FormRequest
             'specializations' => ['required', 'Array'],
             'specializations.*' => ['required', 'numeric', 'exists:specializations,id'],
             'user.email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'user.role' => ['required', 'numeric', 'exists:roles,id'],
             'user.password' => ['required', 'confirmed', Password::defaults()],
         ];
     }

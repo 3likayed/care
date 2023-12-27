@@ -47,6 +47,7 @@ class Supplier extends Model
             return $this->purchases()->sum('total_paid');
         });
     }
+
     public function purchases(): HasMany
     {
         return $this->hasMany(Purchase::class);

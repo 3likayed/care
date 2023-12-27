@@ -8,6 +8,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Znck\Eloquent\Traits\BelongsToThrough;
 
@@ -46,12 +47,12 @@ class AppointmentProduct extends Model
 
     protected $appends = ['total_price'];
 
-    public function appointment()
+    public function appointment(): BelongsTo
     {
         return $this->belongsTo(Appointment::class);
     }
 
-    public function product()
+    public function product(): BelongsTo
     {
         return $this->belongsTo(Product::class);
     }

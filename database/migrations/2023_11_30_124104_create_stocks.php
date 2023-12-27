@@ -20,7 +20,7 @@ return new class extends Migration
 
             $table->foreignId('product_id')
                 ->constrained('products')
-                ->references('id') ;
+                ->references('id');
 
             $table->unsignedDouble('unit_price');
             $table->unsignedDouble('quantity');

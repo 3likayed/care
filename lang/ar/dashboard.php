@@ -165,6 +165,7 @@ return [
     'supplier' => 'مورد',
     'id' => 'الرقم التسلسلي',
     'services' => 'الخدمات',
+    'service' => 'خدمة',
     'purchases' => 'المشتروات',
     'purchase' => 'شراء',
     'supplier_name' => 'إسم المورد',
@@ -216,5 +217,10 @@ return [
     'exists' => 'موجود',
     'manual_transaction' => 'معاملة نقدية يدوية',
     'manual_transactions' => 'المعاملات النقدية اليدوية',
+    'consumed' => 'المُستهلك',
+    'packages' => 'الباقات',
+    'package' => 'باقة',
+    'min' => 'الأقل',
+    'max' => 'الأكثر',
 
 ];

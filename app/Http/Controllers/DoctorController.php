@@ -8,11 +8,13 @@ use App\Http\Resources\ModelCollection;
 use App\Models\Doctor;
 use App\Models\Specialization;
 use App\Services\UserService;
+use App\Sorts\RelationSort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Role;
 use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class DoctorController extends Controller
@@ -44,9 +46,18 @@ class DoctorController extends Controller
         $doctors = QueryBuilder::for(Doctor::class)
             ->with('employee.user')
             ->allowedFilters(
-                AllowedFilter::scope('search'),
-                'name',
-                'email'
+                AllowedFilter::exact('id'),
+                'employee.name',
+                'employee.user.email',
+                'employee.phone',
+                'employee.address'
+            )->allowedSorts(
+                'id',
+                'created_at',
+                AllowedSort::custom('employee.user.email', new RelationSort()),
+                AllowedSort::custom('employee.phone', new RelationSort()),
+                AllowedSort::custom('employee.email', new RelationSort()),
+                AllowedSort::custom('employee.address', new RelationSort()),
             )
             ->get();
         $specializations = Specialization::all();
@@ -72,7 +83,6 @@ class DoctorController extends Controller
         $doctor->specializations()->sync($data['specializations']);
 
         $employee = $doctor->employee()->create($data);
-        $data['user']['role'] = settings('doctor_role');
         $user = UserService::updateOrCreateUser($employee, $data['user']);
         $user->assignRole(settings()->doctor_role);
         DB::commit();

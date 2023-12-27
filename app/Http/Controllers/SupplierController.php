@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\supplierStoreRequest;
-use App\Http\Requests\supplierUpdateRequest;
+use App\Http\Requests\SupplierStoreRequest;
+use App\Http\Requests\SupplierUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Product;
 use App\Models\Supplier;
@@ -28,7 +28,7 @@ class SupplierController extends Controller
     public function index(Request $request)
     {
         $suppliers = QueryBuilder::for(Supplier::class)
-            ->withSum('transactions as total_paid', 'amount',)
+            ->withSum('transactions as total_paid', 'amount')
             ->withSum('purchases as total_price', 'total_price')
             ->allowedFilters(AllowedFilter::exact('id'), 'name')
             ->allowedSorts(['id', 'name', 'total_price', 'total_paid', 'created_at'])
@@ -43,7 +43,7 @@ class SupplierController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(supplierStoreRequest $request)
+    public function store(SupplierStoreRequest $request)
     {
 
         $data = $request->validated();
@@ -53,7 +53,7 @@ class SupplierController extends Controller
 
     }
 
-    public function update(supplierUpdateRequest $request, Supplier $supplier)
+    public function update(SupplierUpdateRequest $request, Supplier $supplier)
     {
 
         $data = $request->validated();
@@ -64,7 +64,8 @@ class SupplierController extends Controller
 
     public function show(supplier $supplier)
     {
-        $supplier->load('purchases.supplier', 'transactions');
+        $supplier->load('purchases.supplier');
+        $supplier['transactions'] = $supplier->transactions()->take(50)->get();
 
         return Inertia::render('Suppliers/Show', [
             'data' => $supplier,
@@ -78,7 +79,7 @@ class SupplierController extends Controller
      */
     public function destroy(supplier $supplier)
     {
-        /*$supplier->delete();*/
+        $supplier->delete();
         return success();
     }
 }

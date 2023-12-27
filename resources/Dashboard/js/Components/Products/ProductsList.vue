@@ -23,8 +23,8 @@
                 <td :data-label="__('quantity')">
                     {{ item.available }}
                 </td>
-                <td :data-label="__('price')">
-                    {{ item.price }}
+                <td :data-label="__('unit_price')">
+                    {{ item.unit_price }}
                 </td>
 
 
@@ -73,7 +73,7 @@ let headers = [
     {name: 'id', sortable: true, searchable: true},
     {name: 'name', sortable: true, searchable: true},
     {name: 'stocks_sum_available', label: 'available', sortable: true},
-    {name: 'price', sortable: true},
+    {name: 'unit_price', sortable: true},
     {name: 'created_at', sortable: true}
 ]
 </script>

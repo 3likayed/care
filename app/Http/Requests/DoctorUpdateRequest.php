@@ -33,6 +33,7 @@ class DoctorUpdateRequest extends FormRequest
             'specializations' => ['required', 'Array'],
             'specializations.*' => ['required', 'numeric', 'exists:specializations,id'],
             'user.email' => ['required', 'email', 'max:255', 'unique:users,email,'.$this->route('doctor')->user->id],
+            'user.role' => ['required', 'numeric', 'exists:roles,id'],
             'user.password' => ['nullable', 'confirmed', Password::defaults()],
         ];
     }

@@ -22,11 +22,11 @@
             />
         </FormField>
 
-        <FormField :errors="form.errors.price" :label="__('price')">
+        <FormField :errors="form.errors.unit_price" :label="__('unit_price')">
             <FormControl
-                v-model="form.price"
+                v-model="form.unit_price"
                 :icon="mdiCash"
-                name="price"
+                name="unit_price"
                 required
             />
         </FormField>
@@ -56,8 +56,7 @@ let props = defineProps({
 let showCreateProduct = inject('showCreateProduct');
 let form = useForm({
     name: null,
-    price: null,
-    type: 'product'
+    unit_price: null,
 
 });
 const submit = () => {

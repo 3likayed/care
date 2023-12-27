@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal v-if="can(`transactions.create`)"
+    <CardBoxModal v-if="can(`${modelResolver(model)}.transaction`)"
                   :button-label="__('create')"
                   :has-cancel="isModal"
                   :has-errors="form.hasErrors"
@@ -33,7 +33,7 @@ import {mdiCash} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
-import {__} from "../../Globals.js";
+import {__, modelResolver} from "../../Globals.js";
 import {inject} from "vue";
 import {Model} from "../../Utils/index.js";
 

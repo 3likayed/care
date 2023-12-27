@@ -6,7 +6,6 @@ use App\Http\Requests\ManualTransactionStoreRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\ManualTransaction;
 use App\Services\TransactionService;
-use App\Services\UserService;
 use App\Sorts\RelationSort;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -28,7 +27,6 @@ class ManualTransactionController extends Controller
         $this->middleware(['permission:manual-transactions.delete'])->only(['destroy']);
     }
 
-
     public function index(Request $request)
     {
 
@@ -42,13 +40,12 @@ class ManualTransactionController extends Controller
                 AllowedFilter::scope('created_at'),
             )
             ->allowedSorts('id',
-            'notes',
-            AllowedSort::custom('transaction.type', new RelationSort()),
-            AllowedSort::custom('transaction.amount', new RelationSort()),
-            AllowedSort::custom('transaction.employee.name', new RelationSort()),
+                'notes',
+                AllowedSort::custom('transaction.type', new RelationSort()),
+                AllowedSort::custom('transaction.amount', new RelationSort()),
+                AllowedSort::custom('transaction.employee.name', new RelationSort()),
             )
             ->paginate($request->get('per_page'));
-      
 
         return Inertia::render('ManualTransactions/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.manual_transactions')]),
@@ -65,11 +62,10 @@ class ManualTransactionController extends Controller
         DB::beginTransaction();
         $data = $request->validated();
         $manualTransaction = ManualTransaction::create($data);
-        TransactionService::create($manualTransaction,$data) ;
+        TransactionService::create($manualTransaction, $data);
         DB::commit();
 
         return success();
 
     }
-
 }

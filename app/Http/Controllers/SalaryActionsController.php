@@ -80,6 +80,7 @@ class SalaryActionsController extends Controller
         //
     }
 
+   
 
     public function pay(SalaryPayStoreRequest $request)
     {
@@ -179,4 +180,5 @@ class SalaryActionsController extends Controller
 
         return success();
     }
+}
 }

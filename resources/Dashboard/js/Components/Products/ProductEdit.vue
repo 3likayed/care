@@ -21,11 +21,11 @@
                 required
             />
         </FormField>
-        <FormField :errors="form.errors.name" :label="__('price')">
+        <FormField :errors="form.errors.unit_price" :label="__('unit_price')">
             <FormControl
-                v-model="form.price"
+                v-model="form.unit_price"
                 :icon="mdiCash"
-                name="price"
+                name="unit_price"
                 required
             />
         </FormField>
@@ -61,7 +61,7 @@ let showEdit = props.isModal ? inject('showEdit') : true;
 let form = useForm({
     name: props.data.name,
     quantity: props.data.quantity,
-    price: props.data.price,
+    unit_price: props.data.unit_price,
 
 
 });

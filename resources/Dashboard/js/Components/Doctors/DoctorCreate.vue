@@ -84,6 +84,18 @@
                     type="email"
                 />
             </FormField>
+            <FormField :errors="form.errors['user.role']" :label="__('role')">
+                <FormControl
+                    v-model="form.user.role"
+                    :icon="mdiLock"
+                    :options="roles"
+                    autocomplete="role"
+                    name="role"
+                    required
+                    type="select"
+                />
+            </FormField>
+
             <FormField :errors="form.errors['user.password']" :label="__('password')">
                 <FormControl
                     v-model="form.user.password"
@@ -115,7 +127,7 @@ import CardBoxModal from "../Sahred/CardBoxModal.vue";
 import {
     mdiAccount,
     mdiAt,
-    mdiFormTextboxPassword,
+    mdiFormTextboxPassword, mdiLock,
     mdiMapMarker,
     mdiPhone,
     mdiPlusCircle,
@@ -129,6 +141,7 @@ import {__, handleField} from "../../Globals.js";
 import {inject, ref} from "vue";
 import {Model} from "../../Utils/index.js";
 import StepsComponent from "../Sahred/StepsComponent.vue";
+import {useStepStore} from "../../Stores/step.js";
 
 let props = defineProps({
     operation: String,
@@ -146,18 +159,19 @@ let form = useForm({
     specializations: null,
     user: {
         email: null,
+        role: null,
         password: null,
         password_confirmation: null,
     }
 
 });
-
+let roles = usePage().props.roles;
 const submit = () => {
     Model.submit('create', 'doctors', form)
 
 }
 let steps = ref([__('data'), __('user_data')]);
-let step = ref(0);
+let step = ref(useStepStore().getStep());
 
 
 </script>

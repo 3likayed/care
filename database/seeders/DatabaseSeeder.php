@@ -37,25 +37,27 @@ class DatabaseSeeder extends Seeder
                 'roles.create', 'roles.edit', 'roles.delete', 'roles.show',
                 'patients.create', 'patients.edit', 'patients.delete', 'patients.show',
                 'appointment-types.create', 'appointment-types.edit', 'appointment-types.delete', 'appointment-types.show',
-                'appointments.create', 'appointments.edit', 'appointments.delete', 'appointments.show',
+                'appointments.create', 'appointments.edit', 'appointments.delete', 'appointments.show', 'appointments.transactions',
                 'doctors.create', 'doctors.edit', 'doctors.delete', 'doctors.show',
                 'specializations.create', 'specializations.edit', 'specializations.delete', 'specializations.show',
                 'products.create', 'products.edit', 'products.delete', 'products.show',
                 'services.create', 'services.edit', 'services.delete', 'services.show',
-                'purchases.create', 'purchases.edit', 'purchases.delete', 'purchases.show',
+                'purchases.create', 'purchases.edit', 'purchases.delete', 'purchases.show', 'purchases.transactions',
                 'suppliers.create', 'suppliers.edit', 'suppliers.delete', 'suppliers.show',
                 'appointment-products.create', 'appointment-products.edit', 'appointment-products.delete', 'appointment-products.show',
+                'appointment-services.create', 'appointment-services.edit', 'appointment-services.delete', 'appointment-services.show',
                 'salaries.create', 'salaries.edit', 'salaries.delete', 'salaries.show',
                 'salary-actions.create', 'salary-actions.edit', 'salary-actions.delete', 'salary-actions.show',
                 'manual-transactions.show', 'manual-transactions.create',
-                'transactions.create', 'transactions.show',
+                'transactions.create', 'transactions.show', 'transactions.confirm',
                 'doctor-products.create', 'doctor-products.show',
+                'packages.create', 'packages.edit', 'packages.delete', 'packages.show',
                 'settings.edit',
                 'stocks.show',
             ],
         ];
-        $insertPermissions = fn($role) => collect($permissionsByRole[$role])
-            ->map(fn($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'web']))
+        $insertPermissions = fn ($role) => collect($permissionsByRole[$role])
+            ->map(fn ($name) => DB::table('permissions')->insertGetId(['name' => $name, 'guard_name' => 'web']))
             ->toArray();
         $permissionIdsByRole = [
             'super-admin' => $insertPermissions('super-admin'),
@@ -65,7 +67,7 @@ class DatabaseSeeder extends Seeder
 
             DB::table('role_has_permissions')
                 ->insert(
-                    collect($permissionIds)->map(fn($id) => [
+                    collect($permissionIds)->map(fn ($id) => [
                         'role_id' => $role->id,
                         'permission_id' => $id,
                     ])->toArray()

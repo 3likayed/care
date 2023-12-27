@@ -66,8 +66,8 @@ let headerFields = [
 
     <SectionTitleLineWithButton :has-create="hasCreate"
                                 :icon="mdiCalendarToday"
-                                :title="title"
                                 :visit-data="visitData"
+                                :title="title"
                                 main
                                 model="appointments">
         <template #create>

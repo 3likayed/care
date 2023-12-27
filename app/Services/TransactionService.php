@@ -32,7 +32,6 @@ class TransactionService
             $transactionable->update(['total_paid' => $transactionable->total_paid]);
         }
 
-
         DB::commit();
 
         return $transaction;
@@ -63,13 +62,13 @@ class TransactionService
         $transaction->update(['status' => 'confirmed']);
     }
 
-    public
-    static function total($transactions)
+    public static function total($transactions)
     {
 
         $deposit = static::totalDeposit(clone $transactions);
         $withdraw = static::totalWithdraw(clone $transactions);
         $remaining = $deposit - $withdraw;
+
         return [
             'deposit' => $deposit,
             'withdraw' => $withdraw,

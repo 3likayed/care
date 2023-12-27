@@ -7,6 +7,7 @@ use App\Http\Requests\RoleUpdateRequest;
 use Inertia\Inertia;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
+use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\QueryBuilder;
 
 class RoleController extends Controller
@@ -25,8 +26,8 @@ class RoleController extends Controller
     public function index()
     {
         $roles = QueryBuilder::for(Role::class)
-            ->allowedFilters(['name'])
-            ->allowedSorts(['name', 'created_at'])
+            ->allowedFilters([AllowedFilter::exact('id'),'name'])
+            ->allowedSorts(['name', 'created_at','id'])
             ->with('permissions')
             ->get();
         $permissions = Permission::orderBy('name')->get();
@@ -58,6 +59,7 @@ class RoleController extends Controller
         $data = $request->validated();
         $role->name = $data['name'];
         $role->save();
+
         foreach ($data['permissions'] as $permission) {
             $permission['checked'] ? $role->givePermissionTo($permission['name']) : $role->revokePermissionTo($permission['name']);
         }

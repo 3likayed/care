@@ -67,7 +67,7 @@ class AppointmentProductController extends Controller
                 'product_id' => $product['id'],
                 'appointment_id' => $data['appointment_id'],
                 'quantity' => $product['quantity'],
-                'unit_price' => $currentDoctorProduct->price,
+                'unit_price' => $currentDoctorProduct->unit_price,
             ];
         }
 

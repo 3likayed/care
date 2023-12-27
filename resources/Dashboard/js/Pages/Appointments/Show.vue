@@ -6,6 +6,7 @@
             :items="[computedData]"
             :searchable="false"
             :sortable="false"
+            :visit-data="{filter:{id:computedData.id}}"
             title="details"/>
         <CardBox class="my-4">
             <StepsComponent
@@ -35,7 +36,31 @@
                 :searchable="false"
                 :sortable="false"/>
         </section>
-        <section v-show="step === 3">
+        <section v-show="step === 4">
+            <div class="grid lg:grid-cols-3 gap-10 lg:gap-20 mb-5">
+                <CardBoxWidget
+                    :icon="mdiCash"
+                    :label="__('total_price')"
+                    :number="computedData.total_price"
+                    color="success"
+
+                />
+                <CardBoxWidget
+                    :icon="mdiCashPlus"
+                    :label="__('total_paid')"
+                    :number="computedData.total_paid"
+                    color="info"
+
+                />
+                <CardBoxWidget
+                    :icon="mdiCashMinus"
+                    :label="__('total_remaining')"
+                    :number="computedData.total_remaining"
+                    color="danger"
+
+                />
+
+            </div>
             <TransactionsList
                 :data="{id:computedData.id , max:computedData.total_remaining}"
                 :has-create="computedData.status !== 'completed' "
@@ -65,15 +90,23 @@ import {collect} from "collect.js";
 import AppointmentEdit from "../../Components/Appointments/AppointmentEdit.vue";
 import AppointmentsList from "../../Components/Appointments/AppointmentsList.vue";
 import TransactionsList from "../../Components/Transactions/TransactionsList.vue";
+import {mdiCash, mdiCashMinus, mdiCashPlus} from "@mdi/js";
+import CardBoxWidget from "../../Components/Sahred/CardBoxWidget.vue";
 
 
-let steps = ref(['data', {
-    name: 'patient',
-    permission: 'patients.show'
-}, {
-    name: 'products',
-    permission: 'appointment-products.show'
-},
+let steps = ref(['data',
+    {
+        name: 'patient',
+        permission: 'patients.show'
+    },
+    {
+        name: 'products',
+        permission: 'appointment-products.show'
+    },
+    {
+        name: 'services',
+        permission: 'appointment-services.show'
+    },
     {
         name: 'transactions',
         permission: 'transactions.show'
@@ -87,7 +120,7 @@ let computedProducts = computed(() =>
         .whereNotIn('id', collect(computedData.value.appointment_products).pluck('product.id').all()
         ).all()
 );
-let canCreateProduct = computed(() => usePage().props.auth.doctor?.id === computedData.value.doctor_id)
+let canCreateProduct = computed(() => usePage().props.auth.doctor?.id === computedData.value.doctor_id && computedData.value.status === 'not_completed')
 let breadcrumbItems = [
     {
         name: __('appointments'),

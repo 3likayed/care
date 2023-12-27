@@ -190,7 +190,7 @@ function doAction(action, key) {
           ref="inputEl"
           v-model="computedValue"
           :class="inputElClass"
-          :disabled="disabled"
+          :disabled="disabled ? true : null"
           :is-disabled="disabled"
           :is-multiple="isMultiple"
           :name="name"

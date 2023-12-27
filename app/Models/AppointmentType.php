@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class AppointmentType extends Model
 {
     use SoftDeletes;
+
     protected $guarded = [];
 
     public function appointments(): HasMany

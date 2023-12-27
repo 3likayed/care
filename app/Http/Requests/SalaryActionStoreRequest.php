@@ -28,7 +28,7 @@ class SalaryActionStoreRequest extends FormRequest
             'employee_id' => ['required', 'numeric', 'exists:employees,id'],
             'amount' => ['required', 'numeric', 'between:0,'.$salaryNetAmount],
             'reason' => ['required', 'in:giving,withhold,loan'],
-            'picked' => ['required', 'nullable','in:now,later,other'],
+            'picked' => ['required', 'nullable', 'in:now,later,other'],
         ];
     }
 }

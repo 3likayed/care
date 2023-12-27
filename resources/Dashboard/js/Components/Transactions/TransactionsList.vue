@@ -1,10 +1,13 @@
 <template>
 
-    <SectionTitleLineWithButton :has-create="hasCreate && can('transactions.create')"
+    <SectionTitleLineWithButton :create-permission="`${modelResolver(model)}.transaction`"
+                                :has-create="hasCreate"
                                 :icon="mdiSafe"
+                                primary-model="transaction"
+                                :model="model"
                                 :title="__('transactions')"
-                                :visit-data="visitData" main
-                                model="transactions">
+                                :visit-data="visitData"
+                                main>
         <template #create>
             <TransactionCreate :data="data" :model="model"/>
         </template>

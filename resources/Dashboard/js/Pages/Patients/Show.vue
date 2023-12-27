@@ -59,7 +59,7 @@ import PatientShow from "../../Components/Patients/PatientShow.vue";
 import {useStepStore} from "../../Stores/step.js";
 
 
-let steps = ref([__('data'), __('edit'), __('appointments')]);
+let steps = ref([__('data'), {permission:'patients.edit',name:__('edit')}, __('appointments')]);
 let step = ref( useStepStore().getStep())
 
 let data = computed(() => usePage().props.data);

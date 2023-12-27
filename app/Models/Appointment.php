@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Appointment extends Model
 {
-    use SoftDeletes,OrderByIdDesc;
+    use OrderByIdDesc, SoftDeletes;
 
     protected $guarded = [];
 
@@ -23,9 +23,9 @@ class Appointment extends Model
 
     protected $dateFormat = 'Y-m-d g:i A';
 
-    protected $with = ['patient:id,name', 'appointmentType:id,name', 'doctor'];
+    protected $with = ['patient:id,name', 'appointmentType:id,name', 'doctor:id,name'];
 
-    protected $appends = ['name', 'total_remaining',];
+    protected $appends = ['name', 'total_remaining', 'total_price'];
 
     public function patient(): BelongsTo
     {
@@ -44,17 +44,10 @@ class Appointment extends Model
 
     public function totalPrice(): Attribute
     {
-        return Attribute::get(function ($value) {
-            $sum = $value;
-            $products = $this->products;
-            foreach ($products as $product) {
-                $sum += $product->pivot->quantity * $product->price;
-            }
-
-            return $sum - $this->discount;
-        });
+        return Attribute::get(
+            fn ($value, $model) => $model['total_price'] + $this->appointmentProducts->sum('total_price') - $this->discount
+        );
     }
-
 
     public function transactions(): MorphMany
     {
@@ -64,7 +57,7 @@ class Appointment extends Model
     public function totalRemaining(): Attribute
     {
         return Attribute::get(
-            fn() => $this->total_price - $this->total_paid
+            fn () => $this->total_price - $this->total_paid
         );
     }
 
@@ -119,13 +112,13 @@ class Appointment extends Model
 
     public function name(): Attribute
     {
-        return Attribute::get(fn() => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
+        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.appointment'), 'id' => $this->id]));
     }
 
-    public function updateStatus()
+    public function updateStatus(): void
     {
         $isFullPaid = $this->total_price == $this->total_paid && $this->products->count();
-        if (!$this->doctor_id) {
+        if (! $this->doctor_id) {
             if (Carbon::parse($this->date)->isBefore(Carbon::today())) {
                 $status = 'canceled';
             } else {
@@ -139,7 +132,6 @@ class Appointment extends Model
         }
         $this->status = $status;
         $this->update();
-        return $status . $this->products->count() . $this->id;
 
     }
 }

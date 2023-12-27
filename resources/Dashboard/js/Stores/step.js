@@ -2,7 +2,7 @@ import {defineStore} from "pinia";
 import {usePage} from "@inertiajs/vue3";
 import {computed} from "vue";
 
-let component = computed(() => usePage().component)
+let component = computed(() => usePage().url)
 export const useStepStore = defineStore("step", {
     state: () => ({
         /* User */
