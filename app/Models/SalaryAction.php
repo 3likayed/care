@@ -32,7 +32,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class SalaryAction extends Model
 {
-    use OrderByIdDesc,SoftDeletes;
+    use SoftDeletes, OrderByIdDesc;
 
     protected $table = 'salary_actions';
 
@@ -68,22 +68,12 @@ class SalaryAction extends Model
     {
         return Attribute::get(function () {
 
-            if ($this->reason == 'giving' && $this->transactions()->count() > 0) {
+            if ($this->reason == 'giving' && $this->transactions()->count() > 0)
                 return true;
-            } elseif ($this->reason == 'loan' && $this->transactions()->sum('amount') == $this->amount) {
-                return true;
-            }
 
+            elseif ($this->reason == 'loan' && $this->amount == 0)
+                return true;
             return false;
-        });
-    }
-
-    public function amount(): Attribute
-    {
-        return Attribute::get(function ($value) {
-            return $value;
-            // ->reason != 'loan' ?  $value :
-            // $value -  $this->transactions()->sum('amount' );
         });
     }
 
@@ -92,11 +82,20 @@ class SalaryAction extends Model
         return $this->morphOne(Transaction::class, 'transactionable');
     }
 
+    public function amount(): Attribute
+    {
+        return Attribute::get(function ($value) {
+            return $this->reason != 'loan' ? $value :
+                $value - $this->transactions()->where('type', 'deposit')->sum('amount');
+
+        });
+    }
+
     public function date()
     {
         return Attribute::make(
-            get: fn ($value) => $value,
-            set: fn ($value) => $value ?? Carbon::now()
+            get: fn($value) => $value,
+            set: fn($value) => $value ?? Carbon::now()
         );
     }
 }
