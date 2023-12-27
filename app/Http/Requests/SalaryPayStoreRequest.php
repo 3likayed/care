@@ -25,8 +25,8 @@ class SalaryPayStoreRequest extends FormRequest
         $total_loan = Employee::find($this->employee_id)->CurrentMonthLoanActions;
         return [
             'employee_id' => ['required', 'numeric', 'exists:employees,id'],
-            'paid_loan' => ['nullable','numeric', 'min:0','max:'.$total_loan],
-            'picked' => ['nullable','in:total_loan,partial_loan'],
+            'paid_loan' => ['nullable', 'numeric', 'min:0', 'max:' . $total_loan],
+            'picked' => ['nullable', 'in:total_loan,partial_loan'],
         ];
     }
 }
