@@ -37,7 +37,7 @@ class EmployeeController extends Controller
         $employee->load('salary', 'user')->append(['current_month_salary_actions','current_month_giving_actions'
         ,'current_month_loan_actions','current_month_withhold_actions']);
 
-        // dd($employee->toArray());
+                        // dd($employee->toArray());
         return Inertia::render('Employees/Show', [
             'data' => $employee,
             'meta' => meta()->metaValues(['title' => "$employee->name | " . __('dashboard.employees')]),
