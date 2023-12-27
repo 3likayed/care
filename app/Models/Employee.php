@@ -81,7 +81,7 @@ class Employee extends Authenticatable
 
     public function CurrentMonthLoanActions(): Attribute
     {
-        return Attribute::get(fn () => $this->salaryActions->where('reason', 'loan')->where('is_confirmed', true)->sum('amount'));
+        return Attribute::get(fn () => $this->salaryActions->where('reason', 'loan')->where('is_confirmed', false)->sum('amount'));
 
     }
 

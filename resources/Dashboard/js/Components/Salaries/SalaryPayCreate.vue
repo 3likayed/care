@@ -20,17 +20,17 @@
 
                      <div v-if=" data.current_month_loan_actions > 0" class="grid grid-flow-row-dense grid-cols-3">
                         <div>
-                            <input id="one" v-model="picked" type="radio" value="total_loan"/>
+                            <input id="one" v-model="form.picked" type="radio" value="total_loan"/>
                             <label class="mr-4" for="one">سداد السلف بالكامل</label>
                         </div>
                         <div>
-                            <input id="two" v-model="picked" type="radio" value="partial_loan"/>
+                            <input id="two" v-model="form.picked" type="radio" value="partial_loan"/>
                             <label class="mr-4" for="two">سداد جزئي  </label>
                         </div>
             
 
                     </div>
-                    <FormControl v-if="picked == 'partial_loan' && data.current_month_loan_actions >0 " :max="data.current_month_loan_actions"   v-model="paid_loan"  :icon="mdiCash" :min="0" autocomplete="amount" name="paid_loan"/>
+                    <FormControl v-if="form.picked == 'partial_loan' && data.current_month_loan_actions >0 " :max="data.current_month_loan_actions"   v-model="form.paid_loan"  :icon="mdiCash" :min="0" autocomplete="amount" name="paid_loan"/>
 
 
 
@@ -61,28 +61,33 @@ let props = defineProps({
 })
 let showCreateSalaryPay = inject('showCreateSalaryPay');
 
-let picked = ref();
 let salary = ref();
-let paid_loan = ref ();
 let loan = ref ();
 let data = props.data;
+
+// const form  = this.form
+// ({
+//     employee_id: props.data.id,
+// });
 let form = useForm({
     employee_id: props.data.id,
-    amount: null,
+    paid_loan: null,
+    picked:null,
 });
 
 watchEffect(()=>{
 salary= data.salary.net_amount- data.current_month_withhold_actions+data.current_month_giving_actions 
 
-if (picked.value === 'partial_loan') { 
-    salary -= (paid_loan.value??0);
-    loan.value = paid_loan.value ?  (loan.value - paid_loan.value) : data.current_month_loan_actions;
+if (form.picked === 'partial_loan') { 
+    salary -= (form.paid_loan??0);
+    loan.value = form.paid_loan ?  (loan.value - form.paid_loan) : data.current_month_loan_actions;
     
-} else if (picked.value === 'total_loan')  {
+} else if (form.picked === 'total_loan')  {
     salary = salary - (data.current_month_loan_actions);
     loan.value = 0;
+    form.paid_loan = data.current_month_loan_actions;
 }
-loan.value =paid_loan.value ?  data.current_month_loan_actions - paid_loan.value : data.current_month_loan_actions ;
+loan.value =form.paid_loan ?  data.current_month_loan_actions - form.paid_loan : data.current_month_loan_actions ;
 
 }) 
 
@@ -90,7 +95,8 @@ loan.value =paid_loan.value ?  data.current_month_loan_actions - paid_loan.value
 
 
 const submit = () => {
-    Model.submit('pay', 'salary-actions', form, props.data.id)
+    // Model.submit('pay', 'salary-actions', form, props.data.id)
+    form.submit('post','../pay')
 }
 
 </script>

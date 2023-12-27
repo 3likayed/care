@@ -12,6 +12,8 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\MorphOne;
+
 
 /**
  * Class Salary
@@ -53,6 +55,10 @@ class Salary extends Model
     public function salaryActions(): HasMany
     {
         return $this->hasMany(SalaryAction::class);
+    }
+    public function transactions(): MorphOne
+    {
+        return $this->morphOne(Transaction::class, 'transactionable');
     }
 
     public function netAmount(): Attribute
