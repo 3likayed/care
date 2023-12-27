@@ -113,18 +113,21 @@ class SalaryActionsController extends Controller
         } elseif ($data['picked'] == 'partial_loan') {
             $calculated_paid_loan = $data['paid_loan'];
 
-            foreach ($employee->salaryActions as $action) {
-                if (!$action->is_confirmed) {
+            foreach ($employee->salaryActions->where('is_confirmed','!=',true) as $action) {
                     if ($action->reason == 'loan') {
-                        if ($calculated_paid_loan >= $action->amount) {
+                        if ($calculated_paid_loan > $action->amount) {
+
                             $calculated_paid_loan = $calculated_paid_loan - $action->amount;
+                            // dd($calculated_paid_loan);
+
                             TransactionService::create($action, [
                                 'amount' => $action->amount,
                                 'status' => 'confirmed',
                                 'type' => 'deposit',
                             ]);
+                            
                         } else {
-                            // dd($calculated_paid_loan);
+                            dd($calculated_paid_loan);
                             TransactionService::create($action, [
                                 'amount' => $calculated_paid_loan,
                                 'status' => 'confirmed',
@@ -143,7 +146,6 @@ class SalaryActionsController extends Controller
                             'type' => 'deposit',
                         ]);
                     }
-                }
             }
         }
         else

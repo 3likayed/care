@@ -96,6 +96,6 @@ class SalaryAction extends Model
         return Attribute::make(
             get: fn($value) => $value,
             set: fn($value) => $value ?? Carbon::now()
-        );
+            );
     }
 }
