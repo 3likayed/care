@@ -114,9 +114,9 @@ export default {
             dir: 'ltr',
             class: ['flex justify-center items-center', 'border-t-1 border-solid border-gray-300 p-2 text-gray-600 dark:text-white/70 ']
         },
-        buttonbar : 'p-2 lg:p-3' ,
+        buttonbar: 'p-2 lg:p-3',
         todayButton: {
-           label: {class: ['text-gray-600 dark:text-white bg-gray-100  dark:bg-slate-400 p-1 rounded-full']}
+            label: {class: ['text-gray-600 dark:text-white bg-gray-100  dark:bg-slate-400 p-1 rounded-full']}
         },
         clearButton: {
             label: {class: ['text-gray-600 dark:text-white bg-gray-100 dark:bg-slate-400 p-1 rounded-full ']}
@@ -181,15 +181,14 @@ export default {
                 'cursor-pointer font-normal overflow-hidden relative whitespace-nowrap',
                 'm-0 p-3 border-0  transition-shadow duration-200 rounded-none',
                 {
-                    'text-gray-700 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-gray-800': !context.focused && !context.selected,
-                    'bg-gray-300 text-gray-700 dark:text-white/80 dark:bg-gray-800/90 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-gray-800': context.focused && !context.selected,
+                    'text-gray-700 hover:text-gray-700 hover:bg-gray-200 dark:text-white/80 dark:hover:bg-slate-800/90  dark:hover:text-gray-100': !context.selected,
                     'bg-slate-100 text-slate-700 dark:bg-slate-400 dark:text-white/80': context.focused && context.selected,
                     'bg-slate-50 text-slate-700 dark:bg-slate-300 dark:text-white/80': !context.focused && context.selected
                 }
             ]
         }),
         itemgroup: {
-            class: ['m-0 p-3 text-gray-800 bg-white font-bold', 'dark:bg-gray-900 dark:text-white/80', 'cursor-auto']
+            class: ['m-0 p-3 text-gray-800 bg-gray-100 font-bold', 'dark:bg-slate-800 dark:text-white/80', 'cursor-auto']
         },
         header: {
             class: ['p-3 border-b border-gray-300 text-gray-700 bg-gray-100 mt-0 rounded-tl-lg rounded-tr-lg', 'dark:bg-gray-800 dark:text-white/80 dark:border-slate-900/40']

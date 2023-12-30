@@ -153,7 +153,10 @@ return [
     'has_user' => 'لديه مستخدم',
     'inventory' => 'المخزن',
     'products' => 'الأصناف',
-    'product' => 'الصنف',
+    'product' => 'صنف',
+    'tools' => 'المعدات',
+    'tool_name' => 'إسم المعدة',
+    'tool' => 'معدة',
     'appointment_products' => 'أصناف الموعد',
     'appointments_products' => 'أصناف المواعيد',
     'appointment_product' => 'صنف الموعد',
@@ -222,5 +225,7 @@ return [
     'package' => 'باقة',
     'min' => 'الأقل',
     'max' => 'الأكثر',
+    'observe_quantity' => 'الكمية المراقبة',
+    'consumed_quantity' => 'الكمية المستهلكة',
 
 ];

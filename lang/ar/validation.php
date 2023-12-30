@@ -168,6 +168,18 @@ return $validation = [
             ],
             'numeric' => 'يجب على الكمية للمنتج رقم #(:position) أن يكون رقمًا',
         ],
+        'stockables.*.id' => [
+            'required' => 'المنتج رقم #(:position) مطلوب.',
+            'exists' => 'المنتج رقم #(:position) لاغ.',
+            'distinct' => 'المنتج رقم #(:position) قيمته مكررة.',
+        ],
+        'stockables.*.quantity' => [
+            'required' => 'الكمية للمنتج رقم #(:position) مطلوبة.',
+            'between' => [
+                'numeric' => 'يجب أن تكون قيمة الكمية للمنتج رقم #(:position) بين :min و :max.',
+            ],
+            'numeric' => 'يجب على الكمية للمنتج رقم #(:position) أن يكون رقمًا',
+        ],
     ],
 
     /*
@@ -188,6 +200,7 @@ return $validation = [
         'images' => 'الصور',
         'service_id' => 'الخدمة',
         'doctor_id' => 'الطبيب',
+        'stockable_id' => 'الطبيب',
         'appointment_type_id' => 'نوع الموعد',
         'patient_id' => 'المريض',
         'icon' => 'الأيقونة',

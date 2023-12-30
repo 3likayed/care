@@ -18,24 +18,22 @@ class ToolController extends Controller
      */
     public function __construct()
     {
-        $this->middleware(['permission:Tools.show'])->only(['index', 'show', 'fetch']);
-        $this->middleware(['permission:Tools.edit'])->only(['update']);
-        $this->middleware(['permission:Tools.create'])->only(['store']);
-        $this->middleware(['permission:Tools.delete'])->only(['destroy']);
+        $this->middleware(['permission:tools.show'])->only(['index', 'show', 'fetch']);
+        $this->middleware(['permission:tools.edit'])->only(['update']);
+        $this->middleware(['permission:tools.create'])->only(['store']);
+        $this->middleware(['permission:tools.delete'])->only(['destroy']);
     }
 
     public function index(Request $request)
     {
-        $Tools = QueryBuilder::for(Tool::class)
-            ->where('type', 'Tool')
-            ->withSum('stocks', 'available')
+        $tools = QueryBuilder::for(Tool::class)
             ->allowedFilters([AllowedFilter::exact('id'), 'name'])
             ->allowedSorts(['name', 'stocks_sum_available', 'id'])
             ->paginate($request->per_page);
 
         return Inertia::render('Tools/Index', [
-            'meta' => meta()->metaValues(['title' => __('dashboard.Tools')]),
-            'data' => ModelCollection::make($Tools),
+            'meta' => meta()->metaValues(['title' => __('dashboard.tools')]),
+            'data' => ModelCollection::make($tools),
         ]);
     }
 
@@ -54,38 +52,35 @@ class ToolController extends Controller
     {
 
         $data = $request->validated();
-
         Tool::create($data);
 
         return success();
 
     }
 
-    public function update(ToolUpdateRequest $request, Tool $Tool)
+    public function update(ToolUpdateRequest $request, Tool $tool)
     {
 
         $data = $request->validated();
-        $Tool->update($data);
+        $tool->update($data);
 
         return success();
     }
 
-    public function show(Tool $Tool)
+    public function show(Tool $tool)
     {
-        $Tool->load('stocks.purchase', 'doctorTools.Tool', 'doctorTools.doctor');
-
         return Inertia::render('Tools/Show', [
-            'data' => $Tool,
-            'meta' => meta()->metaValues(['title' => [__('dashboard.Tools'), $Tool->name]]),
+            'data' => $tool,
+            'meta' => meta()->metaValues(['title' => [__('dashboard.tools'), $tool->name]]),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Tool $Tool)
+    public function destroy(Tool $tool)
     {
-        $Tool->delete();
+        $tool->delete();
 
         return success();
     }

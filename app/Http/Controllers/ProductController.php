@@ -41,7 +41,7 @@ class ProductController extends Controller
     public function fetch(Request $request)
     {
 
-        return QueryBuilder::for(product::class)
+        return QueryBuilder::for(Product::class)
             ->allowedFilters(['name'])
             ->get();
     }
@@ -53,13 +53,13 @@ class ProductController extends Controller
     {
 
         $data = $request->validated();
-        product::create($data);
+        Product::create($data);
 
         return success();
 
     }
 
-    public function update(ProductUpdateRequest $request, product $product)
+    public function update(ProductUpdateRequest $request, Product $product)
     {
 
         $data = $request->validated();
@@ -68,7 +68,7 @@ class ProductController extends Controller
         return success();
     }
 
-    public function show(product $product)
+    public function show(Product $product)
     {
         $product->load('stocks.purchase', 'doctorProducts.product', 'doctorProducts.doctor');
 
@@ -81,7 +81,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(product $product)
+    public function destroy(Product $product)
     {
         $product->delete();
 

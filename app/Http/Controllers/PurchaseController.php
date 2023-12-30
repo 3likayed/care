@@ -10,6 +10,7 @@ use App\Models\Product;
 use App\Models\Purchase;
 use App\Models\Stock;
 use App\Models\Supplier;
+use App\Models\Tool;
 use App\Services\TransactionService;
 use App\Sorts\RelationSort;
 use Carbon\Carbon;
@@ -47,13 +48,22 @@ class PurchaseController extends Controller
             ])
             ->paginate($request->per_page);
         $suppliers = Supplier::all();
-        $products = Product::all();
-
+        $stockables = [
+            [
+                'name' => __('dashboard.products'), 'items' => Product::all()->map(function ($item) {
+                $item['value'] = ['type' => Product::class, 'id' => $item['id']];
+                return $item;
+            })],
+            /* ['name' => __('dashboard.tools'), 'items' => Tool::all()->map(function ($item) {
+                 $item['value'] = ['type' => Tool::class, 'id' => $item['id']];
+                 return $item;
+             })]*/
+        ];
         return Inertia::render('Purchases/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.purchases')]),
             'data' => ModelCollection::make($purchases),
             'suppliers' => $suppliers,
-            'products' => $products,
+            'stockables' => $stockables,
         ]);
     }
 
@@ -67,24 +77,24 @@ class PurchaseController extends Controller
         $totalPrice = 0;
         $data['employee_id'] = auth()->user()->userable_id;
         $purchase = Purchase::create($data);
-        $products = [];
-        foreach ($data['products'] as $product) {
-            $totalPrice += $product['quantity'] * $product['price'];
-            $products[] = [
+        $stockables = [];
+        foreach ($data['stockables'] as $stockable) {
+            $totalPrice += $stockable['quantity'] * $stockable['price'];
+            $stockables[] = [
                 'purchase_id' => $purchase->id,
-                'stockable_id' => $product['id'],
-                'stockable_type' => Product::class,
-                'unit_price' => $product['price'],
-                'quantity' => $product['quantity'],
-                'available' => $product['quantity'],
-                'expires_at' => $product['expires_at'] ?? null,
+                'stockable_id' => $stockable['id'],
+                'stockable_type' => $stockable['type'],
+                'unit_price' => $stockable['price'],
+                'quantity' => $stockable['quantity'],
+                'available' => $stockable['quantity'],
+                'expires_at' => $stockable['expires_at'] ?? null,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
 
             ];
 
         }
-        Stock::insert($products);
+        Stock::insert($stockables);
 
         $purchase->update(['total_price' => $totalPrice, 'total_paid' => $data['paid_price']]);
         if ($data['paid_price']) {

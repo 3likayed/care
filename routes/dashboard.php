@@ -23,6 +23,7 @@ use App\Http\Controllers\SettingController;
 use App\Http\Controllers\SpecializationController;
 use App\Http\Controllers\StockController;
 use App\Http\Controllers\SupplierController;
+use App\Http\Controllers\ToolController;
 use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Route;
 
@@ -57,6 +58,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('appointments', AppointmentController::class);
         Route::apiResource('appointment-products', AppointmentProductController::class);
         Route::apiResource('products', ProductController::class);
+        Route::apiResource('tools', ToolController::class);
         Route::apiResource('suppliers', SupplierController::class);
         Route::apiResource('purchases', PurchaseController::class);
         Route::apiResource('services', ServiceController::class);

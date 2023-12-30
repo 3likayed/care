@@ -20,7 +20,7 @@ return new class extends Migration {
                 ->constrained('employees')
                 ->references('id');
             $table->unsignedDouble('total_price')->default(0);
-            $table->unsignedDouble('total_paid')->default(0);
+            $table->unsignedDouble('total_paid')->nullable()->default(0);
             $table->string('notes')->nullable();
             $table->softDeletes();
             $table->timestamps();

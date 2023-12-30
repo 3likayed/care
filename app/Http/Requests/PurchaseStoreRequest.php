@@ -32,6 +32,7 @@ class PurchaseStoreRequest extends FormRequest
             'stockables.*.id' => ['required', 'numeric'],
             'stockables.*.quantity' => ['numeric', 'min:0', 'required'],
             'stockables.*.price' => ['numeric', 'min:1', 'required'],
+            'stockables.*.type' => ['required','string'],
             'stockables.*.expires_at' => ['nullable', 'date', 'after:' . now()],
             'notes' => ['nullable', 'string', 'max:150'],
             'paid_price' => ['nullable', 'numeric', "between:1,$sum"],

@@ -6,7 +6,7 @@
                                 model="purchases">
 
         <template #create>
-            <PurchaseCreate :data="data" :products="products" :suppliers="suppliers"/>
+            <PurchaseCreate :data="data" :stockables="stockables" :suppliers="suppliers"/>
         </template>
     </SectionTitleLineWithButton>
     <!--    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]"
@@ -75,7 +75,7 @@ let props = defineProps({
         type: Array,
         default: []
     },
-    products: {
+    stockables: {
         type: Array,
         default: []
     },

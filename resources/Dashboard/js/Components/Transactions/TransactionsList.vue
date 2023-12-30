@@ -1,6 +1,6 @@
 <template>
 
-    <SectionTitleLineWithButton :create-permission="`${modelResolver(model)}.transaction`"
+    <SectionTitleLineWithButton :create-permission="`${modelResolver(model)}.transactions`"
                                 :has-create="hasCreate"
                                 :icon="mdiSafe"
                                 primary-model="transaction"

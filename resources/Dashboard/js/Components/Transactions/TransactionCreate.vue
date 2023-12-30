@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal v-if="can(`${modelResolver(model)}.transaction`)"
+    <CardBoxModal v-if="can(`${modelResolver(model)}.transactions`)"
                   :button-label="__('create')"
                   :has-cancel="isModal"
                   :has-errors="form.hasErrors"

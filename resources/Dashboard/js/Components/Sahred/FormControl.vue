@@ -16,6 +16,10 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  hasGroup: {
+    type: Boolean,
+    default: false
+  },
   inline: Boolean,
   min: Number | String,
   max: Number | String,
@@ -42,6 +46,7 @@ const props = defineProps({
     type: String,
     default: null,
   },
+  optionValue: String,
   inputmode: {
     type: String,
     default: null,
@@ -84,6 +89,7 @@ const props = defineProps({
 
 const emit = defineEmits(["update:modelValue", "setRef", "action", 'filter', 'render']);
 let disabled = computed(() => (inject('isDisabled', false) || Boolean(props.isDisabled)))
+
 const computedValue = computed({
   get: () => props.modelValue,
   set: (value) => {
@@ -191,9 +197,11 @@ function doAction(action, key) {
           v-model="computedValue"
           :class="inputElClass"
           :disabled="disabled ? true : null"
+          :has-group="hasGroup"
           :is-disabled="disabled"
           :is-multiple="isMultiple"
           :name="name"
+          :option-value="optionValue"
           :options="computedOptions"
           :placeholder="placeholder"
           @filter="(value)=>emit('filter',value.value)">
