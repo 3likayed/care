@@ -14,8 +14,7 @@ return new class extends Migration
         Schema::create('services', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->unsignedDouble('unit_price');
-            $table->unsignedDouble('consumed')->nullable()->default(0);
+            $table->unsignedDouble('unit_price')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

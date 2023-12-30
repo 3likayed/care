@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal v-if="can(`doctor_products.create`)"
+    <CardBoxModal v-if="can(`patient_services.create`)"
                   :button-label="__('create')"
                   :has-cancel="isModal"
                   :has-errors="form.hasErrors"
@@ -8,7 +8,7 @@
                   :is-form="true"
                   :is-modal="isModal"
                   :model-value="true"
-                  :title="__('create_field',{field:'doctor_products'})"
+                  :title="__('create_field',{field:'patient_services'})"
                   @cancel="showCreateDoctorProduct=false"
                   @confirm="submit"
     >
@@ -20,12 +20,12 @@
                 required
             />
         </FormField>
-        <FormField :label="__('doctor_name')">
+        <FormField :label="__('patient_name')">
             <FormControl
-                v-model="form.doctor_id"
+                v-model="form.patient_id"
                 :icon="mdiDoctor"
-                :is-disabled="data.doctor_id"
-                :options="doctors"
+                :is-disabled="data.patient_id"
+                :options="patients"
                 required
                 type="select"
             />
@@ -41,9 +41,9 @@
             />
         </FormField>
 
-        <FormField :label="__('product_name')">
+        <FormField :label="__('service_name')">
             <FormControl
-                v-model="product.name"
+                v-model="service.name"
                 :icon="mdiClipboardPulse"
                 is-disabled
                 required
@@ -52,7 +52,7 @@
         </FormField>
         <FormField :label="__('available')">
             <FormControl
-                v-model="product.available"
+                v-model="service.available"
                 :icon="mdiClipboardPulse"
                 is-disabled
                 required
@@ -82,11 +82,11 @@ let props = defineProps({
         type: Object,
         default: {}
     },
-    products: {
+    packages: {
         type: Array,
         default: []
     },
-    doctors: {
+    patients: {
         type: Array,
         default: []
     },
@@ -99,33 +99,33 @@ let props = defineProps({
 let showCreateDoctorProduct = inject('showCreateDoctorProduct');
 let form = useForm({
     stock_id: props.data?.stock_id,
-    doctor_id: props.data?.doctor_id,
+    patient_id: props.data?.patient_id,
     quantity: props.data?.quantity,
 
 });
 
-let product = reactive({});
+let service = reactive({});
 let maxQuantity = ref();
 const fetchPatients = debounce(async (stock_id) => {
     if (stock_id) {
-        await Model.fetch('stocks', {id: stock_id, stockable_type: 'Product'}).then(
+        await Model.fetch('stocks', {id: stock_id}).then(
             result => {
-                product.name = result[0]?.stockable?.name
-                product.available = result[0]?.available ?? 0;
+                service.name = result[0]?.service?.name
+                service.available = result[0]?.available ?? 0;
             }
         )
     } else {
-        product.name = null
-        product.available = 0
+        service.name = null
+        service.available = 0
     }
-    maxQuantity.value = product.available
+    maxQuantity.value = service.available
 }, 500);
 
 onMounted(() => watchEffect(() => fetchPatients(form.stock_id)))
 
 
 const submit = () => {
-    Model.submit('create', 'doctor_products', form)
+    Model.submit('create', 'patient_services', form)
 }
 
 </script>

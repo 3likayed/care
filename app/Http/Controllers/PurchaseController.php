@@ -47,7 +47,7 @@ class PurchaseController extends Controller
             ])
             ->paginate($request->per_page);
         $suppliers = Supplier::all();
-        $products = Product::Where('type', 'product')->get();
+        $products = Product::all();
 
         return Inertia::render('Purchases/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.purchases')]),
@@ -66,14 +66,14 @@ class PurchaseController extends Controller
         $data = $request->validated();
         $totalPrice = 0;
         $data['employee_id'] = auth()->user()->userable_id;
-
         $purchase = Purchase::create($data);
         $products = [];
         foreach ($data['products'] as $product) {
             $totalPrice += $product['quantity'] * $product['price'];
             $products[] = [
                 'purchase_id' => $purchase->id,
-                'product_id' => $product['id'],
+                'stockable_id' => $product['id'],
+                'stockable_type' => Product::class,
                 'unit_price' => $product['price'],
                 'quantity' => $product['quantity'],
                 'available' => $product['quantity'],

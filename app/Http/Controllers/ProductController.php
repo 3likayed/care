@@ -27,7 +27,6 @@ class ProductController extends Controller
     public function index(Request $request)
     {
         $products = QueryBuilder::for(Product::class)
-            ->where('type', 'product')
             ->withSum('stocks', 'available')
             ->allowedFilters([AllowedFilter::exact('id'), 'name'])
             ->allowedSorts(['name', 'stocks_sum_available', 'id'])
@@ -54,7 +53,6 @@ class ProductController extends Controller
     {
 
         $data = $request->validated();
-
         product::create($data);
 
         return success();

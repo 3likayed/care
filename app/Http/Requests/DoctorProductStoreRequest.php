@@ -2,8 +2,10 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Product;
 use App\Models\Stock;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class DoctorProductStoreRequest extends FormRequest
 {
@@ -23,10 +25,11 @@ class DoctorProductStoreRequest extends FormRequest
      */
     public function rules(): array
     {
+
         return [
             'doctor_id' => ['required', 'numeric', 'exists:doctors,id'],
-            'stock_id' => ['required', 'numeric', 'exists:stocks,id'],
-            'quantity' => ['required', 'numeric', 'between:0,'.Stock::find($this->stock_id)->available],
+            'stock_id' => ['required', 'numeric', Rule::exists('stocks', 'id')->where('stockable_type', Product::class)],
+            'quantity' => ['required', 'numeric', 'between:0,' . Stock::find($this->stock_id)->available],
         ];
     }
 }

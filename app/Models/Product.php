@@ -32,12 +32,12 @@ class Product extends Model
 
     protected $casts = [
         'quantity' => 'int',
-        'price' => 'float',
+        'unit_price' => 'float',
     ];
 
     protected $fillable = [
         'name',
-        'price',
+        'unit_price',
         'type',
     ];
 
@@ -60,8 +60,8 @@ class Product extends Model
         return $this->hasMany(DoctorProduct::class);
     }
 
-    public function stocks(): HasMany
+    public function stocks()
     {
-        return $this->hasMany(Stock::class);
+        return $this->morphMany(Stock::class,'stockable');
     }
 }

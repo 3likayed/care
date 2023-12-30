@@ -11,21 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('stocks', function (Blueprint $table) {
+        Schema::create('patient_service', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('purchase_id')
-                ->constrained('purchases')
+            $table->foreignId('patient_id')
+                ->constrained('patients')
                 ->references('id')
                 ->cascadeOnDelete();
-
-            $table->morphs('stockable');
-            $table->unsignedDouble('unit_price');
-            $table->unsignedDouble('quantity');
+            $table->foreignId('service_id')
+                ->constrained('services')
+                ->references('id');
             $table->unsignedDouble('available');
-            $table->date('expires_at')->nullable();
+            $table->unsignedDouble('unit_price');
             $table->softDeletes();
             $table->timestamps();
-            $table->unique(['purchase_id', 'stockable_id','stockable_type', 'expires_at']);
         });
     }
 
@@ -34,6 +32,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('stocks');
+        Schema::dropIfExists('patient_service');
     }
 };

@@ -25,8 +25,9 @@ class StockController extends Controller
 
     public function fetch(Request $request)
     {
-        return QueryBuilder::for(Stock::isAvailable()->without(['supplier']))
-            ->allowedFilters(['product_id', AllowedFilter::exact('id')])->get();
+        return QueryBuilder::for(Stock::isAvailable()
+            ->without(['supplier']))
+            ->allowedFilters(['stockable_id', 'stockable_type', AllowedFilter::exact('id')])->get();
     }
 
     public function index(Request $request)
@@ -36,9 +37,10 @@ class StockController extends Controller
                 AllowedFilter::exact('id'),
                 AllowedFilter::scope('created_at'),
                 AllowedFilter::scope('expires_at'),
-                AllowedFilter::exact('purchase.id'),
+                AllowedFilter::exact('purchase_id'),
                 AllowedFilter::exact('supplier.id'),
-                AllowedFilter::exact('product.id'),
+                AllowedFilter::exact('stockable_id'),
+                'stockable_type',
                 'notes',
             ])
             ->allowedSorts(['id', 'available', 'created_at', 'expires_at',
@@ -49,12 +51,16 @@ class StockController extends Controller
 
         $products = Product::whereHas('stocks')->get();
         $suppliers = Supplier::whereHas('purchases')->get();
+        $stockableTypeOptions = Stock::groupBy('stockable_type')
+            ->pluck('stockable_type')
+            ->map(fn($item) => class_basename($item ?? 'stock'));
 
         return Inertia::render('Stocks/Index', [
             'meta' => meta()->metaValues(['title' => __('dashboard.stocks')]),
             'data' => ModelCollection::make($purchases),
             'products' => $products,
             'suppliers' => $suppliers,
+            'stockable_type_options' => $stockableTypeOptions,
         ]);
     }
 }

@@ -57,12 +57,12 @@ class DoctorProductController extends Controller
         $stock->decrement('available', $data['quantity']);
 
         $doctor = Doctor::find($data['doctor_id']);
-        $doctorProduct = $doctor->doctorProducts()->where('product_id', '=', $stock->product_id)->first();
+        $doctorProduct = $doctor->doctorProducts()->where('product_id', '=', $stock->stockable_id)->first();
         if ($doctorProduct) {
             $doctorProduct->increment('available', $data['quantity']);
         } else {
             DoctorProduct::create([
-                'product_id' => $stock->product_id,
+                'product_id' => $stock->stockable_id,
                 'doctor_id' => $data['doctor_id'],
                 'available' => $data['quantity'],
             ]);

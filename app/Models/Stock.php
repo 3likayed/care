@@ -33,7 +33,7 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  */
 class Stock extends Model
 {
-    use BelongsToThrough, HasRelationships, OrderByIdDesc,SoftDeletes;
+    use BelongsToThrough, HasRelationships, OrderByIdDesc, SoftDeletes;
 
     protected $casts = [
         'purchase_id' => 'int',
@@ -45,25 +45,14 @@ class Stock extends Model
 
     protected $fillable = [
         'purchase_id',
-        'product_id',
         'unit_price',
         'quantity',
         'available',
     ];
 
-    protected $with = ['product', 'purchase.supplier'];
+    protected $with = ['stockable', 'purchase.supplier'];
 
-    protected $appends = ['name'];
-
-    public function name(): Attribute
-    {
-        return Attribute::get(fn () => __('dashboard.field_id', ['field' => __('dashboard.stock'), 'id' => $this->id]));
-    }
-
-    public function purchase(): BelongsTo
-    {
-        return $this->belongsTo(Purchase::class);
-    }
+    protected $appends = ['name', 'model'];
 
     public function supplier(): HasOneDeep
     {
@@ -71,9 +60,31 @@ class Stock extends Model
 
     }
 
-    public function product(): BelongsTo
+    public function purchase(): BelongsTo
     {
-        return $this->belongsTo(Product::class);
+        return $this->belongsTo(Purchase::class);
+    }
+
+    public function stockable(): BelongsTo
+    {
+        return $this->morphTo();
+    }
+
+    public function model(): Attribute
+    {
+
+        return Attribute::get(function () {
+            return [
+                'name' => \Str::snake(class_basename($this->stockable_type)),
+                'id' => $this->stockable_id,
+            ];
+        });
+    }
+
+    public function name(): Attribute
+    {
+
+        return Attribute::get(fn() => __('dashboard.field_id', ['field' => __('dashboard.' . $this->model['name']), 'id' => $this->stockable_id]));
     }
 
     public function scopeIsAvailable($query)
@@ -85,7 +96,7 @@ class Stock extends Model
     {
         $value = explode('|', $value);
         $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
-        if (isset($value[1]) && (bool) $value[1]) {
+        if (isset($value[1]) && (bool)$value[1]) {
             $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
         }
 
@@ -96,7 +107,7 @@ class Stock extends Model
     {
         $value = explode('|', $value);
         $query->whereDate('expires_at', '>=', Carbon::parse($value[0])->toDate());
-        if (isset($value[1]) && (bool) $value[1]) {
+        if (isset($value[1]) && (bool)$value[1]) {
             $query->whereDate('expires_at', '<=', Carbon::parse($value[1]) ?? null);
         }
 

@@ -43,7 +43,7 @@
                     {{ moment(item.created_at).format('YYYY-MM-DD') }}
                 </td>
                 <td :data-label="__('options')">
-                    <TableOptions :item="item" model="purchases" @edit="edited=item">
+                    <TableOptions :item="item" :has-edit="false" model="purchases" @edit="edited=item">
                         <template #edit>
                             <!--                            <purchasetransactionEdit :data="edited"/>-->
                         </template>
