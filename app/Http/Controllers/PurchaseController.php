@@ -32,6 +32,7 @@ class PurchaseController extends Controller
         $this->middleware(['permission:purchases.edit'])->only(['update']);
         $this->middleware(['permission:purchases.create'])->only(['store']);
         $this->middleware(['permission:purchases.delete'])->only(['destroy']);
+        $this->middleware(['permission:purchases.transactions'])->only(['transaction']);
     }
 
     public function index(Request $request)

@@ -13,6 +13,7 @@ const props = defineProps({
         type: Object,
         required: true,
     },
+    itemClass: String,
     isDropdownList: Boolean,
 });
 
@@ -86,7 +87,7 @@ const label = (label) => {
         <div class="flex justify-between items-center cursor-pointer" @click="menuClick ">
             <component
                 :is="item.route ? Link : 'a'"
-                :class="[componentClass , activeInactiveStyle ]"
+                :class="[componentClass , activeInactiveStyle ,itemClass]"
                 :href="itemHref"
                 :preserve-state="true"
                 :target="item.target ?? null"

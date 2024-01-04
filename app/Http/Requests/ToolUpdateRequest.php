@@ -23,7 +23,7 @@ class ToolUpdateRequest extends FormRequest
     {
 
         return [
-            'name' => ['required', 'string', 'between:3,50'],
+            'name' => ['required', 'string', 'between:3,50','unique:tools,name,'.$this->route('tool')->id],
             'unit_price' => ['required', 'numeric', 'gt:0'],
             'consumed_quantity' => ['required', 'numeric', 'gte:0'],
             'observe_quantity' => ['required', 'numeric', 'gte:' . $this->consumed_quantity],

@@ -30,14 +30,6 @@
                 required
             />
         </FormField>
-        <FormField :errors="form.errors.consumed" :label="__('consumed')">
-            <FormControl
-                v-model="form.consumed"
-                :icon="mdiArrowAll"
-                name="unit_price"
-                required
-            />
-        </FormField>
 
 
     </CardBoxModal>
@@ -46,7 +38,7 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiAccount, mdiArrowAll, mdiCash} from "@mdi/js";
+import {mdiAccount, mdiCash} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
@@ -65,7 +57,6 @@ let showCreateService = inject('showCreateService');
 let form = useForm({
     name: null,
     unit_price: null,
-    consumed: null,
 });
 const submit = () => {
     Model.submit('create', 'services', form)

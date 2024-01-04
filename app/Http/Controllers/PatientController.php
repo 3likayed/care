@@ -28,8 +28,8 @@ class PatientController extends Controller
     public function index(Request $request)
     {
         $patients = QueryBuilder::for(Patient::class)
-            ->allowedFilters([AllowedFilter::scope('search'), 'name', 'email', 'phone'])
-            ->allowedSorts(['name', 'email', 'birthday', 'created_at'])
+            ->allowedFilters([AllowedFilter::exact('id'),AllowedFilter::scope('created_at'), AllowedFilter::scope('birthday') ,'name', 'email', 'phone'])
+            ->allowedSorts(['id','name', 'email', 'birthday', 'created_at'])
             ->paginate($request->per_page);
 
         return Inertia::render('Patients/Index', [

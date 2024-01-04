@@ -36,6 +36,16 @@
                 :searchable="false"
                 :sortable="false"/>
         </section>
+        <section v-show="step === 3">
+            <AppointmentServicesList
+                :data="{appointment_id:computedData.id}"
+                :has-create="canCreateService"
+                :items="computedData.appointment_servicess"
+                :searchable="false"
+                :services="computedServices"
+                :sortable="false"
+                :tools="computedTools"/>
+        </section>
         <section v-show="step === 4">
             <div class="grid lg:grid-cols-3 gap-10 lg:gap-20 mb-5">
                 <CardBoxWidget
@@ -92,6 +102,7 @@ import AppointmentsList from "../../Components/Appointments/AppointmentsList.vue
 import TransactionsList from "../../Components/Transactions/TransactionsList.vue";
 import {mdiCash, mdiCashMinus, mdiCashPlus} from "@mdi/js";
 import CardBoxWidget from "../../Components/Sahred/CardBoxWidget.vue";
+import AppointmentServicesList from "../../Components/AppointmentServices/AppointmentServicesList.vue";
 
 
 let steps = ref(['data',
@@ -114,13 +125,22 @@ let steps = ref(['data',
 ]);
 let step = ref(useStepStore().getStep());
 let computedData = computed(() => usePage().props.data);
-
+let computedTools = computed(() => usePage().props.tools)
 let computedProducts = computed(() =>
     collect(usePage().props.products)
         .whereNotIn('id', collect(computedData.value.appointment_products).pluck('product.id').all()
         ).all()
 );
 let canCreateProduct = computed(() => usePage().props.auth.doctor?.id === computedData.value.doctor_id && computedData.value.status === 'not_completed')
+
+
+let computedServices = computed(() =>
+    collect(usePage().props.services)
+        .whereNotIn('id', collect(computedData.value.appointment_services).pluck('service.id').all()
+        ).all()
+);
+
+let canCreateService = computed(() => usePage().props.auth.doctor?.id === computedData.value.doctor_id && computedData.value.status === 'not_completed')
 let breadcrumbItems = [
     {
         name: __('appointments'),

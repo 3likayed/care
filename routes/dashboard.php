@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\AppointmentProductController;
+use App\Http\Controllers\AppointmentServiceController;
 use App\Http\Controllers\AppointmentTypeController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\ProfileController;
@@ -57,6 +58,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         Route::apiResource('doctors', DoctorController::class);
         Route::apiResource('appointments', AppointmentController::class);
         Route::apiResource('appointment-products', AppointmentProductController::class);
+        Route::apiResource('appointment-services', AppointmentServiceController::class);
         Route::apiResource('products', ProductController::class);
         Route::apiResource('tools', ToolController::class);
         Route::apiResource('suppliers', SupplierController::class);

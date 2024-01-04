@@ -24,8 +24,7 @@ class ServiceUpdateRequest extends FormRequest
 
         return [
             'name' => ['required', 'string', 'between:5,50'],
-            'unit_price' => ['required', 'numeric', 'gt:0'],
-            'consumed' => ['required', 'numeric', 'min:0'],
+            'unit_price' => ['nullable', 'numeric', 'gt:0'],
 
         ];
     }

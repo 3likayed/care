@@ -1,14 +1,14 @@
 <template>
 
-    <SectionTitleLineWithButton model="patients"  :icon="mdiLockAlertOutline" :title="__('patients')" main>
+    <SectionTitleLineWithButton :icon="mdiLockAlertOutline" :title="__('patients')" main model="patients">
         <template #create>
             <PatientCreate/>
         </template>
     </SectionTitleLineWithButton>
-    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'},{name:'email'}]" model="patients"/>
+
     <CardBox has-table>
         <BaseTable
-            :headers="['#',{name:'name',sortable:true},{name:'email',sortable:true},'phone','address','birthday',{name:'created_at',sortable:true}]"
+            :headers="headers"
             :pagination="pagination"
         >
             <tr v-for="(item,key) in items" class="rtl:flex-row-reverse">
@@ -76,6 +76,13 @@ let props = defineProps({
         default: true,
     },
 })
+let headers = [{name: 'id', sortable: true, searchable: true},
+    {name: 'name', sortable: true, searchable: true},
+    {name: 'email', sortable: true, searchable: true},
+    {name: 'phone', searchable: true},
+    {name: 'address', searchable: true},
+    {name: 'birthday', sortable: true, searchable: {type: 'date-range'}},
+    {name: 'created_at', sortable: true, searchable: {type: 'date-range'}}]
 </script>
 <style>
 

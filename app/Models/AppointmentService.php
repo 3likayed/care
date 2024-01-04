@@ -57,7 +57,7 @@ class AppointmentService extends Model
         return $this->belongsTo(Service::class);
     }
 
-    public function doctor()
+    public function doctor(): \Znck\Eloquent\Relations\BelongsToThrough
     {
         return $this->belongsToThrough(Doctor::class, Appointment::class);
     }

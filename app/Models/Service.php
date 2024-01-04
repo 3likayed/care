@@ -16,7 +16,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property int|null $id
  * @property string|null $name
  * @property float|null $unit_price
- * @property int|null $consumed
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
@@ -29,12 +28,10 @@ class Service extends Model
 
     protected $casts = [
         'unit_price' => 'float',
-        'consumed' => 'int',
     ];
 
     protected $fillable = [
         'name',
         'unit_price',
-        'consumed',
     ];
 }

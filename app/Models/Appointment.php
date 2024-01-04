@@ -66,11 +66,19 @@ class Appointment extends Model
         return $this->belongsToMany(Product::class)->withPivot('unit_price', 'quantity');
     }
 
+    public function services(): BelongsToMany
+    {
+        return $this->belongsToMany(Service::class)->withPivot('unit_price', 'quantity');
+    }
+
     public function appointmentProducts(): HasMany
     {
         return $this->hasMany(AppointmentProduct::class);
     }
-
+    public function appointmentServices(): HasMany
+    {
+        return $this->hasMany(AppointmentProduct::class);
+    }
     public function scopePatientSearch($query, $value)
     {
         return $query->whereRelation('patient', 'name', 'like', "%$value%")

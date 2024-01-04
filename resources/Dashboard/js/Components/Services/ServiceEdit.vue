@@ -30,16 +30,6 @@
             />
         </FormField>
 
-        <FormField :errors="form.errors.consumed" :label="__('consumed')">
-            <FormControl
-                v-model="form.consumed"
-                :icon="mdiArrowAll"
-                name="consumed"
-                required
-            />
-        </FormField>
-
-
     </CardBoxModal>
 </template>
 
@@ -70,7 +60,6 @@ let showEdit = props.isModal ? inject('showEdit') : true;
 
 let form = useForm({
     name: props.data.name,
-    consumed: props.data.consumed,
     unit_price: props.data.unit_price,
 
 

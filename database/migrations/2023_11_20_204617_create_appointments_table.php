@@ -31,7 +31,7 @@ return new class extends Migration
                 ->references('id');
 
             $table->double('total_price');
-            $table->double('total_paid');
+            $table->double('total_paid')->nullable();
             $table->enum('status', ['completed', 'not_completed', 'pending', 'canceled'])->default('pending');
             $table->dateTime('date');
             $table->unsignedDouble('discount')->nullable();

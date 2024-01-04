@@ -75,6 +75,7 @@ const asideLgCloseClick = (event) => {
 
             <ul>
                 <AsideMenuItem
+                    item-class="w-full"
                     :item="logoutItem"
                     @menu-click="menuClick"
                 />

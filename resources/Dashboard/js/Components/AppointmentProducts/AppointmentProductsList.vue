@@ -1,13 +1,13 @@
 <template>
 
-  <SectionTitleLineWithButton :icon="mdiCashCheck"
+  <SectionTitleLineWithButton :icon="mdiClipboardPulse"
                               :visit-data="visitData"
                               :has-create="hasCreate"
                               main
                               model="appointment-products">
 
     <template #create>
-      <AppointmentProductCreate :data="data" :products="products" :suppliers="suppliers"/>
+      <AppointmentProductCreate :data="data" :products="products" />
     </template>
   </SectionTitleLineWithButton>
   <!--    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]"
@@ -61,7 +61,7 @@ import BaseTable from "../../Components/Sahred/BaseTable.vue";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
 import TableOptions from "../../Components/Sahred/TableOptions.vue";
 import {ref} from "vue";
-import {mdiCashCheck} from "@mdi/js";
+import {mdiCashCheck, mdiClipboardPulse} from "@mdi/js";
 import AppointmentProductCreate from "./AppointmentProductCreate.vue";
 import {Link} from "@inertiajs/vue3";
 import {Model} from "../../Utils/index.js";
@@ -70,10 +70,6 @@ import AppointmentProductEdit from "./AppointmentProductEdit.vue";
 let edited = ref();
 let props = defineProps({
   data: Object,
-  suppliers: {
-    type: Array,
-    default: []
-  },
   products: {
     type: Array,
     default: []

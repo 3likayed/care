@@ -18,6 +18,12 @@ class TransactionService
     public static function create($transactionable, $data, $hasTotalPaid = false)
     {
         DB::beginTransaction();
+        if ($data['type'] === 'withdraw') {
+            $remaining = self::total(Transaction::query())['remaining'];
+            if ($remaining < $data['amount']) {
+                throw ValidationException::withMessages(['amount' => __('dashboard.error')]);
+            }
+        }
         $transaction = $transactionable->transactions()->create([
             'employee_id' => UserService::authEmployee()->id,
             'amount' => $data['amount'],
@@ -36,30 +42,6 @@ class TransactionService
 
         return $transaction;
 
-    }
-
-    public static function withdraw($transactionable, $data, $hasTotalPaid = false)
-    {
-        $data['type'] = 'withdraw';
-
-        return static::create($transactionable, $data, $hasTotalPaid);
-    }
-
-    public static function manualCreate($data)
-    {
-        return Transaction::create([
-            'employee_id' => UserService::authEmployee()->id,
-            'transactionable_type' => 'Manual',
-            'amount' => $data['amount'],
-            'status' => $data['status'],
-            'type' => $data['type'],
-        ]);
-
-    }
-
-    public static function confirm(Transaction $transaction): void
-    {
-        $transaction->update(['status' => 'confirmed']);
     }
 
     public static function total($transactions)
@@ -92,5 +74,29 @@ class TransactionService
     {
 
         return static::totalOperation($transactions, 'withdraw');
+    }
+
+    public static function withdraw($transactionable, $data, $hasTotalPaid = false)
+    {
+        $data['type'] = 'withdraw';
+
+        return static::create($transactionable, $data, $hasTotalPaid);
+    }
+
+    public static function manualCreate($data)
+    {
+        return Transaction::create([
+            'employee_id' => UserService::authEmployee()->id,
+            'transactionable_type' => 'Manual',
+            'amount' => $data['amount'],
+            'status' => $data['status'],
+            'type' => $data['type'],
+        ]);
+
+    }
+
+    public static function confirm(Transaction $transaction): void
+    {
+        $transaction->update(['status' => 'confirmed']);
     }
 }

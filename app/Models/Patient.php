@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -43,5 +44,26 @@ class Patient extends Model
     {
 
         return json_encode($value, JSON_UNESCAPED_UNICODE);
+    }
+
+    public function scopeCreatedAt($query, $value)
+    {
+        $value = explode('|', $value);
+        $query->whereDate('created_at', '>=', Carbon::parse($value[0]));
+        if (isset($value[1])) {
+            $query->whereDate('created_at', '<=', Carbon::parse($value[1]) ?? null);
+        }
+
+        return $query;
+    }
+    public function scopeBirthday($query, $value)
+    {
+        $value = explode('|', $value);
+        $query->whereDate('birthday', '>=', Carbon::parse($value[0]));
+        if (isset($value[1])) {
+            $query->whereDate('birthday', '<=', Carbon::parse($value[1]) ?? null);
+        }
+
+        return $query;
     }
 }
