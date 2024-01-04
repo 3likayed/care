@@ -6,6 +6,8 @@ use App\Http\Requests\AppointmentServiceStoreRequest;
 use App\Http\Requests\AppointmentServiceUpdateRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\AppointmentService;
+use App\Models\Service;
+use App\Models\Tool;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -48,9 +50,10 @@ class AppointmentServiceController extends Controller
     public function store(AppointmentServiceStoreRequest $request)
     {
         DB::beginTransaction();
-
         $data = $request->validated();
-
+        $service = Service::find($data['service_id']);
+        $data['unit_price'] = $service->unit_price ?? Tool::find($data['tool_id'])->unit_price;
+        AppointmentService::create($data);
         DB::commit();
 
         return success();

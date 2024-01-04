@@ -4,26 +4,27 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
-        Schema::create('appointment_product', function (Blueprint $table) {
+        Schema::create('appointment_service', function (Blueprint $table) {
             $table->id();
-            $table->unsignedDouble('tool_quantity');
+            $table->unsignedDouble('tool_consumption');
             $table->unsignedDouble('unit_price');
             $table->foreignId('appointment_id')
                 ->constrained('appointments')
                 ->references('id')
                 ->cascadeOnDelete();
-            $table->foreignId('product_id')
-                ->constrained('products')
+            $table->foreignId('service_id')
+                ->constrained('services')
                 ->references('id');
-
-            $table->unique(['appointment_id', 'product_id']);
+            $table->foreignId('tool_id')
+                ->nullable()
+                ->constrained('tools')
+                ->references('id');
             $table->softDeletes();
         });
     }
@@ -33,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('appointment_product');
+        Schema::dropIfExists('appointment_service');
     }
 };

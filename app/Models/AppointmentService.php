@@ -32,10 +32,11 @@ class AppointmentService extends Model
     protected $table = 'appointment_service';
 
     protected $casts = [
-        'quantity' => 'float',
+        'tool_consumption' => 'float',
         'unit_price' => 'float',
         'appointment_id' => 'int',
         'service_id' => 'int',
+        'tool_id' => 'int',
     ];
 
     protected $fillable = [
@@ -43,6 +44,8 @@ class AppointmentService extends Model
         'unit_price',
         'appointment_id',
         'service_id',
+        'tool_consumption',
+        'tool_id',
     ];
 
     protected $appends = ['total_price'];

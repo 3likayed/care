@@ -5,6 +5,9 @@ import {snakeCase} from "lodash/string.js";
 
 
 export function __(key, replace = {}) {
+    if(!key){
+        return "";
+    }
     key = String(key).replace('-', '_') ?? '';
     var translation = usePage().props.language[key] ? usePage().props.language[key] : key
     Object.keys(replace).forEach(function (key) {
@@ -90,6 +93,9 @@ export const modelResolver = (word, replace = ['_', '-']) => {
         .replace(replace[0], replace[1]) : ''
 }
 export const parsePrice = (price) => {
+    if(isNaN(price)){
+        return 0;
+    }
     return parseFloat(price).toFixed(2).replace(/\.00$/, '');
 }
 

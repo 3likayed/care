@@ -203,7 +203,7 @@ function doAction(action, key) {
           :name="name"
           :option-value="optionValue"
           :options="computedOptions"
-          :placeholder="placeholder"
+          :placeholder="__(placeholder)"
           @filter="(value)=>emit('filter',value.value)">
 
       </SelectControl>
@@ -221,7 +221,7 @@ function doAction(action, key) {
           :maxlength="maxlength"
           :min="min"
           :name="name"
-          :placeholder="placeholder"
+          :placeholder="__(placeholder)"
           :required="required"
           :type="computedType"
       />
@@ -234,7 +234,7 @@ function doAction(action, key) {
           :disabled="disabled"
           :maxlength="maxlength"
           :name="name"
-          :placeholder="placeholder"
+          :placeholder="__(placeholder)"
           :required="required"
       />
       <Editor
@@ -258,7 +258,7 @@ function doAction(action, key) {
           :maxlength="maxlength"
           :min="min"
           :name="name"
-          :placeholder="placeholder"
+          :placeholder="__(placeholder)"
           :required="required"
           :type="computedType"
 

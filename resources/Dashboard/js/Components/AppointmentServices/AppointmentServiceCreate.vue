@@ -39,12 +39,11 @@
         </FormField>
         <FormField
             :errors="form.errors.tool_consumption"
-            :label="__('tool_consumption')"
+            :label="__('consumed')"
         >
             <FormControl
                 v-model="form.tool_consumption"
-                :icon="mdiCart"
-                :placeholder="__('tool_consumption')"
+                :icon="mdiTools"
                 name="tool_consumption"
 
             />
@@ -55,12 +54,12 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiCart, mdiTruckDelivery} from "@mdi/js";
+import {mdiCart, mdiTools, mdiTruckDelivery} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__, can} from "../../Globals.js";
-import {inject} from "vue";
+import {inject, ref} from "vue";
 import {Model} from "../../Utils/index.js";
 
 let props = defineProps({
@@ -88,8 +87,7 @@ const submit = () => {
 
     Model.submit('create', 'appointment_services', form, props.data.id)
 }
-
-
+let price = ref();
 </script>
 <style scoped>
 
