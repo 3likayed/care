@@ -127,7 +127,7 @@ class SalaryActionsController extends Controller
                             ]);
                             
                         } else {
-                            dd($calculated_paid_loan);
+                            // dd($calculated_paid_loan);
                             TransactionService::create($action, [
                                 'amount' => $calculated_paid_loan,
                                 'status' => 'confirmed',
@@ -153,12 +153,13 @@ class SalaryActionsController extends Controller
             foreach ($employee->salaryActions as $action) {
                 if (!$action->is_confirmed) {
                     if ($action->reason == 'withhold') {
+                        dd($action->is_confirmed);
                         TransactionService::create($action, [
                             'amount' => $action->amount,
                             'status' => 'confirmed',
                             'type' => 'deposit',
                         ]);
-                    } elseif ($action->reason == 'giiving')   {
+                    } elseif ($action->reason == 'giving')   {
                         TransactionService::create($action, [
                             'amount' => $action->amount,
                             'status' => 'confirmed',

@@ -73,7 +73,9 @@ class SalaryAction extends Model
 
             elseif ($this->reason == 'loan' && $this->amount == 0)
                 return true;
-            return false;
+            elseif($this->reason == 'withhold' && $this->transactions()->count() > 0)
+                return true ;
+        return false;
         });
     }
 
