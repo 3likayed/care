@@ -26,6 +26,7 @@ class PatientPackageController extends Controller
 
     public function index(Request $request)
     {
+
         $patientServices = QueryBuilder::for(PatientPackage::class)
             ->with('patient', 'service')
             ->allowedSorts('available',
@@ -49,6 +50,7 @@ class PatientPackageController extends Controller
      */
     public function store(PatientPackageStoreRequest $request)
     {
+
         DB::beginTransaction();
         $data = $request->validated();
         $data['unit_price'] = $request->package->unit_price;
