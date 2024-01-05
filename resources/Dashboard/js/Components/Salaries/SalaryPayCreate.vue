@@ -19,11 +19,11 @@
         <div v-if="data.current_month_loan_actions > 0" class="grid grid-flow-row-dense grid-cols-3">
             <div>
                 <input id="one" v-model="form.picked" type="radio" value="total_loan" />
-                <label class="mr-4" for="one">سداد السلف بالكامل</label>
+                <label class="mr-4" for="one">{{__("total_pay")}}</label>
             </div>
             <div>
                 <input id="two" v-model="form.picked" type="radio" value="partial_loan" />
-                <label class="mr-4" for="two">سداد جزئي </label>
+                <label class="mr-4" for="two">{{__("partail_pay")}}</label>
             </div>
 
 

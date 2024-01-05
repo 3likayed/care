@@ -82,7 +82,7 @@ class SalaryActionsController extends Controller
         //
     }
 
-    public function pay(SalaryPayStoreRequest $request)
+    public function salaryPayment(SalaryPayStoreRequest $request)
     {
         $data = $request->validated();
         // dd($data);
@@ -181,7 +181,7 @@ class SalaryActionsController extends Controller
         $salary_action['salary_id'] = $employee->salary->id;
         $salary_action['amount'] = $employee->salary->net_amount;
         $salary_action['reason'] = 'salary';
-        $salary_action['notes'] = 'إضافة مرتب بتاريخ' . ' ' . $getSalaryMonth;
+        $salary_action['notes'] = __('dashboard.max') . ' ' . $getSalaryMonth;
         $salary_action['date'] = $getSalaryMonth;
         $action = $employee->salaryActions()->create($salary_action);
         // dd($action);
