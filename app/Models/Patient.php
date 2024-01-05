@@ -32,12 +32,12 @@ class Patient extends Model
 
     public function services(): BelongsToMany
     {
-        return $this->belongsToMany(Service::class, PatientService::class)->withPivot('available', 'unit_price');
+        return $this->belongsToMany(Service::class, PatientPackage::class)->withPivot('available', 'unit_price');
     }
 
     public function doctorServices(): HasMany
     {
-        return $this->hasMany(PatientService::class);
+        return $this->hasMany(PatientPackage::class);
     }
 
     protected function asJson($value): bool|string

@@ -1,6 +1,6 @@
 <template>
 
-    <CardBoxModal v-if="can(`patient_services.create`)"
+    <CardBoxModal v-if="can(`patient_packages.create`)"
                   :button-label="__('create')"
                   :has-cancel="isModal"
                   :has-errors="form.hasErrors"
@@ -8,19 +8,21 @@
                   :is-form="true"
                   :is-modal="isModal"
                   :model-value="true"
-                  :title="__('create_field',{field:'patient_services'})"
-                  @cancel="showCreateDoctorProduct=false"
+                  :title="__('create_field',{field:'patient_packages'})"
+                  @cancel="showCreatePatientPackage=false"
                   @confirm="submit"
     >
-        <FormField :errors="form.errors.stock_id" label="stock_id">
+        <FormField :label="__('package')">
             <FormControl
-                v-model="form.stock_id"
-                :icon="mdiCart"
-                :is-disabled="data.stock_id"
+                v-model="form.package_id"
+                :icon="mdiDoctor"
+                :is-disabled="data.package_id"
+                :options="packages"
                 required
+                type="select"
             />
         </FormField>
-        <FormField :label="__('patient_name')">
+        <FormField :label="__('patient')">
             <FormControl
                 v-model="form.patient_id"
                 :icon="mdiDoctor"
@@ -30,18 +32,7 @@
                 type="select"
             />
         </FormField>
-        <FormField :errors="form.errors.quantity" label="quantity">
-            <FormControl
-                v-model="form.quantity"
-                :icon="mdiStocking"
-                :is-disabled="data.quantity"
-                :max="maxQuantity"
-                :min="0"
-                required
-            />
-        </FormField>
-
-        <FormField :label="__('service_name')">
+        <FormField :label="__('service')">
             <FormControl
                 v-model="service.name"
                 :icon="mdiClipboardPulse"
@@ -50,13 +41,33 @@
                 type="text"
             />
         </FormField>
-        <FormField :label="__('available')">
+        <FormField :label="__('min')">
             <FormControl
-                v-model="service.available"
+                v-model="service.min"
                 :icon="mdiClipboardPulse"
                 is-disabled
                 required
                 type="text"
+            />
+        </FormField>
+        <FormField :label="__('max')">
+            <FormControl
+                v-model="service.max"
+                :icon="mdiClipboardPulse"
+                is-disabled
+                required
+                type="text"
+            />
+        </FormField>
+
+
+        <FormField :errors="form.errors.quantity" label="quantity">
+            <FormControl
+                v-model="form.quantity"
+                :icon="mdiStocking"
+                :min="service.min"
+                :max="service.max"
+                required
             />
         </FormField>
 
@@ -67,14 +78,14 @@
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiCart, mdiClipboardPulse, mdiDoctor, mdiStocking} from "@mdi/js";
+import {mdiClipboardPulse, mdiDoctor, mdiStocking} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
 import {__} from "../../Globals.js";
-import {inject, onMounted, reactive, ref, watchEffect} from "vue";
+import {inject, reactive, watchEffect} from "vue";
 import {Model} from "../../Utils/index.js";
-import {debounce} from "lodash";
+import {collect} from "collect.js";
 
 
 let props = defineProps({
@@ -96,36 +107,27 @@ let props = defineProps({
     },
 })
 
-let showCreateDoctorProduct = inject('showCreateDoctorProduct');
+let showCreatePatientPackage = inject('showCreatePatientPackage');
 let form = useForm({
     stock_id: props.data?.stock_id,
+    package_id: props.data?.package_id,
     patient_id: props.data?.patient_id,
     quantity: props.data?.quantity,
 
 });
 
 let service = reactive({});
-let maxQuantity = ref();
-const fetchPatients = debounce(async (stock_id) => {
-    if (stock_id) {
-        await Model.fetch('stocks', {id: stock_id}).then(
-            result => {
-                service.name = result[0]?.service?.name
-                service.available = result[0]?.available ?? 0;
-            }
-        )
-    } else {
-        service.name = null
-        service.available = 0
+
+watchEffect(() => {
+    let selectedPackage = collect(props.packages).firstWhere('id', form.package_id??null)
+    if( selectedPackage ){
+        service.name = selectedPackage.service.name
+        service.min = selectedPackage.min
+        service.max = selectedPackage.max
     }
-    maxQuantity.value = service.available
-}, 500);
-
-onMounted(() => watchEffect(() => fetchPatients(form.stock_id)))
-
-
+})
 const submit = () => {
-    Model.submit('create', 'patient_services', form)
+    Model.submit('create', 'patient_packages', form)
 }
 
 </script>

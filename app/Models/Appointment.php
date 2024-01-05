@@ -45,7 +45,7 @@ class Appointment extends Model
     public function totalPrice(): Attribute
     {
         return Attribute::get(
-            fn ($value, $model) => $model['total_price'] + $this->appointmentProducts->sum('total_price') - $this->discount
+            fn ($value, $model) => $model['total_price'] + $this->appointmentProducts->sum('total_price') + $this->appointmentServices->sum('total_price') - $this->discount
         );
     }
 
@@ -77,7 +77,7 @@ class Appointment extends Model
     }
     public function appointmentServices(): HasMany
     {
-        return $this->hasMany(AppointmentProduct::class);
+        return $this->hasMany(AppointmentService::class);
     }
     public function scopePatientSearch($query, $value)
     {

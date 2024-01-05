@@ -2,7 +2,7 @@
 
     <SectionMain>
         <BreadCrumb :items="[{}]"/>
-        <PatientServicesList :items="items" :packages="packages" :pagination="pagination"/>
+        <PatientPackagesList :items="items" :packages="packages" :patients="patients" :pagination="pagination"/>
     </SectionMain>
 
 
@@ -14,12 +14,13 @@ import SectionMain from "../../Components/Sahred/SectionMain.vue";
 import {usePage} from "@inertiajs/vue3";
 import {computed} from "vue";
 import BreadCrumb from "../../Components/Sahred/BreadCrumb.vue";
-import PatientServicesList from "../../Components/PatientServices/PatientServicesList.vue";
+import PatientPackagesList from "../../Components/PatientPackages/PatientPackagesList.vue";
 
 
 let items = computed(() => usePage().props.data.data);
 let pagination = computed(() => usePage().props.data.meta);
 let packages = computed(() => usePage().props.packages);
+let patients = computed(() => usePage().props.patients);
 let doctors = computed(() => usePage().props.doctors);
 
 

@@ -12,7 +12,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * Class PatientService
- * 
+ *
  * @property int|null $id
  * @property int|null $patient_id
  * @property int|null $service_id
@@ -21,16 +21,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @property string $deleted_at
  * @property Carbon $created_at
  * @property Carbon $updated_at
- * 
+ *
  * @property Patient|null $patient
  * @property Service|null $service
  *
  * @package App\Models
  */
-class PatientService extends Model
+class PatientPackage extends Model
 {
 	use SoftDeletes;
-	protected $table = 'patient_service';
+	protected $table = 'patient_package';
 
 	protected $casts = [
 		'patient_id' => 'int',

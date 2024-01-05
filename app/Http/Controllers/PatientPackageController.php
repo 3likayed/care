@@ -6,7 +6,7 @@ use App\Http\Requests\PatientServiceStoreRequest;
 use App\Http\Resources\ModelCollection;
 use App\Models\Package;
 use App\Models\Patient;
-use App\Models\PatientService;
+use App\Models\PatientPackage;
 use App\Sorts\RelationSort;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -14,17 +14,17 @@ use Spatie\QueryBuilder\AllowedFilter;
 use Spatie\QueryBuilder\AllowedSort;
 use Spatie\QueryBuilder\QueryBuilder;
 
-class PatientServiceController extends Controller
+class PatientPackageController extends Controller
 {
     public function __construct()
     {
-        $this->middleware(['permission:patient-services.show'])->only(['index', 'show']);
-        $this->middleware(['permission:patient-services.create'])->only(['store']);
+        $this->middleware(['permission:patient-packages.show'])->only(['index', 'show']);
+        $this->middleware(['permission:patient-packages.create'])->only(['store']);
     }
 
     public function index(Request $request)
     {
-        $patientServices = QueryBuilder::for(PatientService::class)
+        $patientServices = QueryBuilder::for(PatientPackage::class)
             ->allowedSorts('available',
                 AllowedSort::custom('patient.name', new RelationSort(), 'patient.employee.name'),
                 AllowedSort::custom('service.name', new RelationSort()),
@@ -33,11 +33,11 @@ class PatientServiceController extends Controller
             ->allowedFilters(AllowedFilter::exact('id'), 'patient_id', 'service_id')
             ->paginate($request->get('per_page'));
 
-        return Inertia::render('PatientServices/Index', [
-            'meta' => meta()->metaValues(['title' => __('dashboard.patient_services')]),
+        return Inertia::render('PatientPackages/Index', [
+            'meta' => meta()->metaValues(['title' => __('dashboard.patient_packages')]),
             'data' => ModelCollection::make($patientServices),
             'patients' => Patient::all(),
-            'packages' => Package::all(),
+            'packages' => Package::with('service')->get(),
         ]);
     }
 
