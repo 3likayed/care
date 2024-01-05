@@ -16,6 +16,7 @@
             />
         </section>
         <section v-if="step===1">
+            
             <div class="grid md:grid-cols-4 gap-5 m-5" v-if="data.salary">
 
                 <BaseButton :label="__('create_field',{field:'giving'})"
@@ -36,6 +37,10 @@
             <SalariesList
                 :data="data"
             />
+            <!-- <SalaryDetails
+            :data="data"
+            :is-modal="false"
+            /> -->
         </section>
         <SalaryActionCreate
             v-if="showCreateSalaryAction"
@@ -63,11 +68,14 @@ import EmployeeEdit from "../../Components/Employees/EmployeeEdit.vue";
 import {useStepStore} from "../../Stores/step.js";
 import SalariesList from "../../Components/Salaries/SalariesList.vue";
 import SalaryActionCreate from "../../Components/Salaries/SalaryActionCreate.vue";
+import SalaryDetails from "../../Components/Salaries/SalaryDetails.vue";
+
 import BaseButton from "../../Components/Sahred/BaseButton.vue";
 import SalaryPayCreate from "../../Components/Salaries/SalaryPayCreate.vue";
 
 let steps = ref([__('data'), __('salary')]);
 let step = ref(useStepStore().getStep())
+// let second_step = ref(useStepStore().getStep());
 let data = computed(() => usePage().props.data);
 let actionType = ref();
 let showCreateSalaryAction = ref(false);

@@ -10,12 +10,14 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Staudenmeir\EloquentHasManyDeep\HasManyDeep;
+use Staudenmeir\EloquentHasManyDeep\HasRelationships;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Str;
 
 class Employee extends Authenticatable
 {
-    use SoftDeletes;
+    use SoftDeletes , HasRelationships;
 
     /**
      * The attributes that are mass assignable.
@@ -90,6 +92,11 @@ class Employee extends Authenticatable
 
         return Attribute::get(fn()=> $this->salaryActions->where('reason','withhold')->where('is_confirmed',false)->sum('amount'));
 
+    }
+
+    public function salaryTransactions(): HasManyDeep
+    {
+        return $this->hasManyDeepFromRelations($this->salaryActions(), (new SalaryAction() )->transactions())->where('reason','salary') ;
     }
 
     public function salaryActions(): HasManyThrough

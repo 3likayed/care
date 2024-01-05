@@ -34,9 +34,9 @@ class EmployeeController extends Controller
             abort(404);
         }
         $roles = Role::all();
-        $employee->load('salary', 'user')->append(['current_month_salary_actions', 'current_month_giving_actions', 'current_month_loan_actions', 'current_month_withhold_actions']);
+        $employee->load('salary', 'user','salaryTransactions')->append(['current_month_salary_actions', 'current_month_giving_actions', 'current_month_loan_actions', 'current_month_withhold_actions']);
 
-                        // dd($employee->toArray());
+                        // dd($employee->salaryTransactions->toArray());
         return Inertia::render('Employees/Show', [
             'data' => $employee,
             'meta' => meta()->metaValues(['title' => "$employee->name | ".__('dashboard.employees')]),

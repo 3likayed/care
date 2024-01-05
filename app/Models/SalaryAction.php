@@ -40,7 +40,6 @@ class SalaryAction extends Model
         'employee_id' => 'int',
         'salary_id' => 'int',
         'amount' => 'float',
-        'date' => 'date:YYYY-MM',
     ];
 
     protected $fillable = [
@@ -68,7 +67,7 @@ class SalaryAction extends Model
     {
         return Attribute::get(function () {
 
-            if ($this->reason == 'giving' && $this->transactions()->count() > 0)
+            if (($this->reason == 'giving' || $this->reason == 'salary') && $this->transactions()->count() > 0)
                 return true;
 
             elseif ($this->reason == 'loan' && $this->amount == 0)

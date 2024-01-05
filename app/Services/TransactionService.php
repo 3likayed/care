@@ -18,6 +18,7 @@ class TransactionService
     public static function create($transactionable, $data, $hasTotalPaid = false)
     {
         DB::beginTransaction();
+        // dd($data);
         if ($data['type'] === 'withdraw') {
             $remaining = self::total(Transaction::query())['remaining'];
             if ($remaining < $data['amount']) {
