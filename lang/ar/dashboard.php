@@ -230,6 +230,8 @@ return [
     'appointment_services' => 'خدمات الموعد',
     'add_month_salary' =>'إضافة مرتب شهر',
     'partail_pay' => 'سداد جزئي ',
-    'total_pay' => 'سداد السلف بالكامل'
+    'total_pay' => 'سداد السلف بالكامل',
+    'patient_packages' => 'باقات المريض',
+    'patient_package' => 'باقة مريض'
 
 ];

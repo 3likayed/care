@@ -32,57 +32,67 @@
                 type="select"
             />
         </FormField>
-        <FormField :label="__('service')">
+        <FormField  class-addon="grid grid-cols-2 md:grid-cols-4 gap-3">
             <FormControl
+                label="service"
                 v-model="service.name"
-                :icon="mdiClipboardPulse"
+                :icon="mdiInformation"
                 is-disabled
-                required
                 type="text"
             />
-        </FormField>
-        <FormField :label="__('min')">
             <FormControl
                 v-model="service.min"
-                :icon="mdiClipboardPulse"
+                :icon="mdiInformation"
                 is-disabled
-                required
+                :label="__('min')"
                 type="text"
             />
-        </FormField>
-        <FormField :label="__('max')">
             <FormControl
                 v-model="service.max"
-                :icon="mdiClipboardPulse"
+                :icon="mdiInformation"
                 is-disabled
+                :label="__('max')"
+                type="text"
+            />
+            <FormControl
+                v-model="service.unit_price"
+                :icon="mdiInformation"
+                is-disabled
+                :label="__('unit_price')"
                 required
                 type="text"
             />
         </FormField>
-
-
         <FormField :errors="form.errors.quantity" label="quantity">
             <FormControl
                 v-model="form.quantity"
                 :icon="mdiStocking"
-                :min="service.min"
                 :max="service.max"
+                :min="0"
                 required
             />
         </FormField>
 
-
+        <FormField :label="__('amount')">
+            <FormControl
+                v-model="service.price"
+                :icon="mdiInformation"
+                is-disabled
+                required
+                type="text"
+            />
+        </FormField>
     </CardBoxModal>
 </template>
 
 <script setup>
 
 import CardBoxModal from "../Sahred/CardBoxModal.vue";
-import {mdiClipboardPulse, mdiDoctor, mdiStocking} from "@mdi/js";
+import {mdiInformation, mdiDoctor, mdiStocking} from "@mdi/js";
 import FormField from "../Sahred/FormField.vue";
 import FormControl from "../Sahred/FormControl.vue";
 import {useForm} from "@inertiajs/vue3";
-import {__} from "../../Globals.js";
+import {__, parsePrice} from "../../Globals.js";
 import {inject, reactive, watchEffect} from "vue";
 import {Model} from "../../Utils/index.js";
 import {collect} from "collect.js";
@@ -119,11 +129,15 @@ let form = useForm({
 let service = reactive({});
 
 watchEffect(() => {
-    let selectedPackage = collect(props.packages).firstWhere('id', form.package_id??null)
-    if( selectedPackage ){
+    let selectedPackage = collect(props.packages).firstWhere('id', form.package_id ?? null)
+    if (selectedPackage) {
         service.name = selectedPackage.service.name
         service.min = selectedPackage.min
         service.max = selectedPackage.max
+        service.unit_price = selectedPackage.unit_price
+        service.price = parsePrice(form.quantity * selectedPackage.unit_price)
+    } else {
+        Object.assign(service, {min: null, max: null, name: null , price:null})
     }
 })
 const submit = () => {

@@ -30,20 +30,15 @@ class Patient extends Model
             ->orWhere('phone', 'like', "%$date%");
     }
 
-    public function services(): BelongsToMany
-    {
-        return $this->belongsToMany(Service::class, PatientPackage::class)->withPivot('available', 'unit_price');
-    }
 
-    public function doctorServices(): HasMany
+    public function patientPackages(): HasMany
     {
         return $this->hasMany(PatientPackage::class);
     }
 
-    protected function asJson($value): bool|string
+    public function packages(): BelongsToMany
     {
-
-        return json_encode($value, JSON_UNESCAPED_UNICODE);
+        return $this->belongsToMany(Package::class, PatientPackage::class)->withPivot('available', 'unit_price');
     }
 
     public function scopeCreatedAt($query, $value)
@@ -56,6 +51,7 @@ class Patient extends Model
 
         return $query;
     }
+
     public function scopeBirthday($query, $value)
     {
         $value = explode('|', $value);
@@ -65,5 +61,11 @@ class Patient extends Model
         }
 
         return $query;
+    }
+
+    protected function asJson($value): bool|string
+    {
+
+        return json_encode($value, JSON_UNESCAPED_UNICODE);
     }
 }

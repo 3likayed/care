@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Support\Facades\DB;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -31,9 +32,9 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $e)
     {
         $response = parent::render($request, $e);
-
+        DB::rollBack();
         if ($request->header('X-inertia')) {
-            if (! app()->environment(['local', 'testing']) && in_array($response->status(), [500, 503, 404, 403])) {
+            if (!app()->environment(['local', 'testing']) && in_array($response->status(), [500, 503, 404, 403])) {
 
                 return error(__($e->getMessage()));
             }

@@ -17,8 +17,8 @@ return new class extends Migration
                 ->constrained('patients')
                 ->references('id')
                 ->cascadeOnDelete();
-            $table->foreignId('service_id')
-                ->constrained('services')
+            $table->foreignId('package_id')
+                ->constrained('packages')
                 ->references('id');
             $table->unsignedDouble('available');
             $table->unsignedDouble('unit_price');
