@@ -227,5 +227,6 @@ return [
     'max' => 'الأكثر',
     'observe_quantity' => 'الكمية المراقبة',
     'consumed_quantity' => 'الكمية المستهلكة',
+    'appointment_services' => 'خدمات الموعد',
 
 ];

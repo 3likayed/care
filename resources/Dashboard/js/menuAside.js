@@ -24,7 +24,7 @@ import {
     mdiNaturePeople, mdiPackage,
     mdiSafe,
     mdiTab,
-    mdiTable,
+    mdiTable, mdiTools,
     mdiTruckDelivery,
     mdiViewList,
     mdiWarehouse,
@@ -226,14 +226,21 @@ export default [
                 route: "dashboard.services.index",
                 permission: "services.show",
                 label: "services",
-                components: ['Service/Index'],
+                components: ['Service/Index','Service/Show'],
                 icon: mdiTruckDelivery,
+            },
+            {
+                route: "dashboard.tools.index",
+                permission: "tools.show",
+                label: "tools",
+                components: ['Tools/Index','Tools/Show'],
+                icon: mdiTools,
             },
             {
                 route: "dashboard.packages.index",
                 permission: "packages.show",
                 label: "packages",
-                components: ['Packages/Index'],
+                components: ['Packages/Index','Packages/Show'],
                 icon: mdiPackage,
             }
         ]

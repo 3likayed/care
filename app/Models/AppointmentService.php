@@ -25,7 +25,7 @@ use Znck\Eloquent\Traits\BelongsToThrough;
  */
 class AppointmentService extends Model
 {
-    use BelongsToThrough , SoftDeletes;
+    use BelongsToThrough, SoftDeletes;
 
     public $timestamps = false;
 
@@ -60,6 +60,11 @@ class AppointmentService extends Model
         return $this->belongsTo(Service::class);
     }
 
+    public function tool(): BelongsTo
+    {
+        return $this->belongsTo(Tool::class);
+    }
+
     public function doctor(): \Znck\Eloquent\Relations\BelongsToThrough
     {
         return $this->belongsToThrough(Doctor::class, Appointment::class);
@@ -67,6 +72,7 @@ class AppointmentService extends Model
 
     public function totalPrice(): Attribute
     {
-        return Attribute::get(fn () => $this->unit_price * $this->quantity);
+
+        return Attribute::get(fn() => $this->unit_price * $this->tool_consumption);
     }
 }

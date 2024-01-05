@@ -70,8 +70,6 @@ class ServiceController extends Controller
 
     public function show(Service $service)
     {
-        $service->load('stocks.purchase', 'doctorServices.service', 'doctorServices.doctor');
-
         return Inertia::render('Services/Show', [
             'data' => $service,
             'meta' => meta()->metaValues(['title' => [__('dashboard.services'), $service->name]]),

@@ -13,7 +13,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ManualTransactionController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\PatientController;
-use App\Http\Controllers\PatientServiceController;
+use App\Http\Controllers\PatientPackageController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\PurchaseController;
 use App\Http\Controllers\RoleController;
@@ -79,7 +79,7 @@ Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function () {
         });
         Route::get('stocks', [StockController::class, 'index'])->name('stocks.index');
         Route::apiResource('doctor-products', DoctorProductController::class)->only(['index', 'store']);
-        Route::apiResource('patient-services', PatientServiceController::class)->only(['index', 'store']);
+        Route::apiResource('patient-packages', PatientPackageController::class)->only(['index', 'store']);
         Route::apiResource('packages', PackageController::class)->except('show');
     });
 

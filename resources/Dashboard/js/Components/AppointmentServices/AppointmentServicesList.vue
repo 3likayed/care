@@ -7,7 +7,7 @@
                                 model="appointment-services">
 
         <template #create>
-            <AppointmentServiceCreate :data="data" :tools="tools" :services="services"/>
+            <AppointmentServiceCreate :data="data" :services="services" :tools="tools"/>
         </template>
     </SectionTitleLineWithButton>
     <!--    <DynamicSearch v-if="searchable" :fields="[{name:'search'},{name:'name'}]"
@@ -25,13 +25,18 @@
                         {{ item.service.name }}
                     </Link>
                 </td>
+                <td :data-label="__('tool')">
+                    <Link :href="Model.showLink('tools',item.tool,id)">
+                        {{ item.tool.name }}
+                    </Link>
+                </td>
                 <td :data-label="__('service')">
                     <Link :href="Model.showLink('appointments',item.appointment.id)">
                         {{ item.appointment.name }}
                     </Link>
                 </td>
-                <td :data-label="__('quantity')">
-                    {{ item.quantity }}
+                <td :data-label="__('consumed')">
+                    {{ item.tool_consumption }}
                 </td>
                 <td :data-label="__('unit_price')">
                     {{ item.unit_price }}
@@ -97,6 +102,7 @@ let props = defineProps({
 
 let headers = [
     {name: 'service.name', label: 'service', sortable: true, searchable: {name: 'service.id', options: props.services}},
+    {name: 'tool.name', label: 'tool', sortable: true, searchable: {name: 'tool.id', options: props.tools}},
     {name: 'appointment.id', label: 'appointment', sortable: true, searchable: {name: 'appointment.id'}},
     {name: 'quantity', sortable: true},
     {name: 'unit_price', sortable: true},

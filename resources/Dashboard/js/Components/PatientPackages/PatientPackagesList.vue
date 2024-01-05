@@ -3,11 +3,11 @@
     <SectionTitleLineWithButton :icon="mdiCartVariant"
                                 :visit-data="visitData"
                                 main
-                                :title="title ?? 'patient_services'"
-                                model="patient-services">
+                                :title="title ?? 'patient-packages'"
+                                model="patient-packages">
 
         <template #create>
-            <PatientServiceCreate :data="data" :patients="patients" :packages="packages"/>
+            <PatientPackageCreate :data="data" :patients="patients" :packages="packages"/>
         </template>
     </SectionTitleLineWithButton>
     <CardBox has-table>
@@ -44,7 +44,7 @@
 import CardBox from "../../Components/Sahred/CardBox.vue";
 import BaseTable from "../../Components/Sahred/BaseTable.vue";
 import SectionTitleLineWithButton from "../../Components/Sahred/SectionTitleLineWithButton.vue";
-import PatientServiceCreate from "./PatientServiceCreate.vue";
+import PatientPackageCreate from "./PatientPackageCreate.vue";
 import {Link} from "@inertiajs/vue3";
 import {Model} from "../../Utils/index.js";
 import {mdiCartVariant} from "@mdi/js";

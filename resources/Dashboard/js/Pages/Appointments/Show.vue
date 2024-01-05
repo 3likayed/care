@@ -40,7 +40,7 @@
             <AppointmentServicesList
                 :data="{appointment_id:computedData.id}"
                 :has-create="canCreateService"
-                :items="computedData.appointment_servicess"
+                :items="computedData.appointment_services"
                 :searchable="false"
                 :services="computedServices"
                 :sortable="false"
@@ -134,12 +134,7 @@ let computedProducts = computed(() =>
 let canCreateProduct = computed(() => usePage().props.auth.doctor?.id === computedData.value.doctor_id && computedData.value.status === 'not_completed')
 
 
-let computedServices = computed(() =>
-    collect(usePage().props.services)
-        .whereNotIn('id', collect(computedData.value.appointment_services).pluck('service.id').all()
-        ).all()
-);
-
+let computedServices = computed(() => usePage().props.services);
 let canCreateService = computed(() => usePage().props.auth.doctor?.id === computedData.value.doctor_id && computedData.value.status === 'not_completed')
 let breadcrumbItems = [
     {

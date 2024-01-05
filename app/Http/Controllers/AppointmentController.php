@@ -101,7 +101,7 @@ class AppointmentController extends Controller
 
     public function show(Appointment $appointment)
     {
-        $appointment->load('patient', 'appointmentProducts.appointment', 'appointmentProducts.product', 'transactions', 'appointmentServices.appointment', 'appointmentServices.service');
+        $appointment->load('patient', 'appointmentProducts.appointment', 'appointmentProducts.product', 'transactions', 'appointmentServices.appointment','appointmentServices.tool', 'appointmentServices.service');
         $appointmentTypes = AppointmentType::all();
         $doctor = UserService::authDoctor();
         $services = Service::all();
