@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\ProfilePasswordUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Models\Employee;
-use App\Services\UserService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -30,6 +29,26 @@ class ProfileController extends Controller
         ]);
     }
 
+    public function updatePassword(ProfilePasswordUpdateRequest $request)
+    {
+
+
+        $user = $request->user();
+
+        if (Hash::check($request->current_password, $user->password)) {
+            $user->update([
+                'password' => $request->password
+            ]);
+            return success();
+
+        } else {
+            throw ValidationException::withMessages([
+                'current_password' => __('dashboard.wrong_password'),
+            ]);
+        }
+
+    }
+
     /**
      * Update the user's profile information.
      */
@@ -39,34 +58,13 @@ class ProfileController extends Controller
         if ($request->user()->isDirty('email')) {
             $request->user()->email_verified_at = null;
         }
-        Employee::where('id',$request->user()->userable_id)->update([
-            'name' =>$request->name
+        Employee::where('id', $request->user()->userable_id)->update([
+            'name' => $request->name
         ]);
 
         $request->user()->save();
 
         return success();
-    }
-
-    public function updatePassword(ProfilePasswordUpdateRequest $request)
-    {
-        $request->user()->fill($request->validated());
-        dd($request->toArray());
-        $user = $request->user();
-
-        if (Hash::check($request->current_password, $user->password)) {
-
-            $user->password = Hash::make($request->password);
-            $user->save();
-            return success();
-           
-        }
-        else{
-            throw ValidationException::withMessages([
-                'current_password' => __('dashboard.wrong_password'),
-            ]); 
-        }
-
     }
 
     /**

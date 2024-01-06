@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
            ])->user()->create(
                [
                    'email' => 'admin@app.com',
-                   'password' => bcrypt(12345678),
+                   'password' => 12345678,
                ]
            );
            app()[PermissionRegistrar::class]->forgetCachedPermissions();
