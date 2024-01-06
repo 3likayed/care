@@ -167,10 +167,10 @@ class SalaryActionsController extends Controller
                 }
             }
         }
-        // dd($employee->salaryTransactions);
-        if (count($employee->salaryActions) > 0) {
+        // dd($employee->salaryActions->where('reason','salary')->first());
+        if ($employee->salaryActions->where('reason','salary')->first()) {
             // dd($employee->salaryActions->toArray());
-            $getSalaryMonth =carbon::createFromFormat('m-Y',$employee->salaryActions->where('reason','salary')->first()->date)->addMonth(1)->format('m-Y');
+            $getSalaryMonth =carbon::createFromFormat('m-Y',$employee->salaryActions->where('reason','salary')->firstOrCreate()->date)->addMonth(1)->format('m-Y');
             // dd($getSalaryMonth);
         } else {
             $getSalaryMonth = Carbon::now()->format('m-Y');
