@@ -9,15 +9,16 @@ import PillTag from "./PillTag.vue";
 import {usePage} from "@inertiajs/vue3";
 
 
-const name = usePage().props.auth.user.name;
-
+const name = usePage().props.user.userable.name;
 const userSwitchVal = ref(false);
 </script>
 
 <template>
     <CardBox>
         <BaseLevel type="lg:justify-start justify-center ">
-            <UserAvatarCurrentUser class="lg:mx-12"/>
+            <UserAvatarCurrentUser
+            :name="name"
+            class="lg:mx-12"/>
             <div class="space-y-3 text-center md:text-start lg:mx-12">
                 <div class="flex justify-center md:block">
                     <FormCheckRadio

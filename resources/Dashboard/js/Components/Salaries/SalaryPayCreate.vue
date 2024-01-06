@@ -65,7 +65,6 @@ let showCreateSalaryPay = inject('showCreateSalaryPay');
 let salary = ref();
 let loan = ref();
 let data = props.data;
-console.log(data.salary_transactions);
 let salaryMonth = ref();
 if (data.salary_transactions.length === 0) {
     salaryMonth.value = moment().format('YYYY-MM');
@@ -102,7 +101,6 @@ watchEffect(() => {
 
 })
 
-console.log(data);
 
 
 const submit = () => {

@@ -2,8 +2,9 @@
 import {computed} from "vue";
 import {usePage} from "@inertiajs/vue3";
 import UserAvatar from "./UserAvatar.vue";
-
-const userName = computed(() => usePage().props.auth.user.name);
+console.log(usePage().props);
+const userName = computed(() => usePage().props.user.userable.name);
+console.log(userName.value);
 </script>
 
 <template>

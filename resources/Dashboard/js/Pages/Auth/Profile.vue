@@ -15,7 +15,7 @@ import FormValidationErrors from "../../Components/Sahred/FormValidationErrors.v
 const user = usePage().props.auth.user;
 
 const profileForm = useForm({
-    name: user.name,
+    name: user.userable.name,
     email: user.email,
 });
 

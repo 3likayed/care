@@ -16,14 +16,14 @@ const props = defineProps({
     },
 });
 
-const avatar = computed(
-    () =>
-        props.avatar ??
-        `https://avatars.dicebear.com/api/${props.api}/${props.username.replace(
-            /[^a-z0-9]+/i,
-            "-"
-        )}.svg`
-);
+// const avatar = computed(
+//     () =>
+//         props.avatar ??
+//         `https://avatars.dicebear.com/api/${props.api}/${props.username.replace(
+//             /[^a-z0-9]+/i,
+//             "-"
+//         )}.svg`
+// );
 
 const username = computed(() => props.username);
 </script>
